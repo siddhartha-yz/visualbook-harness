@@ -1,0 +1,23 @@
+{
+  "status": "isolated-entrypoint-demonstrated-integration-deferred",
+  "modelCalls": 0,
+  "oldGateAcceptedActualDefect": true,
+  "newGateRejectedSameActualDefect": true,
+  "correctedActualChapterPassed": true,
+  "correctedFormulas": 590,
+  "actualOriginalChapterSha256": "6b9f28924a5f90fa1ce4d9275b5ba874d63c2159b8a258bcc4c1061fc6498d9e",
+  "actualCorrectedChapterSha256": "bb1e7704a636a73de6393717dec60944521cfbd2a601c097afb596572a9a94f1",
+  "syntheticControls": {
+    "passed": 4,
+    "failed": 0,
+    "latestLogSha256": "a9cd3fdd25e28fbdced4e423c848459f4c1246bb0508f9c7c68582db5d70087a"
+  },
+  "toolSha256": "783d429cf481323f63bcf51254e389bf68b4550d41424b9e233e9418b510782e",
+  "testSha256": "c4869861da5d3b62cb659b194cd5d49701d8d8acf1eecad34255db678cdc1bd6",
+  "activeProducerChanged": false,
+  "visualFrozenV2Changed": false,
+  "scope": "Real original/corrected chapter mechanical preflight plus4 synthetic controls. Current25-chapter writer remains untouched; future producer integration deferred until it exits. No mathematical truth or browser-layout certification.",
+  "replayLimits": [
+    "Restricted-environment replay03 returned aggregate testCodeFailure with no individual assertion detail. Unchanged tools/tests in host replay04 passed4/4. Environment differs; no unsupported claim about precise cause or source defect."
+  ]
+}
