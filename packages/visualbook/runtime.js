@@ -170,10 +170,11 @@
       if (svg.style.height !== height + "px") svg.style.height = height + "px";
       const calculationTrace = [];
       instance.calculations = calculationTrace;
+      const calculationRuntime = global.VisualBookCalculations;
+      instance.calculationTraceVersion = calculationRuntime ? 2 : 0;
       try {
         if (board) board.begin(width, height);
-        instance.facts =
-          global.VisualBookCalculations.withTrace(calculationTrace, () => draw({
+        const render = () => draw({
             ...context,
             width,
             height,
@@ -183,7 +184,12 @@
             controls,
             board,
             calculationTrace,
-          }), {cache:calculationCache}) ?? {};
+          });
+        // Plain SVG candidates deliberately omit the numerical library. Keep
+        // them drawable, and report their calculations as unrecorded.
+        instance.facts = (calculationRuntime
+          ? calculationRuntime.withTrace(calculationTrace, render, {cache:calculationCache})
+          : render()) ?? {};
         if (board) board.end();
         const role = svg.querySelector('[tabindex="0"]') ? "group" : "img";
         if (svg.getAttribute("role") !== role) svg.setAttribute("role", role);

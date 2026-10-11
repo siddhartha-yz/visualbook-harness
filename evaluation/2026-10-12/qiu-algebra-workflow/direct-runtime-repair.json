@@ -1,0 +1,60 @@
+{
+  "kind": "real CI regression and scoped compatibility repair",
+  "modelCalls": 0,
+  "failedCommit": "bd87ef9a90a3ce53fdd3f18c081d2ce73ae1a21c",
+  "failedRun": 38177367262,
+  "defect": "Runtime unconditionally required VisualBookCalculations.withTrace even in direct SVG pages that intentionally omit library. Prevented drawing before expected NaN geometry control.",
+  "originalLocalReproduction": {
+    "path": "failure-controls-cache-01/raw-svg-invalid/report.json",
+    "sha256": "8474fa1099183dd534a67af18359380a83160c7c8c3c9cae3d10d89e1d449dd1",
+    "failedBeforeDrawing": true
+  },
+  "repair": "Use the calculation observer when the library exists; otherwise draw directly and record trace version 0. Direct arithmetic remains unrecorded and unverified.",
+  "actualPositive": {
+    "kind": "Real direct SVG drawing/export control, no model generation",
+    "modelCalls": 0,
+    "widths": [
+      1280,
+      375,
+      1920
+    ],
+    "findings": [],
+    "calculationCounts": {
+      "states": 21,
+      "legacyStates": 21,
+      "recordedCalculations": 0,
+      "uniqueCalculations": 0,
+      "verifiedCalculations": 0,
+      "unsupportedCalculations": 0,
+      "statesWithoutCalculations": 0
+    },
+    "exported": {
+      "file": "/home/yang-zhi/文档/ChatGPT/concept2motion/work/qiu-algebra-20261012/direct-runtime-control-02/export.html",
+      "sha256": "d5c91c9aa5aa7d974c46775a10ce8dcd49841cb13e8768dbffb772a278d053f8",
+      "previewSha256": "f84d86c054f67de3139638c7d3fc479a67db3bdaa3a1d450cd4f25cfbd988501"
+    },
+    "scope": "Direct SVG remains drawable and explicitly has no independently verified calculation record. No art or source semantic acceptance."
+  },
+  "actualNegative": {
+    "controls": 5,
+    "passed": true,
+    "NaNGeometryActuallyCaught": true,
+    "allExportBlocked": true,
+    "sha256": "01967c756e6d6c2c5a278bc4a61ef6a8b14fc4ef54c57481eb1f3f442354881f"
+  },
+  "oneOffControlScriptFailure": "First positive-control script used URL.pathname with an encoded Chinese path, causing ENOENT before browser launch. A separate script using fileURLToPath succeeded; both the failed script and log are retained.",
+  "frozenVisualV1Disposition": "Retained unused, known regression. New snapshot required before production campaign.",
+  "evidenceHashes": {
+    "ci-bd87ef9-failed.log": "41bc1c364e62ace7067bdc53c210a537ae5c1212efda3920e8df729bf1d33559",
+    "failure-controls-cache-01.log": "625b906dfef265e36a6b2596074cf0b9249d53212ef89edd3b0662128095d18f",
+    "failure-controls-cache-02.log": "b9fafbb261cad858077f7784955eb33cf20b3a5c23f7f48ebb35ca141212ebff",
+    "direct-runtime-control-01.log": "016fded94ccbb40a0c9f2859af282a0ea077d7fe630ea99a50f912311b9e34be",
+    "direct-runtime-control-02/result.json": "b88261ca2ad115f2d89809c41211e038c707c6b3084a5be316c9a1904c63790c",
+    "trace-tests-direct-fix-01.log": "f73326d3e9edec42f636af8cde33c0facff124f26351a802cd905032cd616d4b"
+  },
+  "limits": [
+    "Actual browser engineering controls; no model generation, artistic acceptance or teacher review.",
+    "New CI has not yet verified this repair; old green runs do not verify the current repair.",
+    "No change to the exact algebra kernel or certificate coverage."
+  ]
+}
