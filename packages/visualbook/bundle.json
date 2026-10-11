@@ -11,6 +11,7 @@
     "optimizers.cjs",
     "updates.cjs",
     "reindex.cjs",
+    "algebra.cjs",
     "calculations.cjs",
     "format.cjs",
     "reading.cjs",
@@ -38,6 +39,7 @@
     "components.sequence.js",
     "components.flow.js",
     "components.table.js",
+    "components.algebra.js",
     "math-reader.js"
   ],
   "note": "Ordered original modules. Third-party D3/Dagre, fonts and math rendering are pinned separately in the dependency lock."

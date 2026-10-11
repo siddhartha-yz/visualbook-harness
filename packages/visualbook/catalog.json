@@ -7392,6 +7392,1480 @@
           ]
         }
       }
+    },
+    {
+      "id": "row-reduction",
+      "title": "行操作保持同一组解",
+      "topic": "数学 / 高等代数",
+      "limits": "Exact rational Gauss-Jordan, not continuous row interpolation. Step is discrete and the original matrix remains visible.",
+      "keywords": "线性方程组 初等行变换 Gauss Jordan 消元 augmented matrix",
+      "height": 360,
+      "mobileHeight": 560,
+      "interaction": "parameters",
+      "presentation": "reading",
+      "placement": "wide",
+      "initialProgress": 1,
+      "scene": {
+        "type": "compose",
+        "calculations": [
+          {
+            "id": "r",
+            "operation": "exact-row-reduction",
+            "inputs": {
+              "input": [
+                [
+                  1,
+                  3,
+                  1,
+                  2
+                ],
+                [
+                  3,
+                  4,
+                  2,
+                  9
+                ],
+                [
+                  -1,
+                  -5,
+                  4,
+                  10
+                ]
+              ],
+              "coefficientColumns": 3,
+              "selectedStep": {
+                "$param": "step"
+              }
+            }
+          }
+        ],
+        "visual": {
+          "type": "columns",
+          "layout": {
+            "gap": 24,
+            "minColumnWidth": 280,
+            "weights": [
+              1,
+              1
+            ]
+          },
+          "children": [
+            {
+              "type": "exact-matrix",
+              "props": {
+                "data": {
+                  "$result": "r.inputExact"
+                },
+                "coefficientColumns": 3,
+                "title": "原增广矩阵"
+              }
+            },
+            {
+              "type": "exact-matrix",
+              "props": {
+                "data": {
+                  "$result": "r.currentExact"
+                },
+                "coefficientColumns": 3,
+                "operation": {
+                  "$result": "r.operation"
+                },
+                "title": "等价的方程组"
+              }
+            }
+          ]
+        }
+      },
+      "params": [
+        {
+          "key": "step",
+          "label": "行操作",
+          "kind": "stepper",
+          "min": 0,
+          "max": 8,
+          "step": 1,
+          "value": 8
+        }
+      ],
+      "summary": "每一步只改写方程，不改变共同的解；橙线右侧是常数项。"
+    },
+    {
+      "id": "rank-nullity",
+      "title": "主元与自由变量一起决定维数",
+      "topic": "数学 / 高等代数",
+      "limits": "Coefficient rank excludes RHS. Nullity is a finite example, not a geometric proof for arbitrary fields.",
+      "keywords": "秩 零度 基 自由变量 rank nullity kernel",
+      "height": 320,
+      "mobileHeight": 560,
+      "interaction": "static",
+      "presentation": "reading",
+      "placement": "wide",
+      "initialProgress": 1,
+      "scene": {
+        "type": "compose",
+        "calculations": [
+          {
+            "id": "r",
+            "operation": "exact-row-reduction",
+            "inputs": {
+              "input": [
+                [
+                  1,
+                  2,
+                  1,
+                  0
+                ],
+                [
+                  2,
+                  4,
+                  2,
+                  0
+                ],
+                [
+                  0,
+                  1,
+                  1,
+                  0
+                ]
+              ],
+              "coefficientColumns": 3
+            }
+          }
+        ],
+        "visual": {
+          "type": "columns",
+          "layout": {
+            "gap": 24,
+            "minColumnWidth": 280,
+            "weights": [
+              2,
+              1
+            ]
+          },
+          "children": [
+            {
+              "type": "exact-matrix",
+              "props": {
+                "data": {
+                  "$result": "r.finalExact"
+                },
+                "coefficientColumns": 3,
+                "pivotColumns": {
+                  "$result": "r.pivotColumns"
+                },
+                "title": "行最简形"
+              }
+            },
+            {
+              "type": "readout",
+              "props": {
+                "items": [
+                  {
+                    "label": "系数矩阵的秩",
+                    "value": {
+                      "$result": "r.rank"
+                    },
+                    "color": "green"
+                  },
+                  {
+                    "label": "自由变量个数",
+                    "value": {
+                      "$result": "r.nullity"
+                    },
+                    "color": "blue"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "params": [],
+      "summary": "绿色标出主元，其余未知量可以自由选择。"
+    },
+    {
+      "id": "basis-coordinates",
+      "title": "换一组基，向量没有换",
+      "topic": "数学 / 高等代数",
+      "limits": "Gold x denotes the same physical vector in both panels; only coordinate grid and contributions change.",
+      "keywords": "换基 基 坐标 同一向量 change basis coordinates",
+      "height": 350,
+      "mobileHeight": 560,
+      "interaction": "static",
+      "presentation": "reading",
+      "placement": "wide",
+      "initialProgress": 1,
+      "scene": {
+        "type": "columns",
+        "layout": {
+          "gap": 24,
+          "minColumnWidth": 280,
+          "weights": [
+            1,
+            1
+          ]
+        },
+        "children": [
+          {
+            "type": "basis-frame",
+            "props": {
+              "basis": [
+                [
+                  1,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ]
+              ],
+              "vector": [
+                3,
+                2
+              ],
+              "title": "标准基",
+              "xDomain": [
+                -1,
+                5
+              ],
+              "yDomain": [
+                -1,
+                4
+              ],
+              "labels": [
+                "e₁",
+                "e₂"
+              ]
+            }
+          },
+          {
+            "type": "basis-frame",
+            "props": {
+              "basis": [
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  1
+                ]
+              ],
+              "vector": [
+                3,
+                2
+              ],
+              "title": "斜基",
+              "xDomain": [
+                -1,
+                5
+              ],
+              "yDomain": [
+                -1,
+                4
+              ]
+            }
+          }
+        ]
+      },
+      "params": [],
+      "summary": "金色向量相同；换一组基，描述它的两个坐标会改变。"
+    },
+    {
+      "id": "basis-decomposition",
+      "title": "两个系数怎样拼出同一向量",
+      "topic": "数学 / 高等代数",
+      "limits": "Progress reveals head-to-tail basis contributions; it does not move the fixed gold vector or interpolate between bases.",
+      "keywords": "基 坐标 线性组合 basis linear combination",
+      "height": 360,
+      "mobileHeight": 390,
+      "interaction": "timeline",
+      "presentation": "reading",
+      "placement": "body",
+      "initialProgress": 1,
+      "scene": {
+        "type": "basis-frame",
+        "props": {
+          "basis": [
+            [
+              2,
+              -1
+            ],
+            [
+              1,
+              1
+            ]
+          ],
+          "vector": [
+            3,
+            3
+          ],
+          "progress": {
+            "$progress": true
+          },
+          "xDomain": [
+            -2,
+            5
+          ],
+          "yDomain": [
+            -1,
+            5
+          ]
+        }
+      },
+      "params": [],
+      "summary": "蓝色与紫色分量首尾相接，合成固定的金色向量。"
+    },
+    {
+      "id": "residue-field",
+      "title": "非零元素可以相除的运算系统",
+      "topic": "数学 / 高等代数",
+      "limits": "Z/nZ; orange cells mark a*b=0 with both a,b nonzero. Prime/composite distinction is computed exactly. This finite field is not a number field/subfield of C.",
+      "keywords": "域 环 零因子 剩余类 modular field ring multiplication table",
+      "height": 330,
+      "mobileHeight": 355,
+      "interaction": "static",
+      "presentation": "reading",
+      "placement": "body",
+      "initialProgress": 1,
+      "scene": {
+        "type": "residue-grid",
+        "props": {
+          "modulus": 5,
+          "operation": "multiply"
+        }
+      },
+      "params": [],
+      "summary": "模 5 的非零数都有逆元；这是有限域，并非复数的子域。"
+    },
+    {
+      "id": "residue-zero-divisors",
+      "title": "两个非零元素也可能乘出零",
+      "topic": "数学 / 高等代数",
+      "limits": "Z/nZ; orange cells mark a*b=0 with both a,b nonzero. Prime/composite distinction is computed exactly.",
+      "keywords": "域 环 零因子 剩余类 modular field ring multiplication table",
+      "height": 330,
+      "mobileHeight": 355,
+      "interaction": "static",
+      "presentation": "reading",
+      "placement": "body",
+      "initialProgress": 1,
+      "scene": {
+        "type": "residue-grid",
+        "props": {
+          "modulus": 6,
+          "operation": "multiply"
+        }
+      },
+      "params": [],
+      "summary": "橙格展示非零乘非零得到 0，说明不能随意约消。"
+    },
+    {
+      "id": "residue-systems",
+      "title": "加法表相似，乘法性质却不同",
+      "topic": "数学 / 高等代数",
+      "limits": "Both are commutative rings with identity. Only mod 5 is a field; zero divisors are orange.",
+      "keywords": "环 域 数域 零因子 modulo prime",
+      "height": 345,
+      "mobileHeight": 560,
+      "interaction": "static",
+      "presentation": "reading",
+      "placement": "wide",
+      "initialProgress": 1,
+      "scene": {
+        "type": "columns",
+        "layout": {
+          "gap": 24,
+          "minColumnWidth": 280,
+          "weights": [
+            1,
+            1
+          ]
+        },
+        "children": [
+          {
+            "type": "residue-grid",
+            "props": {
+              "modulus": 5,
+              "operation": "multiply",
+              "title": "模 5"
+            }
+          },
+          {
+            "type": "residue-grid",
+            "props": {
+              "modulus": 6,
+              "operation": "multiply",
+              "title": "模 6"
+            }
+          }
+        ]
+      },
+      "params": [],
+      "summary": "模 5 可以对非零元素作除法，模 6 则出现零因子。"
+    },
+    {
+      "id": "jordan-blocks",
+      "title": "链长决定幂零变换的结构",
+      "topic": "数学 / 高等代数",
+      "limits": "Canonical 3+2 chains inferred from nullities; no basis recovery for a general input matrix is claimed.",
+      "keywords": "约当 Jordan 链 幂零 最小多项式 循环子空间",
+      "height": 320,
+      "mobileHeight": 340,
+      "interaction": "parameters",
+      "presentation": "reading",
+      "placement": "body",
+      "initialProgress": 1,
+      "scene": {
+        "type": "jordan-chains",
+        "props": {
+          "input": [
+            [
+              0,
+              1,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          ],
+          "selectedPower": {
+            "$param": "power"
+          }
+        }
+      },
+      "params": [
+        {
+          "key": "power",
+          "label": "幂次 k",
+          "kind": "stepper",
+          "min": 0,
+          "max": 5,
+          "step": 1,
+          "value": 1
+        }
+      ],
+      "summary": "箭头指向变换后的基向量；灰点在这次幂运算中变成 0。"
+    },
+    {
+      "id": "nilpotent-kernels",
+      "title": "每做一次幂，核会再扩大",
+      "topic": "数学 / 高等代数",
+      "limits": "Ranks/nullities checked exactly; table includes N^0=I. The illustrative chain coordinates need not be the input basis.",
+      "keywords": "核 核维数 幂零 最小多项式 nilpotency rank Jordan",
+      "height": 330,
+      "mobileHeight": 560,
+      "interaction": "static",
+      "presentation": "reading",
+      "placement": "wide",
+      "initialProgress": 1,
+      "scene": {
+        "type": "compose",
+        "calculations": [
+          {
+            "id": "n",
+            "operation": "nilpotent-profile",
+            "inputs": {
+              "input": [
+                [
+                  0,
+                  1,
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  1,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  0,
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        ],
+        "visual": {
+          "type": "columns",
+          "layout": {
+            "gap": 24,
+            "minColumnWidth": 280,
+            "weights": [
+              2,
+              1.4
+            ]
+          },
+          "children": [
+            {
+              "type": "jordan-chains",
+              "props": {
+                "input": [
+                  [
+                    0,
+                    1,
+                    0,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    0,
+                    0,
+                    1
+                  ],
+                  [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
+                ],
+                "selectedPower": 2
+              }
+            },
+            {
+              "type": "matrix-table",
+              "props": {
+                "data": [
+                  {
+                    "$result": "n.ranks"
+                  },
+                  {
+                    "$result": "n.nullities"
+                  }
+                ],
+                "rowLabels": [
+                  "秩",
+                  "核维数"
+                ],
+                "columnLabels": [
+                  "0",
+                  "1",
+                  "2",
+                  "3",
+                  "4",
+                  "5"
+                ],
+                "title": "N 的幂次"
+              }
+            }
+          ]
+        }
+      },
+      "params": [],
+      "summary": "链长为 3 和 2；核维数的逐次增量告诉我们剩下多少条链。"
+    },
+    {
+      "id": "polynomial-division",
+      "title": "整除关系写成一组精确系数",
+      "topic": "数学 / 高等代数",
+      "limits": "Ascending rational coefficients, f=qg+r. This exact example x³−1=(x−1)(x²+x+1) has remainder zero.",
+      "keywords": "带余除法 多项式 整除 polynomial division",
+      "height": 350,
+      "mobileHeight": 560,
+      "interaction": "static",
+      "presentation": "reading",
+      "placement": "wide",
+      "initialProgress": 1,
+      "scene": {
+        "type": "compose",
+        "calculations": [
+          {
+            "id": "d",
+            "operation": "polynomial-divide",
+            "inputs": {
+              "dividend": [
+                -1,
+                0,
+                0,
+                1
+              ],
+              "divisor": [
+                -1,
+                1
+              ]
+            }
+          }
+        ],
+        "visual": {
+          "type": "grid",
+          "layout": {
+            "gap": 18,
+            "minColumnWidth": 250,
+            "columns": 2
+          },
+          "children": [
+            {
+              "type": "coefficient-strip",
+              "props": {
+                "coefficients": {
+                  "$result": "d.dividendExact"
+                },
+                "title": "被除式 f",
+                "color": "blue"
+              }
+            },
+            {
+              "type": "coefficient-strip",
+              "props": {
+                "coefficients": {
+                  "$result": "d.divisorExact"
+                },
+                "title": "除式 g",
+                "color": "violet"
+              }
+            },
+            {
+              "type": "coefficient-strip",
+              "props": {
+                "coefficients": {
+                  "$result": "d.quotientExact"
+                },
+                "title": "商 q",
+                "color": "green"
+              }
+            },
+            {
+              "type": "coefficient-strip",
+              "props": {
+                "coefficients": {
+                  "$result": "d.remainderExact"
+                },
+                "title": "余式 r",
+                "color": "orange"
+              }
+            }
+          ]
+        }
+      },
+      "params": [],
+      "summary": "每格对应一个幂次；这个例子中余式为零，被除式能被除式整除。"
+    },
+    {
+      "id": "polynomial-remainder",
+      "title": "留下的余式次数必须更低",
+      "topic": "数学 / 高等代数",
+      "limits": "Exact f=(x²+1)x+(x+1), not approximate evaluation at roots.",
+      "keywords": "多项式 带余除法 余式 整除 polynomial remainder",
+      "height": 180,
+      "mobileHeight": 310,
+      "interaction": "static",
+      "presentation": "reading",
+      "placement": "wide",
+      "initialProgress": 1,
+      "scene": {
+        "type": "compose",
+        "calculations": [
+          {
+            "id": "d",
+            "operation": "polynomial-divide",
+            "inputs": {
+              "dividend": [
+                1,
+                2,
+                0,
+                1
+              ],
+              "divisor": [
+                1,
+                0,
+                1
+              ]
+            }
+          }
+        ],
+        "visual": {
+          "type": "columns",
+          "layout": {
+            "gap": 24,
+            "minColumnWidth": 280,
+            "weights": [
+              1,
+              1
+            ]
+          },
+          "children": [
+            {
+              "type": "coefficient-strip",
+              "props": {
+                "coefficients": {
+                  "$result": "d.quotientExact"
+                },
+                "title": "商 q",
+                "color": "green"
+              }
+            },
+            {
+              "type": "coefficient-strip",
+              "props": {
+                "coefficients": {
+                  "$result": "d.remainderExact"
+                },
+                "title": "余式 r",
+                "color": "orange"
+              }
+            }
+          ]
+        }
+      },
+      "params": [],
+      "summary": "被除式等于除式乘商再加余式，余式的次数更低。"
+    },
+    {
+      "id": "polynomial-bezout",
+      "title": "公因式也可以由两个多项式组合得到",
+      "topic": "数学 / 高等代数",
+      "limits": "u*a+v*b=gcd over Q, monic normalization. Factorization over R or C is a different question.",
+      "keywords": "最大公因式 裴蜀 辗转相除 polynomial gcd Bezout",
+      "height": 180,
+      "mobileHeight": 490,
+      "interaction": "static",
+      "presentation": "reading",
+      "placement": "wide",
+      "initialProgress": 1,
+      "scene": {
+        "type": "compose",
+        "calculations": [
+          {
+            "id": "g",
+            "operation": "polynomial-gcd",
+            "inputs": {
+              "a": [
+                -1,
+                0,
+                1
+              ],
+              "b": [
+                2,
+                -3,
+                1
+              ]
+            }
+          }
+        ],
+        "visual": {
+          "type": "columns",
+          "layout": {
+            "gap": 24,
+            "minColumnWidth": 280,
+            "weights": [
+              1,
+              1,
+              1
+            ]
+          },
+          "children": [
+            {
+              "type": "coefficient-strip",
+              "props": {
+                "coefficients": {
+                  "$result": "g.gcdExact"
+                },
+                "title": "首一公因式",
+                "color": "green"
+              }
+            },
+            {
+              "type": "coefficient-strip",
+              "props": {
+                "coefficients": {
+                  "$result": "g.bezoutAExact"
+                },
+                "title": "组合系数 u",
+                "color": "blue"
+              }
+            },
+            {
+              "type": "coefficient-strip",
+              "props": {
+                "coefficients": {
+                  "$result": "g.bezoutBExact"
+                },
+                "title": "组合系数 v",
+                "color": "violet"
+              }
+            }
+          ]
+        }
+      },
+      "params": [],
+      "summary": "两个组合系数乘原多项式再相加，得到首一最大公因式。"
+    },
+    {
+      "id": "quotient-cosets",
+      "title": "一条平行线算一个新对象",
+      "topic": "数学 / 高等代数",
+      "limits": "R²/span(1,1). Moving within a class leaves its quotient coordinate fixed; orthogonal representative is a chosen Euclidean model.",
+      "keywords": "商空间 等价关系 商集 陪集 quotient coset",
+      "height": 360,
+      "mobileHeight": 390,
+      "interaction": "timeline",
+      "presentation": "reading",
+      "placement": "body",
+      "initialProgress": 1,
+      "scene": {
+        "type": "quotient-plane",
+        "props": {
+          "direction": [
+            1,
+            1
+          ],
+          "vector": [
+            2,
+            1
+          ],
+          "progress": {
+            "$progress": true
+          }
+        }
+      },
+      "params": [],
+      "summary": "紫线是子空间，橙线是一个等价类；沿橙线移动不会改变类别。"
+    },
+    {
+      "id": "solution-coset",
+      "title": "非齐次解集是齐次解空间的平移",
+      "topic": "数学 / 高等代数",
+      "limits": "Real 2D example; the orange affine line is the consistent solution set, violet line is the homogeneous kernel. Does not assert arbitrary-field geometric lines.",
+      "keywords": "通解 齐次 非齐次 解空间 方程组 affine solution kernel",
+      "height": 340,
+      "mobileHeight": 560,
+      "interaction": "static",
+      "presentation": "reading",
+      "placement": "wide",
+      "initialProgress": 1,
+      "scene": {
+        "type": "columns",
+        "layout": {
+          "gap": 24,
+          "minColumnWidth": 280,
+          "weights": [
+            1.5,
+            1
+          ]
+        },
+        "children": [
+          {
+            "type": "quotient-plane",
+            "props": {
+              "direction": [
+                -2,
+                1
+              ],
+              "vector": [
+                1,
+                1
+              ],
+              "xDomain": [
+                -4,
+                5
+              ],
+              "yDomain": [
+                -2,
+                4
+              ],
+              "title": "x₁ + 2x₂ = 3"
+            }
+          },
+          {
+            "type": "exact-matrix",
+            "props": {
+              "data": [
+                [
+                  "1",
+                  "2",
+                  "3"
+                ],
+                [
+                  "2",
+                  "4",
+                  "6"
+                ]
+              ],
+              "coefficientColumns": 2,
+              "title": "两条方程，同一条解集"
+            }
+          }
+        ]
+      },
+      "params": [],
+      "summary": "紫线是齐次解空间，橙线是把它平移后得到的非齐次解集。"
+    },
+    {
+      "id": "cofactor-expansion",
+      "title": "展开的各项既有大小，也有符号",
+      "scene": {
+        "type": "compose",
+        "calculations": [
+          {
+            "id": "d",
+            "operation": "determinant-expansion",
+            "inputs": {
+              "input": [
+                [
+                  1,
+                  2,
+                  3
+                ],
+                [
+                  0,
+                  4,
+                  5
+                ],
+                [
+                  1,
+                  0,
+                  6
+                ]
+              ],
+              "axis": "row",
+              "index": 0
+            }
+          }
+        ],
+        "visual": {
+          "type": "columns",
+          "layout": {
+            "gap": 22,
+            "minColumnWidth": 280,
+            "weights": [
+              1,
+              1.2
+            ]
+          },
+          "children": [
+            {
+              "type": "exact-matrix",
+              "props": {
+                "data": {
+                  "$result": "d.inputExact"
+                },
+                "title": "沿第一行展开"
+              }
+            },
+            {
+              "type": "category-bars",
+              "props": {
+                "items": [
+                  {
+                    "label": "第一项",
+                    "value": {
+                      "$result": "d.values.0"
+                    },
+                    "color": "blue"
+                  },
+                  {
+                    "label": "第二项",
+                    "value": {
+                      "$result": "d.values.1"
+                    },
+                    "color": "violet"
+                  },
+                  {
+                    "label": "第三项",
+                    "value": {
+                      "$result": "d.values.2"
+                    },
+                    "color": "orange"
+                  }
+                ],
+                "domain": [
+                  -16,
+                  28
+                ],
+                "unit": "各项贡献"
+              }
+            }
+          ]
+        }
+      },
+      "summary": "24 + 10 − 12 = 22；每项是选中元素乘它的代数余子式。",
+      "limits": "Exact 3×3 row expansion; chosen row/index are replaceable. Bars share a signed scale. This is not a geometric proof of n-dimensional determinants.",
+      "keywords": "展开的各项既有大小，也有符号 高等代数 线性代数",
+      "topic": "数学 / 高等代数",
+      "height": 330,
+      "mobileHeight": 540,
+      "interaction": "static",
+      "presentation": "reading",
+      "placement": "wide",
+      "initialProgress": 1,
+      "params": []
+    },
+    {
+      "id": "dual-contours",
+      "title": "对偶基从向量中读出两个坐标",
+      "scene": {
+        "type": "compose",
+        "calculations": [
+          {
+            "id": "d",
+            "operation": "dual-basis",
+            "inputs": {
+              "basis": [
+                [
+                  2,
+                  1
+                ],
+                [
+                  1,
+                  1
+                ]
+              ],
+              "vector": [
+                3,
+                2
+              ]
+            }
+          }
+        ],
+        "visual": {
+          "type": "columns",
+          "layout": {
+            "gap": 22,
+            "minColumnWidth": 280,
+            "weights": [
+              1,
+              1
+            ]
+          },
+          "children": [
+            {
+              "type": "quotient-plane",
+              "props": {
+                "direction": {
+                  "$result": "d.kernelDirections.0"
+                },
+                "vector": [
+                  3,
+                  2
+                ],
+                "coordinateScale": {
+                  "$result": "d.coordinateScales.0"
+                },
+                "coordinateLabel": "φ₁(x)",
+                "title": "第一个对偶函数",
+                "xDomain": [
+                  -2,
+                  5
+                ],
+                "yDomain": [
+                  -2,
+                  5
+                ]
+              }
+            },
+            {
+              "type": "quotient-plane",
+              "props": {
+                "direction": {
+                  "$result": "d.kernelDirections.1"
+                },
+                "vector": [
+                  3,
+                  2
+                ],
+                "coordinateScale": {
+                  "$result": "d.coordinateScales.1"
+                },
+                "coordinateLabel": "φ₂(x)",
+                "title": "第二个对偶函数",
+                "xDomain": [
+                  -2,
+                  5
+                ],
+                "yDomain": [
+                  -2,
+                  5
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "summary": "每条橙线上的函数值相同；两个对偶函数分别读出这组基的两个坐标。",
+      "limits": "Dual covectors are ROWS of B^-1. Parallel lines illustrate real 2D level sets; no geometric model for arbitrary fields is asserted.",
+      "keywords": "对偶基从向量中读出两个坐标 高等代数 线性代数",
+      "topic": "数学 / 高等代数",
+      "height": 350,
+      "mobileHeight": 560,
+      "interaction": "static",
+      "presentation": "reading",
+      "placement": "wide",
+      "initialProgress": 1,
+      "params": []
+    },
+    {
+      "id": "quadratic-congruence",
+      "title": "换坐标后，形状的表达变了，二次型值没变",
+      "scene": {
+        "type": "compose",
+        "calculations": [
+          {
+            "id": "q",
+            "operation": "bilinear-congruence",
+            "inputs": {
+              "input": [
+                [
+                  2,
+                  1
+                ],
+                [
+                  1,
+                  3
+                ]
+              ],
+              "basis": [
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  1
+                ]
+              ],
+              "point": [
+                2,
+                1
+              ]
+            }
+          }
+        ],
+        "visual": {
+          "type": "columns",
+          "layout": {
+            "gap": 22,
+            "minColumnWidth": 280,
+            "weights": [
+              1,
+              1
+            ]
+          },
+          "children": [
+            {
+              "type": "level-set",
+              "props": {
+                "field": {
+                  "$result": "q.field"
+                },
+                "point": {
+                  "$result": "q.values.oldPoint"
+                },
+                "xDomain": [
+                  -4,
+                  4
+                ],
+                "yDomain": [
+                  -4,
+                  4
+                ],
+                "levels": [
+                  4,
+                  9,
+                  16,
+                  27,
+                  36
+                ],
+                "direction": "none",
+                "title": "旧坐标"
+              }
+            },
+            {
+              "type": "level-set",
+              "props": {
+                "field": {
+                  "$result": "q.transformedField"
+                },
+                "point": {
+                  "$result": "q.values.newPoint"
+                },
+                "xDomain": [
+                  -4,
+                  4
+                ],
+                "yDomain": [
+                  -4,
+                  4
+                ],
+                "levels": [
+                  4,
+                  9,
+                  16,
+                  27,
+                  36
+                ],
+                "direction": "none",
+                "title": "新坐标"
+              }
+            }
+          ]
+        }
+      },
+      "summary": "左图用旧坐标，右图用新坐标描述同一个点；二次型值都为 27。",
+      "limits": "C=B^T A B, x=By, not similarity. These panels use different coordinate descriptions. Contour geometry is sampled; black-point values are exact analytic evaluations.",
+      "keywords": "换坐标后，形状的表达变了，二次型值没变 高等代数 线性代数",
+      "topic": "数学 / 高等代数",
+      "height": 360,
+      "mobileHeight": 560,
+      "interaction": "static",
+      "presentation": "reading",
+      "placement": "wide",
+      "initialProgress": 1,
+      "params": []
+    },
+    {
+      "id": "quadratic-inertia",
+      "title": "原对角线都是零，也可能有正项和负项",
+      "scene": {
+        "type": "compose",
+        "calculations": [
+          {
+            "id": "q",
+            "operation": "symmetric-inertia",
+            "inputs": {
+              "input": [
+                [
+                  0,
+                  1
+                ],
+                [
+                  1,
+                  0
+                ]
+              ]
+            }
+          }
+        ],
+        "visual": {
+          "type": "columns",
+          "layout": {
+            "gap": 22,
+            "minColumnWidth": 280,
+            "weights": [
+              1.5,
+              1
+            ]
+          },
+          "children": [
+            {
+              "type": "exact-matrix",
+              "props": {
+                "data": {
+                  "$result": "q.diagonalMatrixExact"
+                },
+                "title": "合同变换后的对角形式"
+              }
+            },
+            {
+              "type": "readout",
+              "props": {
+                "items": [
+                  {
+                    "label": "正项个数",
+                    "value": {
+                      "$result": "q.positive"
+                    },
+                    "color": "green"
+                  },
+                  {
+                    "label": "负项个数",
+                    "value": {
+                      "$result": "q.negative"
+                    },
+                    "color": "orange"
+                  },
+                  {
+                    "label": "零项个数",
+                    "value": {
+                      "$result": "q.zero"
+                    },
+                    "color": "muted"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "summary": "2xy 经过可逆换坐标，成为两个平方项的差；它并不是零二次型。",
+      "limits": "Exact rational congruence diagonalization; inertia classification is over R. Counts do not classify quadratic forms over Q, and signs differ over C. No irrational unit normalization claimed.",
+      "keywords": "原对角线都是零，也可能有正项和负项 高等代数 线性代数",
+      "topic": "数学 / 高等代数",
+      "height": 320,
+      "mobileHeight": 520,
+      "interaction": "static",
+      "presentation": "reading",
+      "placement": "wide",
+      "initialProgress": 1,
+      "params": []
+    },
+    {
+      "id": "quadratic-degeneracy",
+      "title": "少一个平方项，就多一个不受约束的方向",
+      "scene": {
+        "type": "columns",
+        "layout": {
+          "gap": 22,
+          "minColumnWidth": 280,
+          "weights": [
+            1,
+            1
+          ]
+        },
+        "children": [
+          {
+            "type": "level-set",
+            "props": {
+              "field": {
+                "type": "quadratic",
+                "matrix": [
+                  [
+                    2,
+                    0
+                  ],
+                  [
+                    0,
+                    2
+                  ]
+                ]
+              },
+              "point": [
+                1,
+                1
+              ],
+              "xDomain": [
+                -3,
+                3
+              ],
+              "yDomain": [
+                -3,
+                3
+              ],
+              "levels": [
+                0.5,
+                1,
+                2,
+                4
+              ],
+              "direction": "none",
+              "title": "两个正平方项"
+            }
+          },
+          {
+            "type": "level-set",
+            "props": {
+              "field": {
+                "type": "quadratic",
+                "matrix": [
+                  [
+                    2,
+                    0
+                  ],
+                  [
+                    0,
+                    0
+                  ]
+                ]
+              },
+              "point": [
+                1,
+                1
+              ],
+              "xDomain": [
+                -3,
+                3
+              ],
+              "yDomain": [
+                -3,
+                3
+              ],
+              "levels": [
+                0.5,
+                1,
+                2,
+                4
+              ],
+              "direction": "none",
+              "title": "一个方向不影响值"
+            }
+          }
+        ]
+      },
+      "summary": "左图的等值线封闭；右图沿竖直方向移动不会改变二次型值。",
+      "limits": "Real 2D forms x²+y² and x². Coordinate scale is shared. Sampled contours illustrate a fixed example, not arbitrary-field classification.",
+      "keywords": "少一个平方项，就多一个不受约束的方向 高等代数 线性代数",
+      "topic": "数学 / 高等代数",
+      "height": 350,
+      "mobileHeight": 550,
+      "interaction": "static",
+      "presentation": "reading",
+      "placement": "wide",
+      "initialProgress": 1,
+      "params": []
     }
   ]
 }

@@ -1625,6 +1625,185 @@
       ],
       "limits": "等长连续Q头分组，KV指一对K/V；不模拟注意力分数、训练权重、迁移训练或实测质量/速度。",
       "keywords": "MHA GQA MQA query key value heads attention 头 共享 分组 缓存"
+    },
+    {
+      "id": "exact-matrix",
+      "title": "精确矩阵与行操作",
+      "props": {
+        "data": "1..6 rows × 1..8 columns of integer or p/q strings; exact fraction typography",
+        "coefficientColumns": "Integer coefficient-column count; later columns are RHS",
+        "operation": "Optional initial/swap/scale/add record from exact-row-reduction.current operation",
+        "pivotColumns": "Optional pivot indices for this displayed stage, not a future stage",
+        "title": "Optional short label"
+      },
+      "required": [
+        "data"
+      ],
+      "outputs": [
+        "data",
+        "coefficientColumns",
+        "operation",
+        "pivotColumns",
+        "convention"
+      ],
+      "examples": [
+        "row-reduction",
+        "rank-nullity"
+      ],
+      "limits": "Small exact entries; cells >=30×44px and text >=12px. Large rational numerators fail rather than shrink.",
+      "keywords": "消元 方程组 行阶梯 分数 初等行变换 row reduction exact rational matrix"
+    },
+    {
+      "id": "basis-frame",
+      "title": "同一向量的基分解",
+      "props": {
+        "basis": "Invertible 2×2 matrix of column basis vectors; rational strings or numbers",
+        "vector": "Finite physical [x,y] in standard coordinates",
+        "progress": "0..1 construction of two contributions; gold physical vector remains fixed",
+        "xDomain": "Increasing finite [min,max]",
+        "yDomain": "Increasing finite [min,max]",
+        "gridExtent": "Integer 1..6 for clipped oblique coordinate grid",
+        "title": "Optional short label",
+        "labels": "Two short basis names"
+      },
+      "required": [],
+      "outputs": [
+        "vector",
+        "sourceBasis",
+        "targetBasis",
+        "sourceCoordinates",
+        "targetCoordinates",
+        "sourceCoordinatesExact",
+        "targetCoordinatesExact",
+        "transition",
+        "transitionExact",
+        "inverseTransition",
+        "operator",
+        "constructionProgress",
+        "convention"
+      ],
+      "examples": [
+        "basis-coordinates",
+        "basis-decomposition"
+      ],
+      "limits": "2D invertible column basis. Does not animate through possibly singular interpolated bases.",
+      "keywords": "基 换基 坐标 基向量 change basis coordinates"
+    },
+    {
+      "id": "residue-grid",
+      "title": "剩余类运算表",
+      "props": {
+        "modulus": "Integer 2..12; choose smaller modulus on mobile if cells cannot stay >=23px",
+        "operation": "add or multiply",
+        "title": "Optional short label"
+      },
+      "required": [],
+      "outputs": [
+        "modulus",
+        "operation",
+        "data",
+        "labels",
+        "units",
+        "zeroDivisors",
+        "isField",
+        "classification",
+        "zeroDivisorCount",
+        "convention"
+      ],
+      "examples": [
+        "residue-field",
+        "residue-zero-divisors"
+      ],
+      "limits": "Residue representatives 0..n-1. Orange witness requires both factors nonzero. Finite examples do not prove arbitrary algebra-system statements.",
+      "keywords": "域 环 零因子 剩余类 模 运算表 modular field ring zero divisor"
+    },
+    {
+      "id": "jordan-chains",
+      "title": "由核维数识别约当链",
+      "props": {
+        "input": "Exact rational nilpotent square matrix, dimension 1..6",
+        "selectedPower": "Integer 0..dimension",
+        "title": "Optional short label"
+      },
+      "required": [
+        "input"
+      ],
+      "outputs": [
+        "input",
+        "powers",
+        "ranks",
+        "nullities",
+        "atLeast",
+        "blockCounts",
+        "blockSizes",
+        "nilpotencyIndex",
+        "selectedPower",
+        "selectedRank",
+        "selectedNullity",
+        "convention"
+      ],
+      "examples": [
+        "jordan-blocks",
+        "nilpotent-kernels"
+      ],
+      "limits": "Chain sizes inferred exactly; diagram e labels are illustrative canonical coordinates, not a constructed basis for the input matrix.",
+      "keywords": "Jordan 约当 幂零 循环子空间 最小多项式 核 链 nilpotent"
+    },
+    {
+      "id": "coefficient-strip",
+      "title": "按幂排列的精确系数",
+      "props": {
+        "coefficients": "1..13 rational literals or finite numbers, ascending power order; entries are normalized as exact strings",
+        "title": "Optional short label",
+        "color": "Known palette name"
+      },
+      "required": [
+        "coefficients"
+      ],
+      "outputs": [
+        "coefficients",
+        "degree",
+        "convention"
+      ],
+      "examples": [
+        "polynomial-division",
+        "polynomial-bezout"
+      ],
+      "limits": "Cells >=54×65px, rational text >=12px. Supplied vector may have leading zeros; displayed index labels do not assert irreducibility or root multiplicity. Zero polynomial degree is null; trailing zero slots remain displayed without inflating degree.",
+      "keywords": "多项式 整除 余式 最大公因式 系数 polynomial coefficient division gcd Bezout"
+    },
+    {
+      "id": "quotient-plane",
+      "title": "等价类是平行直线",
+      "props": {
+        "direction": "Finite nonzero [x,y], spans the quotient subspace",
+        "vector": "Finite representative point [x,y]",
+        "progress": "0..1 motion within one coset to a chosen Euclidean orthogonal representative",
+        "xDomain": "Increasing finite [min,max]",
+        "yDomain": "Increasing finite [min,max]",
+        "title": "Optional short label",
+        "coordinateScale": "Positive finite scalar rescaling of the chosen normal coordinate (default 1); useful for actual covector evaluation",
+        "coordinateLabel": "Short displayed quantity name, default 商空间坐标"
+      },
+      "required": [],
+      "outputs": [
+        "direction",
+        "vector",
+        "coordinate",
+        "representative",
+        "current",
+        "convention",
+        "displayCoordinate",
+        "coordinateScale",
+        "coordinateLabel"
+      ],
+      "examples": [
+        "quotient-cosets",
+        "solution-coset",
+        "dual-contours"
+      ],
+      "limits": "Only R²/span(direction); choosing orthogonal representatives uses Euclidean structure and is not intrinsic to arbitrary quotient spaces.",
+      "keywords": "商空间 等价关系 商集 陪集 齐次解 通解 coset quotient affine solution 对偶 线性函数 covector dual"
     }
   ]
 }

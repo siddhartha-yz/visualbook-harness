@@ -1,0 +1,242 @@
+/* Exact bounded rational algebra. Geometry still draws numeric approximations. */
+(function (global) {
+  const abs = n => n < 0n ? -n : n;
+  function gcd(a, b) { a = abs(a); b = abs(b); while (b) [a, b] = [b, a % b]; return a; }
+  function q(n, d = 1n) {
+    if (!d) throw Error("Zero rational denominator");
+    if (d < 0n) { n = -n; d = -d; }
+    const g = gcd(n, d); n /= g; d /= g;
+    if (abs(n).toString().length > 128 || d.toString().length > 128) throw Error("Exact algebra exceeds bounded rational size");
+    return { n, d };
+  }
+  function rational(value) {
+    if (typeof value === "number" && (!Number.isFinite(value) || Math.abs(value) > 1e9)) throw Error("Bounded finite rational input required");
+    if (typeof value !== "number" && typeof value !== "string") throw Error("Use numbers or rational strings");
+    const text = String(value);
+    if (/^-?\d{1,32}\/\d{1,32}$/.test(text)) { const [a, b] = text.split("/"); return q(BigInt(a), BigInt(b)); }
+    const m = /^(-?)(\d{1,32})(?:\.(\d{1,32}))?(?:e([+-]?\d{1,2}))?$/i.exec(text);
+    if (!m) throw Error("Invalid rational literal");
+    const exponent = Number(m[4] ?? 0) - (m[3]?.length ?? 0);
+    if (Math.abs(exponent) > 40) throw Error("Rational exponent is too large");
+    let n = BigInt(m[2] + (m[3] ?? "")); if (m[1]) n = -n;
+    return exponent < 0 ? q(n, 10n ** BigInt(-exponent)) : q(n * 10n ** BigInt(exponent));
+  }
+  const add = (a, b) => q(a.n * b.d + b.n * a.d, a.d * b.d);
+  const neg = a => q(-a.n, a.d);
+  const sub = (a, b) => add(a, neg(b));
+  const mul = (a, b) => q(a.n * b.n, a.d * b.d);
+  const div = (a, b) => q(a.n * b.d, a.d * b.n);
+  const Z = () => q(0n), O = () => q(1n);
+  const literal = a => a.d === 1n ? String(a.n) : `${a.n}/${a.d}`;
+  const number = a => { const v = Number(a.n) / Number(a.d); if (!Number.isFinite(v)) throw Error("Numeric drawing overflow"); return v; };
+  const numeric = rows => rows.map(row => row.map(number));
+  const exact = rows => rows.map(row => row.map(literal));
+  const copy = rows => rows.map(row => row.slice());
+  const identity = n => Array.from({ length: n }, (_, i) => Array.from({ length: n }, (_, j) => i === j ? O() : Z()));
+  function matrix(input, maxColumns = 6) {
+    if (!Array.isArray(input) || input.length < 1 || input.length > 6 || !Array.isArray(input[0]) || input[0].length < 1 || input[0].length > maxColumns || input.some(row => !Array.isArray(row) || row.length !== input[0].length)) throw Error("Use a bounded rectangular matrix");
+    return input.map(row => row.map(rational));
+  }
+  function product(a, b) {
+    if (a[0].length !== b.length) throw Error("Matrix product shape mismatch");
+    return a.map(row => b[0].map((_, j) => row.reduce((sum, v, k) => add(sum, mul(v, b[k][j])), Z())));
+  }
+  const transpose = a => a[0].map((_, j) => a.map(row => row[j]));
+  function reduce(a, columns = a[0].length) {
+    const current = copy(a), transform = identity(a.length), steps = [], pivots = [];
+    let determinant = O(), row = 0;
+    const record = operation => steps.push({ operation, values: numeric(current), exact: exact(current), transform: numeric(transform), transformExact: exact(transform) });
+    record({ kind: "initial" });
+    for (let column = 0; column < columns && row < a.length; column++) {
+      const found = current.findIndex((line, i) => i >= row && line[column].n !== 0n);
+      if (found < 0) continue;
+      if (found !== row) {
+        [current[row], current[found]] = [current[found], current[row]];
+        [transform[row], transform[found]] = [transform[found], transform[row]];
+        determinant = neg(determinant); record({ kind: "swap", row, source: found });
+      }
+      const pivot = current[row][column]; determinant = mul(determinant, pivot);
+      if (pivot.n !== pivot.d) {
+        const factor = div(O(), pivot);
+        current[row] = current[row].map(v => mul(v, factor));
+        transform[row] = transform[row].map(v => mul(v, factor));
+        record({ kind: "scale", row, factor: number(factor), factorExact: literal(factor) });
+      }
+      for (let i = 0; i < a.length; i++) {
+        if (i === row || current[i][column].n === 0n) continue;
+        const factor = neg(current[i][column]);
+        current[i] = current[i].map((v, j) => add(v, mul(factor, current[row][j])));
+        transform[i] = transform[i].map((v, j) => add(v, mul(factor, transform[row][j])));
+        record({ kind: "add", row: i, source: row, factor: number(factor), factorExact: literal(factor) });
+      }
+      pivots.push(column); row++;
+    }
+    return { current, transform, steps, pivots, determinant: a.length === columns ? (row === columns ? determinant : Z()) : null };
+  }
+  function rowReduction({ input, coefficientColumns, selectedStep } = {}) {
+    const a = matrix(input, 12), n = coefficientColumns ?? a[0].length;
+    if (!Number.isInteger(n) || n < 1 || n > 6 || n > a[0].length) throw Error("Coefficient columns must be 1..6 within matrix");
+    const r = reduce(a, n), free = Array.from({ length: n }, (_, j) => j).filter(j => !r.pivots.includes(j));
+    const kernel = free.map(column => { const v = Array.from({ length: n }, Z); v[column] = O(); r.pivots.forEach((pivot, i) => { v[pivot] = neg(r.current[i][column]); }); return v; });
+    const solutions = Array.from({ length: a[0].length - n }, (_, k) => {
+      const rhs = n + k, consistent = !r.current.some(line => line.slice(0, n).every(v => v.n === 0n) && line[rhs].n !== 0n);
+      const p = Array.from({ length: n }, Z); if (consistent) r.pivots.forEach((pivot, i) => { p[pivot] = r.current[i][rhs]; });
+      return { rhsColumn: rhs, consistent, particular: consistent ? p.map(number) : null, particularExact: consistent ? p.map(literal) : null };
+    });
+    const requested = selectedStep ?? r.steps.length - 1;
+    if (!Number.isInteger(requested) || requested < 0 || requested > 64) throw Error("Selected row step must be integer 0..64");
+    const index = Math.min(requested, r.steps.length - 1);
+    return { input: numeric(a), inputExact: exact(a), coefficientColumns: n, steps: r.steps, lastStep: r.steps.length - 1,
+      selectedStep: index, selectionClamped: index !== requested, current: r.steps[index].values, currentExact: r.steps[index].exact,
+      operation: r.steps[index].operation, final: numeric(r.current), finalExact: exact(r.current), transform: numeric(r.transform), transformExact: exact(r.transform),
+      pivotColumns: r.pivots, freeColumns: free, rank: r.pivots.length, nullity: n - r.pivots.length,
+      kernelBasis: numeric(kernel), kernelBasisExact: exact(kernel),
+      imageBasis: r.pivots.map(column => a.map(row => number(row[column]))),
+      imageBasisExact: r.pivots.map(column => a.map(row => literal(row[column]))), solutions,
+      determinant: r.determinant ? number(r.determinant) : null, determinantExact: r.determinant ? literal(r.determinant) : null,
+      convention: "Exact rational Gauss-Jordan; decimal inputs are interpreted as written rationals. Coefficient rank excludes RHS; displayed numeric values approximate exact strings. Finite examples do not prove statements over arbitrary fields." };
+  }
+  function inverse(a) {
+    if (a.length !== a[0].length) throw Error("Square basis matrix required");
+    const r = reduce(a);
+    if (r.pivots.length !== a.length) throw Error("Basis/change matrix must be invertible");
+    return r.transform;
+  }
+  function changeBasis({ sourceBasis, targetBasis, vector, operator } = {}) {
+    const b = matrix(sourceBasis), c = matrix(targetBasis), n = b.length;
+    if (b[0].length !== n || c.length !== n || c[0].length !== n || !Array.isArray(vector) || vector.length !== n) throw Error("Basis/vector dimensions differ");
+    const bi = inverse(b), ci = inverse(c), x = vector.map(v => [rational(v)]), transition = product(ci, b);
+    const old = product(bi, x), next = product(ci, x);
+    let op = null;
+    if (operator !== undefined) { const a = matrix(operator); if (a.length !== n || a[0].length !== n) throw Error("Operator dimension mismatch"); op = { source: numeric(product(product(bi, a), b)), target: numeric(product(product(ci, a), c)), sourceExact: exact(product(product(bi, a), b)), targetExact: exact(product(product(ci, a), c)) }; }
+    return { vector: numeric(x).map(row => row[0]), sourceBasis: numeric(b), targetBasis: numeric(c),
+      sourceCoordinates: numeric(old).map(row => row[0]), targetCoordinates: numeric(next).map(row => row[0]),
+      sourceCoordinatesExact: exact(old).map(row => row[0]), targetCoordinatesExact: exact(next).map(row => row[0]),
+      transition: numeric(transition), transitionExact: exact(transition), inverseTransition: numeric(product(bi, c)), operator: op,
+      convention: "Basis vectors are columns; x=B[x]_B=C[x]_C and [x]_C=C^-1 B[x]_B. Optional operator is supplied in standard coordinates, transformed by similarity." };
+  }
+  function trim(p) { while (p.length > 1 && p.at(-1).n === 0n) p.pop(); return p; }
+  function polynomial(input) { if (!Array.isArray(input) || input.length < 1 || input.length > 13) throw Error("Use 1..13 ascending polynomial coefficients"); return trim(input.map(rational)); }
+  const zeroPoly = p => p.length === 1 && p[0].n === 0n;
+  function polyAdd(a, b, minus = false) { return trim(Array.from({ length: Math.max(a.length, b.length) }, (_, i) => minus ? sub(a[i] ?? Z(), b[i] ?? Z()) : add(a[i] ?? Z(), b[i] ?? Z()))); }
+  function polyMul(a, b) { const r = Array.from({ length: a.length + b.length - 1 }, Z); a.forEach((v, i) => b.forEach((w, j) => { r[i + j] = add(r[i + j], mul(v, w)); })); return trim(r); }
+  function division(a, b) {
+    if (zeroPoly(b)) throw Error("Cannot divide by zero polynomial");
+    let remainder = a.slice(); const quotient = Array.from({ length: Math.max(1, a.length - b.length + 1) }, Z), steps = [];
+    while (!zeroPoly(remainder) && remainder.length >= b.length) {
+      const power = remainder.length - b.length, factor = div(remainder.at(-1), b.at(-1));
+      quotient[power] = add(quotient[power], factor);
+      const term = [...Array.from({ length: power }, Z), factor];
+      remainder = polyAdd(remainder, polyMul(term, b), true);
+      steps.push({ power, factor: number(factor), factorExact: literal(factor), quotient: quotient.map(number), quotientExact: quotient.map(literal), remainder: remainder.map(number), remainderExact: remainder.map(literal) });
+    }
+    return { quotient: trim(quotient), remainder, steps };
+  }
+  function polynomialDivide({ dividend, divisor } = {}) {
+    const a = polynomial(dividend), b = polynomial(divisor), r = division(a, b);
+    return { dividend: a.map(number), divisor: b.map(number), quotient: r.quotient.map(number), remainder: r.remainder.map(number),
+      dividendExact: a.map(literal), divisorExact: b.map(literal), quotientExact: r.quotient.map(literal), remainderExact: r.remainder.map(literal), steps: r.steps,
+      convention: "Exact rational coefficients in ascending power order; f=qg+r with deg r<deg g or r=0. Not numerical root finding." };
+  }
+  function polynomialGcd({ a, b } = {}) {
+    const first = polynomial(a), second = polynomial(b);
+    if (zeroPoly(first) && zeroPoly(second)) throw Error("Both-zero gcd has no monic normalization");
+    let left = first, right = second, u = [O()], v = [Z()], uu = [Z()], vv = [O()]; const steps = [];
+    while (!zeroPoly(right)) {
+      const r = division(left, right); steps.push({ dividend: left.map(number), divisor: right.map(number), quotient: r.quotient.map(number), remainder: r.remainder.map(number) });
+      [left, right] = [right, r.remainder]; [u, uu] = [uu, polyAdd(u, polyMul(r.quotient, uu), true)]; [v, vv] = [vv, polyAdd(v, polyMul(r.quotient, vv), true)];
+    }
+    const scale = div(O(), left.at(-1)); left = left.map(x => mul(x, scale)); u = u.map(x => mul(x, scale)); v = v.map(x => mul(x, scale));
+    return { a: first.map(number), b: second.map(number), gcd: left.map(number), gcdExact: left.map(literal),
+      bezoutA: u.map(number), bezoutB: v.map(number), bezoutAExact: u.map(literal), bezoutBExact: v.map(literal), steps,
+      convention: "Monic gcd over Q; exact Bezout identity u*a+v*b=gcd. Rational examples do not establish irreducibility over another field." };
+  }
+  function modularTable({ modulus = 5, operation = "multiply" } = {}) {
+    if (!Number.isInteger(modulus) || modulus < 2 || modulus > 12 || !["add", "multiply"].includes(operation)) throw Error("Residue ring modulus 2..12, add/multiply");
+    const values = Array.from({ length: modulus }, (_, i) => i), prime = values.slice(2).every(v => modulus % v !== 0);
+    const data = values.map(a => values.map(b => (operation === "add" ? a + b : a * b) % modulus));
+    const units = values.filter(a => values.some(b => a * b % modulus === 1));
+    const zeroDivisors = values.slice(1).filter(a => values.slice(1).some(b => a * b % modulus === 0));
+    return { modulus, operation, data, labels: values.map(String), units, zeroDivisors, isField: prime,
+      classification: prime ? "域" : "有零因子的环", zeroDivisorCount: zeroDivisors.length,
+      convention: "Z/nZ with residue representatives 0..n-1; it is a field precisely for prime n. A zero product counts as a zero divisor only when both factors are nonzero." };
+  }
+  function jordanProfile({ input } = {}) {
+    const a = matrix(input), n = a.length;
+    if (a[0].length !== n) throw Error("Square nilpotent matrix required");
+    let power = identity(n); const ranks = [n], nullities = [0], powers = [numeric(power)];
+    for (let k = 1; k <= n; k++) { power = product(power, a); const r = reduce(power); ranks.push(r.pivots.length); nullities.push(n - r.pivots.length); powers.push(numeric(power)); }
+    if (ranks.at(-1) !== 0) throw Error("Input is not nilpotent; subtract a verified single eigenvalue first");
+    const atLeast = Array.from({ length: n }, (_, i) => nullities[i + 1] - nullities[i]);
+    const blockCounts = atLeast.map((count, i) => count - (atLeast[i + 1] ?? 0));
+    const blockSizes = blockCounts.flatMap((count, i) => Array(count).fill(i + 1)).reverse();
+    return { input: numeric(a), powers, ranks, nullities, atLeast, blockCounts, blockSizes, nilpotencyIndex: ranks.findIndex((rank, i) => i > 0 && rank === 0),
+      convention: "Exact nilpotent profile over Q. dim ker N^k increments count blocks of size>=k; second differences count exact sizes. Does not construct a Jordan basis or assert arbitrary matrices are nilpotent." };
+  }
+  function bilinearChange({ input, basis, point } = {}) {
+    const a = matrix(input), b = matrix(basis), n = a.length;
+    if (a[0].length !== n || b.length !== n || b[0].length !== n) throw Error("Bilinear/basis dimensions differ");
+    inverse(b); const c = product(product(transpose(b), a), b), rank = reduce(a).pivots.length;
+    const symmetric = a.every((row, i) => row.every((v, j) => sub(v, a[j][i]).n === 0n));
+    let values = null;
+    if (point !== undefined) {
+      if (!Array.isArray(point) || point.length !== n) throw Error("Point is coordinates in the new basis");
+      const y = point.map(v => [rational(v)]), x = product(b, y), first = product(product(transpose(x), a), x)[0][0], second = product(product(transpose(y), c), y)[0][0];
+      values = { oldPoint: numeric(x).map(row => row[0]), newPoint: numeric(y).map(row => row[0]), oldValue: number(first), newValue: number(second), oldValueExact: literal(first), newValueExact: literal(second) };
+    }
+    return { input: numeric(a), basis: numeric(b), transformed: numeric(c), transformedExact: exact(c), rank, transformedRank: reduce(c).pivots.length,
+      symmetric, values, transformedField: n === 2 && symmetric ? { type: "quadratic", matrix: numeric(c).map(row => row.map(v => 2 * v)), center: [0, 0], constant: 0 } : null, field: n === 2 && symmetric ? { type: "quadratic", matrix: numeric(a).map(row => row.map(v => 2 * v)), center: [0, 0], constant: 0 } : null,
+      convention: "Bilinear congruence C=B^T A B, columns of B are the new basis; x=By. For symmetric 2D A the optional level-set field uses 2A because scalar-field internally has factor 1/2. Congruence is not similarity." };
+  }
+  function determinantExpansion({ input, axis = "row", index = 0 } = {}) {
+    const a = matrix(input), n = a.length;
+    if(a[0].length!==n || !["row","column"].includes(axis) || !Number.isInteger(index) || index<0 || index>=n)throw Error("Square matrix and valid row/column index required");
+    const terms=Array.from({length:n},(_,k)=>{
+      const row=axis==="row"?index:k,column=axis==="row"?k:index;
+      const minor=a.filter((_,i)=>i!==row).map(line=>line.filter((_,j)=>j!==column));
+      const minorDet=n===1?O():reduce(minor).determinant,sign=(row+column)%2?-1:1,cofactor=sign<0?neg(minorDet):minorDet,term=mul(a[row][column],cofactor);
+      return {row,column,sign,entry:number(a[row][column]),entryExact:literal(a[row][column]),minor:n===1?[]:numeric(minor),minorExact:n===1?[]:exact(minor),minorDeterminant:number(minorDet),minorDeterminantExact:literal(minorDet),cofactor:number(cofactor),cofactorExact:literal(cofactor),value:number(term),valueExact:literal(term)};
+    });
+    const value=terms.reduce((sum,t)=>add(sum,rational(t.valueExact)),Z());
+    return {input:numeric(a),inputExact:exact(a),axis,index,terms,cofactors:terms.map(t=>t.cofactor),cofactorsExact:terms.map(t=>t.cofactorExact),values:terms.map(t=>t.value),valuesExact:terms.map(t=>t.valueExact),determinant:number(value),determinantExact:literal(value),convention:"Exact cofactor expansion over Q, along the selected row or column. The empty 0×0 minor has determinant 1. Not a large-matrix performance claim."};
+  }
+  function dualBasis({ basis, vector } = {}) {
+    const b=matrix(basis),n=b.length,dual=inverse(b);
+    let evaluations=null,evaluationsExact=null;
+    if(vector!==undefined) {if(!Array.isArray(vector)||vector.length!==n)throw Error("Dual vector dimension mismatch");const r=product(dual,vector.map(x=>[rational(x)]));evaluations=r.map(row=>number(row[0]));evaluationsExact=r.map(row=>literal(row[0]));}
+    const rows=numeric(dual);
+    return {basis:numeric(b),basisExact:exact(b),dualRows:rows,dualRowsExact:exact(dual),evaluations,evaluationsExact,
+      kernelDirections:n===2?rows.map(row=>[row[1],-row[0]]):null,coordinateScales:n===2?rows.map(row=>Math.hypot(...row)):null,
+      pairing:numeric(product(dual,b)),pairingExact:exact(product(dual,b)),convention:"Basis vectors are columns; dual covectors are ROWS of B^-1, so phi_i(b_j)=delta_ij. Evaluations are coordinates of the physical vector. Contour directions/scales use a real 2D Euclidean display only."};
+  }
+  function symmetricInertia({ input } = {}) {
+    let a=matrix(input);const n=a.length;
+    if(a[0].length!==n || a.some((row,i)=>row.some((v,j)=>sub(v,a[j][i]).n!==0n)))throw Error("Exact symmetric square matrix required");
+    const original=copy(a);let basis=identity(n);const steps=[];
+    const change=(t,operation)=>{a=product(product(transpose(t),a),t);basis=product(basis,t);steps.push({operation,matrix:numeric(a),matrixExact:exact(a),basis:numeric(basis),basisExact:exact(basis)});};
+    for(let k=0;k<n;k++) {
+      let pivot=a.findIndex((row,i)=>i>=k&&row[i].n!==0n);
+      if(pivot<0) {
+        let pair=null;for(let i=k;i<n&&!pair;i++)for(let j=i+1;j<n;j++)if(a[i][j].n!==0n){pair=[i,j];break;}
+        if(!pair)break;
+        if(pair[0]!==k) {const t=identity(n);[t[k],t[pair[0]]]=[t[pair[0]],t[k]];change(t,{kind:"swap",a:k,b:pair[0]});}
+        const t=identity(n);t[pair[1]][k]=O();change(t,{kind:"create-diagonal",from:pair[1],to:k});pivot=k;
+      }
+      if(pivot!==k) {const t=identity(n);[t[k],t[pivot]]=[t[pivot],t[k]];change(t,{kind:"swap",a:k,b:pivot});}
+      const t=identity(n);let changed=false;
+      for(let j=k+1;j<n;j++)if(a[k][j].n!==0n){t[k][j]=neg(div(a[k][j],a[k][k]));changed=true;}
+      if(changed)change(t,{kind:"eliminate-paired-row-column",pivot:k});
+    }
+    const diagonal=a.map((row,i)=>row[i]),positive=diagonal.filter(x=>x.n>0n).length,negative=diagonal.filter(x=>x.n<0n).length,zero=n-positive-negative;
+    return {input:numeric(original),inputExact:exact(original),diagonal:diagonal.map(number),diagonalExact:diagonal.map(literal),diagonalMatrix:numeric(a),diagonalMatrixExact:exact(a),basis:numeric(basis),basisExact:exact(basis),steps,positive,negative,zero,rank:positive+negative,positiveDefinite:positive===n,negativeDefinite:negative===n,positiveSemidefinite:negative===0,negativeSemidefinite:positive===0,
+      convention:"Exact rational congruence B^T A B=D. Inertia counts positive/negative/zero terms over R; a zero diagonal can require mixing two coordinates before elimination. Over Q these counts do not classify all quadratic forms; over C signs have a different meaning. No irrational normalization to +/-1 is claimed."};
+  }
+  function coefficientLiterals(input) {
+    if(!Array.isArray(input)||input.length<1||input.length>13)throw Error("Use 1..13 polynomial coefficients");
+    const values=input.map(rational),last=values.findLastIndex(x=>x.n!==0n);
+    return {values:values.map(literal),degree:last<0?null:last};
+  }
+  const api = { rowReduction, changeBasis, polynomialDivide, polynomialGcd, modularTable, jordanProfile, bilinearChange, determinantExpansion, dualBasis, symmetricInertia, coefficientLiterals };
+  if (typeof module !== "undefined" && module.exports) module.exports = api;
+  global.VisualBookAlgebra = api;
+})(typeof window !== "undefined" ? window : globalThis);

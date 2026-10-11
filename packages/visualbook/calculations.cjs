@@ -44,7 +44,61 @@
     typeof module !== "undefined" && module.exports
       ? require("./reindex.cjs")
       : global.VisualBookReindex;
+  const A =
+    typeof module !== "undefined" && module.exports
+      ? require("./algebra.cjs")
+      : global.VisualBookAlgebra;
   const operations = {
+    "determinant-expansion": {
+      keys: ["input", "axis", "index"], required: ["input"],
+      outputs: ["input", "inputExact", "axis", "index", "terms", "cofactors", "cofactorsExact", "values", "valuesExact", "determinant", "determinantExact", "convention"],
+      run: A.determinantExpansion,
+    },
+    "dual-basis": {
+      keys: ["basis", "vector"], required: ["basis"],
+      outputs: ["basis", "basisExact", "dualRows", "dualRowsExact", "evaluations", "evaluationsExact", "kernelDirections", "coordinateScales", "pairing", "pairingExact", "convention"],
+      run: A.dualBasis,
+    },
+    "symmetric-inertia": {
+      keys: ["input"], required: ["input"],
+      outputs: ["input", "inputExact", "diagonal", "diagonalExact", "diagonalMatrix", "diagonalMatrixExact", "basis", "basisExact", "steps", "positive", "negative", "zero", "rank", "positiveDefinite", "negativeDefinite", "positiveSemidefinite", "negativeSemidefinite", "convention"],
+      run: A.symmetricInertia,
+    },
+    "exact-row-reduction": {
+      keys: ["input", "coefficientColumns", "selectedStep"], required: ["input"],
+      outputs: ["input", "inputExact", "coefficientColumns", "steps", "lastStep", "selectedStep", "selectionClamped", "current", "currentExact", "operation", "final", "finalExact", "transform", "transformExact", "pivotColumns", "freeColumns", "rank", "nullity", "kernelBasis", "kernelBasisExact", "imageBasis", "imageBasisExact", "solutions", "determinant", "determinantExact", "convention"],
+      run: A.rowReduction,
+    },
+    "change-basis": {
+      keys: ["sourceBasis", "targetBasis", "vector", "operator"], required: ["sourceBasis", "targetBasis", "vector"],
+      outputs: ["vector", "sourceBasis", "targetBasis", "sourceCoordinates", "targetCoordinates", "sourceCoordinatesExact", "targetCoordinatesExact", "transition", "transitionExact", "inverseTransition", "operator", "convention"],
+      run: A.changeBasis,
+    },
+    "polynomial-divide": {
+      keys: ["dividend", "divisor"], required: ["dividend", "divisor"],
+      outputs: ["dividend", "divisor", "quotient", "remainder", "dividendExact", "divisorExact", "quotientExact", "remainderExact", "steps", "convention"],
+      run: A.polynomialDivide,
+    },
+    "polynomial-gcd": {
+      keys: ["a", "b"], required: ["a", "b"],
+      outputs: ["a", "b", "gcd", "gcdExact", "bezoutA", "bezoutB", "bezoutAExact", "bezoutBExact", "steps", "convention"],
+      run: A.polynomialGcd,
+    },
+    "residue-table": {
+      keys: ["modulus", "operation"], required: [],
+      outputs: ["modulus", "operation", "data", "labels", "units", "zeroDivisors", "isField", "classification", "zeroDivisorCount", "convention"],
+      run: A.modularTable,
+    },
+    "nilpotent-profile": {
+      keys: ["input"], required: ["input"],
+      outputs: ["input", "powers", "ranks", "nullities", "atLeast", "blockCounts", "blockSizes", "nilpotencyIndex", "convention"],
+      run: A.jordanProfile,
+    },
+    "bilinear-congruence": {
+      keys: ["input", "basis", "point"], required: ["input", "basis"],
+      outputs: ["input", "basis", "transformed", "transformedExact", "rank", "transformedRank", "symmetric", "values", "field", "transformedField", "convention"],
+      run: A.bilinearChange,
+    },
     "matmul-batch-sweep": {
       keys: ["batch","inputDim","outputDim","bytesPerElement","computeTFLOPS","memoryGBPS","minBatch","maxBatch","samples"], required: [],
       outputs: ["batch","inputDim","outputDim","bytesPerElement","computeTFLOPS","memoryGBPS","minBatch","maxBatch","samples","selected","intensityCurve","weightOnlyCurve","crossoverLine","selectedPoint","xDomain","yDomain","criticalBatch","firstComputeBoundBatch","intensityCeiling","timesUs","convention"],

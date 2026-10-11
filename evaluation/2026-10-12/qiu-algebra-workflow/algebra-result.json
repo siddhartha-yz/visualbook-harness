@@ -1,0 +1,45 @@
+{
+  "seed": 20261012,
+  "sympyVersion": "1.14.0",
+  "cases": 361,
+  "counts": {
+    "exact-row-reduction": 36,
+    "change-basis": 24,
+    "polynomial-divide": 48,
+    "polynomial-gcd": 48,
+    "residue-table": 22,
+    "nilpotent-profile": 15,
+    "bilinear-congruence": 12,
+    "determinant-expansion": 48,
+    "dual-basis": 24,
+    "symmetric-inertia": 84
+  },
+  "passed": true,
+  "elapsedSeconds": 3.269,
+  "sourceSha256": "b4adad171aec3c29afea6feb1a96a704051d70d3f016a968a7f74bbce74c4179",
+  "scope": "Independent exact numeric comparison, not source accuracy, rendering or artistic review",
+  "libraryNodeTests": {
+    "passed": 142,
+    "failed": 0,
+    "scope": "Actual host execution of existing suite and twelve new algebra cases."
+  },
+  "renderChecks": {
+    "designs": 19,
+    "viewports": [
+      375,
+      1280,
+      1920
+    ],
+    "findings": 0,
+    "observedArtisticSamples": [
+      "desktop basis coordinates",
+      "desktop Jordan chains",
+      "mobile quotient cosets",
+      "desktop cofactor expansion",
+      "mobile dual coordinates",
+      "desktop quadratic congruence"
+    ],
+    "scope": "Actual control rendering and layout witnesses; six samples viewed by the maintainer AI, no teacher or human artistic certification."
+  },
+  "renderModuleSha256": "f2ac3bd4a203b70cab167cdc291948720bb752499641bd72bbfbd1f2994d4cf3"
+}

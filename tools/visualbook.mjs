@@ -115,7 +115,7 @@ export function resolvePlan(plan) {
       const { design: ignored, overrides: replaced, ...fields } = figure;
       return {
         ...base,
-        summary: design.limits,
+        summary: design.summary ?? design.limits,
         ...structuredClone(fields),
         designRef: {
           id: design.id,
