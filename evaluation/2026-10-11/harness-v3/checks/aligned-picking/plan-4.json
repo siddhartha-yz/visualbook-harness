@@ -1,0 +1,49 @@
+{
+  "figures": [
+    {
+      "id": "points",
+      "afterAnchor": "source-001",
+      "title": "相等数值仍可逐项选择",
+      "height": 300,
+      "mobileHeight": 300,
+      "interaction": "parameters",
+      "state": {
+        "item": 0
+      },
+      "scene": {
+        "type": "aligned-points",
+        "props": {
+          "rows": [
+            {
+              "label": "输入",
+              "values": [
+                0,
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              "label": "相等值",
+              "values": [
+                0,
+                0,
+                0,
+                0
+              ]
+            }
+          ],
+          "domain": [
+            -1,
+            4
+          ],
+          "statistics": false,
+          "stateKey": "item",
+          "selected": {
+            "$state": "item"
+          }
+        }
+      }
+    }
+  ]
+}

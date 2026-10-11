@@ -1,0 +1,363 @@
+{
+  "passed": true,
+  "browserVersion": "153.0",
+  "modelCalls": 0,
+  "scope": "Actual Firefox software pointer/Enter selection in one/three/four-item rows at375/1280; separate preview reports remain Chromium; intended aria-pressed identity across both rows, separate render checks. No physical touch/user/art guarantee; dense near-coincident groups remain a readability limit.",
+  "records": [
+    {
+      "n": 1,
+      "width": 375,
+      "i": 0,
+      "action": "mouse",
+      "selected": [
+        "hit-0-0",
+        "hit-1-0"
+      ],
+      "changesSelection": false
+    },
+    {
+      "n": 1,
+      "width": 375,
+      "i": 0,
+      "action": "Enter",
+      "selected": [
+        "hit-0-0",
+        "hit-1-0"
+      ],
+      "changesSelection": false
+    },
+    {
+      "n": 1,
+      "width": 1280,
+      "i": 0,
+      "action": "mouse",
+      "selected": [
+        "hit-0-0",
+        "hit-1-0"
+      ],
+      "changesSelection": false
+    },
+    {
+      "n": 1,
+      "width": 1280,
+      "i": 0,
+      "action": "Enter",
+      "selected": [
+        "hit-0-0",
+        "hit-1-0"
+      ],
+      "changesSelection": false
+    },
+    {
+      "n": 3,
+      "width": 375,
+      "i": 0,
+      "action": "mouse",
+      "selected": [
+        "hit-0-0",
+        "hit-1-0"
+      ],
+      "changesSelection": false
+    },
+    {
+      "n": 3,
+      "width": 375,
+      "i": 0,
+      "action": "Enter",
+      "selected": [
+        "hit-0-0",
+        "hit-1-0"
+      ],
+      "changesSelection": false
+    },
+    {
+      "n": 3,
+      "width": 375,
+      "i": 1,
+      "action": "mouse",
+      "selected": [
+        "hit-0-1",
+        "hit-1-1"
+      ],
+      "changesSelection": true
+    },
+    {
+      "n": 3,
+      "width": 375,
+      "i": 1,
+      "action": "Enter",
+      "selected": [
+        "hit-0-1",
+        "hit-1-1"
+      ],
+      "changesSelection": true
+    },
+    {
+      "n": 3,
+      "width": 375,
+      "i": 2,
+      "action": "mouse",
+      "selected": [
+        "hit-0-2",
+        "hit-1-2"
+      ],
+      "changesSelection": true
+    },
+    {
+      "n": 3,
+      "width": 375,
+      "i": 2,
+      "action": "Enter",
+      "selected": [
+        "hit-0-2",
+        "hit-1-2"
+      ],
+      "changesSelection": true
+    },
+    {
+      "n": 3,
+      "width": 1280,
+      "i": 0,
+      "action": "mouse",
+      "selected": [
+        "hit-0-0",
+        "hit-1-0"
+      ],
+      "changesSelection": false
+    },
+    {
+      "n": 3,
+      "width": 1280,
+      "i": 0,
+      "action": "Enter",
+      "selected": [
+        "hit-0-0",
+        "hit-1-0"
+      ],
+      "changesSelection": false
+    },
+    {
+      "n": 3,
+      "width": 1280,
+      "i": 1,
+      "action": "mouse",
+      "selected": [
+        "hit-0-1",
+        "hit-1-1"
+      ],
+      "changesSelection": true
+    },
+    {
+      "n": 3,
+      "width": 1280,
+      "i": 1,
+      "action": "Enter",
+      "selected": [
+        "hit-0-1",
+        "hit-1-1"
+      ],
+      "changesSelection": true
+    },
+    {
+      "n": 3,
+      "width": 1280,
+      "i": 2,
+      "action": "mouse",
+      "selected": [
+        "hit-0-2",
+        "hit-1-2"
+      ],
+      "changesSelection": true
+    },
+    {
+      "n": 3,
+      "width": 1280,
+      "i": 2,
+      "action": "Enter",
+      "selected": [
+        "hit-0-2",
+        "hit-1-2"
+      ],
+      "changesSelection": true
+    },
+    {
+      "n": 4,
+      "width": 375,
+      "i": 0,
+      "action": "mouse",
+      "selected": [
+        "hit-0-0",
+        "hit-1-0"
+      ],
+      "changesSelection": false
+    },
+    {
+      "n": 4,
+      "width": 375,
+      "i": 0,
+      "action": "Enter",
+      "selected": [
+        "hit-0-0",
+        "hit-1-0"
+      ],
+      "changesSelection": false
+    },
+    {
+      "n": 4,
+      "width": 375,
+      "i": 1,
+      "action": "mouse",
+      "selected": [
+        "hit-0-1",
+        "hit-1-1"
+      ],
+      "changesSelection": true
+    },
+    {
+      "n": 4,
+      "width": 375,
+      "i": 1,
+      "action": "Enter",
+      "selected": [
+        "hit-0-1",
+        "hit-1-1"
+      ],
+      "changesSelection": true
+    },
+    {
+      "n": 4,
+      "width": 375,
+      "i": 2,
+      "action": "mouse",
+      "selected": [
+        "hit-0-2",
+        "hit-1-2"
+      ],
+      "changesSelection": true
+    },
+    {
+      "n": 4,
+      "width": 375,
+      "i": 2,
+      "action": "Enter",
+      "selected": [
+        "hit-0-2",
+        "hit-1-2"
+      ],
+      "changesSelection": true
+    },
+    {
+      "n": 4,
+      "width": 375,
+      "i": 3,
+      "action": "mouse",
+      "selected": [
+        "hit-0-3",
+        "hit-1-3"
+      ],
+      "changesSelection": true
+    },
+    {
+      "n": 4,
+      "width": 375,
+      "i": 3,
+      "action": "Enter",
+      "selected": [
+        "hit-0-3",
+        "hit-1-3"
+      ],
+      "changesSelection": true
+    },
+    {
+      "n": 4,
+      "width": 1280,
+      "i": 0,
+      "action": "mouse",
+      "selected": [
+        "hit-0-0",
+        "hit-1-0"
+      ],
+      "changesSelection": false
+    },
+    {
+      "n": 4,
+      "width": 1280,
+      "i": 0,
+      "action": "Enter",
+      "selected": [
+        "hit-0-0",
+        "hit-1-0"
+      ],
+      "changesSelection": false
+    },
+    {
+      "n": 4,
+      "width": 1280,
+      "i": 1,
+      "action": "mouse",
+      "selected": [
+        "hit-0-1",
+        "hit-1-1"
+      ],
+      "changesSelection": true
+    },
+    {
+      "n": 4,
+      "width": 1280,
+      "i": 1,
+      "action": "Enter",
+      "selected": [
+        "hit-0-1",
+        "hit-1-1"
+      ],
+      "changesSelection": true
+    },
+    {
+      "n": 4,
+      "width": 1280,
+      "i": 2,
+      "action": "mouse",
+      "selected": [
+        "hit-0-2",
+        "hit-1-2"
+      ],
+      "changesSelection": true
+    },
+    {
+      "n": 4,
+      "width": 1280,
+      "i": 2,
+      "action": "Enter",
+      "selected": [
+        "hit-0-2",
+        "hit-1-2"
+      ],
+      "changesSelection": true
+    },
+    {
+      "n": 4,
+      "width": 1280,
+      "i": 3,
+      "action": "mouse",
+      "selected": [
+        "hit-0-3",
+        "hit-1-3"
+      ],
+      "changesSelection": true
+    },
+    {
+      "n": 4,
+      "width": 1280,
+      "i": 3,
+      "action": "Enter",
+      "selected": [
+        "hit-0-3",
+        "hit-1-3"
+      ],
+      "changesSelection": true
+    }
+  ],
+  "actions": 32,
+  "changingSelections": 20,
+  "activationsOfAlreadySelectedItem": 12
+}

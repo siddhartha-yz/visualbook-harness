@@ -1,0 +1,12 @@
+{
+  "branch": "main",
+  "codeCommit": "76bdf737b4e4ecc7810a32d46a1064df8c942352",
+  "committedTreeFiles": 3748,
+  "committedTreeScanFindings": 0,
+  "fullMainHistoryScanFindings": 0,
+  "scanner": "Gitleaks 8.30.1",
+  "scope": "Exact git archive of committed main plus full reachable main history; ignored local dependencies, provider events and intermediate HTML/video are not publication targets; internal checkpoint refs excluded. Final evidence commit will be scanned separately.",
+  "mainCommits": 112,
+  "historyTextBytesScanned": 39991007,
+  "committedTreeBytesScanned": 39421426
+}

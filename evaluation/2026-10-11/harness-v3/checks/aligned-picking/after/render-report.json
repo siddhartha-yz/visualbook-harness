@@ -1,0 +1,561 @@
+{
+  "file": "/home/yang-zhi/文档/ChatGPT/concept2motion/work/harness-v3/duplicate-point-probe-02/book.html",
+  "sha256": "a097a398ed3326d058b14bbb392e2172cf24d53baee7402a84c3121b10c3dd4c",
+  "viewports": [
+    {
+      "width": 1280,
+      "math": {
+        "expected": 0,
+        "rendered": 0,
+        "annotationExpected": 0,
+        "annotationRendered": 0,
+        "errors": 0,
+        "raw": [],
+        "overflow": false
+      },
+      "sourceImages": [],
+      "shapes": [
+        {
+          "id": "points",
+          "interaction": "parameters",
+          "initialProgress": 0,
+          "interactiveTargets": 6,
+          "frames": [
+            {
+              "progress": 0,
+              "facts": {
+                "rows": [
+                  {
+                    "label": "输入",
+                    "values": [
+                      -1,
+                      0,
+                      1
+                    ],
+                    "mean": 0,
+                    "variance": 0.6666666666666666,
+                    "selectedValue": -1
+                  },
+                  {
+                    "label": "相等值",
+                    "values": [
+                      0,
+                      0,
+                      0
+                    ],
+                    "mean": 0,
+                    "variance": 0,
+                    "selectedValue": 0
+                  }
+                ],
+                "compact": false,
+                "itemLabels": null,
+                "domain": [
+                  -2,
+                  2
+                ],
+                "selected": 0,
+                "selectedValues": [
+                  -1,
+                  0
+                ],
+                "convention": "Rows share a numeric x scale and item identity, not necessarily physical units. v uses population denominator N. Connector lines match item index, not causation, time or a training path. Small vertical offsets distinguish duplicate values; y is not quantitative."
+              },
+              "error": null,
+              "outside": [],
+              "tiny": [],
+              "overlaps": [],
+              "invalidGeometry": [],
+              "svgHash": "2559e73c710b42ae9b6960f8431521a04a0c1ed786275dab35763090631436ee"
+            },
+            {
+              "progress": 0,
+              "facts": {
+                "rows": [
+                  {
+                    "label": "输入",
+                    "values": [
+                      -1,
+                      0,
+                      1
+                    ],
+                    "mean": 0,
+                    "variance": 0.6666666666666666,
+                    "selectedValue": -1
+                  },
+                  {
+                    "label": "相等值",
+                    "values": [
+                      0,
+                      0,
+                      0
+                    ],
+                    "mean": 0,
+                    "variance": 0,
+                    "selectedValue": 0
+                  }
+                ],
+                "compact": false,
+                "itemLabels": null,
+                "domain": [
+                  -2,
+                  2
+                ],
+                "selected": 0,
+                "selectedValues": [
+                  -1,
+                  0
+                ],
+                "convention": "Rows share a numeric x scale and item identity, not necessarily physical units. v uses population denominator N. Connector lines match item index, not causation, time or a training path. Small vertical offsets distinguish duplicate values; y is not quantitative."
+              },
+              "error": null,
+              "outside": [],
+              "tiny": [],
+              "overlaps": [],
+              "invalidGeometry": [],
+              "svgHash": "2559e73c710b42ae9b6960f8431521a04a0c1ed786275dab35763090631436ee"
+            },
+            {
+              "progress": 0,
+              "facts": {
+                "rows": [
+                  {
+                    "label": "输入",
+                    "values": [
+                      -1,
+                      0,
+                      1
+                    ],
+                    "mean": 0,
+                    "variance": 0.6666666666666666,
+                    "selectedValue": -1
+                  },
+                  {
+                    "label": "相等值",
+                    "values": [
+                      0,
+                      0,
+                      0
+                    ],
+                    "mean": 0,
+                    "variance": 0,
+                    "selectedValue": 0
+                  }
+                ],
+                "compact": false,
+                "itemLabels": null,
+                "domain": [
+                  -2,
+                  2
+                ],
+                "selected": 0,
+                "selectedValues": [
+                  -1,
+                  0
+                ],
+                "convention": "Rows share a numeric x scale and item identity, not necessarily physical units. v uses population denominator N. Connector lines match item index, not causation, time or a training path. Small vertical offsets distinguish duplicate values; y is not quantitative."
+              },
+              "error": null,
+              "outside": [],
+              "tiny": [],
+              "overlaps": [],
+              "invalidGeometry": [],
+              "svgHash": "2559e73c710b42ae9b6960f8431521a04a0c1ed786275dab35763090631436ee"
+            },
+            {
+              "progress": 0,
+              "facts": {
+                "rows": [
+                  {
+                    "label": "输入",
+                    "values": [
+                      -1,
+                      0,
+                      1
+                    ],
+                    "mean": 0,
+                    "variance": 0.6666666666666666,
+                    "selectedValue": -1
+                  },
+                  {
+                    "label": "相等值",
+                    "values": [
+                      0,
+                      0,
+                      0
+                    ],
+                    "mean": 0,
+                    "variance": 0,
+                    "selectedValue": 0
+                  }
+                ],
+                "compact": false,
+                "itemLabels": null,
+                "domain": [
+                  -2,
+                  2
+                ],
+                "selected": 0,
+                "selectedValues": [
+                  -1,
+                  0
+                ],
+                "convention": "Rows share a numeric x scale and item identity, not necessarily physical units. v uses population denominator N. Connector lines match item index, not causation, time or a training path. Small vertical offsets distinguish duplicate values; y is not quantitative."
+              },
+              "error": null,
+              "outside": [],
+              "tiny": [],
+              "overlaps": [],
+              "invalidGeometry": [],
+              "svgHash": "2559e73c710b42ae9b6960f8431521a04a0c1ed786275dab35763090631436ee"
+            },
+            {
+              "progress": 0,
+              "facts": {
+                "rows": [
+                  {
+                    "label": "输入",
+                    "values": [
+                      -1,
+                      0,
+                      1
+                    ],
+                    "mean": 0,
+                    "variance": 0.6666666666666666,
+                    "selectedValue": -1
+                  },
+                  {
+                    "label": "相等值",
+                    "values": [
+                      0,
+                      0,
+                      0
+                    ],
+                    "mean": 0,
+                    "variance": 0,
+                    "selectedValue": 0
+                  }
+                ],
+                "compact": false,
+                "itemLabels": null,
+                "domain": [
+                  -2,
+                  2
+                ],
+                "selected": 0,
+                "selectedValues": [
+                  -1,
+                  0
+                ],
+                "convention": "Rows share a numeric x scale and item identity, not necessarily physical units. v uses population denominator N. Connector lines match item index, not causation, time or a training path. Small vertical offsets distinguish duplicate values; y is not quantitative."
+              },
+              "error": null,
+              "outside": [],
+              "tiny": [],
+              "overlaps": [],
+              "invalidGeometry": [],
+              "svgHash": "2559e73c710b42ae9b6960f8431521a04a0c1ed786275dab35763090631436ee"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "width": 375,
+      "math": {
+        "expected": 0,
+        "rendered": 0,
+        "annotationExpected": 0,
+        "annotationRendered": 0,
+        "errors": 0,
+        "raw": [],
+        "overflow": false
+      },
+      "sourceImages": [],
+      "shapes": [
+        {
+          "id": "points",
+          "interaction": "parameters",
+          "initialProgress": 0,
+          "interactiveTargets": 6,
+          "frames": [
+            {
+              "progress": 0,
+              "facts": {
+                "rows": [
+                  {
+                    "label": "输入",
+                    "values": [
+                      -1,
+                      0,
+                      1
+                    ],
+                    "mean": 0,
+                    "variance": 0.6666666666666666,
+                    "selectedValue": -1
+                  },
+                  {
+                    "label": "相等值",
+                    "values": [
+                      0,
+                      0,
+                      0
+                    ],
+                    "mean": 0,
+                    "variance": 0,
+                    "selectedValue": 0
+                  }
+                ],
+                "compact": false,
+                "itemLabels": null,
+                "domain": [
+                  -2,
+                  2
+                ],
+                "selected": 0,
+                "selectedValues": [
+                  -1,
+                  0
+                ],
+                "convention": "Rows share a numeric x scale and item identity, not necessarily physical units. v uses population denominator N. Connector lines match item index, not causation, time or a training path. Small vertical offsets distinguish duplicate values; y is not quantitative."
+              },
+              "error": null,
+              "outside": [],
+              "tiny": [],
+              "overlaps": [],
+              "invalidGeometry": [],
+              "svgHash": "f146bb8a8ff451a954b7a07db4f90e0ef73e4a4f91f81a5ffd9a396861ba198b"
+            },
+            {
+              "progress": 0,
+              "facts": {
+                "rows": [
+                  {
+                    "label": "输入",
+                    "values": [
+                      -1,
+                      0,
+                      1
+                    ],
+                    "mean": 0,
+                    "variance": 0.6666666666666666,
+                    "selectedValue": -1
+                  },
+                  {
+                    "label": "相等值",
+                    "values": [
+                      0,
+                      0,
+                      0
+                    ],
+                    "mean": 0,
+                    "variance": 0,
+                    "selectedValue": 0
+                  }
+                ],
+                "compact": false,
+                "itemLabels": null,
+                "domain": [
+                  -2,
+                  2
+                ],
+                "selected": 0,
+                "selectedValues": [
+                  -1,
+                  0
+                ],
+                "convention": "Rows share a numeric x scale and item identity, not necessarily physical units. v uses population denominator N. Connector lines match item index, not causation, time or a training path. Small vertical offsets distinguish duplicate values; y is not quantitative."
+              },
+              "error": null,
+              "outside": [],
+              "tiny": [],
+              "overlaps": [],
+              "invalidGeometry": [],
+              "svgHash": "f146bb8a8ff451a954b7a07db4f90e0ef73e4a4f91f81a5ffd9a396861ba198b"
+            },
+            {
+              "progress": 0,
+              "facts": {
+                "rows": [
+                  {
+                    "label": "输入",
+                    "values": [
+                      -1,
+                      0,
+                      1
+                    ],
+                    "mean": 0,
+                    "variance": 0.6666666666666666,
+                    "selectedValue": -1
+                  },
+                  {
+                    "label": "相等值",
+                    "values": [
+                      0,
+                      0,
+                      0
+                    ],
+                    "mean": 0,
+                    "variance": 0,
+                    "selectedValue": 0
+                  }
+                ],
+                "compact": false,
+                "itemLabels": null,
+                "domain": [
+                  -2,
+                  2
+                ],
+                "selected": 0,
+                "selectedValues": [
+                  -1,
+                  0
+                ],
+                "convention": "Rows share a numeric x scale and item identity, not necessarily physical units. v uses population denominator N. Connector lines match item index, not causation, time or a training path. Small vertical offsets distinguish duplicate values; y is not quantitative."
+              },
+              "error": null,
+              "outside": [],
+              "tiny": [],
+              "overlaps": [],
+              "invalidGeometry": [],
+              "svgHash": "f146bb8a8ff451a954b7a07db4f90e0ef73e4a4f91f81a5ffd9a396861ba198b"
+            },
+            {
+              "progress": 0,
+              "facts": {
+                "rows": [
+                  {
+                    "label": "输入",
+                    "values": [
+                      -1,
+                      0,
+                      1
+                    ],
+                    "mean": 0,
+                    "variance": 0.6666666666666666,
+                    "selectedValue": -1
+                  },
+                  {
+                    "label": "相等值",
+                    "values": [
+                      0,
+                      0,
+                      0
+                    ],
+                    "mean": 0,
+                    "variance": 0,
+                    "selectedValue": 0
+                  }
+                ],
+                "compact": false,
+                "itemLabels": null,
+                "domain": [
+                  -2,
+                  2
+                ],
+                "selected": 0,
+                "selectedValues": [
+                  -1,
+                  0
+                ],
+                "convention": "Rows share a numeric x scale and item identity, not necessarily physical units. v uses population denominator N. Connector lines match item index, not causation, time or a training path. Small vertical offsets distinguish duplicate values; y is not quantitative."
+              },
+              "error": null,
+              "outside": [],
+              "tiny": [],
+              "overlaps": [],
+              "invalidGeometry": [],
+              "svgHash": "f146bb8a8ff451a954b7a07db4f90e0ef73e4a4f91f81a5ffd9a396861ba198b"
+            },
+            {
+              "progress": 0,
+              "facts": {
+                "rows": [
+                  {
+                    "label": "输入",
+                    "values": [
+                      -1,
+                      0,
+                      1
+                    ],
+                    "mean": 0,
+                    "variance": 0.6666666666666666,
+                    "selectedValue": -1
+                  },
+                  {
+                    "label": "相等值",
+                    "values": [
+                      0,
+                      0,
+                      0
+                    ],
+                    "mean": 0,
+                    "variance": 0,
+                    "selectedValue": 0
+                  }
+                ],
+                "compact": false,
+                "itemLabels": null,
+                "domain": [
+                  -2,
+                  2
+                ],
+                "selected": 0,
+                "selectedValues": [
+                  -1,
+                  0
+                ],
+                "convention": "Rows share a numeric x scale and item identity, not necessarily physical units. v uses population denominator N. Connector lines match item index, not causation, time or a training path. Small vertical offsets distinguish duplicate values; y is not quantitative."
+              },
+              "error": null,
+              "outside": [],
+              "tiny": [],
+              "overlaps": [],
+              "invalidGeometry": [],
+              "svgHash": "f146bb8a8ff451a954b7a07db4f90e0ef73e4a4f91f81a5ffd9a396861ba198b"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "findings": [],
+  "screenshots": [
+    "/home/yang-zhi/文档/ChatGPT/concept2motion/work/harness-v3/duplicate-point-probe-02/preview/1280-points-0.png",
+    "/home/yang-zhi/文档/ChatGPT/concept2motion/work/harness-v3/duplicate-point-probe-02/preview/1280-points-context.png",
+    "/home/yang-zhi/文档/ChatGPT/concept2motion/work/harness-v3/duplicate-point-probe-02/preview/1280-points-0.5.png",
+    "/home/yang-zhi/文档/ChatGPT/concept2motion/work/harness-v3/duplicate-point-probe-02/preview/1280-points-1.png",
+    "/home/yang-zhi/文档/ChatGPT/concept2motion/work/harness-v3/duplicate-point-probe-02/preview/1280-page.png",
+    "/home/yang-zhi/文档/ChatGPT/concept2motion/work/harness-v3/duplicate-point-probe-02/preview/375-points-0.png",
+    "/home/yang-zhi/文档/ChatGPT/concept2motion/work/harness-v3/duplicate-point-probe-02/preview/375-points-context.png",
+    "/home/yang-zhi/文档/ChatGPT/concept2motion/work/harness-v3/duplicate-point-probe-02/preview/375-points-0.5.png",
+    "/home/yang-zhi/文档/ChatGPT/concept2motion/work/harness-v3/duplicate-point-probe-02/preview/375-points-1.png",
+    "/home/yang-zhi/文档/ChatGPT/concept2motion/work/harness-v3/duplicate-point-probe-02/preview/375-page.png"
+  ],
+  "status": "completed",
+  "parameterAudit": {
+    "cases": 4,
+    "scope": "Parameter extremes at progress 0.5 and 1, not exhaustive parameter combinations or artistic review."
+  },
+  "interactionAudit": {
+    "status": "completed",
+    "cases": 24,
+    "coverage": [
+      {
+        "width": 1280,
+        "id": "points",
+        "registered": 6,
+        "sampled": 6,
+        "limit": 16
+      },
+      {
+        "width": 375,
+        "id": "points",
+        "registered": 6,
+        "sampled": 6,
+        "limit": 16
+      }
+    ],
+    "scope": "Up to sixteen registered controls per figure: .vh-handle keyboard/pointer and .vh-selectable mouse/Enter, at two widths and first available default/0/0.5/1 pose. Not exhaustive states, custom controls, physical touch devices or artistic review."
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "title": "相等值仍保留项目身份",
+  "sourceSha256": "maintenance-control",
+  "blocks": [
+    {
+      "id": "source-001",
+      "type": "paragraph",
+      "raw": "同一批项目，一行变换成相等值。",
+      "html": "<p>同一批项目，一行变换成相等值。</p>",
+      "math": {
+        "expected": 0
+      }
+    }
+  ]
+}

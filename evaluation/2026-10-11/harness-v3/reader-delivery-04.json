@@ -1,0 +1,279 @@
+{
+  "kind": "Package already reviewed exported books/designs into a quiet local reading entry.\nNo authoring, source rewrites or model calls; every copied HTML is hash verified.\n",
+  "modelCalls": 0,
+  "chapters": 5,
+  "designs": 61,
+  "files": [
+    {
+      "path": "book/ndarray.html",
+      "sha256": "17de664786a442105d430c824e0485bbc6ec296500a4e0115e8465193ebba161"
+    },
+    {
+      "path": "book/probability.html",
+      "sha256": "b1a9ba85644e3f4e6b555bb5ac0aa633b5d8cc14080de81f7a0de25a60628492"
+    },
+    {
+      "path": "book/weight-decay.html",
+      "sha256": "9fcec069e7095417a6807a5ec8b153e165b0e68be503244a02180fd433058c29"
+    },
+    {
+      "path": "book/batch-norm.html",
+      "sha256": "23a6314365a20c52611ddbd305217cbdb12cec295ac66e7a17fb5c46f1dbeeeb"
+    },
+    {
+      "path": "book/adam.html",
+      "sha256": "ddd86ff4611d82d6fac9d11e1d3294abb3c5916466fd1494a94e3a8a4a038696"
+    },
+    {
+      "path": "designs/matrix-product.html",
+      "sha256": "b54b3c3c545012860b9025ff13d776b43b5fcb8924bc14403a20ede37bf5a98a"
+    },
+    {
+      "path": "designs/reshape.html",
+      "sha256": "6e9c5eedd62a318cff7ad9f1a8f89c892fd1b9176136768deea59c194226718b"
+    },
+    {
+      "path": "designs/data-flow.html",
+      "sha256": "39713c71acc90c845782d0f277bf4434d1085eeb651fa7af7dcfc02cd3082aff"
+    },
+    {
+      "path": "designs/optimizer.html",
+      "sha256": "eeea7e4c93dc84e6320d1ba01647203872211cbc0588957a3ecca0779d51a5f7"
+    },
+    {
+      "path": "designs/probabilities.html",
+      "sha256": "fce533ef65622e5fd1511810e09757372eaf1f62e39fd48e796015781bc29a3c"
+    },
+    {
+      "path": "designs/convolution.html",
+      "sha256": "9faf85bd1c519c5e16f3fd17f9f07da451f066f9f65cdab951937b6e76d667fa"
+    },
+    {
+      "path": "designs/projection.html",
+      "sha256": "fcb34fdf82439bfe80c0ea653f7c59b5d06d2d5f11dd8899c3f12124db214564"
+    },
+    {
+      "path": "designs/linear-transform.html",
+      "sha256": "cc5075d191fda7d11e3fe98703f95a34a04b3e8ee04d00786a6e27ee016a4072"
+    },
+    {
+      "path": "designs/derivative.html",
+      "sha256": "5c4b8538397fea00b778cd926958e87e201aaf1edc75bb7a1a6e36c32da7ddad"
+    },
+    {
+      "path": "designs/integral.html",
+      "sha256": "c2f717ba615810e9e3b62652213f33ec504f60756c1c3d8517a6df6abf980b92"
+    },
+    {
+      "path": "designs/unit-circle.html",
+      "sha256": "0e146ad329bfb3141d2b1db86533bac8218d687ae0fb17fe1f92717b557e3bbd"
+    },
+    {
+      "path": "designs/activation.html",
+      "sha256": "52b5117e91c776df738a247599d8be174681f920de55106e51352f2ccad82646"
+    },
+    {
+      "path": "designs/linked-plot.html",
+      "sha256": "87a1fb329776d5d9dc87a32ea583efcc8c5bb010e8898604d24550071ba497f2"
+    },
+    {
+      "path": "designs/autograd.html",
+      "sha256": "c2a3b86d4d85970bb3a0c28be1c23a1a001cd6dd630aa08d2d0bb4733b917255"
+    },
+    {
+      "path": "designs/dependency-graph.html",
+      "sha256": "7cbfb1a29582b9beb053f5402495d49b5048944f03037a63c0b7225a9ca275ef"
+    },
+    {
+      "path": "designs/normal-distribution.html",
+      "sha256": "f50c11684849bdaac0173929a055a99daad473e7754ba4c2edb0043cf72963e1"
+    },
+    {
+      "path": "designs/binomial-distribution.html",
+      "sha256": "504036aad49811c0af0ec80bbdd4802f922e21b6689ab61c9a46c596262eaaee"
+    },
+    {
+      "path": "designs/bayes-area.html",
+      "sha256": "96c8078e721c7425e3e27d2fa8fe10f97b7a46fcc8d932ef938f090340c11c09"
+    },
+    {
+      "path": "designs/histogram.html",
+      "sha256": "4d756f9521c677cfe9046ef740b028eaf784084ba4ec2495836801423b298f1e"
+    },
+    {
+      "path": "designs/regression-residuals.html",
+      "sha256": "ce23a5b315e38fc0cf92b18dad470ec0023d717ec5dd257921c2e0daa99ae0b9"
+    },
+    {
+      "path": "designs/regularized-loss.html",
+      "sha256": "df3178039f2167c268ee4c5fe192c29687fa96d9eeb905c63306a3fcf0680420"
+    },
+    {
+      "path": "designs/decision-boundary.html",
+      "sha256": "840b454b8913791b4c05229d358474fdde42a295f40f88bf3572a99c74b1bb89"
+    },
+    {
+      "path": "designs/pca-projection.html",
+      "sha256": "c8110022931319f14ad17705a6e5582672d15c47a35d696cecee002dcb47e169"
+    },
+    {
+      "path": "designs/matrix-selection.html",
+      "sha256": "a4f7266a135706ee86cf0adf18e3f775a808b01eeab717a96c69e40fc7a4f880"
+    },
+    {
+      "path": "designs/attention-compose.html",
+      "sha256": "34c9bca9fcf8f5f07a244e63f4260ed7a150a808921e41ee54f3e25375c10a62"
+    },
+    {
+      "path": "designs/normalization-axes.html",
+      "sha256": "28c814715a66487142411803f9ada2b76bd8df201014aa92ea32732ab1c59774"
+    },
+    {
+      "path": "designs/normalization-running.html",
+      "sha256": "060b5bdcbc064f351ca48e0e42f6bc54f6c4267f38e90b7b05457eac8e652572"
+    },
+    {
+      "path": "designs/dense-compose.html",
+      "sha256": "f57114d1bf7f4310183fffc2aba866ee13206055c72e56fa56f3ca40fca39b52"
+    },
+    {
+      "path": "designs/dropout-mask.html",
+      "sha256": "eca7db922ec20510227f40ae63aed16ba909702dc7cb390821e2f07df91bc9d2"
+    },
+    {
+      "path": "designs/pca-coordinates.html",
+      "sha256": "97849aa93ce116fa8c6131978360e9a6db73fba3e6caf4cd30c33d36c4626070"
+    },
+    {
+      "path": "designs/dense-backward.html",
+      "sha256": "1c7cfe62344bfb488722a11d0a15f94645f25ccf4a55ee67209b4f6ba78342f9"
+    },
+    {
+      "path": "designs/two-layer-gradient.html",
+      "sha256": "be8696fa1a807bbf338405932fa9869096cd08343fe926c55769e0c8c4fd75eb"
+    },
+    {
+      "path": "designs/array-strides.html",
+      "sha256": "00113084dd25d1e071a5f70198b3cd741c8455e8beeacafb4cbf69f41d195332"
+    },
+    {
+      "path": "designs/broadcast-axes.html",
+      "sha256": "d1fefc3c7d36022bc0ea799a4d198e07bfd4df449d34ca151c3e4750c06ac191"
+    },
+    {
+      "path": "designs/async-schedule.html",
+      "sha256": "99316c5faf259f4966d909b6fabb7ffdcceadf702d0312d41578bb62a01c2f1f"
+    },
+    {
+      "path": "designs/memory-alias.html",
+      "sha256": "f990d60c25830e983ab26eaef4d8f009c449c01afa7bd3bc30798f0ed1f31437"
+    },
+    {
+      "path": "designs/gradient-contributions.html",
+      "sha256": "b6ea45348d4c251dcb68d411cd011ab3c514f99940220bced87913de56b2bc5c"
+    },
+    {
+      "path": "designs/weighted-expectation.html",
+      "sha256": "8c6a479ca76b1f08bae0f98ae3538d20e81cfa2c619625bae19b5256527a736f"
+    },
+    {
+      "path": "designs/cache-lifetimes.html",
+      "sha256": "4fe0a5b56e382d3a6b6cd943ab20d10486735343e6c7a8539f34020c772915f3"
+    },
+    {
+      "path": "designs/receptive-field.html",
+      "sha256": "7a8cc7dad54e85adbe22364423da38f02623941b7bdd172e476235aed18d3371"
+    },
+    {
+      "path": "designs/dilation-holes.html",
+      "sha256": "6b93d5b1f1e58573b724335ce5a9f06f4fdd565917c5f5294e4b6b269b85ec1e"
+    },
+    {
+      "path": "designs/kernel-regression.html",
+      "sha256": "6c282f14c9958fe098f1c907d73f9cbaec62f6b1c608ccdd4b941085b31885bb"
+    },
+    {
+      "path": "designs/kernel-weight-composition.html",
+      "sha256": "46b97e96dbcc9373e9b2d989a12675ea2272c8ca47d2e5ee25b468ac5bd166ea"
+    },
+    {
+      "path": "designs/gradient-vectors.html",
+      "sha256": "f920f7ecc60c7f2f6447f1e01f336aa7a8037222dd5d4b83a28abfdc4ed3f02a"
+    },
+    {
+      "path": "designs/vector-addition.html",
+      "sha256": "d78da78dde4ba426b296a265b24dd993987bfabae519a2875784d1a21ac5ca8d"
+    },
+    {
+      "path": "designs/quadratic-contours.html",
+      "sha256": "eb6a9593c338a1bd0816445a7095c29cfd9d928030fdc226b92aa1c3765be222"
+    },
+    {
+      "path": "designs/rosenbrock-valley.html",
+      "sha256": "098b121ac6990c789f93fee878725a260198162283612d9bb01b433699f87962"
+    },
+    {
+      "path": "designs/saddle-contours.html",
+      "sha256": "685b02be450218cdf422baa2a0c3bdacb3a4c3a35487886423bfc54f8386090d"
+    },
+    {
+      "path": "designs/normalization-points.html",
+      "sha256": "7108d6ee4000c47f78dbb2e836f7472662479131119958e30b42e59ce4a29081"
+    },
+    {
+      "path": "designs/paired-points.html",
+      "sha256": "7e2bd81d35e62ff4bb25b770edbdd228d39246a47767f995f5e2daa415b5fac0"
+    },
+    {
+      "path": "designs/transpose-grid.html",
+      "sha256": "54ddca2f7478679cf5d2f6dc7d33ce944545613b0c3e7f89f51c125c34349324"
+    },
+    {
+      "path": "designs/neural-response.html",
+      "sha256": "948e1c9c8dbbeddccd5da261f851908a2cf1f9c55b3dff0b77cf60b4369d3be6"
+    },
+    {
+      "path": "designs/sigmoid-response.html",
+      "sha256": "f02d7fd34fad14ab378cd2048aeb4a15a92cf150af3f4d36eca613724b3ac1dd"
+    },
+    {
+      "path": "designs/sampled-field.html",
+      "sha256": "d7c66bacbd8430ee3e02d6200a3dec645154fb64ae21cff72f22a5bf904ed637"
+    },
+    {
+      "path": "designs/polynomial-fit.html",
+      "sha256": "38a84a455ccd421fd676986f40a92e3e52469ec1cd09049e51719ef2bb5e4b72"
+    },
+    {
+      "path": "designs/optimizer-landscape.html",
+      "sha256": "feb9d423862b16d73d7d5b9ed0b6c62b0ff98643b29e04501ee26835df3869e4"
+    },
+    {
+      "path": "designs/adam-bias.html",
+      "sha256": "8917feadf5ff4b2df1178b5925e10a929ba9e3ab8c473d72778b705998f9c33a"
+    },
+    {
+      "path": "designs/softmax-competition.html",
+      "sha256": "8748f1e05df869b1106976cf8a96150052d741e7530d451ddc2f4ab652aecc63"
+    },
+    {
+      "path": "designs/softmax-gradient-step.html",
+      "sha256": "3e539f0d867f55e90989f623da46f4fd7851b0edf04cec353b6e1d93d6be27ed"
+    },
+    {
+      "path": "designs/head-reindex.html",
+      "sha256": "445d703086ded93132eead054315fa3c2c0c56d1fba3192db2cfa0e9106d3c78"
+    },
+    {
+      "path": "designs/sparse-gradient-memory.html",
+      "sha256": "0ebdeb9c1c3992879967b9f16fd14e183ffed774d34d59947cc10544c3b47a9f"
+    }
+  ],
+  "offlineZipScope": "Exported textbook chapters, index and licenses only; design gallery stays separate",
+  "offlineZipSha256": "41a214d99d9e22e98e513488fe2774e5a07941b4ae4f854e7a5f22f0d5b6b437",
+  "localUrl": "http://127.0.0.1:8768/index.html",
+  "stages": "Five reviewed model chapters from multiple stages, unchanged original exported HTML. Not a same-version one-pass generated book.",
+  "figures": 13,
+  "outputDirectory": "outputs/visualbook/v3-04",
+  "zipBytes": 5948510
+}

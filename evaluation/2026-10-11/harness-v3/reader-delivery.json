@@ -26,254 +26,249 @@
     },
     {
       "path": "designs/matrix-product.html",
-      "sha256": "b54b3c3c545012860b9025ff13d776b43b5fcb8924bc14403a20ede37bf5a98a"
+      "sha256": "fdc355575d08ca494000f049536c0dd25fc747582cc5600af50e7c7c6f5a48f0"
     },
     {
       "path": "designs/reshape.html",
-      "sha256": "6e9c5eedd62a318cff7ad9f1a8f89c892fd1b9176136768deea59c194226718b"
+      "sha256": "013145f344ba3b6301f7e7fc07a6c1dcad34d7bd05dee628758966e99b3c45f5"
     },
     {
       "path": "designs/data-flow.html",
-      "sha256": "39713c71acc90c845782d0f277bf4434d1085eeb651fa7af7dcfc02cd3082aff"
+      "sha256": "4f55ddecace9929ef092649ba1d478a811e1d17f6f57187e9af96d8ae705139b"
     },
     {
       "path": "designs/optimizer.html",
-      "sha256": "eeea7e4c93dc84e6320d1ba01647203872211cbc0588957a3ecca0779d51a5f7"
+      "sha256": "8ab0d7370897af1966e6e84dea5231dd648e3e25546de8c948f46cf8ec102dfd"
     },
     {
       "path": "designs/probabilities.html",
-      "sha256": "fce533ef65622e5fd1511810e09757372eaf1f62e39fd48e796015781bc29a3c"
+      "sha256": "54d42bff760bfd74e7fff4177a855d77508a13e5ad70423a91f6527c99a4c6ec"
     },
     {
       "path": "designs/convolution.html",
-      "sha256": "9faf85bd1c519c5e16f3fd17f9f07da451f066f9f65cdab951937b6e76d667fa"
+      "sha256": "5f703f0130ee801efebb04903d3de3d22f0595f09eb029d68776c486ef733a6c"
     },
     {
       "path": "designs/projection.html",
-      "sha256": "fcb34fdf82439bfe80c0ea653f7c59b5d06d2d5f11dd8899c3f12124db214564"
+      "sha256": "32c9a804208a0117d7cd3b0a3a190e6783e79c184a4c9c7cc34e7bedb8b17b96"
     },
     {
       "path": "designs/linear-transform.html",
-      "sha256": "cc5075d191fda7d11e3fe98703f95a34a04b3e8ee04d00786a6e27ee016a4072"
+      "sha256": "65a5cde9a7b34b43b354d43acb45f30c7f6e8de00dfec9fab3ce6fbc8d2e93a2"
     },
     {
       "path": "designs/derivative.html",
-      "sha256": "5c4b8538397fea00b778cd926958e87e201aaf1edc75bb7a1a6e36c32da7ddad"
+      "sha256": "2800ba8844f814a2b9794b0f0d0693ae7977be89ceb303e58a44094524091f1e"
     },
     {
       "path": "designs/integral.html",
-      "sha256": "c2f717ba615810e9e3b62652213f33ec504f60756c1c3d8517a6df6abf980b92"
+      "sha256": "5238da3e21782e91f3b740b73383ba029eafc18e691212497f6c1be1ac489f7b"
     },
     {
       "path": "designs/unit-circle.html",
-      "sha256": "0e146ad329bfb3141d2b1db86533bac8218d687ae0fb17fe1f92717b557e3bbd"
+      "sha256": "b09742e2b6837e468961538f23644d2c1a449379ed7d1843ec2feef28fd28c4b"
     },
     {
       "path": "designs/activation.html",
-      "sha256": "52b5117e91c776df738a247599d8be174681f920de55106e51352f2ccad82646"
+      "sha256": "8f1d2b12418e5361360f2616e7ab41a01928f6716f1b241ffcf02045a1567193"
     },
     {
       "path": "designs/linked-plot.html",
-      "sha256": "87a1fb329776d5d9dc87a32ea583efcc8c5bb010e8898604d24550071ba497f2"
+      "sha256": "dc50a79b764cde2f5a37f566c79a6becc19335d37cf2946bd243885364cacb62"
     },
     {
       "path": "designs/autograd.html",
-      "sha256": "c2a3b86d4d85970bb3a0c28be1c23a1a001cd6dd630aa08d2d0bb4733b917255"
+      "sha256": "14438879f58cf11f0aae947c0c417a23468e5c8e4bc355c8f8d27da77d956ed2"
     },
     {
       "path": "designs/dependency-graph.html",
-      "sha256": "7cbfb1a29582b9beb053f5402495d49b5048944f03037a63c0b7225a9ca275ef"
+      "sha256": "bea5ff0c4492bd3f227344cf59a998105f1ae865a4a59fc5be76f436429542be"
     },
     {
       "path": "designs/normal-distribution.html",
-      "sha256": "f50c11684849bdaac0173929a055a99daad473e7754ba4c2edb0043cf72963e1"
+      "sha256": "66d2a187d18e6e64378b2af92014d38809e8731a81772aaebf9af79d67b8745c"
     },
     {
       "path": "designs/binomial-distribution.html",
-      "sha256": "504036aad49811c0af0ec80bbdd4802f922e21b6689ab61c9a46c596262eaaee"
+      "sha256": "87192ba5a41cabdd00d02f55d9ba59fbe0e08b225f152b56392d2846f2c0f138"
     },
     {
       "path": "designs/bayes-area.html",
-      "sha256": "96c8078e721c7425e3e27d2fa8fe10f97b7a46fcc8d932ef938f090340c11c09"
+      "sha256": "74b4bb1837d4714ed1b2b6a770db7d7963dc87a5d8b3b1d4233a579a528413fb"
     },
     {
       "path": "designs/histogram.html",
-      "sha256": "4d756f9521c677cfe9046ef740b028eaf784084ba4ec2495836801423b298f1e"
+      "sha256": "564c122ccd744a9bc51b9f70d0af04bd7b2a4070d119a4b8bf0bfb9c9f8adb78"
     },
     {
       "path": "designs/regression-residuals.html",
-      "sha256": "ce23a5b315e38fc0cf92b18dad470ec0023d717ec5dd257921c2e0daa99ae0b9"
+      "sha256": "5e620b5968de0b255aa988a0dc6928985796d9f4293ccc2a7c069aa08893b2fa"
     },
     {
       "path": "designs/regularized-loss.html",
-      "sha256": "df3178039f2167c268ee4c5fe192c29687fa96d9eeb905c63306a3fcf0680420"
+      "sha256": "6b978da088e06d88f649e697e4e5522518e4fd70e5a146bc7d951163b53bcc48"
     },
     {
       "path": "designs/decision-boundary.html",
-      "sha256": "840b454b8913791b4c05229d358474fdde42a295f40f88bf3572a99c74b1bb89"
+      "sha256": "93e21412f58fcb48540e8ad62b28955c343196232bd9e23c6f325431b765653d"
     },
     {
       "path": "designs/pca-projection.html",
-      "sha256": "c8110022931319f14ad17705a6e5582672d15c47a35d696cecee002dcb47e169"
+      "sha256": "92aa31106b6adcaa8fcc5a53c83c7c6c94688d9756d92f3237cb97b8e2ebb33d"
     },
     {
       "path": "designs/matrix-selection.html",
-      "sha256": "a4f7266a135706ee86cf0adf18e3f775a808b01eeab717a96c69e40fc7a4f880"
+      "sha256": "800ce9abd01952fd5ba670ab5e7b5c3a3884b9d6740fd629fc91579d8d2ce3bd"
     },
     {
       "path": "designs/attention-compose.html",
-      "sha256": "34c9bca9fcf8f5f07a244e63f4260ed7a150a808921e41ee54f3e25375c10a62"
+      "sha256": "22658eb62056dea88b80c98077846bdb8ee82c45059f4b02512c244bea332d3a"
     },
     {
       "path": "designs/normalization-axes.html",
-      "sha256": "28c814715a66487142411803f9ada2b76bd8df201014aa92ea32732ab1c59774"
+      "sha256": "5d5a509b806cd144ab949af855f81606d6f67f3047856ee9b7fe670ec3ea291f"
     },
     {
       "path": "designs/normalization-running.html",
-      "sha256": "060b5bdcbc064f351ca48e0e42f6bc54f6c4267f38e90b7b05457eac8e652572"
+      "sha256": "fc80086c297be67c74f1ae27568d34ca068c432f21a9303d65d1a85424049bec"
     },
     {
       "path": "designs/dense-compose.html",
-      "sha256": "f57114d1bf7f4310183fffc2aba866ee13206055c72e56fa56f3ca40fca39b52"
+      "sha256": "17c9f7e668726e4034de5bff02fbde4163bf8f990fdbc680b60d919ebbca37c1"
     },
     {
       "path": "designs/dropout-mask.html",
-      "sha256": "eca7db922ec20510227f40ae63aed16ba909702dc7cb390821e2f07df91bc9d2"
+      "sha256": "e0efc87059f8069dfa96983315a53db3a4ff696bd83ed0cb35f5d5fc769c978f"
     },
     {
       "path": "designs/pca-coordinates.html",
-      "sha256": "97849aa93ce116fa8c6131978360e9a6db73fba3e6caf4cd30c33d36c4626070"
+      "sha256": "bb7420169f7dcfb62bf585817836db65314d12a53d1d485a24faa48513e665f4"
     },
     {
       "path": "designs/dense-backward.html",
-      "sha256": "1c7cfe62344bfb488722a11d0a15f94645f25ccf4a55ee67209b4f6ba78342f9"
+      "sha256": "cc5b079ecbf07cfefdf669f1958c0beb6b9860ac57352008a9807d1272d07f4b"
     },
     {
       "path": "designs/two-layer-gradient.html",
-      "sha256": "be8696fa1a807bbf338405932fa9869096cd08343fe926c55769e0c8c4fd75eb"
+      "sha256": "97b09cd673a4cebabc6c678052741ff49a2009dfef3472299bf1a9b8b73a6acf"
     },
     {
       "path": "designs/array-strides.html",
-      "sha256": "00113084dd25d1e071a5f70198b3cd741c8455e8beeacafb4cbf69f41d195332"
+      "sha256": "fd92285fda7ea02fe3e808cd5151b394feea744e4b90f1e1831ebed00e9c137e"
     },
     {
       "path": "designs/broadcast-axes.html",
-      "sha256": "d1fefc3c7d36022bc0ea799a4d198e07bfd4df449d34ca151c3e4750c06ac191"
+      "sha256": "36bcf61e48b78c3075e47f4041bee898f1ce2af7e350939ded40d654654ae9fa"
     },
     {
       "path": "designs/async-schedule.html",
-      "sha256": "99316c5faf259f4966d909b6fabb7ffdcceadf702d0312d41578bb62a01c2f1f"
+      "sha256": "473c28f0b6f7a978cb069ea88d54e1a86f7d519ed84df30365a307ce32b6d31c"
     },
     {
       "path": "designs/memory-alias.html",
-      "sha256": "f990d60c25830e983ab26eaef4d8f009c449c01afa7bd3bc30798f0ed1f31437"
+      "sha256": "795c9f2d148c7c03107a64207edf67ded135b7fc10bba026698bd97a4a1d7b20"
     },
     {
       "path": "designs/gradient-contributions.html",
-      "sha256": "b6ea45348d4c251dcb68d411cd011ab3c514f99940220bced87913de56b2bc5c"
+      "sha256": "8631271deb7306daa64a684066bd2e21d2b15b9e311c58e5a1bcfa144dcd1b73"
     },
     {
       "path": "designs/weighted-expectation.html",
-      "sha256": "8c6a479ca76b1f08bae0f98ae3538d20e81cfa2c619625bae19b5256527a736f"
+      "sha256": "2f6716829c847cfcc39e96e4352d77c7ed1412231f1e19f522328b64cfb5d5af"
     },
     {
       "path": "designs/cache-lifetimes.html",
-      "sha256": "4fe0a5b56e382d3a6b6cd943ab20d10486735343e6c7a8539f34020c772915f3"
+      "sha256": "ddcaf7c4dcc19ccb093ee8574a56ae2a7cf1578253d025cd0db89497fbd8e019"
     },
     {
       "path": "designs/receptive-field.html",
-      "sha256": "7a8cc7dad54e85adbe22364423da38f02623941b7bdd172e476235aed18d3371"
+      "sha256": "8e013c7587120a0a471da5d5916d24a953287f13398b951b31e81557dbf29f14"
     },
     {
       "path": "designs/dilation-holes.html",
-      "sha256": "6b93d5b1f1e58573b724335ce5a9f06f4fdd565917c5f5294e4b6b269b85ec1e"
+      "sha256": "88e0470b18763b9c0f5140710ff60bcf8f39a2d3482f3df66cf10c0dcb94fc75"
     },
     {
       "path": "designs/kernel-regression.html",
-      "sha256": "6c282f14c9958fe098f1c907d73f9cbaec62f6b1c608ccdd4b941085b31885bb"
+      "sha256": "b554f330a2284225a48742bcf8623ce30288dd6dbe94726112a15d4de2ae576f"
     },
     {
       "path": "designs/kernel-weight-composition.html",
-      "sha256": "46b97e96dbcc9373e9b2d989a12675ea2272c8ca47d2e5ee25b468ac5bd166ea"
+      "sha256": "252848b9ea18141f327c3f4479b4cc76ebd202660fab62a3bad3e12ab533bc5d"
     },
     {
       "path": "designs/gradient-vectors.html",
-      "sha256": "f920f7ecc60c7f2f6447f1e01f336aa7a8037222dd5d4b83a28abfdc4ed3f02a"
+      "sha256": "eab100717b6640d94d6744021ce60dc4c5fcf2bace9da2b0c808521f73e8bd19"
     },
     {
       "path": "designs/vector-addition.html",
-      "sha256": "d78da78dde4ba426b296a265b24dd993987bfabae519a2875784d1a21ac5ca8d"
+      "sha256": "14d1e2f3d804afc23ef91b75c2dca8de2278381e8bc5b31232c7cb11086a94fa"
     },
     {
       "path": "designs/quadratic-contours.html",
-      "sha256": "eb6a9593c338a1bd0816445a7095c29cfd9d928030fdc226b92aa1c3765be222"
+      "sha256": "7766d79d79519c2930c2240605ed708c413348f4197b4d837789f3f99403405d"
     },
     {
       "path": "designs/rosenbrock-valley.html",
-      "sha256": "098b121ac6990c789f93fee878725a260198162283612d9bb01b433699f87962"
+      "sha256": "ba3f6ddb5adf5e56f964f09b410d2b2487421723236e00ff5d92159d28238b99"
     },
     {
       "path": "designs/saddle-contours.html",
-      "sha256": "685b02be450218cdf422baa2a0c3bdacb3a4c3a35487886423bfc54f8386090d"
+      "sha256": "71b05765d6c269abcca1972b1054349994d58a322b9bdd176603b29168722648"
     },
     {
       "path": "designs/normalization-points.html",
-      "sha256": "7108d6ee4000c47f78dbb2e836f7472662479131119958e30b42e59ce4a29081"
+      "sha256": "c895d56021ecb1a5daab1f292f144eaea8c3f048bb9ebed37e9f3d931f68d838"
     },
     {
       "path": "designs/paired-points.html",
-      "sha256": "7e2bd81d35e62ff4bb25b770edbdd228d39246a47767f995f5e2daa415b5fac0"
+      "sha256": "c848801c13abbbc0fdac99df6aa517780708b4db5dae3789f05e9948a37d9173"
     },
     {
       "path": "designs/transpose-grid.html",
-      "sha256": "54ddca2f7478679cf5d2f6dc7d33ce944545613b0c3e7f89f51c125c34349324"
+      "sha256": "6fc4e0ee69e56d55500503ca2c5f515c775ed644c53f9abc186667af07a6335c"
     },
     {
       "path": "designs/neural-response.html",
-      "sha256": "948e1c9c8dbbeddccd5da261f851908a2cf1f9c55b3dff0b77cf60b4369d3be6"
+      "sha256": "a91740b8e9b6452b6fdfb1ab2cdbdd7fc3917a3aad161c39ba54999480345f00"
     },
     {
       "path": "designs/sigmoid-response.html",
-      "sha256": "f02d7fd34fad14ab378cd2048aeb4a15a92cf150af3f4d36eca613724b3ac1dd"
+      "sha256": "aaa7bdd8f73c6f50f38725301aa0bceb73920682d2cca55b40ad9128529aab73"
     },
     {
       "path": "designs/sampled-field.html",
-      "sha256": "d7c66bacbd8430ee3e02d6200a3dec645154fb64ae21cff72f22a5bf904ed637"
+      "sha256": "80320bed47ed61df306ac294b61b7c5783dff4a856c4bf3c5d2a71dfe8cb0c77"
     },
     {
       "path": "designs/polynomial-fit.html",
-      "sha256": "38a84a455ccd421fd676986f40a92e3e52469ec1cd09049e51719ef2bb5e4b72"
+      "sha256": "792e3a2655487f727b334788d4f11dbafbe0784ceae9c7bd3de3b3e590eef776"
     },
     {
       "path": "designs/optimizer-landscape.html",
-      "sha256": "feb9d423862b16d73d7d5b9ed0b6c62b0ff98643b29e04501ee26835df3869e4"
+      "sha256": "d1b01855edb256778b2a067368c2adaa1bd346bfa3ec4ff33276f8702dabc101"
     },
     {
       "path": "designs/adam-bias.html",
-      "sha256": "8917feadf5ff4b2df1178b5925e10a929ba9e3ab8c473d72778b705998f9c33a"
+      "sha256": "70712d3dd0f7924db9b5c8f9c69e5b173a357b877678d0a53811efdacb616296"
     },
     {
       "path": "designs/softmax-competition.html",
-      "sha256": "8748f1e05df869b1106976cf8a96150052d741e7530d451ddc2f4ab652aecc63"
+      "sha256": "552be35d178367b8bd428a290f5da04555a91833e6c6b9e651fe535d39ed4b88"
     },
     {
       "path": "designs/softmax-gradient-step.html",
-      "sha256": "3e539f0d867f55e90989f623da46f4fd7851b0edf04cec353b6e1d93d6be27ed"
+      "sha256": "716540ca11aa67466cfd0f2baebc3e628d3c175dc694775ae196b0f045aafa88"
     },
     {
       "path": "designs/head-reindex.html",
-      "sha256": "445d703086ded93132eead054315fa3c2c0c56d1fba3192db2cfa0e9106d3c78"
+      "sha256": "f052d49b26711e3aa143ddc764d9a89249df6f91d2ca351b26047b355f232dd0"
     },
     {
       "path": "designs/sparse-gradient-memory.html",
-      "sha256": "0ebdeb9c1c3992879967b9f16fd14e183ffed774d34d59947cc10544c3b47a9f"
+      "sha256": "d36761e79483930afe458688c8d0d3c304b44168dc038a2ddfb4d7a8492110a9"
     }
   ],
   "offlineZipScope": "Exported textbook chapters, index and licenses only; design gallery stays separate",
-  "offlineZipSha256": "41a214d99d9e22e98e513488fe2774e5a07941b4ae4f854e7a5f22f0d5b6b437",
-  "localUrl": "http://127.0.0.1:8768/index.html",
-  "stages": "Five reviewed model chapters from multiple stages, unchanged original exported HTML. Not a same-version one-pass generated book.",
-  "figures": 13,
-  "outputDirectory": "outputs/visualbook/v3-04",
-  "zipBytes": 5948510
+  "offlineZipSha256": "41a214d99d9e22e98e513488fe2774e5a07941b4ae4f854e7a5f22f0d5b6b437"
 }

@@ -1,0 +1,18 @@
+[
+  {
+    "artifact": 11686968539,
+    "downloadExit": 0,
+    "source": "Immutable GitHub artifact ID; parallel read of later archives; no model calls",
+    "zipCRCPassed": true,
+    "sha256": "6df4b5923d231f65552b30e14540389fd8bcfca7bc6d0212e07fc31432e4e596",
+    "publishedToCache": true
+  },
+  {
+    "artifact": 11686884875,
+    "downloadExit": 0,
+    "source": "Immutable GitHub artifact ID; parallel read of later archives; no model calls",
+    "zipCRCPassed": true,
+    "sha256": "02c5549a6d9848b72f616f70220b79f887b746faf8a06cfe90cf43dbe0a77584",
+    "publishedToCache": true
+  }
+]

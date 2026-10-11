@@ -1,0 +1,16 @@
+{
+  "snapshotAtUTC": "2026-10-11T01:39:02.689272+00:00",
+  "elapsedSecondsAtSnapshot": 27311,
+  "sourceCommit": "76bdf737b4e4ecc7810a32d46a1064df8c942352",
+  "githubArtifacts": 31,
+  "githubRuns": 22,
+  "archivesDownloaded": 53,
+  "archiveDownloadFailures": 0,
+  "maxArchiveDepth": 3,
+  "gitleaksSurfaceExit": 0,
+  "surfaceBytesScanned": 1844716811,
+  "surfaceFindingCount": 0,
+  "pagesAPI": "404, not accessible",
+  "closingCommitScope": "Only docs/ and evaluation/; code/config/tests identical to successful source commit. Final exact committed tree and full main history will be scanned once more before push.",
+  "limits": "Scanner patterns and three archive levels only; not OCR/manual inspection of every image, and not proof that no unrecognized secret exists. Expired/deleted/inaccessible surfaces excluded."
+}

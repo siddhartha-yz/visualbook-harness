@@ -1,0 +1,28 @@
+{
+  "runId": 38100764258,
+  "url": "https://github.com/siddhartha-yz/visualbook-harness/actions/runs/38100764258",
+  "codeCommit": "76bdf737b4e4ecc7810a32d46a1064df8c942352",
+  "status": "completed",
+  "conclusion": "success",
+  "jobs": [
+    {
+      "name": "check",
+      "conclusion": "success",
+      "startedAt": "2026-10-11T01:07:33Z",
+      "completedAt": "2026-10-11T01:07:51Z"
+    },
+    {
+      "name": "scene-smoke",
+      "conclusion": "success",
+      "startedAt": "2026-10-11T01:07:33Z",
+      "completedAt": "2026-10-11T01:08:12Z"
+    },
+    {
+      "name": "visualbook",
+      "conclusion": "success",
+      "startedAt": "2026-10-11T01:07:34Z",
+      "completedAt": "2026-10-11T01:16:21Z"
+    }
+  ],
+  "note": "The later final evidence/report commit contains only docs/ and evaluation/ files. CI emitted expected rejection annotations for known bad scene controls; all jobs themselves completed successfully. Earlier missing-dependency run retained separately."
+}

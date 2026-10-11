@@ -1,0 +1,47 @@
+{
+  "figures": [
+    {
+      "id": "points",
+      "afterAnchor": "source-001",
+      "title": "保留重复值的身份",
+      "height": 300,
+      "mobileHeight": 300,
+      "interaction": "parameters",
+      "state": {
+        "item": 0
+      },
+      "scene": {
+        "type": "aligned-points",
+        "props": {
+          "rows": [
+            {
+              "label": "输入",
+              "values": [
+                -1,
+                0,
+                1
+              ]
+            },
+            {
+              "label": "相等值",
+              "values": [
+                0,
+                0,
+                0
+              ]
+            }
+          ],
+          "domain": [
+            -2,
+            2
+          ],
+          "statistics": false,
+          "stateKey": "item",
+          "selected": {
+            "$state": "item"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,619 @@
+{
+  "modelCalls": 0,
+  "scope": "All 61 maintenance designs after the disjoint nearest-item picking fix; finite Chromium poses, parameters, geometry and registered inputs. The earlier Firefox record predates this fix; no physical touch or artistic guarantee.",
+  "codeCommit": "76bdf737b4e4ecc7810a32d46a1064df8c942352",
+  "catalogSha256": "95da01d3e7332640d1cb8b0e3d64342e4e0936332df67e7c334eafa1d6ba9e20",
+  "designs": 61,
+  "records": [
+    {
+      "id": "matrix-product",
+      "rawSha256": "141e8ae698154cf60fe7e63517da9c929e93ad3ee165edffc48bdcef651a1ee4",
+      "exported": {
+        "file": "/home/yang-zhi/文档/ChatGPT/concept2motion/work/harness-v3/final-catalog-13/matrix-product.html",
+        "sha256": "fdc355575d08ca494000f049536c0dd25fc747582cc5600af50e7c7c6f5a48f0",
+        "previewSha256": "141e8ae698154cf60fe7e63517da9c929e93ad3ee165edffc48bdcef651a1ee4"
+      },
+      "findings": []
+    },
+    {
+      "id": "reshape",
+      "rawSha256": "926f39abd2a61c7116777aded524fdca4546aa8961ba04ace39aad658bfdd4c9",
+      "exported": {
+        "file": "/home/yang-zhi/文档/ChatGPT/concept2motion/work/harness-v3/final-catalog-13/reshape.html",
+        "sha256": "013145f344ba3b6301f7e7fc07a6c1dcad34d7bd05dee628758966e99b3c45f5",
+        "previewSha256": "926f39abd2a61c7116777aded524fdca4546aa8961ba04ace39aad658bfdd4c9"
+      },
+      "findings": []
+    },
+    {
+      "id": "data-flow",
+      "rawSha256": "d48c6fabc33c4bb79389f41b9370555d944a5ea6da9bd9f9d47dc44e1c1ecd6f",
+      "exported": {
+        "file": "/home/yang-zhi/文档/ChatGPT/concept2motion/work/harness-v3/final-catalog-13/data-flow.html",
+        "sha256": "4f55ddecace9929ef092649ba1d478a811e1d17f6f57187e9af96d8ae705139b",
+        "previewSha256": "d48c6fabc33c4bb79389f41b9370555d944a5ea6da9bd9f9d47dc44e1c1ecd6f"
+      },
+      "findings": []
+    },
+    {
+      "id": "optimizer",
+      "rawSha256": "d3cdb7bdd4a6d0434b152751841f30099faf7310848bbaa63474b68f9021b595",
+      "exported": {
+        "file": "/home/yang-zhi/文档/ChatGPT/concept2motion/work/harness-v3/final-catalog-13/optimizer.html",
+        "sha256": "8ab0d7370897af1966e6e84dea5231dd648e3e25546de8c948f46cf8ec102dfd",
+        "previewSha256": "d3cdb7bdd4a6d0434b152751841f30099faf7310848bbaa63474b68f9021b595"
+      },
+      "findings": []
+    },
+    {
+      "id": "probabilities",
+      "rawSha256": "c35204e743fe02b7e11b0c5c55962efd555522ba1acaeb2b97220309f9599a3f",
+      "exported": {
+        "file": "/home/yang-zhi/文档/ChatGPT/concept2motion/work/harness-v3/final-catalog-13/probabilities.html",
+        "sha256": "54d42bff760bfd74e7fff4177a855d77508a13e5ad70423a91f6527c99a4c6ec",
+        "previewSha256": "c35204e743fe02b7e11b0c5c55962efd555522ba1acaeb2b97220309f9599a3f"
+      },
+      "findings": []
+    },
+    {
+      "id": "convolution",
+      "rawSha256": "711e1317bcfc5cf5a20c4efa1c4260b51fab7a0c798729bb8e2740fb9a59d088",
+      "exported": {
+        "file": "/home/yang-zhi/文档/ChatGPT/concept2motion/work/harness-v3/final-catalog-13/convolution.html",
+        "sha256": "5f703f0130ee801efebb04903d3de3d22f0595f09eb029d68776c486ef733a6c",
+        "previewSha256": "711e1317bcfc5cf5a20c4efa1c4260b51fab7a0c798729bb8e2740fb9a59d088"
+      },
+      "findings": []
+    },
+    {
+      "id": "projection",
+      "rawSha256": "84b4d22450606f9b870a52982c0a2eb6666128c695cea9b4d9cd034ea060c0d5",
+      "exported": {
+        "file": "/home/yang-zhi/文档/ChatGPT/concept2motion/work/harness-v3/final-catalog-13/projection.html",
+        "sha256": "32c9a804208a0117d7cd3b0a3a190e6783e79c184a4c9c7cc34e7bedb8b17b96",
+        "previewSha256": "84b4d22450606f9b870a52982c0a2eb6666128c695cea9b4d9cd034ea060c0d5"
+      },
+      "findings": []
+    },
+    {
+      "id": "linear-transform",
+      "rawSha256": "d067872b713781e855c2e05035f9fecd724e52aa986dc5f7b46c17a5cfe9bf9b",
+      "exported": {
+        "file": "/home/yang-zhi/文档/ChatGPT/concept2motion/work/harness-v3/final-catalog-13/linear-transform.html",
+        "sha256": "65a5cde9a7b34b43b354d43acb45f30c7f6e8de00dfec9fab3ce6fbc8d2e93a2",
+        "previewSha256": "d067872b713781e855c2e05035f9fecd724e52aa986dc5f7b46c17a5cfe9bf9b"
+      },
+      "findings": []
+    },
+    {
+      "id": "derivative",
+      "rawSha256": "c0d3ba48523129e73a5e617d3ab78966bcf51b390be39b8ca11ef05edfa58419",
+      "exported": {
+        "file": "/home/yang-zhi/文档/ChatGPT/concept2motion/work/harness-v3/final-catalog-13/derivative.html",
+        "sha256": "2800ba8844f814a2b9794b0f0d0693ae7977be89ceb303e58a44094524091f1e",
+        "previewSha256": "c0d3ba48523129e73a5e617d3ab78966bcf51b390be39b8ca11ef05edfa58419"
+      },
+      "findings": []
+    },
+    {
+      "id": "integral",
+      "rawSha256": "85f5cece72e3ff03d461fb82a267023f3e0ad9df83e7cf455def9be7d0d68fab",
+      "exported": {
+        "file": "/home/yang-zhi/文档/ChatGPT/concept2motion/work/harness-v3/final-catalog-13/integral.html",
+        "sha256": "5238da3e21782e91f3b740b73383ba029eafc18e691212497f6c1be1ac489f7b",
+        "previewSha256": "85f5cece72e3ff03d461fb82a267023f3e0ad9df83e7cf455def9be7d0d68fab"
+      },
+      "findings": []
+    },
+    {
+      "id": "unit-circle",
+      "rawSha256": "ed763d86dfe832d8660a816f9d74fabc59ea8b92adafbc31b7f9a845662f09b8",
+      "exported": {
+        "file": "/home/yang-zhi/文档/ChatGPT/concept2motion/work/harness-v3/final-catalog-13/unit-circle.html",
+        "sha256": "b09742e2b6837e468961538f23644d2c1a449379ed7d1843ec2feef28fd28c4b",
+        "previewSha256": "ed763d86dfe832d8660a816f9d74fabc59ea8b92adafbc31b7f9a845662f09b8"
+      },
+      "findings": []
+    },
+    {
+      "id": "activation",
+      "rawSha256": "5d4f5a8fb0ad3fea05fb838b4e02e021bb88a7fd750f39fc5408aaffbfa93a38",
+      "exported": {
+        "file": "/home/yang-zhi/文档/ChatGPT/concept2motion/work/harness-v3/final-catalog-13/activation.html",
+        "sha256": "8f1d2b12418e5361360f2616e7ab41a01928f6716f1b241ffcf02045a1567193",
+        "previewSha256": "5d4f5a8fb0ad3fea05fb838b4e02e021bb88a7fd750f39fc5408aaffbfa93a38"
+      },
+      "findings": []
+    },
+    {
+      "id": "linked-plot",
+      "rawSha256": "4700fb60d6b8760e6d34b1c50a567714ec3330f2ba6caea92c3da445f575e2d6",
+      "exported": {
+        "file": "/home/yang-zhi/文档/ChatGPT/concept2motion/work/harness-v3/final-catalog-13/linked-plot.html",
+        "sha256": "dc50a79b764cde2f5a37f566c79a6becc19335d37cf2946bd243885364cacb62",
+        "previewSha256": "4700fb60d6b8760e6d34b1c50a567714ec3330f2ba6caea92c3da445f575e2d6"
+      },
+      "findings": []
+    },
+    {
+      "id": "autograd",
+      "rawSha256": "1362466d8d00e3a67f5eadbb968669213d8597f0753025647aa5fedc26eda6f3",
+      "exported": {
+        "file": "/home/yang-zhi/文档/ChatGPT/concept2motion/work/harness-v3/final-catalog-13/autograd.html",
+        "sha256": "14438879f58cf11f0aae947c0c417a23468e5c8e4bc355c8f8d27da77d956ed2",
+        "previewSha256": "1362466d8d00e3a67f5eadbb968669213d8597f0753025647aa5fedc26eda6f3"
+      },
+      "findings": []
+    },
+    {
+      "id": "dependency-graph",
+      "rawSha256": "a397ed52160f744fb84c82a8fa8d535633a7ca66d48164a73ab3093a824ae238",
+      "exported": {
+        "file": "/home/yang-zhi/文档/ChatGPT/concept2motion/work/harness-v3/final-catalog-13/dependency-graph.html",
+        "sha256": "bea5ff0c4492bd3f227344cf59a998105f1ae865a4a59fc5be76f436429542be",
+        "previewSha256": "a397ed52160f744fb84c82a8fa8d535633a7ca66d48164a73ab3093a824ae238"
+      },
+      "findings": []
+    },
+    {
+      "id": "normal-distribution",
+      "rawSha256": "dbd2885bc704093f96c8c93a4379f1c064ea076de2fbdd6020c158e788c2b235",
+      "exported": {
+        "file": "/home/yang-zhi/文档/ChatGPT/concept2motion/work/harness-v3/final-catalog-13/normal-distribution.html",
+        "sha256": "66d2a187d18e6e64378b2af92014d38809e8731a81772aaebf9af79d67b8745c",
+        "previewSha256": "dbd2885bc704093f96c8c93a4379f1c064ea076de2fbdd6020c158e788c2b235"
+      },
+      "findings": []
+    },
+    {
+      "id": "binomial-distribution",
+      "rawSha256": "17a2d4cc1800954c763512f678e3c6ac014fcd974f3e8637d5b929b39572d932",
+      "exported": {
+        "file": "/home/yang-zhi/文档/ChatGPT/concept2motion/work/harness-v3/final-catalog-13/binomial-distribution.html",
+        "sha256": "87192ba5a41cabdd00d02f55d9ba59fbe0e08b225f152b56392d2846f2c0f138",
+        "previewSha256": "17a2d4cc1800954c763512f678e3c6ac014fcd974f3e8637d5b929b39572d932"
+      },
+      "findings": []
+    },
+    {
+      "id": "bayes-area",
+      "rawSha256": "0342259825c8c19b8ecf43d30a4dd7f7f137daa70dcb84236200782955b8cd43",
+      "exported": {
+        "file": "/home/yang-zhi/文档/ChatGPT/concept2motion/work/harness-v3/final-catalog-13/bayes-area.html",
+        "sha256": "74b4bb1837d4714ed1b2b6a770db7d7963dc87a5d8b3b1d4233a579a528413fb",
+        "previewSha256": "0342259825c8c19b8ecf43d30a4dd7f7f137daa70dcb84236200782955b8cd43"
+      },
+      "findings": []
+    },
+    {
+      "id": "histogram",
+      "rawSha256": "45c0d6055f26c724019489a88e35f6887f58f0f863e2ce379f9e77da07dc2329",
+      "exported": {
+        "file": "/home/yang-zhi/文档/ChatGPT/concept2motion/work/harness-v3/final-catalog-13/histogram.html",
+        "sha256": "564c122ccd744a9bc51b9f70d0af04bd7b2a4070d119a4b8bf0bfb9c9f8adb78",
+        "previewSha256": "45c0d6055f26c724019489a88e35f6887f58f0f863e2ce379f9e77da07dc2329"
+      },
+      "findings": []
+    },
+    {
+      "id": "regression-residuals",
+      "rawSha256": "a6537db3cc1aefb144df0bd313856eab47ae2b4fd751edae48c6ef8f5a8a3d12",
+      "exported": {
+        "file": "/home/yang-zhi/文档/ChatGPT/concept2motion/work/harness-v3/final-catalog-13/regression-residuals.html",
+        "sha256": "5e620b5968de0b255aa988a0dc6928985796d9f4293ccc2a7c069aa08893b2fa",
+        "previewSha256": "a6537db3cc1aefb144df0bd313856eab47ae2b4fd751edae48c6ef8f5a8a3d12"
+      },
+      "findings": []
+    },
+    {
+      "id": "regularized-loss",
+      "rawSha256": "6bc3709642d6686e29a0c2723906188633882bca612e65570b384fec4cda8e94",
+      "exported": {
+        "file": "/home/yang-zhi/文档/ChatGPT/concept2motion/work/harness-v3/final-catalog-13/regularized-loss.html",
+        "sha256": "6b978da088e06d88f649e697e4e5522518e4fd70e5a146bc7d951163b53bcc48",
+        "previewSha256": "6bc3709642d6686e29a0c2723906188633882bca612e65570b384fec4cda8e94"
+      },
+      "findings": []
+    },
+    {
+      "id": "decision-boundary",
+      "rawSha256": "b48768ba0398a5e3d59b70b801c599abfac1d75609809f1bcd90288010e73133",
+      "exported": {
+        "file": "/home/yang-zhi/文档/ChatGPT/concept2motion/work/harness-v3/final-catalog-13/decision-boundary.html",
+        "sha256": "93e21412f58fcb48540e8ad62b28955c343196232bd9e23c6f325431b765653d",
+        "previewSha256": "b48768ba0398a5e3d59b70b801c599abfac1d75609809f1bcd90288010e73133"
+      },
+      "findings": []
+    },
+    {
+      "id": "pca-projection",
+      "rawSha256": "86c613c35ab03a11767fcfd8eb5d030b0285a0e315a3e1af0c38701f011a19aa",
+      "exported": {
+        "file": "/home/yang-zhi/文档/ChatGPT/concept2motion/work/harness-v3/final-catalog-13/pca-projection.html",
+        "sha256": "92aa31106b6adcaa8fcc5a53c83c7c6c94688d9756d92f3237cb97b8e2ebb33d",
+        "previewSha256": "86c613c35ab03a11767fcfd8eb5d030b0285a0e315a3e1af0c38701f011a19aa"
+      },
+      "findings": []
+    },
+    {
+      "id": "matrix-selection",
+      "rawSha256": "7d0622aa8e4d3364ff9d94af4eeea3750ec379f4acf71383466b9c3da23ce8ce",
+      "exported": {
+        "file": "/home/yang-zhi/文档/ChatGPT/concept2motion/work/harness-v3/final-catalog-13/matrix-selection.html",
+        "sha256": "800ce9abd01952fd5ba670ab5e7b5c3a3884b9d6740fd629fc91579d8d2ce3bd",
+        "previewSha256": "7d0622aa8e4d3364ff9d94af4eeea3750ec379f4acf71383466b9c3da23ce8ce"
+      },
+      "findings": []
+    },
+    {
+      "id": "attention-compose",
+      "rawSha256": "d2604812bea9eac03b728e7913d2e5c6a773c0f940fa4f05adea81da5bc5041e",
+      "exported": {
+        "file": "/home/yang-zhi/文档/ChatGPT/concept2motion/work/harness-v3/final-catalog-13/attention-compose.html",
+        "sha256": "22658eb62056dea88b80c98077846bdb8ee82c45059f4b02512c244bea332d3a",
+        "previewSha256": "d2604812bea9eac03b728e7913d2e5c6a773c0f940fa4f05adea81da5bc5041e"
+      },
+      "findings": []
+    },
+    {
+      "id": "normalization-axes",
+      "rawSha256": "3f7ecafab47bac81570e96ff1652a18259cb1e9580f9a8a7afa9342a7ca51c72",
+      "exported": {
+        "file": "/home/yang-zhi/文档/ChatGPT/concept2motion/work/harness-v3/final-catalog-13/normalization-axes.html",
+        "sha256": "5d5a509b806cd144ab949af855f81606d6f67f3047856ee9b7fe670ec3ea291f",
+        "previewSha256": "3f7ecafab47bac81570e96ff1652a18259cb1e9580f9a8a7afa9342a7ca51c72"
+      },
+      "findings": []
+    },
+    {
+      "id": "normalization-running",
+      "rawSha256": "def4a3f12f039f46ed08af7cb7f9df3ea6af5fd19656bbd745646737fd82e75e",
+      "exported": {
+        "file": "/home/yang-zhi/文档/ChatGPT/concept2motion/work/harness-v3/final-catalog-13/normalization-running.html",
+        "sha256": "fc80086c297be67c74f1ae27568d34ca068c432f21a9303d65d1a85424049bec",
+        "previewSha256": "def4a3f12f039f46ed08af7cb7f9df3ea6af5fd19656bbd745646737fd82e75e"
+      },
+      "findings": []
+    },
+    {
+      "id": "dense-compose",
+      "rawSha256": "6c26957a010c8496f72b5829e96bf84960dbfc2d690299dc14693a6510b1e2bb",
+      "exported": {
+        "file": "/home/yang-zhi/文档/ChatGPT/concept2motion/work/harness-v3/final-catalog-13/dense-compose.html",
+        "sha256": "17c9f7e668726e4034de5bff02fbde4163bf8f990fdbc680b60d919ebbca37c1",
+        "previewSha256": "6c26957a010c8496f72b5829e96bf84960dbfc2d690299dc14693a6510b1e2bb"
+      },
+      "findings": []
+    },
+    {
+      "id": "dropout-mask",
+      "rawSha256": "c92c16644755c17eb08c425c783a2ef2a49e09f3d8cda994380681cbe299a4cf",
+      "exported": {
+        "file": "/home/yang-zhi/文档/ChatGPT/concept2motion/work/harness-v3/final-catalog-13/dropout-mask.html",
+        "sha256": "e0efc87059f8069dfa96983315a53db3a4ff696bd83ed0cb35f5d5fc769c978f",
+        "previewSha256": "c92c16644755c17eb08c425c783a2ef2a49e09f3d8cda994380681cbe299a4cf"
+      },
+      "findings": []
+    },
+    {
+      "id": "pca-coordinates",
+      "rawSha256": "6d4b331570ab43c9e0c3000560f652b2b578db14a00fb3935eaf115d55eb9f4e",
+      "exported": {
+        "file": "/home/yang-zhi/文档/ChatGPT/concept2motion/work/harness-v3/final-catalog-13/pca-coordinates.html",
+        "sha256": "bb7420169f7dcfb62bf585817836db65314d12a53d1d485a24faa48513e665f4",
+        "previewSha256": "6d4b331570ab43c9e0c3000560f652b2b578db14a00fb3935eaf115d55eb9f4e"
+      },
+      "findings": []
+    },
+    {
+      "id": "dense-backward",
+      "rawSha256": "c5a57f04a550874efd6fdb5f797adcfb2183847bdcbc91aa82d0873f2b36c0af",
+      "exported": {
+        "file": "/home/yang-zhi/文档/ChatGPT/concept2motion/work/harness-v3/final-catalog-13/dense-backward.html",
+        "sha256": "cc5b079ecbf07cfefdf669f1958c0beb6b9860ac57352008a9807d1272d07f4b",
+        "previewSha256": "c5a57f04a550874efd6fdb5f797adcfb2183847bdcbc91aa82d0873f2b36c0af"
+      },
+      "findings": []
+    },
+    {
+      "id": "two-layer-gradient",
+      "rawSha256": "e6c319d1a6e22e5fbf002ba6373e5fa559532ac96ee2f29e7751c4b515005d42",
+      "exported": {
+        "file": "/home/yang-zhi/文档/ChatGPT/concept2motion/work/harness-v3/final-catalog-13/two-layer-gradient.html",
+        "sha256": "97b09cd673a4cebabc6c678052741ff49a2009dfef3472299bf1a9b8b73a6acf",
+        "previewSha256": "e6c319d1a6e22e5fbf002ba6373e5fa559532ac96ee2f29e7751c4b515005d42"
+      },
+      "findings": []
+    },
+    {
+      "id": "array-strides",
+      "rawSha256": "9f6dc428e324f10fbe4be8cb2b1477326791eec6f479651bf01fcd1faae62d84",
+      "exported": {
+        "file": "/home/yang-zhi/文档/ChatGPT/concept2motion/work/harness-v3/final-catalog-13/array-strides.html",
+        "sha256": "fd92285fda7ea02fe3e808cd5151b394feea744e4b90f1e1831ebed00e9c137e",
+        "previewSha256": "9f6dc428e324f10fbe4be8cb2b1477326791eec6f479651bf01fcd1faae62d84"
+      },
+      "findings": []
+    },
+    {
+      "id": "broadcast-axes",
+      "rawSha256": "d80b81c60fa747605bb7e439e55bd7b207c1c9bce0c13a0dd7e6f25b50ea7065",
+      "exported": {
+        "file": "/home/yang-zhi/文档/ChatGPT/concept2motion/work/harness-v3/final-catalog-13/broadcast-axes.html",
+        "sha256": "36bcf61e48b78c3075e47f4041bee898f1ce2af7e350939ded40d654654ae9fa",
+        "previewSha256": "d80b81c60fa747605bb7e439e55bd7b207c1c9bce0c13a0dd7e6f25b50ea7065"
+      },
+      "findings": []
+    },
+    {
+      "id": "async-schedule",
+      "rawSha256": "8940bef362da20bd54cf35e3e44f6d4f91a6e92231b3c832be7c0ab96c8796c8",
+      "exported": {
+        "file": "/home/yang-zhi/文档/ChatGPT/concept2motion/work/harness-v3/final-catalog-13/async-schedule.html",
+        "sha256": "473c28f0b6f7a978cb069ea88d54e1a86f7d519ed84df30365a307ce32b6d31c",
+        "previewSha256": "8940bef362da20bd54cf35e3e44f6d4f91a6e92231b3c832be7c0ab96c8796c8"
+      },
+      "findings": []
+    },
+    {
+      "id": "memory-alias",
+      "rawSha256": "3a53cb5f81886b78a32c4e48f3d537574a2a088e577a2da18d84a1b39bd0b513",
+      "exported": {
+        "file": "/home/yang-zhi/文档/ChatGPT/concept2motion/work/harness-v3/final-catalog-13/memory-alias.html",
+        "sha256": "795c9f2d148c7c03107a64207edf67ded135b7fc10bba026698bd97a4a1d7b20",
+        "previewSha256": "3a53cb5f81886b78a32c4e48f3d537574a2a088e577a2da18d84a1b39bd0b513"
+      },
+      "findings": []
+    },
+    {
+      "id": "gradient-contributions",
+      "rawSha256": "b3f7bf10796e736508e7742792fbd2aa4eecb9127fc20905f3a32b665751199c",
+      "exported": {
+        "file": "/home/yang-zhi/文档/ChatGPT/concept2motion/work/harness-v3/final-catalog-13/gradient-contributions.html",
+        "sha256": "8631271deb7306daa64a684066bd2e21d2b15b9e311c58e5a1bcfa144dcd1b73",
+        "previewSha256": "b3f7bf10796e736508e7742792fbd2aa4eecb9127fc20905f3a32b665751199c"
+      },
+      "findings": []
+    },
+    {
+      "id": "weighted-expectation",
+      "rawSha256": "1e9f8e02236aed760d0337d707f5c6c1eb82322150414d78c6c8cf92e0f05d3f",
+      "exported": {
+        "file": "/home/yang-zhi/文档/ChatGPT/concept2motion/work/harness-v3/final-catalog-13/weighted-expectation.html",
+        "sha256": "2f6716829c847cfcc39e96e4352d77c7ed1412231f1e19f522328b64cfb5d5af",
+        "previewSha256": "1e9f8e02236aed760d0337d707f5c6c1eb82322150414d78c6c8cf92e0f05d3f"
+      },
+      "findings": []
+    },
+    {
+      "id": "cache-lifetimes",
+      "rawSha256": "03b3aa815baac06a8af8db31bb7f94f1f5e8726575ced9f638c8e7636bbf7a5e",
+      "exported": {
+        "file": "/home/yang-zhi/文档/ChatGPT/concept2motion/work/harness-v3/final-catalog-13/cache-lifetimes.html",
+        "sha256": "ddcaf7c4dcc19ccb093ee8574a56ae2a7cf1578253d025cd0db89497fbd8e019",
+        "previewSha256": "03b3aa815baac06a8af8db31bb7f94f1f5e8726575ced9f638c8e7636bbf7a5e"
+      },
+      "findings": []
+    },
+    {
+      "id": "receptive-field",
+      "rawSha256": "c5679d705bf5af5db51c14f4cf7ab29297cab834ae42ad7c8a0677ce1b8c9f84",
+      "exported": {
+        "file": "/home/yang-zhi/文档/ChatGPT/concept2motion/work/harness-v3/final-catalog-13/receptive-field.html",
+        "sha256": "8e013c7587120a0a471da5d5916d24a953287f13398b951b31e81557dbf29f14",
+        "previewSha256": "c5679d705bf5af5db51c14f4cf7ab29297cab834ae42ad7c8a0677ce1b8c9f84"
+      },
+      "findings": []
+    },
+    {
+      "id": "dilation-holes",
+      "rawSha256": "54e5ce7b2c1af9f4ae72b80e5c366d52970a88f9bf22d63db316106863aa6ca0",
+      "exported": {
+        "file": "/home/yang-zhi/文档/ChatGPT/concept2motion/work/harness-v3/final-catalog-13/dilation-holes.html",
+        "sha256": "88e0470b18763b9c0f5140710ff60bcf8f39a2d3482f3df66cf10c0dcb94fc75",
+        "previewSha256": "54e5ce7b2c1af9f4ae72b80e5c366d52970a88f9bf22d63db316106863aa6ca0"
+      },
+      "findings": []
+    },
+    {
+      "id": "kernel-regression",
+      "rawSha256": "80e02b5010995cdce9a65d9f4453fe4bf1eb8e4b393310656781143c5eeb3bac",
+      "exported": {
+        "file": "/home/yang-zhi/文档/ChatGPT/concept2motion/work/harness-v3/final-catalog-13/kernel-regression.html",
+        "sha256": "b554f330a2284225a48742bcf8623ce30288dd6dbe94726112a15d4de2ae576f",
+        "previewSha256": "80e02b5010995cdce9a65d9f4453fe4bf1eb8e4b393310656781143c5eeb3bac"
+      },
+      "findings": []
+    },
+    {
+      "id": "kernel-weight-composition",
+      "rawSha256": "c35455942231cb01d289a504b4c2ac70e6bdb5ae48671387d1cff8b7fa6b04f5",
+      "exported": {
+        "file": "/home/yang-zhi/文档/ChatGPT/concept2motion/work/harness-v3/final-catalog-13/kernel-weight-composition.html",
+        "sha256": "252848b9ea18141f327c3f4479b4cc76ebd202660fab62a3bad3e12ab533bc5d",
+        "previewSha256": "c35455942231cb01d289a504b4c2ac70e6bdb5ae48671387d1cff8b7fa6b04f5"
+      },
+      "findings": []
+    },
+    {
+      "id": "gradient-vectors",
+      "rawSha256": "923c918f01eaf4da5730079891061072f26423fdd2cc400b887563754d35bba4",
+      "exported": {
+        "file": "/home/yang-zhi/文档/ChatGPT/concept2motion/work/harness-v3/final-catalog-13/gradient-vectors.html",
+        "sha256": "eab100717b6640d94d6744021ce60dc4c5fcf2bace9da2b0c808521f73e8bd19",
+        "previewSha256": "923c918f01eaf4da5730079891061072f26423fdd2cc400b887563754d35bba4"
+      },
+      "findings": []
+    },
+    {
+      "id": "vector-addition",
+      "rawSha256": "95ed0ddace661eb5d41b1ce39e603679b5bc1df3de20327050005bdbe8b43032",
+      "exported": {
+        "file": "/home/yang-zhi/文档/ChatGPT/concept2motion/work/harness-v3/final-catalog-13/vector-addition.html",
+        "sha256": "14d1e2f3d804afc23ef91b75c2dca8de2278381e8bc5b31232c7cb11086a94fa",
+        "previewSha256": "95ed0ddace661eb5d41b1ce39e603679b5bc1df3de20327050005bdbe8b43032"
+      },
+      "findings": []
+    },
+    {
+      "id": "quadratic-contours",
+      "rawSha256": "9fd4a58d5416ac32f073ff8a3a9984b9f18240e5a0acafb2de2bfdcc2da24aee",
+      "exported": {
+        "file": "/home/yang-zhi/文档/ChatGPT/concept2motion/work/harness-v3/final-catalog-13/quadratic-contours.html",
+        "sha256": "7766d79d79519c2930c2240605ed708c413348f4197b4d837789f3f99403405d",
+        "previewSha256": "9fd4a58d5416ac32f073ff8a3a9984b9f18240e5a0acafb2de2bfdcc2da24aee"
+      },
+      "findings": []
+    },
+    {
+      "id": "rosenbrock-valley",
+      "rawSha256": "5fa4fe4e40f71e0de7f9bf8c63cd889ba8275bd97a8730051a8436d65ab99120",
+      "exported": {
+        "file": "/home/yang-zhi/文档/ChatGPT/concept2motion/work/harness-v3/final-catalog-13/rosenbrock-valley.html",
+        "sha256": "ba3f6ddb5adf5e56f964f09b410d2b2487421723236e00ff5d92159d28238b99",
+        "previewSha256": "5fa4fe4e40f71e0de7f9bf8c63cd889ba8275bd97a8730051a8436d65ab99120"
+      },
+      "findings": []
+    },
+    {
+      "id": "saddle-contours",
+      "rawSha256": "fd40d1d2d843c378610e53dc68b8b5a5db8d6ddb019add0f7b94c26f369f2e42",
+      "exported": {
+        "file": "/home/yang-zhi/文档/ChatGPT/concept2motion/work/harness-v3/final-catalog-13/saddle-contours.html",
+        "sha256": "71b05765d6c269abcca1972b1054349994d58a322b9bdd176603b29168722648",
+        "previewSha256": "fd40d1d2d843c378610e53dc68b8b5a5db8d6ddb019add0f7b94c26f369f2e42"
+      },
+      "findings": []
+    },
+    {
+      "id": "normalization-points",
+      "rawSha256": "a6fd038c7fd89077ff0f372be5ca2c74167808bb5398b37c2e2b94a127bffaf9",
+      "exported": {
+        "file": "/home/yang-zhi/文档/ChatGPT/concept2motion/work/harness-v3/final-catalog-13/normalization-points.html",
+        "sha256": "c895d56021ecb1a5daab1f292f144eaea8c3f048bb9ebed37e9f3d931f68d838",
+        "previewSha256": "a6fd038c7fd89077ff0f372be5ca2c74167808bb5398b37c2e2b94a127bffaf9"
+      },
+      "findings": []
+    },
+    {
+      "id": "paired-points",
+      "rawSha256": "972227ea235093c32f79e178561590e3ee62b5def1f8471e9bad4c0a7e6cefb7",
+      "exported": {
+        "file": "/home/yang-zhi/文档/ChatGPT/concept2motion/work/harness-v3/final-catalog-13/paired-points.html",
+        "sha256": "c848801c13abbbc0fdac99df6aa517780708b4db5dae3789f05e9948a37d9173",
+        "previewSha256": "972227ea235093c32f79e178561590e3ee62b5def1f8471e9bad4c0a7e6cefb7"
+      },
+      "findings": []
+    },
+    {
+      "id": "transpose-grid",
+      "rawSha256": "2149de65083df8f17005c3b35363049b72806cafe2df16d377e221ca66417d63",
+      "exported": {
+        "file": "/home/yang-zhi/文档/ChatGPT/concept2motion/work/harness-v3/final-catalog-13/transpose-grid.html",
+        "sha256": "6fc4e0ee69e56d55500503ca2c5f515c775ed644c53f9abc186667af07a6335c",
+        "previewSha256": "2149de65083df8f17005c3b35363049b72806cafe2df16d377e221ca66417d63"
+      },
+      "findings": []
+    },
+    {
+      "id": "neural-response",
+      "rawSha256": "164da4a4932d598a1868bc0867caeccb6e5168d8297d2893bae7ea6e93c4b7f7",
+      "exported": {
+        "file": "/home/yang-zhi/文档/ChatGPT/concept2motion/work/harness-v3/final-catalog-13/neural-response.html",
+        "sha256": "a91740b8e9b6452b6fdfb1ab2cdbdd7fc3917a3aad161c39ba54999480345f00",
+        "previewSha256": "164da4a4932d598a1868bc0867caeccb6e5168d8297d2893bae7ea6e93c4b7f7"
+      },
+      "findings": []
+    },
+    {
+      "id": "sigmoid-response",
+      "rawSha256": "8ad38711a52779228be8ad5436a7f6755c67c85ef74060f92c166d7a1c0fb0de",
+      "exported": {
+        "file": "/home/yang-zhi/文档/ChatGPT/concept2motion/work/harness-v3/final-catalog-13/sigmoid-response.html",
+        "sha256": "aaa7bdd8f73c6f50f38725301aa0bceb73920682d2cca55b40ad9128529aab73",
+        "previewSha256": "8ad38711a52779228be8ad5436a7f6755c67c85ef74060f92c166d7a1c0fb0de"
+      },
+      "findings": []
+    },
+    {
+      "id": "sampled-field",
+      "rawSha256": "dde71c83799f7797f40db7332c6294af2079b06599fa06e8ed6d558305b26e22",
+      "exported": {
+        "file": "/home/yang-zhi/文档/ChatGPT/concept2motion/work/harness-v3/final-catalog-13/sampled-field.html",
+        "sha256": "80320bed47ed61df306ac294b61b7c5783dff4a856c4bf3c5d2a71dfe8cb0c77",
+        "previewSha256": "dde71c83799f7797f40db7332c6294af2079b06599fa06e8ed6d558305b26e22"
+      },
+      "findings": []
+    },
+    {
+      "id": "polynomial-fit",
+      "rawSha256": "3c183f025b0e47ef9462e32675ca43b7f644a3b2000deb77dbf9f45c7dce0cc4",
+      "exported": {
+        "file": "/home/yang-zhi/文档/ChatGPT/concept2motion/work/harness-v3/final-catalog-13/polynomial-fit.html",
+        "sha256": "792e3a2655487f727b334788d4f11dbafbe0784ceae9c7bd3de3b3e590eef776",
+        "previewSha256": "3c183f025b0e47ef9462e32675ca43b7f644a3b2000deb77dbf9f45c7dce0cc4"
+      },
+      "findings": []
+    },
+    {
+      "id": "optimizer-landscape",
+      "rawSha256": "88ef5c06c301e3ab9f308772de1b52209db05083dbf648f6e970c17474d568b7",
+      "exported": {
+        "file": "/home/yang-zhi/文档/ChatGPT/concept2motion/work/harness-v3/final-catalog-13/optimizer-landscape.html",
+        "sha256": "d1b01855edb256778b2a067368c2adaa1bd346bfa3ec4ff33276f8702dabc101",
+        "previewSha256": "88ef5c06c301e3ab9f308772de1b52209db05083dbf648f6e970c17474d568b7"
+      },
+      "findings": []
+    },
+    {
+      "id": "adam-bias",
+      "rawSha256": "46792ad513987f32a95f344976931db9bd41b1247b2508e70279e7b2173aa2bc",
+      "exported": {
+        "file": "/home/yang-zhi/文档/ChatGPT/concept2motion/work/harness-v3/final-catalog-13/adam-bias.html",
+        "sha256": "70712d3dd0f7924db9b5c8f9c69e5b173a357b877678d0a53811efdacb616296",
+        "previewSha256": "46792ad513987f32a95f344976931db9bd41b1247b2508e70279e7b2173aa2bc"
+      },
+      "findings": []
+    },
+    {
+      "id": "softmax-competition",
+      "rawSha256": "3b0f12982451dea12fef6625d95f7f0d8707770177ba99a75ef3a28d282a529e",
+      "exported": {
+        "file": "/home/yang-zhi/文档/ChatGPT/concept2motion/work/harness-v3/final-catalog-13/softmax-competition.html",
+        "sha256": "552be35d178367b8bd428a290f5da04555a91833e6c6b9e651fe535d39ed4b88",
+        "previewSha256": "3b0f12982451dea12fef6625d95f7f0d8707770177ba99a75ef3a28d282a529e"
+      },
+      "findings": []
+    },
+    {
+      "id": "softmax-gradient-step",
+      "rawSha256": "e5aa5eff7c8e024e25199ca7257734a1494c27839956d4c3dfdc360174a3b67f",
+      "exported": {
+        "file": "/home/yang-zhi/文档/ChatGPT/concept2motion/work/harness-v3/final-catalog-13/softmax-gradient-step.html",
+        "sha256": "716540ca11aa67466cfd0f2baebc3e628d3c175dc694775ae196b0f045aafa88",
+        "previewSha256": "e5aa5eff7c8e024e25199ca7257734a1494c27839956d4c3dfdc360174a3b67f"
+      },
+      "findings": []
+    },
+    {
+      "id": "head-reindex",
+      "rawSha256": "5c567aac937ef469e086a8e753804d92e69c9df6f5a7c464a39b02b6786ba440",
+      "exported": {
+        "file": "/home/yang-zhi/文档/ChatGPT/concept2motion/work/harness-v3/final-catalog-13/head-reindex.html",
+        "sha256": "f052d49b26711e3aa143ddc764d9a89249df6f91d2ca351b26047b355f232dd0",
+        "previewSha256": "5c567aac937ef469e086a8e753804d92e69c9df6f5a7c464a39b02b6786ba440"
+      },
+      "findings": []
+    },
+    {
+      "id": "sparse-gradient-memory",
+      "rawSha256": "9626de85021ad7ce3f462a483e4a3f7fb98171f9f800951726a74bac36c7051e",
+      "exported": {
+        "file": "/home/yang-zhi/文档/ChatGPT/concept2motion/work/harness-v3/final-catalog-13/sparse-gradient-memory.html",
+        "sha256": "d36761e79483930afe458688c8d0d3c304b44168dc038a2ddfb4d7a8492110a9",
+        "previewSha256": "9626de85021ad7ce3f462a483e4a3f7fb98171f9f800951726a74bac36c7051e"
+      },
+      "findings": []
+    }
+  ]
+}

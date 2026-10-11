@@ -1,0 +1,341 @@
+{
+  "surfaces": {
+    "issues": {
+      "status": 0,
+      "items": 0
+    },
+    "issue-comments": {
+      "status": 0,
+      "items": 0
+    },
+    "review-comments": {
+      "status": 0,
+      "items": 0
+    },
+    "commit-comments": {
+      "status": 0,
+      "items": 0
+    },
+    "releases": {
+      "status": 0,
+      "items": 0
+    },
+    "tags": {
+      "status": 0,
+      "items": 0
+    },
+    "branches": {
+      "status": 0,
+      "items": 1
+    },
+    "deployments": {
+      "status": 0,
+      "items": 0
+    },
+    "artifacts": {
+      "status": 0,
+      "items": 23
+    },
+    "runs": {
+      "status": 0,
+      "items": 18
+    },
+    "pages": {
+      "status": 1,
+      "items": 0
+    }
+  },
+  "nonexpired_artifacts": 23,
+  "listed_runs": 18,
+  "release_assets": 0,
+  "archives": [
+    {
+      "kind": "artifact",
+      "id": 11676137699,
+      "download_status": 0,
+      "file": "artifact-11676137699.zip",
+      "cached": true
+    },
+    {
+      "kind": "artifact",
+      "id": 11676123027,
+      "download_status": 0,
+      "file": "artifact-11676123027.zip",
+      "cached": true
+    },
+    {
+      "kind": "artifact",
+      "id": 11676067783,
+      "download_status": 0,
+      "file": "artifact-11676067783.zip",
+      "cached": true
+    },
+    {
+      "kind": "artifact",
+      "id": 11675992870,
+      "download_status": 0,
+      "file": "artifact-11675992870.zip",
+      "cached": true
+    },
+    {
+      "kind": "artifact",
+      "id": 11675664999,
+      "download_status": 0,
+      "file": "artifact-11675664999.zip",
+      "cached": true
+    },
+    {
+      "kind": "artifact",
+      "id": 11675489850,
+      "download_status": 0,
+      "file": "artifact-11675489850.zip",
+      "cached": true
+    },
+    {
+      "kind": "artifact",
+      "id": 11673555056,
+      "download_status": 0,
+      "file": "artifact-11673555056.zip",
+      "cached": true
+    },
+    {
+      "kind": "artifact",
+      "id": 11673351604,
+      "download_status": 0,
+      "file": "artifact-11673351604.zip",
+      "cached": true
+    },
+    {
+      "kind": "artifact",
+      "id": 11672840342,
+      "download_status": 0,
+      "file": "artifact-11672840342.zip",
+      "cached": true
+    },
+    {
+      "kind": "artifact",
+      "id": 11671494105,
+      "download_status": 0,
+      "file": "artifact-11671494105.zip",
+      "cached": true
+    },
+    {
+      "kind": "artifact",
+      "id": 11671474311,
+      "download_status": 0,
+      "file": "artifact-11671474311.zip",
+      "cached": true
+    },
+    {
+      "kind": "artifact",
+      "id": 11670979839,
+      "download_status": 0,
+      "file": "artifact-11670979839.zip",
+      "cached": true
+    },
+    {
+      "kind": "artifact",
+      "id": 11279035057,
+      "download_status": 0,
+      "file": "artifact-11279035057.zip",
+      "cached": true
+    },
+    {
+      "kind": "artifact",
+      "id": 11278249582,
+      "download_status": 0,
+      "file": "artifact-11278249582.zip",
+      "cached": true
+    },
+    {
+      "kind": "artifact",
+      "id": 11202780488,
+      "download_status": 0,
+      "file": "artifact-11202780488.zip",
+      "cached": true
+    },
+    {
+      "kind": "artifact",
+      "id": 11151889049,
+      "download_status": 0,
+      "file": "artifact-11151889049.zip",
+      "cached": true
+    },
+    {
+      "kind": "artifact",
+      "id": 11151747365,
+      "download_status": 0,
+      "file": "artifact-11151747365.zip",
+      "cached": true
+    },
+    {
+      "kind": "artifact",
+      "id": 11150726145,
+      "download_status": 0,
+      "file": "artifact-11150726145.zip",
+      "cached": true
+    },
+    {
+      "kind": "artifact",
+      "id": 11148608464,
+      "download_status": 0,
+      "file": "artifact-11148608464.zip",
+      "cached": true
+    },
+    {
+      "kind": "artifact",
+      "id": 11146474491,
+      "download_status": 0,
+      "file": "artifact-11146474491.zip",
+      "cached": true
+    },
+    {
+      "kind": "artifact",
+      "id": 11146078920,
+      "download_status": 0,
+      "file": "artifact-11146078920.zip",
+      "cached": true
+    },
+    {
+      "kind": "artifact",
+      "id": 11144363795,
+      "download_status": 0,
+      "file": "artifact-11144363795.zip",
+      "cached": true
+    },
+    {
+      "kind": "artifact",
+      "id": 11143088810,
+      "download_status": 0,
+      "file": "artifact-11143088810.zip",
+      "cached": true
+    },
+    {
+      "kind": "run",
+      "id": 38069925201,
+      "download_status": 0,
+      "file": "run-38069925201-logs.zip",
+      "cached": true
+    },
+    {
+      "kind": "run",
+      "id": 38069637807,
+      "download_status": 0,
+      "file": "run-38069637807-logs.zip",
+      "cached": true
+    },
+    {
+      "kind": "run",
+      "id": 38068852694,
+      "download_status": 0,
+      "file": "run-38068852694-logs.zip",
+      "cached": true
+    },
+    {
+      "kind": "run",
+      "id": 38061025036,
+      "download_status": 0,
+      "file": "run-38061025036-logs.zip",
+      "cached": true
+    },
+    {
+      "kind": "run",
+      "id": 38058645237,
+      "download_status": 0,
+      "file": "run-38058645237-logs.zip",
+      "cached": true
+    },
+    {
+      "kind": "run",
+      "id": 38057717014,
+      "download_status": 0,
+      "file": "run-38057717014-logs.zip",
+      "cached": true
+    },
+    {
+      "kind": "run",
+      "id": 37136717163,
+      "download_status": 0,
+      "file": "run-37136717163-logs.zip",
+      "cached": true
+    },
+    {
+      "kind": "run",
+      "id": 37136370964,
+      "download_status": 0,
+      "file": "run-37136370964-logs.zip",
+      "cached": true
+    },
+    {
+      "kind": "run",
+      "id": 36946182956,
+      "download_status": 0,
+      "file": "run-36946182956-logs.zip",
+      "cached": true
+    },
+    {
+      "kind": "run",
+      "id": 36843978372,
+      "download_status": 0,
+      "file": "run-36843978372-logs.zip",
+      "cached": true
+    },
+    {
+      "kind": "run",
+      "id": 36842299153,
+      "download_status": 0,
+      "file": "run-36842299153-logs.zip",
+      "cached": true
+    },
+    {
+      "kind": "run",
+      "id": 36839628378,
+      "download_status": 0,
+      "file": "run-36839628378-logs.zip",
+      "cached": true
+    },
+    {
+      "kind": "run",
+      "id": 36835544253,
+      "download_status": 0,
+      "file": "run-36835544253-logs.zip",
+      "cached": true
+    },
+    {
+      "kind": "run",
+      "id": 36831299183,
+      "download_status": 0,
+      "file": "run-36831299183-logs.zip",
+      "cached": true
+    },
+    {
+      "kind": "run",
+      "id": 36829040957,
+      "download_status": 0,
+      "file": "run-36829040957-logs.zip",
+      "cached": true
+    },
+    {
+      "kind": "run",
+      "id": 36825031804,
+      "download_status": 0,
+      "file": "run-36825031804-logs.zip",
+      "cached": true
+    },
+    {
+      "kind": "run",
+      "id": 36822803066,
+      "download_status": 0,
+      "file": "run-36822803066-logs.zip",
+      "cached": true
+    },
+    {
+      "kind": "run",
+      "id": 36819938967,
+      "download_status": 0,
+      "file": "run-36819938967-logs.zip",
+      "cached": true
+    }
+  ],
+  "scope": "Public API snapshot; expired/deleted archives and inaccessible surfaces cannot be inspected."
+}
