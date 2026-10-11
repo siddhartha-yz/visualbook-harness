@@ -1,0 +1,103 @@
+{
+  "recordedAtUTC": "2026-10-11T09:17:08.528708+00:00",
+  "surfaces": {
+    "issues": {
+      "status": 0,
+      "items": 0
+    },
+    "issue-comments": {
+      "status": 0,
+      "items": 0
+    },
+    "review-comments": {
+      "status": 0,
+      "items": 0
+    },
+    "commit-comments": {
+      "status": 0,
+      "items": 0
+    },
+    "releases": {
+      "status": 0,
+      "items": 0
+    },
+    "tags": {
+      "status": 0,
+      "items": 0
+    },
+    "branches": {
+      "status": 0,
+      "items": 1
+    },
+    "deployments": {
+      "status": 0,
+      "items": 0
+    },
+    "artifacts": {
+      "status": 0,
+      "items": 35
+    },
+    "runs": {
+      "status": 0,
+      "items": 24
+    },
+    "pages": {
+      "status": 1,
+      "items": 0
+    }
+  },
+  "nonexpiredArtifacts": 35,
+  "listedRuns": 24,
+  "archives": 59,
+  "downloadFailures": 0,
+  "archiveBytes": 1810546987,
+  "archiveCRCValid": true,
+  "archiveScanDepth": 3,
+  "findingsInArchives": 0,
+  "confirmedFalsePositives": {
+    "source": "metadata-sha-verification-05.json",
+    "count": 2,
+    "reason": "Independent rehash of public toolchain-05 API.md and DIRECT_API.md sources; exact values and path only allowlisted. Original full failure preserved."
+  },
+  "targetedMetadataRescanExit": 0,
+  "unresolvedCredentialFindings": 0,
+  "codeCommit": "eee360b3bfb3bb88a109fdb280ec19dc6d562158",
+  "codeMainHistory": {
+    "commits": 117,
+    "findings": 0
+  },
+  "codeExactTreeFindings": 0,
+  "intendedEvidenceFindings": 0,
+  "limits": [
+    "Only publishable main history, not internal application checkpoint refs.",
+    "Pages returned HTTP404; expired/deleted/inaccessible content cannot be inspected.",
+    "Regex scanner and ZIP CRC do not prove absence of all secrets; no pixel OCR or encrypted archive inspection.",
+    "Final research-only commit must pass exact main history/tree scan before push; raw final scans remain in ignored work.",
+    "Attempt04 outer session143 retained; final attempt05 durably recorded scanner return0 and zero findings, with normal outer completion."
+  ],
+  "fullScannerInitialExit": 1,
+  "fullScannerInitialFindings": 2,
+  "fullScannerLatestExit": 0,
+  "fullScannerLatestFindings": 0,
+  "fullScannerLatestBytes": 2698815109,
+  "fullScannerLatestWall": "2m0s",
+  "allowlist": "Exact independently verified hash values only. No paths or file exclusions.",
+  "negativeControl": {
+    "oldPathFilterMissed": true,
+    "newExactValueDetected": true,
+    "synthetic": true
+  },
+  "configSha256": "9b2613a831394523072a1116ef15025ff627f94da25bd46b44c6db52be57319b",
+  "fullScannerAttempt04": {
+    "outerSessionReturncode": 143,
+    "reportFindings": 0,
+    "stderrCompleted": true,
+    "cleanExitNotClaimed": true
+  },
+  "durableScannerStatus": {
+    "scannerReturncode": 0,
+    "wallSeconds": 176.242,
+    "findings": 0,
+    "scope": "Durable child return code, independent of outer tool session lifecycle; value-only allowlist, three archive levels."
+  }
+}

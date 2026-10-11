@@ -1,0 +1,65 @@
+{
+  "records": [
+    {
+      "id": "tokenization",
+      "title": "字节对编码算法原理与工程实现",
+      "file": "tokenization.html",
+      "figures": 2,
+      "sourceSha256": "5ba4a0677ce87023c324caff5f1f2fb1ea03ef25e8065d62ececdb83f52df082",
+      "finalHtmlSha256": "6fd98bd57dbf11353f3bae1ca88a55db536040c5b7936a1ec0bffd707924a857",
+      "sourceJsonSha256": "d9b0ae5c3ac84fd9f7bdbaeb0ce0f734c8f7cde070b71d4b8e34960f5d04f204",
+      "planSha256": "c7369ec99c0128fc2997e0a6ec42fecfccf5e60ace651fc5d9a55b53f904a360",
+      "rawHtmlSha256": "cc90bcbac50e63b4b5b3343f11fcf871af57621e5dabdb22e067eef00c3ddc45",
+      "previewReportSha256": "ba82ec6129419bb1dcaa483fd65a01a7d011122788b3d99561a87536be3547a0"
+    },
+    {
+      "id": "position",
+      "title": "序列位置依赖与旋转位置嵌入",
+      "file": "position.html",
+      "figures": 2,
+      "sourceSha256": "3db916e035cc6f729947ede039c7f737499b5ea3b960ad666ab2d18df758faba",
+      "finalHtmlSha256": "573ce526c147211a23fd030d5d73189e2dc454f81e82e8c8e215b3b3b1883c28",
+      "sourceJsonSha256": "2018bd4b50c98352064d3234bc867cb8ea95c691cc1b2aa77aee0d1933e8d55a",
+      "planSha256": "d629e7369ba1109cd103cb0414d6d9297992685afc7c37c9459b307ebfc88e53",
+      "rawHtmlSha256": "55252648753ac5d8da74902fc3c046dbd45dbd35df8258e6e57722ffb8cd7266",
+      "previewReportSha256": "5abc0f8e657dad00197990f2ac620e74713efb53bb11ed525872bf70cfd06a65"
+    },
+    {
+      "id": "hardware",
+      "title": "算术强度建模与硬件内存墙分析",
+      "file": "hardware.html",
+      "figures": 2,
+      "sourceSha256": "0548371bf660c8bb3a2e3571714592436d307a44edc97299412cfb7f13d59981",
+      "finalHtmlSha256": "6c621c0e83c886a45e318550e7447c81c2ae543bc99a55cc3d68a084035826cf",
+      "sourceJsonSha256": "ec68d86b639763030cbc3654bd6680f60862719fb711bd08d161447fea5d1626",
+      "planSha256": "b96d4d2c3683b2181eb87a0b656cba8e86e54012e17126ac7f31df58db34a59d",
+      "rawHtmlSha256": "22aee7d64c258065758f907a91cd325f7773583f0cc65b656012853f9a88f6e3",
+      "previewReportSha256": "6a0f47f802cf639c0229a0d9b0121d8c3a852df33482ecffc64283dda8a22743"
+    },
+    {
+      "id": "communication",
+      "title": "分布式集合通信原语",
+      "file": "communication.html",
+      "figures": 2,
+      "sourceSha256": "93e30927f30c1aea24031d4bf9fcbba9df17908d773d021834791c29006fc99d",
+      "finalHtmlSha256": "4596319ba284fd4dd81c6b4ba20af59be7bf98d5a521f174802da40dc120d77e",
+      "sourceJsonSha256": "7edb1d9573c5aac1be6675d02654b8e2d557e1f3062e2c98aae000f861101b5f",
+      "planSha256": "f7611c9181aa81d38f7594fee1a64eb6ce9d83ae199f40580d3a2cf22fc03e6c",
+      "rawHtmlSha256": "fa25c75a0a06e8facbf25d9fd06b1e04580baab937eeca3e50b05a156704674b",
+      "previewReportSha256": "a9473aea37397bd91ced86c079dc5697972982d7b4bb38018e2c3feb96f264db"
+    },
+    {
+      "id": "cache",
+      "title": "架构层面的键值缓存压缩技术",
+      "file": "cache.html",
+      "figures": 2,
+      "sourceSha256": "2eef51ce88c424698d4ff9ee148654ba032511cfac91be50a7cacb9d8700c541",
+      "finalHtmlSha256": "3d76302d039bd5aca43de619f3e0af1ab5f16693970c682c2f3256c808f3779c",
+      "sourceJsonSha256": "e42c3f9f5dad94b5473cd5a337a0fc8364981977010c7caa0bc7486a7131f005",
+      "planSha256": "1d5f5bb0624f41bb2e1e7e24a2b46cad30e29cd864cb231324831f6025ab0b2e",
+      "rawHtmlSha256": "bf21344119b19dfe8c746b54d93fc2e382ed34dd355179b70453f26b83600fd7",
+      "previewReportSha256": "d9b33d18243f8d3c975c0d1565508815181c94309bf26fd03c5737929b28039c"
+    }
+  ],
+  "scope": "Original model plans byte-identical, shared toolchain-04 recompilation, final navigation assembly. Maintainer reviews are not new model passes or human expert review."
+}

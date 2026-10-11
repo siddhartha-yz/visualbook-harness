@@ -1,0 +1,59 @@
+{
+  "records": [
+    {
+      "file": "index.html",
+      "http": 200,
+      "sha256": "f9f994b42dd67238310380bb4bbc6c97fc936aa336b6807571223c8577090a60",
+      "matchesLocal": true
+    },
+    {
+      "file": "tokenization.html",
+      "http": 200,
+      "sha256": "6fd98bd57dbf11353f3bae1ca88a55db536040c5b7936a1ec0bffd707924a857",
+      "matchesLocal": true
+    },
+    {
+      "file": "position.html",
+      "http": 200,
+      "sha256": "573ce526c147211a23fd030d5d73189e2dc454f81e82e8c8e215b3b3b1883c28",
+      "matchesLocal": true
+    },
+    {
+      "file": "hardware.html",
+      "http": 200,
+      "sha256": "6c621c0e83c886a45e318550e7447c81c2ae543bc99a55cc3d68a084035826cf",
+      "matchesLocal": true
+    },
+    {
+      "file": "communication.html",
+      "http": 200,
+      "sha256": "4596319ba284fd4dd81c6b4ba20af59be7bf98d5a521f174802da40dc120d77e",
+      "matchesLocal": true
+    },
+    {
+      "file": "cache.html",
+      "http": 200,
+      "sha256": "3d76302d039bd5aca43de619f3e0af1ab5f16693970c682c2f3256c808f3779c",
+      "matchesLocal": true
+    },
+    {
+      "file": "cs336-offline.zip",
+      "http": 200,
+      "sha256": "d7de6e1f34afcd24f12a7965daaea13ccab8034405ce7d8694ff443ddcf36d53",
+      "matchesLocal": true
+    },
+    {
+      "file": "rope-demo.gif",
+      "http": 200,
+      "sha256": "d6d30d3997f162a99e627578e5ca80302b4548dff06cfe7270e20554065caa76",
+      "matchesLocal": true
+    },
+    {
+      "file": "rope-demo.mp4",
+      "http": 200,
+      "sha256": "35c798ba3dd8d3b121fb2584141243f1cc386e436e6003e54418fe0f116db3af",
+      "matchesLocal": true
+    }
+  ],
+  "scope": "Actual loopback HTTP bytes match the bounded local deliverable. Local server availability is not permanent hosting."
+}

@@ -1,0 +1,6 @@
+{
+  "rejected": true,
+  "mutation": "First exact-tie criticalBatch + 10",
+  "exit": 1,
+  "scope": "Independent arithmetic detects injected false boundary; no model call."
+}

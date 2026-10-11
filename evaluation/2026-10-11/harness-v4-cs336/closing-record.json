@@ -1,0 +1,15 @@
+{
+  "startedAtUTC": "2026-10-11T05:02:33+00:00",
+  "fourHourWorkCheckpointUTC": "2026-10-11T09:17:08.529053+00:00",
+  "elapsedSecondsAtCheckpoint": 15275.529053,
+  "minimumFourHoursSatisfied": true,
+  "codeCommit": "eee360b3bfb3bb88a109fdb280ec19dc6d562158",
+  "ci": 38125441265,
+  "ciAllThreeJobsSuccess": true,
+  "formalModelStarts": 8,
+  "formalReadyStarts": 3,
+  "maintainerRecompiledTrialChapters": 5,
+  "fullSourceBooksConverted": false,
+  "scope": "Checkpoint after actual generation, tool changes, source/candidate reconstruction, readers, export, CI, publication negative control and full rescan. Final research commit audit/push follows; no idle time or prior seven-hour run counted.",
+  "publicationDurableScanExit": 0
+}

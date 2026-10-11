@@ -1,0 +1,7 @@
+{
+  "passed": true,
+  "states": 11,
+  "checks": 663,
+  "capturedSha256": "d14aae199830cab721ae0df7630965b58ffe5926ff392806d0657554970d096a",
+  "scope": "Independent Fraction/stdlib arithmetic for eleven maintainer data variants captured from actual native rendering. Not model generation, aesthetic review, whole-book certification or GPU measurement."
+}

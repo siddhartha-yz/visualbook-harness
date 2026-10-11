@@ -1,0 +1,23 @@
+{
+  "ready_for_export": true,
+  "issues": [],
+  "html_sha256": "bf21344119b19dfe8c746b54d93fc2e382ed34dd355179b70453f26b83600fd7",
+  "plan_sha256": "1d5f5bb0624f41bb2e1e7e24a2b46cad30e29cd864cb231324831f6025ab0b2e",
+  "reviewer": "maintainer",
+  "modelCalls": 0,
+  "originalAuthorReady": true,
+  "scope": "维护者对未改原文与未改模型计划的共同工具复编译复核。五章不是五次新的自动生成成功；原2/5及1/3正式结果保留。",
+  "mathChecks": {
+    "report": "math-verified-04.json",
+    "states": 1173,
+    "checks": 9379,
+    "htmlIdentityMatches": true
+  },
+  "visualReview": "实际查看本版全部10幅375px默认阅读PNG，以及RoPE/硬件1920px画面；较早共同版还逐一查看其余桌面/手机构图。最终导出另作成书检查。",
+  "limitations": [
+    "Video2Book二次整理原文并非课程一级来源；原有措辞和数学内容未改。",
+    "手选参数与理想化账本，不代表训练、模型推理或GPU测量。",
+    "维护者复核不是独立艺术专家审评或学习效果试验。"
+  ],
+  "timeUTC": "2026-10-11T07:49:58.157523+00:00"
+}

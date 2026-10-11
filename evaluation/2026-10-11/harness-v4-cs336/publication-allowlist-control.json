@@ -1,0 +1,15 @@
+{
+  "synthetic": true,
+  "realCredential": false,
+  "oldPathAllowlist": {
+    "exit": 0,
+    "findings": 0,
+    "knownCanaryMissed": true
+  },
+  "newExactHashOnly": {
+    "exit": 1,
+    "findings": 1,
+    "knownCanaryDetected": true
+  },
+  "scope": "Same original captured-facts-shaped file plus one deterministic fake credential. Only config changes; no real account data. Global path filters removed to avoid entire-file exclusion."
+}

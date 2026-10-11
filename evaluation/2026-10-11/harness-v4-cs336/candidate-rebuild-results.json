@@ -1,0 +1,42 @@
+{
+  "passed": true,
+  "modelCalls": 0,
+  "records": [
+    {
+      "id": "tokenization",
+      "sourceSha256": "5ba4a0677ce87023c324caff5f1f2fb1ea03ef25e8065d62ececdb83f52df082",
+      "planSha256": "c7369ec99c0128fc2997e0a6ec42fecfccf5e60ace651fc5d9a55b53f904a360",
+      "rawHtmlSha256": "cc90bcbac50e63b4b5b3343f11fcf871af57621e5dabdb22e067eef00c3ddc45",
+      "matches": true
+    },
+    {
+      "id": "position",
+      "sourceSha256": "3db916e035cc6f729947ede039c7f737499b5ea3b960ad666ab2d18df758faba",
+      "planSha256": "d629e7369ba1109cd103cb0414d6d9297992685afc7c37c9459b307ebfc88e53",
+      "rawHtmlSha256": "55252648753ac5d8da74902fc3c046dbd45dbd35df8258e6e57722ffb8cd7266",
+      "matches": true
+    },
+    {
+      "id": "hardware",
+      "sourceSha256": "0548371bf660c8bb3a2e3571714592436d307a44edc97299412cfb7f13d59981",
+      "planSha256": "b96d4d2c3683b2181eb87a0b656cba8e86e54012e17126ac7f31df58db34a59d",
+      "rawHtmlSha256": "22aee7d64c258065758f907a91cd325f7773583f0cc65b656012853f9a88f6e3",
+      "matches": true
+    },
+    {
+      "id": "communication",
+      "sourceSha256": "93e30927f30c1aea24031d4bf9fcbba9df17908d773d021834791c29006fc99d",
+      "planSha256": "f7611c9181aa81d38f7594fee1a64eb6ce9d83ae199f40580d3a2cf22fc03e6c",
+      "rawHtmlSha256": "fa25c75a0a06e8facbf25d9fd06b1e04580baab937eeca3e50b05a156704674b",
+      "matches": true
+    },
+    {
+      "id": "cache",
+      "sourceSha256": "2eef51ce88c424698d4ff9ee148654ba032511cfac91be50a7cacb9d8700c541",
+      "planSha256": "1d5f5bb0624f41bb2e1e7e24a2b46cad30e29cd864cb231324831f6025ab0b2e",
+      "rawHtmlSha256": "bf21344119b19dfe8c746b54d93fc2e382ed34dd355179b70453f26b83600fd7",
+      "matches": true
+    }
+  ],
+  "scope": "Exact five raw candidate HTMLs from original local books, recorded plans and toolchain-04. Source JSON path metadata differs at a new location. No model reproduction, reader check, art review or navigation/ZIP assembly claimed."
+}

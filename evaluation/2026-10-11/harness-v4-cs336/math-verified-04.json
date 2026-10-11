@@ -1,0 +1,30 @@
+{
+  "passed": true,
+  "poses": {
+    "recount-pairs": 1,
+    "chunk-boundary": 1,
+    "shared-shift": 9,
+    "frequency-scales": 6,
+    "gemm-balance": 1024,
+    "shared-private": 128,
+    "reduce-factorization": 1,
+    "alltoall-identity": 1,
+    "kv-budget": 1,
+    "local-dependency": 1
+  },
+  "states": 1173,
+  "checks": 9379,
+  "capturedSha256": "21cc1e5cb037d2038f7ef4bcd609cfd330ccfcf040345739d43760aff926d533",
+  "htmlIdentities": {
+    "tokenization": "cc90bcbac50e63b4b5b3343f11fcf871af57621e5dabdb22e067eef00c3ddc45",
+    "position": "55252648753ac5d8da74902fc3c046dbd45dbd35df8258e6e57722ffb8cd7266",
+    "hardware": "22aee7d64c258065758f907a91cd325f7773583f0cc65b656012853f9a88f6e3",
+    "communication": "fa25c75a0a06e8facbf25d9fd06b1e04580baab937eeca3e50b05a156704674b",
+    "cache": "bf21344119b19dfe8c746b54d93fc2e382ed34dd355179b70453f26b83600fd7"
+  },
+  "tolerance": {
+    "relative": 1e-11,
+    "absolute": 1e-10
+  },
+  "scope": "Independent integer/Fraction/complex stdlib arithmetic against actual finite runtime values and fixed plan inputs. No reuse of canonical numeric kernels; no training, real hardware, artistic or whole-source mathematical certification."
+}

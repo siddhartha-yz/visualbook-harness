@@ -1,0 +1,24 @@
+{
+  "status": "completed",
+  "modelCalls": 0,
+  "ready": true,
+  "scope": "Final offline reader identity/render/navigation gate and deterministic packaging. Does not change author outcomes or certify mathematics, art or learning.",
+  "assemblySha256": "7ecc5ca70c04456a4e544595edb6ef2cc8ec84659b32ffbb0fba1a6617bd3abf",
+  "toolHashes": {
+    "tools/deliver_visualbook.py": "c8a067c93b6a3becd5c6a08cfb2abbfcbddde0384135c3381b8b1bf620bc04a2",
+    "tools/check_visualbook_collection.mjs": "d02813e7788852466f78f414c343352cc12a7371c8ab36b38ab46cb7b935599f",
+    "tools/package_visualbook.py": "4969ff12a585407b53a1321809f6ff91ddfa9609872f9600205cc34e887486e1",
+    "tools/visualbook_capture.mjs": "b3202ff94e598cf8f525de7ef0e7a1263ad3114911e8287132c837979569d420"
+  },
+  "readerReportSha256": "a38f37e7ab7ab064d7fc2dbffeef3c16cef7440aeca88f387f1e1e1b81908664",
+  "readerCases": 18,
+  "package": {
+    "archiveSha256": "e69d33fbe3678c5a96341524d5b64c819a0e1accb1c15a744ec686fc93fd04fc",
+    "files": 9,
+    "chapters": 3,
+    "bytes": 3517635,
+    "modelCalls": 0,
+    "scope": "Identity-checked packaging, not mathematical/artistic review or publication."
+  },
+  "wallSeconds": 10.651
+}

@@ -1,0 +1,27 @@
+{
+  "newModelCalls": 0,
+  "records": [
+    {
+      "id": "position",
+      "originalResultSha256": "00027f15f486f09f39e8f5fc84244187bf4e930b0a9645a7a6ea359f680cb0f3",
+      "copiedResultSha256": "00027f15f486f09f39e8f5fc84244187bf4e930b0a9645a7a6ea359f680cb0f3",
+      "originalInvocationSha256": "faadef33cbcfebfb19773c62aa6626ce7e131f910bed3448d4e0b16159caec95",
+      "artifactReuseOnly": true
+    },
+    {
+      "id": "hardware",
+      "originalResultSha256": "e570f36c7d78fbcbbef98ae84bb2558dd873bf2b51ab9f6372d4645979e8b25a",
+      "copiedResultSha256": "e570f36c7d78fbcbbef98ae84bb2558dd873bf2b51ab9f6372d4645979e8b25a",
+      "originalInvocationSha256": "97ec7ac60fd3807dfa137e5681bd329376cddd8d132163d89d7ff8ad648c9466",
+      "artifactReuseOnly": true
+    },
+    {
+      "id": "cache",
+      "originalResultSha256": "73f2e9914233a64e2f6e021257360eb769fd5486894bb2ab61f4a63d6bd6c08d",
+      "copiedResultSha256": "73f2e9914233a64e2f6e021257360eb769fd5486894bb2ab61f4a63d6bd6c08d",
+      "originalInvocationSha256": "b35e6c6d000e73f6183938cd67c1f6b82f616f746f9167a0c4f81e5ea10d1d25",
+      "artifactReuseOnly": true
+    }
+  ],
+  "scope": "Three existing accepted official author sessions copied without rewriting. Original invocation retained under origin-invocation.json to avoid counting artifact reuse as a new startup. Original sessions unchanged."
+}

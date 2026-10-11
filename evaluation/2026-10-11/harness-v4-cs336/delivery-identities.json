@@ -1,0 +1,109 @@
+{
+  "originalBooks": [
+    {
+      "file": "模块01_卷一：语言模型基础与分词架构工程_精读全书.md",
+      "sha256": "0879266d3651ff23d8af85e3219def1728dc3d5be3628ab4a488b8e12254f0a1",
+      "unchanged": true
+    },
+    {
+      "file": "模块02_卷二：现代 Transformer 架构与高效注意力机制_精读全书.md",
+      "sha256": "f2d13669a24606ef0f2dcfe13d7e9d3d8df42f7abc61cf372767b4fced9deec7",
+      "unchanged": true
+    },
+    {
+      "file": "模块03_卷三：硬件加速、自定义内核与并行训练体系（上）_精读全书.md",
+      "sha256": "19eee7d2a0abbd9a4f96db8ba6f39ecb3c21a0a2f6fd772d0b22e13cbf85569d",
+      "unchanged": true
+    },
+    {
+      "file": "模块04_卷三：硬件加速、自定义内核与并行训练体系（下）_精读全书.md",
+      "sha256": "61e05f3e35c6ed26a592d6494a7a2734c18ef50c28d489397defdd39e54ca20a",
+      "unchanged": true
+    },
+    {
+      "file": "模块05_卷四：扩展定律、推理加速与数据工程管线（上）_精读全书.md",
+      "sha256": "9490befc9c9810ff0faae32948cbd5123bffce5b279f3cef10956a1818040e29",
+      "unchanged": true
+    },
+    {
+      "file": "模块06_卷四：扩展定律、推理加速与数据工程管线（中）_精读全书.md",
+      "sha256": "24936e838348c2d6a12721be81857bfa0473da54426554eb0693f590edb30f6f",
+      "unchanged": true
+    },
+    {
+      "file": "模块07_卷四：扩展定律、推理加速与数据工程管线（下）_精读全书.md",
+      "sha256": "7b219f6d00c00a76ba5d99144f8f6e72fc64bc5afa51856a3bf2c159ba811ecd",
+      "unchanged": true
+    },
+    {
+      "file": "模块08_卷五：模型后训练、强化学习对齐与前沿演进（上）_精读全书.md",
+      "sha256": "8ad767ebfe32ba7a2ee0dc004db8fbfa3dab9e2587cea326f134a2d5c8cc4f5c",
+      "unchanged": true
+    },
+    {
+      "file": "模块09_卷五：模型后训练、强化学习对齐与前沿演进（下）_精读全书.md",
+      "sha256": "bfc7dab5f6c6c1ba5bb32b50a5fb51f124439427970eb545db2931ce5293d238",
+      "unchanged": true
+    }
+  ],
+  "archiveSha256": "d7de6e1f34afcd24f12a7965daaea13ccab8034405ce7d8694ff443ddcf36d53",
+  "archiveBytes": 5875858,
+  "files": [
+    {
+      "file": "D3-LICENSE.txt",
+      "sha256": "3e6849627f74ff73c257a3ae1efb574015d94fc1035c05ec3c15805165efcbc4",
+      "bytes": 731
+    },
+    {
+      "file": "Dagre-LICENSE.txt",
+      "sha256": "6a349742a6cb219d5a2fc8d0844f6d89a6efc62e20c664450d884fc7ff2d6015",
+      "bytes": 1062
+    },
+    {
+      "file": "Graphlib-LICENSE.txt",
+      "sha256": "6a349742a6cb219d5a2fc8d0844f6d89a6efc62e20c664450d884fc7ff2d6015",
+      "bytes": 1062
+    },
+    {
+      "file": "KaTeX-LICENSE.txt",
+      "sha256": "766ccc1f306c885aa45542a9846bbd0a505b27a0374f146778171c2254ce18e3",
+      "bytes": 1107
+    },
+    {
+      "file": "book-provenance.json",
+      "sha256": "3c078e5180efa95878324461b493da9126debc436b75fc9766f74288b07006c5",
+      "bytes": 3311
+    },
+    {
+      "file": "cache.html",
+      "sha256": "3d76302d039bd5aca43de619f3e0af1ab5f16693970c682c2f3256c808f3779c",
+      "bytes": 2197246
+    },
+    {
+      "file": "communication.html",
+      "sha256": "4596319ba284fd4dd81c6b4ba20af59be7bf98d5a521f174802da40dc120d77e",
+      "bytes": 2264196
+    },
+    {
+      "file": "hardware.html",
+      "sha256": "6c621c0e83c886a45e318550e7447c81c2ae543bc99a55cc3d68a084035826cf",
+      "bytes": 2291747
+    },
+    {
+      "file": "index.html",
+      "sha256": "f9f994b42dd67238310380bb4bbc6c97fc936aa336b6807571223c8577090a60",
+      "bytes": 13685
+    },
+    {
+      "file": "position.html",
+      "sha256": "573ce526c147211a23fd030d5d73189e2dc454f81e82e8c8e215b3b3b1883c28",
+      "bytes": 2271861
+    },
+    {
+      "file": "tokenization.html",
+      "sha256": "6fd98bd57dbf11353f3bae1ca88a55db536040c5b7936a1ec0bffd707924a857",
+      "bytes": 2192498
+    }
+  ],
+  "scope": "Actual unchanged original source bytes and archive members match local delivered files; reader checks are separate."
+}

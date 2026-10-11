@@ -1,0 +1,69 @@
+{
+  "records": [
+    {
+      "id": "volume-1",
+      "originalSha256": "0879266d3651ff23d8af85e3219def1728dc3d5be3628ab4a488b8e12254f0a1",
+      "importedSha256": "f70b7c07353467afca84f149317f355fea85a4a6d33e020b8ecc70a8689e1fc0",
+      "blocks": 597,
+      "formulas": 425
+    },
+    {
+      "id": "volume-2",
+      "originalSha256": "f2d13669a24606ef0f2dcfe13d7e9d3d8df42f7abc61cf372767b4fced9deec7",
+      "importedSha256": "33345ca5a70273e35b466af2a47b9783df3d547defa2dff1381dd1de053a0dbe",
+      "blocks": 888,
+      "formulas": 537
+    },
+    {
+      "id": "volume-3",
+      "originalSha256": "19eee7d2a0abbd9a4f96db8ba6f39ecb3c21a0a2f6fd772d0b22e13cbf85569d",
+      "importedSha256": "48a0662c681968583dea59d6edb5ea39c8b4e93034e4e6412027aaac523092e2",
+      "blocks": 904,
+      "formulas": 455
+    },
+    {
+      "id": "volume-4",
+      "originalSha256": "61e05f3e35c6ed26a592d6494a7a2734c18ef50c28d489397defdd39e54ca20a",
+      "importedSha256": "d50f598b2c12bec3313b212f4bc86a70285ca53a6fa598c0edb0fd3c744a54ff",
+      "blocks": 557,
+      "formulas": 175
+    },
+    {
+      "id": "volume-5",
+      "originalSha256": "9490befc9c9810ff0faae32948cbd5123bffce5b279f3cef10956a1818040e29",
+      "importedSha256": "aea0ce14214a574f0ad0398043e6a3ceb8646b23426bd79c9cb880adb4bc91f5",
+      "blocks": 839,
+      "formulas": 354
+    },
+    {
+      "id": "volume-6",
+      "originalSha256": "24936e838348c2d6a12721be81857bfa0473da54426554eb0693f590edb30f6f",
+      "importedSha256": "72dc2d4b3d8e0c911de640ca72b75950027c851aa8cace30dc302c09dc316af1",
+      "blocks": 918,
+      "formulas": 483
+    },
+    {
+      "id": "volume-7",
+      "originalSha256": "7b219f6d00c00a76ba5d99144f8f6e72fc64bc5afa51856a3bf2c159ba811ecd",
+      "importedSha256": "7105fe3f686a3f9336ce99785e6d507c14e8ea2c28c23712c167a3d37014fea6",
+      "blocks": 328,
+      "formulas": 67
+    },
+    {
+      "id": "volume-8",
+      "originalSha256": "8ad767ebfe32ba7a2ee0dc004db8fbfa3dab9e2587cea326f134a2d5c8cc4f5c",
+      "importedSha256": "aae44582d41b938f83ccd1fcffa9c501d39a7ae0b7e71ee88b271888ed9dbd85",
+      "blocks": 679,
+      "formulas": 252
+    },
+    {
+      "id": "volume-9",
+      "originalSha256": "bfc7dab5f6c6c1ba5bb32b50a5fb51f124439427970eb545db2931ce5293d238",
+      "importedSha256": "f2f2145fd68f5fbfe302df27ecdcdcd938c3c9470704a76b7507b2d30a053f6b",
+      "blocks": 592,
+      "formulas": 184
+    }
+  ],
+  "modelCalls": 0,
+  "scope": "Original 9 books import only, not 9 generated or mathematically certified books."
+}

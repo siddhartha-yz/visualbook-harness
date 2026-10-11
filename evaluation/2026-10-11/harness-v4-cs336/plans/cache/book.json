@@ -1,0 +1,149 @@
+{
+  "figures": [
+    {
+      "id": "kv-budget",
+      "afterAnchor": "cache-008",
+      "title": "同样的 8 个 Q 头，缓存量由 KV 头数决定",
+      "height": 220,
+      "mobileHeight": 220,
+      "interaction": "static",
+      "presentation": "reading",
+      "placement": "body",
+      "summary": "示例：8 个 Q 头、32 层、单序列、2048 token、每头 128 维、FP16；标签中的数字为 KV 头数。仅计 K 与 V 的持久存储。",
+      "scene": {
+        "type": "compose",
+        "calculations": [
+          {
+            "id": "mha",
+            "operation": "cache-footprint",
+            "inputs": {
+              "layers": 32,
+              "batch": 1,
+              "tokens": 2048,
+              "queryHeads": 8,
+              "kvHeads": 8,
+              "headDim": 128,
+              "bytesPerElement": 2
+            }
+          },
+          {
+            "id": "gqa",
+            "operation": "cache-footprint",
+            "inputs": {
+              "layers": 32,
+              "batch": 1,
+              "tokens": 2048,
+              "queryHeads": 8,
+              "kvHeads": 4,
+              "headDim": 128,
+              "bytesPerElement": 2
+            }
+          },
+          {
+            "id": "mqa",
+            "operation": "cache-footprint",
+            "inputs": {
+              "layers": 32,
+              "batch": 1,
+              "tokens": 2048,
+              "queryHeads": 8,
+              "kvHeads": 1,
+              "headDim": 128,
+              "bytesPerElement": 2
+            }
+          }
+        ],
+        "visual": {
+          "type": "category-bars",
+          "props": {
+            "items": [
+              {
+                "label": "MHA · 8",
+                "value": {
+                  "$result": "mha.totalMiB"
+                },
+                "color": "muted"
+              },
+              {
+                "label": "GQA · 4",
+                "value": {
+                  "$result": "gqa.totalMiB"
+                },
+                "color": "blue"
+              },
+              {
+                "label": "MQA · 1",
+                "value": {
+                  "$result": "mqa.totalMiB"
+                },
+                "color": "orange"
+              }
+            ],
+            "domain": [
+              0,
+              256
+            ],
+            "unit": "MiB"
+          }
+        }
+      }
+    },
+    {
+      "id": "local-dependency",
+      "afterAnchor": "cache-023",
+      "title": "每层看 3 个位置，两层连到 5 个输入",
+      "height": 280,
+      "mobileHeight": 300,
+      "interaction": "static",
+      "presentation": "reading",
+      "placement": "wide",
+      "summary": "窗口含当前；k/s/d 为宽度/步长/间隔，取 3/1/1。位置 7：一层连 5–7，两层连 3–7。蓝色仅表示依赖路径，不保证保真检索。",
+      "scene": {
+        "type": "receptive-field",
+        "props": {
+          "inputLength": 8,
+          "layers": [
+            {
+              "kernel": 3,
+              "stride": 1,
+              "dilation": 1,
+              "padding": [
+                2,
+                0
+              ],
+              "label": "第 1 层"
+            },
+            {
+              "kernel": 3,
+              "stride": 1,
+              "dilation": 1,
+              "padding": [
+                2,
+                0
+              ],
+              "label": "第 2 层"
+            }
+          ],
+          "index": 7
+        }
+      }
+    }
+  ],
+  "annotations": [
+    {
+      "id": "note-mla-cache-condition",
+      "afterAnchor": "cache-011",
+      "kind": "correction",
+      "text": "解耦 RoPE 的 MLA 还要缓存位置键 kᴿ，不能只计算潜变量 cᴷⱽ。若潜变量维度为 C、位置键维度为 R，则每个 token、每层持久缓存 C+R 个元素；内容 K/V 可由潜变量展开，实际实现也可将部分投影吸收进计算。",
+      "formula": "M_{\\mathrm{MLA}}=LBSe(C+R)"
+    },
+    {
+      "id": "note-budget-condition",
+      "afterAnchor": "cache-008",
+      "kind": "condition",
+      "text": "L 层、B 条序列、每条 S 个 token、K 个 KV 头、每头 H 维、每元素 e 字节。其余量固定时，缓存比例才是 K/N；它不是实测加速比。",
+      "formula": "M_{\\mathrm{KV}}=2LBSKHe",
+      "placement": "margin"
+    }
+  ]
+}

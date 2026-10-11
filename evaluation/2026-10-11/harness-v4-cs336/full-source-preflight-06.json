@@ -1,0 +1,315 @@
+{
+  "status": "completed",
+  "modelCalls": 0,
+  "scope": "Source-only real browser preflight: 375/1280 CSS layout, complete formula coverage and local image decoding with scripts disabled. No generated diagram or art/teaching assessment.",
+  "manifestSha256": "46b9b52ec398263ce04f29f8515c197e78fd6a83012e429e40f401820af77160",
+  "records": [
+    {
+      "id": "volume-1",
+      "sourceJsonSha256": "f70b7c07353467afca84f149317f355fea85a4a6d33e020b8ecc70a8689e1fc0",
+      "htmlSha256": "231e5a53e1bb8b30a2c808a4a68765c65bc92f2ba774f4c17b2248171510f7c2",
+      "expectedFormulas": 425,
+      "cases": [
+        {
+          "width": 375,
+          "pageWidth": 375,
+          "renderedFormulas": 425,
+          "formulaErrors": 0,
+          "images": [],
+          "localOverflow": [
+            "volume-1-439",
+            "volume-1-516"
+          ],
+          "rawMath": [],
+          "javaScriptEnabled": false,
+          "findings": []
+        },
+        {
+          "width": 1280,
+          "pageWidth": 1280,
+          "renderedFormulas": 425,
+          "formulaErrors": 0,
+          "images": [],
+          "localOverflow": [],
+          "rawMath": [],
+          "javaScriptEnabled": false,
+          "findings": []
+        }
+      ]
+    },
+    {
+      "id": "volume-2",
+      "sourceJsonSha256": "33345ca5a70273e35b466af2a47b9783df3d547defa2dff1381dd1de053a0dbe",
+      "htmlSha256": "31c75907d53f23133ed1cee5bbd5a8b8fdf36bba60ccd841355f39cf728a04c3",
+      "expectedFormulas": 537,
+      "cases": [
+        {
+          "width": 375,
+          "pageWidth": 375,
+          "renderedFormulas": 537,
+          "formulaErrors": 0,
+          "images": [],
+          "localOverflow": [
+            "volume-2-005",
+            "volume-2-055",
+            "volume-2-259",
+            "volume-2-561",
+            "volume-2-734",
+            "volume-2-739",
+            "volume-2-837"
+          ],
+          "rawMath": [],
+          "javaScriptEnabled": false,
+          "findings": []
+        },
+        {
+          "width": 1280,
+          "pageWidth": 1280,
+          "renderedFormulas": 537,
+          "formulaErrors": 0,
+          "images": [],
+          "localOverflow": [],
+          "rawMath": [],
+          "javaScriptEnabled": false,
+          "findings": []
+        }
+      ]
+    },
+    {
+      "id": "volume-3",
+      "sourceJsonSha256": "48a0662c681968583dea59d6edb5ea39c8b4e93034e4e6412027aaac523092e2",
+      "htmlSha256": "ba4b18f0bd1244a47868fe93036818cf3b5ded55f13b2dd0d78daf8e1166ebcd",
+      "expectedFormulas": 455,
+      "cases": [
+        {
+          "width": 375,
+          "pageWidth": 375,
+          "renderedFormulas": 455,
+          "formulaErrors": 0,
+          "images": [],
+          "localOverflow": [
+            "volume-3-191",
+            "volume-3-674",
+            "volume-3-728"
+          ],
+          "rawMath": [],
+          "javaScriptEnabled": false,
+          "findings": []
+        },
+        {
+          "width": 1280,
+          "pageWidth": 1280,
+          "renderedFormulas": 455,
+          "formulaErrors": 0,
+          "images": [],
+          "localOverflow": [],
+          "rawMath": [],
+          "javaScriptEnabled": false,
+          "findings": []
+        }
+      ]
+    },
+    {
+      "id": "volume-4",
+      "sourceJsonSha256": "d50f598b2c12bec3313b212f4bc86a70285ca53a6fa598c0edb0fd3c744a54ff",
+      "htmlSha256": "5b1592cf3a140c3d9b96da7ce754964588830307bf51bd82668a9f81ce699f8d",
+      "expectedFormulas": 175,
+      "cases": [
+        {
+          "width": 375,
+          "pageWidth": 375,
+          "renderedFormulas": 175,
+          "formulaErrors": 0,
+          "images": [],
+          "localOverflow": [
+            "volume-4-400",
+            "volume-4-491",
+            "volume-4-538"
+          ],
+          "rawMath": [],
+          "javaScriptEnabled": false,
+          "findings": []
+        },
+        {
+          "width": 1280,
+          "pageWidth": 1280,
+          "renderedFormulas": 175,
+          "formulaErrors": 0,
+          "images": [],
+          "localOverflow": [],
+          "rawMath": [],
+          "javaScriptEnabled": false,
+          "findings": []
+        }
+      ]
+    },
+    {
+      "id": "volume-5",
+      "sourceJsonSha256": "aea0ce14214a574f0ad0398043e6a3ceb8646b23426bd79c9cb880adb4bc91f5",
+      "htmlSha256": "4318e4604c4e69533786b8e9d09bbb27a18c5ea6a8f8003f07e2a2f89d353c36",
+      "expectedFormulas": 354,
+      "cases": [
+        {
+          "width": 375,
+          "pageWidth": 375,
+          "renderedFormulas": 354,
+          "formulaErrors": 0,
+          "images": [],
+          "localOverflow": [
+            "volume-5-008",
+            "volume-5-175",
+            "volume-5-482",
+            "volume-5-790"
+          ],
+          "rawMath": [],
+          "javaScriptEnabled": false,
+          "findings": []
+        },
+        {
+          "width": 1280,
+          "pageWidth": 1280,
+          "renderedFormulas": 354,
+          "formulaErrors": 0,
+          "images": [],
+          "localOverflow": [],
+          "rawMath": [],
+          "javaScriptEnabled": false,
+          "findings": []
+        }
+      ]
+    },
+    {
+      "id": "volume-6",
+      "sourceJsonSha256": "72dc2d4b3d8e0c911de640ca72b75950027c851aa8cace30dc302c09dc316af1",
+      "htmlSha256": "d124d0c0da72dd6ef550a67464e0b69066bc93228659db9260abe884d3d49e8d",
+      "expectedFormulas": 483,
+      "cases": [
+        {
+          "width": 375,
+          "pageWidth": 375,
+          "renderedFormulas": 483,
+          "formulaErrors": 0,
+          "images": [],
+          "localOverflow": [
+            "volume-6-005",
+            "volume-6-023",
+            "volume-6-143",
+            "volume-6-151",
+            "volume-6-722"
+          ],
+          "rawMath": [],
+          "javaScriptEnabled": false,
+          "findings": []
+        },
+        {
+          "width": 1280,
+          "pageWidth": 1280,
+          "renderedFormulas": 483,
+          "formulaErrors": 0,
+          "images": [],
+          "localOverflow": [],
+          "rawMath": [],
+          "javaScriptEnabled": false,
+          "findings": []
+        }
+      ]
+    },
+    {
+      "id": "volume-7",
+      "sourceJsonSha256": "7105fe3f686a3f9336ce99785e6d507c14e8ea2c28c23712c167a3d37014fea6",
+      "htmlSha256": "ae0682b1edfcf89cd348861a0ee167f640774b3dc777de1c7758e0bcfe988264",
+      "expectedFormulas": 67,
+      "cases": [
+        {
+          "width": 375,
+          "pageWidth": 375,
+          "renderedFormulas": 67,
+          "formulaErrors": 0,
+          "images": [],
+          "localOverflow": [
+            "volume-7-005",
+            "volume-7-206"
+          ],
+          "rawMath": [],
+          "javaScriptEnabled": false,
+          "findings": []
+        },
+        {
+          "width": 1280,
+          "pageWidth": 1280,
+          "renderedFormulas": 67,
+          "formulaErrors": 0,
+          "images": [],
+          "localOverflow": [],
+          "rawMath": [],
+          "javaScriptEnabled": false,
+          "findings": []
+        }
+      ]
+    },
+    {
+      "id": "volume-8",
+      "sourceJsonSha256": "aae44582d41b938f83ccd1fcffa9c501d39a7ae0b7e71ee88b271888ed9dbd85",
+      "htmlSha256": "92ddc8de79d5b17283b723c628894bc7a18946a08a42c0ddf33068bcd2d303ca",
+      "expectedFormulas": 252,
+      "cases": [
+        {
+          "width": 375,
+          "pageWidth": 375,
+          "renderedFormulas": 252,
+          "formulaErrors": 0,
+          "images": [],
+          "localOverflow": [
+            "volume-8-005"
+          ],
+          "rawMath": [],
+          "javaScriptEnabled": false,
+          "findings": []
+        },
+        {
+          "width": 1280,
+          "pageWidth": 1280,
+          "renderedFormulas": 252,
+          "formulaErrors": 0,
+          "images": [],
+          "localOverflow": [],
+          "rawMath": [],
+          "javaScriptEnabled": false,
+          "findings": []
+        }
+      ]
+    },
+    {
+      "id": "volume-9",
+      "sourceJsonSha256": "f2f2145fd68f5fbfe302df27ecdcdcd938c3c9470704a76b7507b2d30a053f6b",
+      "htmlSha256": "f9f5c2b6fe5445058957f267e7449d5e58f1c6260802f5cbfeae2dc25e172555",
+      "expectedFormulas": 184,
+      "cases": [
+        {
+          "width": 375,
+          "pageWidth": 375,
+          "renderedFormulas": 184,
+          "formulaErrors": 0,
+          "images": [],
+          "localOverflow": [],
+          "rawMath": [],
+          "javaScriptEnabled": false,
+          "findings": []
+        },
+        {
+          "width": 1280,
+          "pageWidth": 1280,
+          "renderedFormulas": 184,
+          "formulaErrors": 0,
+          "images": [],
+          "localOverflow": [],
+          "rawMath": [],
+          "javaScriptEnabled": false,
+          "findings": []
+        }
+      ]
+    }
+  ],
+  "findings": [],
+  "browserVersion": "151.0.7922.34"
+}

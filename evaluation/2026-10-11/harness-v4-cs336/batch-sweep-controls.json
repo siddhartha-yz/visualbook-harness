@@ -1,0 +1,39 @@
+{
+  "passed": true,
+  "modelCalls": 0,
+  "variants": [
+    {
+      "id": "exact-tie",
+      "renderCases": 3,
+      "inputs": {
+        "inputDim": 4,
+        "outputDim": 4,
+        "computeTFLOPS": 0.001,
+        "memoryGBPS": 1,
+        "maxBatch": 4,
+        "samples": 4
+      }
+    },
+    {
+      "id": "no-crossing",
+      "renderCases": 3,
+      "inputs": {
+        "inputDim": 4,
+        "outputDim": 4,
+        "computeTFLOPS": 0.004,
+        "memoryGBPS": 1,
+        "maxBatch": 4,
+        "samples": 4
+      }
+    },
+    {
+      "id": "fp32",
+      "renderCases": 3,
+      "inputs": {
+        "bytesPerElement": 4
+      }
+    }
+  ],
+  "runtimeStates": 11,
+  "scope": "Real three-width rendering and actual parameter states for a finite exact tie, impossible crossing, FP32 traffic. Same native scene, changed data only; no claim of broad artistic or generation quality."
+}

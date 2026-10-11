@@ -1,0 +1,340 @@
+{
+  "figures": [
+    {
+      "title": "全规约：总和先分片，再补齐",
+      "height": 220,
+      "mobileHeight": 520,
+      "params": [],
+      "interaction": "static",
+      "placement": "wide",
+      "scene": {
+        "type": "compose",
+        "calculations": [
+          {
+            "id": "scatter",
+            "operation": "collective",
+            "inputs": {
+              "input": [
+                [
+                  0,
+                  1,
+                  2,
+                  3
+                ],
+                [
+                  1,
+                  2,
+                  3,
+                  4
+                ],
+                [
+                  2,
+                  3,
+                  4,
+                  5
+                ],
+                [
+                  3,
+                  4,
+                  5,
+                  6
+                ]
+              ],
+              "kind": "reduce-scatter"
+            }
+          },
+          {
+            "id": "gather",
+            "operation": "collective",
+            "inputs": {
+              "input": {
+                "$result": "scatter.output"
+              },
+              "kind": "allgather"
+            }
+          }
+        ],
+        "visual": {
+          "type": "columns",
+          "layout": {
+            "gap": 14,
+            "minColumnWidth": 240
+          },
+          "children": [
+            {
+              "id": "before",
+              "type": "matrix-table",
+              "props": {
+                "data": [
+                  [
+                    0,
+                    1,
+                    2,
+                    3
+                  ],
+                  [
+                    1,
+                    2,
+                    3,
+                    4
+                  ],
+                  [
+                    2,
+                    3,
+                    4,
+                    5
+                  ],
+                  [
+                    3,
+                    4,
+                    5,
+                    6
+                  ]
+                ],
+                "rowLabels": [
+                  "R0",
+                  "R1",
+                  "R2",
+                  "R3"
+                ],
+                "columnLabels": [
+                  "j0",
+                  "j1",
+                  "j2",
+                  "j3"
+                ],
+                "title": "① 输入：按列求和",
+                "columnColors": [
+                  "blue",
+                  "orange",
+                  "green",
+                  "violet"
+                ]
+              }
+            },
+            {
+              "id": "shards",
+              "type": "matrix-table",
+              "props": {
+                "data": {
+                  "$result": "scatter.output"
+                },
+                "rowLabels": [
+                  "R0·j0",
+                  "R1·j1",
+                  "R2·j2",
+                  "R3·j3"
+                ],
+                "columnLabels": [
+                  "和"
+                ],
+                "title": "② 规约分散 · 各持一片",
+                "rowColors": [
+                  "blue",
+                  "orange",
+                  "green",
+                  "violet"
+                ]
+              }
+            },
+            {
+              "id": "full",
+              "type": "matrix-table",
+              "props": {
+                "data": {
+                  "$result": "gather.output"
+                },
+                "rowLabels": [
+                  "R0",
+                  "R1",
+                  "R2",
+                  "R3"
+                ],
+                "columnLabels": [
+                  "j0",
+                  "j1",
+                  "j2",
+                  "j3"
+                ],
+                "title": "③ 全收集 · 各持全部",
+                "columnColors": [
+                  "blue",
+                  "orange",
+                  "green",
+                  "violet"
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "summary": "R 是 Rank，j 是分量；颜色标记同一分量。j1 列的 1+2+3+4=10 先归 R1，再出现在每卡的 j1 列。",
+      "id": "reduce-factorization",
+      "afterAnchor": "communication-036",
+      "presentation": "reading",
+      "initialProgress": 1
+    },
+    {
+      "title": "全到全：来源行变成来源列",
+      "height": 220,
+      "mobileHeight": 520,
+      "params": [],
+      "interaction": "static",
+      "placement": "wide",
+      "scene": {
+        "type": "compose",
+        "calculations": [
+          {
+            "id": "exchange",
+            "operation": "collective",
+            "inputs": {
+              "input": [
+                [
+                  0,
+                  1,
+                  2,
+                  3
+                ],
+                [
+                  10,
+                  11,
+                  12,
+                  13
+                ],
+                [
+                  20,
+                  21,
+                  22,
+                  23
+                ],
+                [
+                  30,
+                  31,
+                  32,
+                  33
+                ]
+              ],
+              "kind": "alltoall"
+            }
+          }
+        ],
+        "visual": {
+          "type": "columns",
+          "layout": {
+            "gap": 32,
+            "minColumnWidth": 240
+          },
+          "children": [
+            {
+              "id": "send",
+              "type": "matrix-table",
+              "props": {
+                "data": [
+                  [
+                    0,
+                    1,
+                    2,
+                    3
+                  ],
+                  [
+                    10,
+                    11,
+                    12,
+                    13
+                  ],
+                  [
+                    20,
+                    21,
+                    22,
+                    23
+                  ],
+                  [
+                    30,
+                    31,
+                    32,
+                    33
+                  ]
+                ],
+                "rowLabels": [
+                  "R0",
+                  "R1",
+                  "R2",
+                  "R3"
+                ],
+                "columnLabels": [
+                  "至R0",
+                  "至R1",
+                  "至R2",
+                  "至R3"
+                ],
+                "rowColors": [
+                  "blue",
+                  "orange",
+                  "green",
+                  "violet"
+                ],
+                "title": "发送前 · 行是来源"
+              }
+            },
+            {
+              "id": "receive",
+              "type": "matrix-table",
+              "props": {
+                "data": {
+                  "$result": "exchange.output"
+                },
+                "rowLabels": [
+                  "R0",
+                  "R1",
+                  "R2",
+                  "R3"
+                ],
+                "columnLabels": [
+                  "从R0",
+                  "从R1",
+                  "从R2",
+                  "从R3"
+                ],
+                "columnColors": [
+                  "blue",
+                  "orange",
+                  "green",
+                  "violet"
+                ],
+                "title": "接收后 · 行是目标"
+              }
+            }
+          ]
+        }
+      },
+      "summary": "编号 10i+j 标记来源 i 和目标 j，颜色标来源。例如块 12 从 R1 发往 R2，最后在 R2 行、从 R1 列。",
+      "id": "alltoall-identity",
+      "afterAnchor": "communication-039",
+      "presentation": "reading",
+      "initialProgress": 1
+    }
+  ],
+  "annotations": [
+    {
+      "id": "note-concat-is-ordered",
+      "afterAnchor": "communication-020",
+      "kind": "clarification",
+      "placement": "body",
+      "text": "这里是广义类比：Gather 按 Rank 顺序拼接，结果长度增加；Sum Reduce 对对应位置求和，结果形状不变。拼接不满足交换律，因此不能直接视作上一段那类可交换的逐元素规约。"
+    },
+    {
+      "id": "note-semantic-not-schedule",
+      "afterAnchor": "communication-036",
+      "kind": "condition",
+      "placement": "body",
+      "text": "等式比较同一输入、同一规约算子的最终值，不指定网络协议；浮点求和的末位可随结合顺序变化。FSDP 规约分散梯度、收集参数，不能把插入更新后的流程视为对同一张量的两步等式。"
+    },
+    {
+      "id": "note-block-not-inner-transpose",
+      "afterAnchor": "communication-040",
+      "kind": "clarification",
+      "placement": "margin",
+      "text": "转置的是“来源 × 目标”的块索引；每个块内部的元素顺序不因此转置。图示每对设备交换一个等长块。"
+    }
+  ]
+}

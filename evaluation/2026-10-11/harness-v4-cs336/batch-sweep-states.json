@@ -1,0 +1,5701 @@
+{
+  "states": [
+    {
+      "id": "exact-tie",
+      "batch": 1,
+      "inputs": {
+        "inputDim": 4,
+        "outputDim": 4,
+        "computeTFLOPS": 0.001,
+        "memoryGBPS": 1,
+        "maxBatch": 4,
+        "samples": 4
+      },
+      "budget": {
+        "batch": 1,
+        "inputDim": 4,
+        "outputDim": 4,
+        "bytesPerElement": 2,
+        "computeTFLOPS": 0.001,
+        "memoryGBPS": 1,
+        "minBatch": 1,
+        "maxBatch": 4,
+        "samples": 4,
+        "selected": {
+          "m": 1,
+          "n": 4,
+          "k": 4,
+          "bytesPerElement": 2,
+          "aElements": 4,
+          "bElements": 16,
+          "cElements": 4,
+          "aBytes": 8,
+          "bBytes": 32,
+          "cBytes": 8,
+          "bytes": 48,
+          "flops": 32,
+          "multiplies": 16,
+          "additions": 12,
+          "exactScalarOps": 28,
+          "intensity": 0.6666666666666666,
+          "aMiB": 7.62939453125e-06,
+          "bMiB": 3.0517578125e-05,
+          "cMiB": 7.62939453125e-06,
+          "maxMiB": 3.0517578125e-05,
+          "convention": "Decimal GB and TFLOP; max(compute time, transfer time) is an ideal lower bound with overlap and peak rates, not measured runtime. Excludes latency, caches and utilization losses.",
+          "computeTFLOPS": 0.001,
+          "memoryGBPS": 1,
+          "crossover": 1,
+          "computeMs": 3.2e-05,
+          "transferMs": 4.8e-05,
+          "idealMs": 4.8e-05,
+          "idealTFLOPS": 0.0006666666666666666,
+          "bound": "memory"
+        },
+        "intensityCurve": [
+          [
+            1,
+            0.6666666666666666
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            3,
+            1.2
+          ],
+          [
+            4,
+            1.3333333333333333
+          ]
+        ],
+        "weightOnlyCurve": [
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            4,
+            4
+          ]
+        ],
+        "crossoverLine": [
+          [
+            1,
+            1
+          ],
+          [
+            4,
+            1
+          ]
+        ],
+        "selectedPoint": [
+          [
+            1,
+            0.6666666666666666
+          ]
+        ],
+        "xDomain": [
+          1,
+          4
+        ],
+        "yDomain": [
+          0,
+          4.24
+        ],
+        "criticalBatch": 2,
+        "firstComputeBoundBatch": 2,
+        "intensityCeiling": 2,
+        "timesUs": [
+          0.032,
+          0.048
+        ],
+        "convention": "A[B,D] W[D,F] -> C[B,F]; once-read A/W and once-write C. Weight-only 2B/e neglects A/C traffic and is an approximation, not the B-to-infinity limit. Finite crossing solves I(B)=peak/bandwidth; null means no finite crossing, and first integer is null also outside safe integer range. Sampled polyline, ideal peak/overlap assumptions, no measured GPU performance."
+      },
+      "facts": {
+        "curves": {
+          "xDomain": [
+            1,
+            4
+          ],
+          "yDomain": [
+            0,
+            4.24
+          ],
+          "xLabel": "B · 批量",
+          "yLabel": "强度 · FLOP/Byte",
+          "layers": [
+            {
+              "id": "exact",
+              "type": "curve",
+              "points": [
+                [
+                  1,
+                  0.6666666666666666
+                ],
+                [
+                  2,
+                  1
+                ],
+                [
+                  3,
+                  1.2
+                ],
+                [
+                  4,
+                  1.3333333333333333
+                ]
+              ]
+            },
+            {
+              "id": "weight-only",
+              "type": "curve",
+              "points": [
+                [
+                  1,
+                  1
+                ],
+                [
+                  2,
+                  2
+                ],
+                [
+                  3,
+                  3
+                ],
+                [
+                  4,
+                  4
+                ]
+              ]
+            },
+            {
+              "id": "crossing",
+              "type": "curve",
+              "points": [
+                [
+                  1,
+                  1
+                ],
+                [
+                  4,
+                  1
+                ]
+              ]
+            },
+            {
+              "id": "selected",
+              "type": "points",
+              "points": [
+                [
+                  1,
+                  0.6666666666666666
+                ]
+              ]
+            }
+          ],
+          "legend": [
+            {
+              "label": "完整账本",
+              "type": "curve",
+              "color": "blue"
+            },
+            {
+              "label": "只计权重",
+              "type": "curve",
+              "color": "muted"
+            },
+            {
+              "label": "算/搬阈值",
+              "type": "curve",
+              "color": "orange"
+            },
+            {
+              "label": "当前 B",
+              "type": "points",
+              "color": "blue"
+            }
+          ]
+        },
+        "numbers": {
+          "items": [
+            {
+              "label": "当前批量 B",
+              "value": 1
+            },
+            {
+              "label": "强度 · FLOP/Byte",
+              "value": 0.6666666666666666,
+              "color": "blue"
+            },
+            {
+              "label": "有限分界 B · 连续理想值",
+              "value": 2,
+              "nullText": "无有限分界"
+            },
+            {
+              "label": "计算, 搬运 · µs",
+              "value": [
+                0.032,
+                0.048
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "exact-tie",
+      "batch": 2,
+      "inputs": {
+        "inputDim": 4,
+        "outputDim": 4,
+        "computeTFLOPS": 0.001,
+        "memoryGBPS": 1,
+        "maxBatch": 4,
+        "samples": 4
+      },
+      "budget": {
+        "batch": 2,
+        "inputDim": 4,
+        "outputDim": 4,
+        "bytesPerElement": 2,
+        "computeTFLOPS": 0.001,
+        "memoryGBPS": 1,
+        "minBatch": 1,
+        "maxBatch": 4,
+        "samples": 4,
+        "selected": {
+          "m": 2,
+          "n": 4,
+          "k": 4,
+          "bytesPerElement": 2,
+          "aElements": 8,
+          "bElements": 16,
+          "cElements": 8,
+          "aBytes": 16,
+          "bBytes": 32,
+          "cBytes": 16,
+          "bytes": 64,
+          "flops": 64,
+          "multiplies": 32,
+          "additions": 24,
+          "exactScalarOps": 56,
+          "intensity": 1,
+          "aMiB": 1.52587890625e-05,
+          "bMiB": 3.0517578125e-05,
+          "cMiB": 1.52587890625e-05,
+          "maxMiB": 3.0517578125e-05,
+          "convention": "Decimal GB and TFLOP; max(compute time, transfer time) is an ideal lower bound with overlap and peak rates, not measured runtime. Excludes latency, caches and utilization losses.",
+          "computeTFLOPS": 0.001,
+          "memoryGBPS": 1,
+          "crossover": 1,
+          "computeMs": 6.4e-05,
+          "transferMs": 6.4e-05,
+          "idealMs": 6.4e-05,
+          "idealTFLOPS": 0.001,
+          "bound": "compute"
+        },
+        "intensityCurve": [
+          [
+            1,
+            0.6666666666666666
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            3,
+            1.2
+          ],
+          [
+            4,
+            1.3333333333333333
+          ]
+        ],
+        "weightOnlyCurve": [
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            4,
+            4
+          ]
+        ],
+        "crossoverLine": [
+          [
+            1,
+            1
+          ],
+          [
+            4,
+            1
+          ]
+        ],
+        "selectedPoint": [
+          [
+            2,
+            1
+          ]
+        ],
+        "xDomain": [
+          1,
+          4
+        ],
+        "yDomain": [
+          0,
+          4.24
+        ],
+        "criticalBatch": 2,
+        "firstComputeBoundBatch": 2,
+        "intensityCeiling": 2,
+        "timesUs": [
+          0.064,
+          0.064
+        ],
+        "convention": "A[B,D] W[D,F] -> C[B,F]; once-read A/W and once-write C. Weight-only 2B/e neglects A/C traffic and is an approximation, not the B-to-infinity limit. Finite crossing solves I(B)=peak/bandwidth; null means no finite crossing, and first integer is null also outside safe integer range. Sampled polyline, ideal peak/overlap assumptions, no measured GPU performance."
+      },
+      "facts": {
+        "curves": {
+          "xDomain": [
+            1,
+            4
+          ],
+          "yDomain": [
+            0,
+            4.24
+          ],
+          "xLabel": "B · 批量",
+          "yLabel": "强度 · FLOP/Byte",
+          "layers": [
+            {
+              "id": "exact",
+              "type": "curve",
+              "points": [
+                [
+                  1,
+                  0.6666666666666666
+                ],
+                [
+                  2,
+                  1
+                ],
+                [
+                  3,
+                  1.2
+                ],
+                [
+                  4,
+                  1.3333333333333333
+                ]
+              ]
+            },
+            {
+              "id": "weight-only",
+              "type": "curve",
+              "points": [
+                [
+                  1,
+                  1
+                ],
+                [
+                  2,
+                  2
+                ],
+                [
+                  3,
+                  3
+                ],
+                [
+                  4,
+                  4
+                ]
+              ]
+            },
+            {
+              "id": "crossing",
+              "type": "curve",
+              "points": [
+                [
+                  1,
+                  1
+                ],
+                [
+                  4,
+                  1
+                ]
+              ]
+            },
+            {
+              "id": "selected",
+              "type": "points",
+              "points": [
+                [
+                  2,
+                  1
+                ]
+              ]
+            }
+          ],
+          "legend": [
+            {
+              "label": "完整账本",
+              "type": "curve",
+              "color": "blue"
+            },
+            {
+              "label": "只计权重",
+              "type": "curve",
+              "color": "muted"
+            },
+            {
+              "label": "算/搬阈值",
+              "type": "curve",
+              "color": "orange"
+            },
+            {
+              "label": "当前 B",
+              "type": "points",
+              "color": "blue"
+            }
+          ]
+        },
+        "numbers": {
+          "items": [
+            {
+              "label": "当前批量 B",
+              "value": 2
+            },
+            {
+              "label": "强度 · FLOP/Byte",
+              "value": 1,
+              "color": "blue"
+            },
+            {
+              "label": "有限分界 B · 连续理想值",
+              "value": 2,
+              "nullText": "无有限分界"
+            },
+            {
+              "label": "计算, 搬运 · µs",
+              "value": [
+                0.064,
+                0.064
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "exact-tie",
+      "batch": 3,
+      "inputs": {
+        "inputDim": 4,
+        "outputDim": 4,
+        "computeTFLOPS": 0.001,
+        "memoryGBPS": 1,
+        "maxBatch": 4,
+        "samples": 4
+      },
+      "budget": {
+        "batch": 3,
+        "inputDim": 4,
+        "outputDim": 4,
+        "bytesPerElement": 2,
+        "computeTFLOPS": 0.001,
+        "memoryGBPS": 1,
+        "minBatch": 1,
+        "maxBatch": 4,
+        "samples": 4,
+        "selected": {
+          "m": 3,
+          "n": 4,
+          "k": 4,
+          "bytesPerElement": 2,
+          "aElements": 12,
+          "bElements": 16,
+          "cElements": 12,
+          "aBytes": 24,
+          "bBytes": 32,
+          "cBytes": 24,
+          "bytes": 80,
+          "flops": 96,
+          "multiplies": 48,
+          "additions": 36,
+          "exactScalarOps": 84,
+          "intensity": 1.2,
+          "aMiB": 2.288818359375e-05,
+          "bMiB": 3.0517578125e-05,
+          "cMiB": 2.288818359375e-05,
+          "maxMiB": 3.0517578125e-05,
+          "convention": "Decimal GB and TFLOP; max(compute time, transfer time) is an ideal lower bound with overlap and peak rates, not measured runtime. Excludes latency, caches and utilization losses.",
+          "computeTFLOPS": 0.001,
+          "memoryGBPS": 1,
+          "crossover": 1,
+          "computeMs": 9.6e-05,
+          "transferMs": 8e-05,
+          "idealMs": 9.6e-05,
+          "idealTFLOPS": 0.001,
+          "bound": "compute"
+        },
+        "intensityCurve": [
+          [
+            1,
+            0.6666666666666666
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            3,
+            1.2
+          ],
+          [
+            4,
+            1.3333333333333333
+          ]
+        ],
+        "weightOnlyCurve": [
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            4,
+            4
+          ]
+        ],
+        "crossoverLine": [
+          [
+            1,
+            1
+          ],
+          [
+            4,
+            1
+          ]
+        ],
+        "selectedPoint": [
+          [
+            3,
+            1.2
+          ]
+        ],
+        "xDomain": [
+          1,
+          4
+        ],
+        "yDomain": [
+          0,
+          4.24
+        ],
+        "criticalBatch": 2,
+        "firstComputeBoundBatch": 2,
+        "intensityCeiling": 2,
+        "timesUs": [
+          0.096,
+          0.08
+        ],
+        "convention": "A[B,D] W[D,F] -> C[B,F]; once-read A/W and once-write C. Weight-only 2B/e neglects A/C traffic and is an approximation, not the B-to-infinity limit. Finite crossing solves I(B)=peak/bandwidth; null means no finite crossing, and first integer is null also outside safe integer range. Sampled polyline, ideal peak/overlap assumptions, no measured GPU performance."
+      },
+      "facts": {
+        "curves": {
+          "xDomain": [
+            1,
+            4
+          ],
+          "yDomain": [
+            0,
+            4.24
+          ],
+          "xLabel": "B · 批量",
+          "yLabel": "强度 · FLOP/Byte",
+          "layers": [
+            {
+              "id": "exact",
+              "type": "curve",
+              "points": [
+                [
+                  1,
+                  0.6666666666666666
+                ],
+                [
+                  2,
+                  1
+                ],
+                [
+                  3,
+                  1.2
+                ],
+                [
+                  4,
+                  1.3333333333333333
+                ]
+              ]
+            },
+            {
+              "id": "weight-only",
+              "type": "curve",
+              "points": [
+                [
+                  1,
+                  1
+                ],
+                [
+                  2,
+                  2
+                ],
+                [
+                  3,
+                  3
+                ],
+                [
+                  4,
+                  4
+                ]
+              ]
+            },
+            {
+              "id": "crossing",
+              "type": "curve",
+              "points": [
+                [
+                  1,
+                  1
+                ],
+                [
+                  4,
+                  1
+                ]
+              ]
+            },
+            {
+              "id": "selected",
+              "type": "points",
+              "points": [
+                [
+                  3,
+                  1.2
+                ]
+              ]
+            }
+          ],
+          "legend": [
+            {
+              "label": "完整账本",
+              "type": "curve",
+              "color": "blue"
+            },
+            {
+              "label": "只计权重",
+              "type": "curve",
+              "color": "muted"
+            },
+            {
+              "label": "算/搬阈值",
+              "type": "curve",
+              "color": "orange"
+            },
+            {
+              "label": "当前 B",
+              "type": "points",
+              "color": "blue"
+            }
+          ]
+        },
+        "numbers": {
+          "items": [
+            {
+              "label": "当前批量 B",
+              "value": 3
+            },
+            {
+              "label": "强度 · FLOP/Byte",
+              "value": 1.2,
+              "color": "blue"
+            },
+            {
+              "label": "有限分界 B · 连续理想值",
+              "value": 2,
+              "nullText": "无有限分界"
+            },
+            {
+              "label": "计算, 搬运 · µs",
+              "value": [
+                0.096,
+                0.08
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "exact-tie",
+      "batch": 4,
+      "inputs": {
+        "inputDim": 4,
+        "outputDim": 4,
+        "computeTFLOPS": 0.001,
+        "memoryGBPS": 1,
+        "maxBatch": 4,
+        "samples": 4
+      },
+      "budget": {
+        "batch": 4,
+        "inputDim": 4,
+        "outputDim": 4,
+        "bytesPerElement": 2,
+        "computeTFLOPS": 0.001,
+        "memoryGBPS": 1,
+        "minBatch": 1,
+        "maxBatch": 4,
+        "samples": 4,
+        "selected": {
+          "m": 4,
+          "n": 4,
+          "k": 4,
+          "bytesPerElement": 2,
+          "aElements": 16,
+          "bElements": 16,
+          "cElements": 16,
+          "aBytes": 32,
+          "bBytes": 32,
+          "cBytes": 32,
+          "bytes": 96,
+          "flops": 128,
+          "multiplies": 64,
+          "additions": 48,
+          "exactScalarOps": 112,
+          "intensity": 1.3333333333333333,
+          "aMiB": 3.0517578125e-05,
+          "bMiB": 3.0517578125e-05,
+          "cMiB": 3.0517578125e-05,
+          "maxMiB": 3.0517578125e-05,
+          "convention": "Decimal GB and TFLOP; max(compute time, transfer time) is an ideal lower bound with overlap and peak rates, not measured runtime. Excludes latency, caches and utilization losses.",
+          "computeTFLOPS": 0.001,
+          "memoryGBPS": 1,
+          "crossover": 1,
+          "computeMs": 0.000128,
+          "transferMs": 9.6e-05,
+          "idealMs": 0.000128,
+          "idealTFLOPS": 0.001,
+          "bound": "compute"
+        },
+        "intensityCurve": [
+          [
+            1,
+            0.6666666666666666
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            3,
+            1.2
+          ],
+          [
+            4,
+            1.3333333333333333
+          ]
+        ],
+        "weightOnlyCurve": [
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            4,
+            4
+          ]
+        ],
+        "crossoverLine": [
+          [
+            1,
+            1
+          ],
+          [
+            4,
+            1
+          ]
+        ],
+        "selectedPoint": [
+          [
+            4,
+            1.3333333333333333
+          ]
+        ],
+        "xDomain": [
+          1,
+          4
+        ],
+        "yDomain": [
+          0,
+          4.24
+        ],
+        "criticalBatch": 2,
+        "firstComputeBoundBatch": 2,
+        "intensityCeiling": 2,
+        "timesUs": [
+          0.128,
+          0.096
+        ],
+        "convention": "A[B,D] W[D,F] -> C[B,F]; once-read A/W and once-write C. Weight-only 2B/e neglects A/C traffic and is an approximation, not the B-to-infinity limit. Finite crossing solves I(B)=peak/bandwidth; null means no finite crossing, and first integer is null also outside safe integer range. Sampled polyline, ideal peak/overlap assumptions, no measured GPU performance."
+      },
+      "facts": {
+        "curves": {
+          "xDomain": [
+            1,
+            4
+          ],
+          "yDomain": [
+            0,
+            4.24
+          ],
+          "xLabel": "B · 批量",
+          "yLabel": "强度 · FLOP/Byte",
+          "layers": [
+            {
+              "id": "exact",
+              "type": "curve",
+              "points": [
+                [
+                  1,
+                  0.6666666666666666
+                ],
+                [
+                  2,
+                  1
+                ],
+                [
+                  3,
+                  1.2
+                ],
+                [
+                  4,
+                  1.3333333333333333
+                ]
+              ]
+            },
+            {
+              "id": "weight-only",
+              "type": "curve",
+              "points": [
+                [
+                  1,
+                  1
+                ],
+                [
+                  2,
+                  2
+                ],
+                [
+                  3,
+                  3
+                ],
+                [
+                  4,
+                  4
+                ]
+              ]
+            },
+            {
+              "id": "crossing",
+              "type": "curve",
+              "points": [
+                [
+                  1,
+                  1
+                ],
+                [
+                  4,
+                  1
+                ]
+              ]
+            },
+            {
+              "id": "selected",
+              "type": "points",
+              "points": [
+                [
+                  4,
+                  1.3333333333333333
+                ]
+              ]
+            }
+          ],
+          "legend": [
+            {
+              "label": "完整账本",
+              "type": "curve",
+              "color": "blue"
+            },
+            {
+              "label": "只计权重",
+              "type": "curve",
+              "color": "muted"
+            },
+            {
+              "label": "算/搬阈值",
+              "type": "curve",
+              "color": "orange"
+            },
+            {
+              "label": "当前 B",
+              "type": "points",
+              "color": "blue"
+            }
+          ]
+        },
+        "numbers": {
+          "items": [
+            {
+              "label": "当前批量 B",
+              "value": 4
+            },
+            {
+              "label": "强度 · FLOP/Byte",
+              "value": 1.3333333333333333,
+              "color": "blue"
+            },
+            {
+              "label": "有限分界 B · 连续理想值",
+              "value": 2,
+              "nullText": "无有限分界"
+            },
+            {
+              "label": "计算, 搬运 · µs",
+              "value": [
+                0.128,
+                0.096
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "no-crossing",
+      "batch": 1,
+      "inputs": {
+        "inputDim": 4,
+        "outputDim": 4,
+        "computeTFLOPS": 0.004,
+        "memoryGBPS": 1,
+        "maxBatch": 4,
+        "samples": 4
+      },
+      "budget": {
+        "batch": 1,
+        "inputDim": 4,
+        "outputDim": 4,
+        "bytesPerElement": 2,
+        "computeTFLOPS": 0.004,
+        "memoryGBPS": 1,
+        "minBatch": 1,
+        "maxBatch": 4,
+        "samples": 4,
+        "selected": {
+          "m": 1,
+          "n": 4,
+          "k": 4,
+          "bytesPerElement": 2,
+          "aElements": 4,
+          "bElements": 16,
+          "cElements": 4,
+          "aBytes": 8,
+          "bBytes": 32,
+          "cBytes": 8,
+          "bytes": 48,
+          "flops": 32,
+          "multiplies": 16,
+          "additions": 12,
+          "exactScalarOps": 28,
+          "intensity": 0.6666666666666666,
+          "aMiB": 7.62939453125e-06,
+          "bMiB": 3.0517578125e-05,
+          "cMiB": 7.62939453125e-06,
+          "maxMiB": 3.0517578125e-05,
+          "convention": "Decimal GB and TFLOP; max(compute time, transfer time) is an ideal lower bound with overlap and peak rates, not measured runtime. Excludes latency, caches and utilization losses.",
+          "computeTFLOPS": 0.004,
+          "memoryGBPS": 1,
+          "crossover": 4,
+          "computeMs": 8e-06,
+          "transferMs": 4.8e-05,
+          "idealMs": 4.8e-05,
+          "idealTFLOPS": 0.0006666666666666666,
+          "bound": "memory"
+        },
+        "intensityCurve": [
+          [
+            1,
+            0.6666666666666666
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            3,
+            1.2
+          ],
+          [
+            4,
+            1.3333333333333333
+          ]
+        ],
+        "weightOnlyCurve": [
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            4,
+            4
+          ]
+        ],
+        "crossoverLine": [
+          [
+            1,
+            4
+          ],
+          [
+            4,
+            4
+          ]
+        ],
+        "selectedPoint": [
+          [
+            1,
+            0.6666666666666666
+          ]
+        ],
+        "xDomain": [
+          1,
+          4
+        ],
+        "yDomain": [
+          0,
+          4.24
+        ],
+        "criticalBatch": null,
+        "firstComputeBoundBatch": null,
+        "intensityCeiling": 2,
+        "timesUs": [
+          0.008,
+          0.048
+        ],
+        "convention": "A[B,D] W[D,F] -> C[B,F]; once-read A/W and once-write C. Weight-only 2B/e neglects A/C traffic and is an approximation, not the B-to-infinity limit. Finite crossing solves I(B)=peak/bandwidth; null means no finite crossing, and first integer is null also outside safe integer range. Sampled polyline, ideal peak/overlap assumptions, no measured GPU performance."
+      },
+      "facts": {
+        "curves": {
+          "xDomain": [
+            1,
+            4
+          ],
+          "yDomain": [
+            0,
+            4.24
+          ],
+          "xLabel": "B · 批量",
+          "yLabel": "强度 · FLOP/Byte",
+          "layers": [
+            {
+              "id": "exact",
+              "type": "curve",
+              "points": [
+                [
+                  1,
+                  0.6666666666666666
+                ],
+                [
+                  2,
+                  1
+                ],
+                [
+                  3,
+                  1.2
+                ],
+                [
+                  4,
+                  1.3333333333333333
+                ]
+              ]
+            },
+            {
+              "id": "weight-only",
+              "type": "curve",
+              "points": [
+                [
+                  1,
+                  1
+                ],
+                [
+                  2,
+                  2
+                ],
+                [
+                  3,
+                  3
+                ],
+                [
+                  4,
+                  4
+                ]
+              ]
+            },
+            {
+              "id": "crossing",
+              "type": "curve",
+              "points": [
+                [
+                  1,
+                  4
+                ],
+                [
+                  4,
+                  4
+                ]
+              ]
+            },
+            {
+              "id": "selected",
+              "type": "points",
+              "points": [
+                [
+                  1,
+                  0.6666666666666666
+                ]
+              ]
+            }
+          ],
+          "legend": [
+            {
+              "label": "完整账本",
+              "type": "curve",
+              "color": "blue"
+            },
+            {
+              "label": "只计权重",
+              "type": "curve",
+              "color": "muted"
+            },
+            {
+              "label": "算/搬阈值",
+              "type": "curve",
+              "color": "orange"
+            },
+            {
+              "label": "当前 B",
+              "type": "points",
+              "color": "blue"
+            }
+          ]
+        },
+        "numbers": {
+          "items": [
+            {
+              "label": "当前批量 B",
+              "value": 1
+            },
+            {
+              "label": "强度 · FLOP/Byte",
+              "value": 0.6666666666666666,
+              "color": "blue"
+            },
+            {
+              "label": "有限分界 B · 连续理想值",
+              "value": null,
+              "nullText": "无有限分界"
+            },
+            {
+              "label": "计算, 搬运 · µs",
+              "value": [
+                0.008,
+                0.048
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "no-crossing",
+      "batch": 2,
+      "inputs": {
+        "inputDim": 4,
+        "outputDim": 4,
+        "computeTFLOPS": 0.004,
+        "memoryGBPS": 1,
+        "maxBatch": 4,
+        "samples": 4
+      },
+      "budget": {
+        "batch": 2,
+        "inputDim": 4,
+        "outputDim": 4,
+        "bytesPerElement": 2,
+        "computeTFLOPS": 0.004,
+        "memoryGBPS": 1,
+        "minBatch": 1,
+        "maxBatch": 4,
+        "samples": 4,
+        "selected": {
+          "m": 2,
+          "n": 4,
+          "k": 4,
+          "bytesPerElement": 2,
+          "aElements": 8,
+          "bElements": 16,
+          "cElements": 8,
+          "aBytes": 16,
+          "bBytes": 32,
+          "cBytes": 16,
+          "bytes": 64,
+          "flops": 64,
+          "multiplies": 32,
+          "additions": 24,
+          "exactScalarOps": 56,
+          "intensity": 1,
+          "aMiB": 1.52587890625e-05,
+          "bMiB": 3.0517578125e-05,
+          "cMiB": 1.52587890625e-05,
+          "maxMiB": 3.0517578125e-05,
+          "convention": "Decimal GB and TFLOP; max(compute time, transfer time) is an ideal lower bound with overlap and peak rates, not measured runtime. Excludes latency, caches and utilization losses.",
+          "computeTFLOPS": 0.004,
+          "memoryGBPS": 1,
+          "crossover": 4,
+          "computeMs": 1.6e-05,
+          "transferMs": 6.4e-05,
+          "idealMs": 6.4e-05,
+          "idealTFLOPS": 0.001,
+          "bound": "memory"
+        },
+        "intensityCurve": [
+          [
+            1,
+            0.6666666666666666
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            3,
+            1.2
+          ],
+          [
+            4,
+            1.3333333333333333
+          ]
+        ],
+        "weightOnlyCurve": [
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            4,
+            4
+          ]
+        ],
+        "crossoverLine": [
+          [
+            1,
+            4
+          ],
+          [
+            4,
+            4
+          ]
+        ],
+        "selectedPoint": [
+          [
+            2,
+            1
+          ]
+        ],
+        "xDomain": [
+          1,
+          4
+        ],
+        "yDomain": [
+          0,
+          4.24
+        ],
+        "criticalBatch": null,
+        "firstComputeBoundBatch": null,
+        "intensityCeiling": 2,
+        "timesUs": [
+          0.016,
+          0.064
+        ],
+        "convention": "A[B,D] W[D,F] -> C[B,F]; once-read A/W and once-write C. Weight-only 2B/e neglects A/C traffic and is an approximation, not the B-to-infinity limit. Finite crossing solves I(B)=peak/bandwidth; null means no finite crossing, and first integer is null also outside safe integer range. Sampled polyline, ideal peak/overlap assumptions, no measured GPU performance."
+      },
+      "facts": {
+        "curves": {
+          "xDomain": [
+            1,
+            4
+          ],
+          "yDomain": [
+            0,
+            4.24
+          ],
+          "xLabel": "B · 批量",
+          "yLabel": "强度 · FLOP/Byte",
+          "layers": [
+            {
+              "id": "exact",
+              "type": "curve",
+              "points": [
+                [
+                  1,
+                  0.6666666666666666
+                ],
+                [
+                  2,
+                  1
+                ],
+                [
+                  3,
+                  1.2
+                ],
+                [
+                  4,
+                  1.3333333333333333
+                ]
+              ]
+            },
+            {
+              "id": "weight-only",
+              "type": "curve",
+              "points": [
+                [
+                  1,
+                  1
+                ],
+                [
+                  2,
+                  2
+                ],
+                [
+                  3,
+                  3
+                ],
+                [
+                  4,
+                  4
+                ]
+              ]
+            },
+            {
+              "id": "crossing",
+              "type": "curve",
+              "points": [
+                [
+                  1,
+                  4
+                ],
+                [
+                  4,
+                  4
+                ]
+              ]
+            },
+            {
+              "id": "selected",
+              "type": "points",
+              "points": [
+                [
+                  2,
+                  1
+                ]
+              ]
+            }
+          ],
+          "legend": [
+            {
+              "label": "完整账本",
+              "type": "curve",
+              "color": "blue"
+            },
+            {
+              "label": "只计权重",
+              "type": "curve",
+              "color": "muted"
+            },
+            {
+              "label": "算/搬阈值",
+              "type": "curve",
+              "color": "orange"
+            },
+            {
+              "label": "当前 B",
+              "type": "points",
+              "color": "blue"
+            }
+          ]
+        },
+        "numbers": {
+          "items": [
+            {
+              "label": "当前批量 B",
+              "value": 2
+            },
+            {
+              "label": "强度 · FLOP/Byte",
+              "value": 1,
+              "color": "blue"
+            },
+            {
+              "label": "有限分界 B · 连续理想值",
+              "value": null,
+              "nullText": "无有限分界"
+            },
+            {
+              "label": "计算, 搬运 · µs",
+              "value": [
+                0.016,
+                0.064
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "no-crossing",
+      "batch": 3,
+      "inputs": {
+        "inputDim": 4,
+        "outputDim": 4,
+        "computeTFLOPS": 0.004,
+        "memoryGBPS": 1,
+        "maxBatch": 4,
+        "samples": 4
+      },
+      "budget": {
+        "batch": 3,
+        "inputDim": 4,
+        "outputDim": 4,
+        "bytesPerElement": 2,
+        "computeTFLOPS": 0.004,
+        "memoryGBPS": 1,
+        "minBatch": 1,
+        "maxBatch": 4,
+        "samples": 4,
+        "selected": {
+          "m": 3,
+          "n": 4,
+          "k": 4,
+          "bytesPerElement": 2,
+          "aElements": 12,
+          "bElements": 16,
+          "cElements": 12,
+          "aBytes": 24,
+          "bBytes": 32,
+          "cBytes": 24,
+          "bytes": 80,
+          "flops": 96,
+          "multiplies": 48,
+          "additions": 36,
+          "exactScalarOps": 84,
+          "intensity": 1.2,
+          "aMiB": 2.288818359375e-05,
+          "bMiB": 3.0517578125e-05,
+          "cMiB": 2.288818359375e-05,
+          "maxMiB": 3.0517578125e-05,
+          "convention": "Decimal GB and TFLOP; max(compute time, transfer time) is an ideal lower bound with overlap and peak rates, not measured runtime. Excludes latency, caches and utilization losses.",
+          "computeTFLOPS": 0.004,
+          "memoryGBPS": 1,
+          "crossover": 4,
+          "computeMs": 2.4e-05,
+          "transferMs": 8e-05,
+          "idealMs": 8e-05,
+          "idealTFLOPS": 0.0012,
+          "bound": "memory"
+        },
+        "intensityCurve": [
+          [
+            1,
+            0.6666666666666666
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            3,
+            1.2
+          ],
+          [
+            4,
+            1.3333333333333333
+          ]
+        ],
+        "weightOnlyCurve": [
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            4,
+            4
+          ]
+        ],
+        "crossoverLine": [
+          [
+            1,
+            4
+          ],
+          [
+            4,
+            4
+          ]
+        ],
+        "selectedPoint": [
+          [
+            3,
+            1.2
+          ]
+        ],
+        "xDomain": [
+          1,
+          4
+        ],
+        "yDomain": [
+          0,
+          4.24
+        ],
+        "criticalBatch": null,
+        "firstComputeBoundBatch": null,
+        "intensityCeiling": 2,
+        "timesUs": [
+          0.024,
+          0.08
+        ],
+        "convention": "A[B,D] W[D,F] -> C[B,F]; once-read A/W and once-write C. Weight-only 2B/e neglects A/C traffic and is an approximation, not the B-to-infinity limit. Finite crossing solves I(B)=peak/bandwidth; null means no finite crossing, and first integer is null also outside safe integer range. Sampled polyline, ideal peak/overlap assumptions, no measured GPU performance."
+      },
+      "facts": {
+        "curves": {
+          "xDomain": [
+            1,
+            4
+          ],
+          "yDomain": [
+            0,
+            4.24
+          ],
+          "xLabel": "B · 批量",
+          "yLabel": "强度 · FLOP/Byte",
+          "layers": [
+            {
+              "id": "exact",
+              "type": "curve",
+              "points": [
+                [
+                  1,
+                  0.6666666666666666
+                ],
+                [
+                  2,
+                  1
+                ],
+                [
+                  3,
+                  1.2
+                ],
+                [
+                  4,
+                  1.3333333333333333
+                ]
+              ]
+            },
+            {
+              "id": "weight-only",
+              "type": "curve",
+              "points": [
+                [
+                  1,
+                  1
+                ],
+                [
+                  2,
+                  2
+                ],
+                [
+                  3,
+                  3
+                ],
+                [
+                  4,
+                  4
+                ]
+              ]
+            },
+            {
+              "id": "crossing",
+              "type": "curve",
+              "points": [
+                [
+                  1,
+                  4
+                ],
+                [
+                  4,
+                  4
+                ]
+              ]
+            },
+            {
+              "id": "selected",
+              "type": "points",
+              "points": [
+                [
+                  3,
+                  1.2
+                ]
+              ]
+            }
+          ],
+          "legend": [
+            {
+              "label": "完整账本",
+              "type": "curve",
+              "color": "blue"
+            },
+            {
+              "label": "只计权重",
+              "type": "curve",
+              "color": "muted"
+            },
+            {
+              "label": "算/搬阈值",
+              "type": "curve",
+              "color": "orange"
+            },
+            {
+              "label": "当前 B",
+              "type": "points",
+              "color": "blue"
+            }
+          ]
+        },
+        "numbers": {
+          "items": [
+            {
+              "label": "当前批量 B",
+              "value": 3
+            },
+            {
+              "label": "强度 · FLOP/Byte",
+              "value": 1.2,
+              "color": "blue"
+            },
+            {
+              "label": "有限分界 B · 连续理想值",
+              "value": null,
+              "nullText": "无有限分界"
+            },
+            {
+              "label": "计算, 搬运 · µs",
+              "value": [
+                0.024,
+                0.08
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "no-crossing",
+      "batch": 4,
+      "inputs": {
+        "inputDim": 4,
+        "outputDim": 4,
+        "computeTFLOPS": 0.004,
+        "memoryGBPS": 1,
+        "maxBatch": 4,
+        "samples": 4
+      },
+      "budget": {
+        "batch": 4,
+        "inputDim": 4,
+        "outputDim": 4,
+        "bytesPerElement": 2,
+        "computeTFLOPS": 0.004,
+        "memoryGBPS": 1,
+        "minBatch": 1,
+        "maxBatch": 4,
+        "samples": 4,
+        "selected": {
+          "m": 4,
+          "n": 4,
+          "k": 4,
+          "bytesPerElement": 2,
+          "aElements": 16,
+          "bElements": 16,
+          "cElements": 16,
+          "aBytes": 32,
+          "bBytes": 32,
+          "cBytes": 32,
+          "bytes": 96,
+          "flops": 128,
+          "multiplies": 64,
+          "additions": 48,
+          "exactScalarOps": 112,
+          "intensity": 1.3333333333333333,
+          "aMiB": 3.0517578125e-05,
+          "bMiB": 3.0517578125e-05,
+          "cMiB": 3.0517578125e-05,
+          "maxMiB": 3.0517578125e-05,
+          "convention": "Decimal GB and TFLOP; max(compute time, transfer time) is an ideal lower bound with overlap and peak rates, not measured runtime. Excludes latency, caches and utilization losses.",
+          "computeTFLOPS": 0.004,
+          "memoryGBPS": 1,
+          "crossover": 4,
+          "computeMs": 3.2e-05,
+          "transferMs": 9.6e-05,
+          "idealMs": 9.6e-05,
+          "idealTFLOPS": 0.0013333333333333333,
+          "bound": "memory"
+        },
+        "intensityCurve": [
+          [
+            1,
+            0.6666666666666666
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            3,
+            1.2
+          ],
+          [
+            4,
+            1.3333333333333333
+          ]
+        ],
+        "weightOnlyCurve": [
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            4,
+            4
+          ]
+        ],
+        "crossoverLine": [
+          [
+            1,
+            4
+          ],
+          [
+            4,
+            4
+          ]
+        ],
+        "selectedPoint": [
+          [
+            4,
+            1.3333333333333333
+          ]
+        ],
+        "xDomain": [
+          1,
+          4
+        ],
+        "yDomain": [
+          0,
+          4.24
+        ],
+        "criticalBatch": null,
+        "firstComputeBoundBatch": null,
+        "intensityCeiling": 2,
+        "timesUs": [
+          0.032,
+          0.096
+        ],
+        "convention": "A[B,D] W[D,F] -> C[B,F]; once-read A/W and once-write C. Weight-only 2B/e neglects A/C traffic and is an approximation, not the B-to-infinity limit. Finite crossing solves I(B)=peak/bandwidth; null means no finite crossing, and first integer is null also outside safe integer range. Sampled polyline, ideal peak/overlap assumptions, no measured GPU performance."
+      },
+      "facts": {
+        "curves": {
+          "xDomain": [
+            1,
+            4
+          ],
+          "yDomain": [
+            0,
+            4.24
+          ],
+          "xLabel": "B · 批量",
+          "yLabel": "强度 · FLOP/Byte",
+          "layers": [
+            {
+              "id": "exact",
+              "type": "curve",
+              "points": [
+                [
+                  1,
+                  0.6666666666666666
+                ],
+                [
+                  2,
+                  1
+                ],
+                [
+                  3,
+                  1.2
+                ],
+                [
+                  4,
+                  1.3333333333333333
+                ]
+              ]
+            },
+            {
+              "id": "weight-only",
+              "type": "curve",
+              "points": [
+                [
+                  1,
+                  1
+                ],
+                [
+                  2,
+                  2
+                ],
+                [
+                  3,
+                  3
+                ],
+                [
+                  4,
+                  4
+                ]
+              ]
+            },
+            {
+              "id": "crossing",
+              "type": "curve",
+              "points": [
+                [
+                  1,
+                  4
+                ],
+                [
+                  4,
+                  4
+                ]
+              ]
+            },
+            {
+              "id": "selected",
+              "type": "points",
+              "points": [
+                [
+                  4,
+                  1.3333333333333333
+                ]
+              ]
+            }
+          ],
+          "legend": [
+            {
+              "label": "完整账本",
+              "type": "curve",
+              "color": "blue"
+            },
+            {
+              "label": "只计权重",
+              "type": "curve",
+              "color": "muted"
+            },
+            {
+              "label": "算/搬阈值",
+              "type": "curve",
+              "color": "orange"
+            },
+            {
+              "label": "当前 B",
+              "type": "points",
+              "color": "blue"
+            }
+          ]
+        },
+        "numbers": {
+          "items": [
+            {
+              "label": "当前批量 B",
+              "value": 4
+            },
+            {
+              "label": "强度 · FLOP/Byte",
+              "value": 1.3333333333333333,
+              "color": "blue"
+            },
+            {
+              "label": "有限分界 B · 连续理想值",
+              "value": null,
+              "nullText": "无有限分界"
+            },
+            {
+              "label": "计算, 搬运 · µs",
+              "value": [
+                0.032,
+                0.096
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "fp32",
+      "batch": 1,
+      "inputs": {
+        "bytesPerElement": 4
+      },
+      "budget": {
+        "batch": 1,
+        "inputDim": 4096,
+        "outputDim": 11008,
+        "bytesPerElement": 4,
+        "computeTFLOPS": 989,
+        "memoryGBPS": 3350,
+        "minBatch": 1,
+        "maxBatch": 1024,
+        "samples": 65,
+        "selected": {
+          "m": 1,
+          "n": 11008,
+          "k": 4096,
+          "bytesPerElement": 4,
+          "aElements": 4096,
+          "bElements": 45088768,
+          "cElements": 11008,
+          "aBytes": 16384,
+          "bBytes": 180355072,
+          "cBytes": 44032,
+          "bytes": 180415488,
+          "flops": 90177536,
+          "multiplies": 45088768,
+          "additions": 45077760,
+          "exactScalarOps": 90166528,
+          "intensity": 0.49983256426410577,
+          "aMiB": 0.015625,
+          "bMiB": 172,
+          "cMiB": 0.0419921875,
+          "maxMiB": 172,
+          "convention": "Decimal GB and TFLOP; max(compute time, transfer time) is an ideal lower bound with overlap and peak rates, not measured runtime. Excludes latency, caches and utilization losses.",
+          "computeTFLOPS": 989,
+          "memoryGBPS": 3350,
+          "crossover": 295.2238805970149,
+          "computeMs": 9.118052173913043e-05,
+          "transferMs": 0.0538553695522388,
+          "idealMs": 0.0538553695522388,
+          "idealTFLOPS": 1.6744390902847544,
+          "bound": "memory"
+        },
+        "intensityCurve": [
+          [
+            1,
+            0.49983256426410577
+          ],
+          [
+            17,
+            8.451868955744619
+          ],
+          [
+            33,
+            16.319595675979222
+          ],
+          [
+            49,
+            24.104346466017574
+          ],
+          [
+            65,
+            31.80742708223357
+          ],
+          [
+            81,
+            39.430116026466635
+          ],
+          [
+            97,
+            46.97366525342176
+          ],
+          [
+            113,
+            54.43930085615033
+          ],
+          [
+            129,
+            61.82822373040019
+          ],
+          [
+            145,
+            69.14161021859077
+          ],
+          [
+            161,
+            76.3806127341389
+          ],
+          [
+            177,
+            83.54636036683085
+          ],
+          [
+            193,
+            90.63995946990907
+          ],
+          [
+            209,
+            97.66249422951411
+          ],
+          [
+            225,
+            104.61502721709793
+          ],
+          [
+            241,
+            111.4985999253994
+          ],
+          [
+            257,
+            118.3142332885499
+          ],
+          [
+            273,
+            125.06292818685463
+          ],
+          [
+            289,
+            131.74566593677366
+          ],
+          [
+            305,
+            138.36340876660674
+          ],
+          [
+            321,
+            144.9171002783659
+          ],
+          [
+            337,
+            151.40766589630175
+          ],
+          [
+            353,
+            157.83601330253103
+          ],
+          [
+            369,
+            164.20303286019637
+          ],
+          [
+            385,
+            170.50959802457214
+          ],
+          [
+            401,
+            176.7565657425158
+          ],
+          [
+            417,
+            182.94477684064742
+          ],
+          [
+            433,
+            189.07505640262798
+          ],
+          [
+            449,
+            195.14821413589053
+          ],
+          [
+            465,
+            201.1650447281677
+          ],
+          [
+            481,
+            207.12632819414495
+          ],
+          [
+            497,
+            213.03283021255677
+          ],
+          [
+            513,
+            218.8853024540323
+          ],
+          [
+            528,
+            224.32358162871478
+          ],
+          [
+            544,
+            230.07345935146765
+          ],
+          [
+            560,
+            235.771437313547
+          ],
+          [
+            576,
+            241.41821504721293
+          ],
+          [
+            592,
+            247.0144795694034
+          ],
+          [
+            608,
+            252.56090566037736
+          ],
+          [
+            624,
+            258.0581561349463
+          ],
+          [
+            640,
+            263.50688210652305
+          ],
+          [
+            656,
+            268.9077232442094
+          ],
+          [
+            672,
+            274.2613080231351
+          ],
+          [
+            688,
+            279.56825396825394
+          ],
+          [
+            704,
+            284.82916789179654
+          ],
+          [
+            720,
+            290.04464612457
+          ],
+          [
+            736,
+            295.21527474129135
+          ],
+          [
+            752,
+            300.34162978013205
+          ],
+          [
+            768,
+            305.4242774566474
+          ],
+          [
+            784,
+            310.463774372257
+          ],
+          [
+            800,
+            315.460667717438
+          ],
+          [
+            816,
+            320.41549546978666
+          ],
+          [
+            832,
+            325.3287865870986
+          ],
+          [
+            848,
+            330.2010611956137
+          ],
+          [
+            864,
+            335.0328307735663
+          ],
+          [
+            880,
+            339.8245983301761
+          ],
+          [
+            896,
+            344.5768585802124
+          ],
+          [
+            912,
+            349.2900981142579
+          ],
+          [
+            928,
+            353.96479556479557
+          ],
+          [
+            944,
+            358.60142176823797
+          ],
+          [
+            960,
+            363.20043992301345
+          ],
+          [
+            976,
+            367.76230574382146
+          ],
+          [
+            992,
+            372.28746761216416
+          ],
+          [
+            1008,
+            376.77636672325974
+          ],
+          [
+            1024,
+            381.2294372294372
+          ]
+        ],
+        "weightOnlyCurve": [
+          [
+            1,
+            0.5
+          ],
+          [
+            17,
+            8.5
+          ],
+          [
+            33,
+            16.5
+          ],
+          [
+            49,
+            24.5
+          ],
+          [
+            65,
+            32.5
+          ],
+          [
+            81,
+            40.5
+          ],
+          [
+            97,
+            48.5
+          ],
+          [
+            113,
+            56.5
+          ],
+          [
+            129,
+            64.5
+          ],
+          [
+            145,
+            72.5
+          ],
+          [
+            161,
+            80.5
+          ],
+          [
+            177,
+            88.5
+          ],
+          [
+            193,
+            96.5
+          ],
+          [
+            209,
+            104.5
+          ],
+          [
+            225,
+            112.5
+          ],
+          [
+            241,
+            120.5
+          ],
+          [
+            257,
+            128.5
+          ],
+          [
+            273,
+            136.5
+          ],
+          [
+            289,
+            144.5
+          ],
+          [
+            305,
+            152.5
+          ],
+          [
+            321,
+            160.5
+          ],
+          [
+            337,
+            168.5
+          ],
+          [
+            353,
+            176.5
+          ],
+          [
+            369,
+            184.5
+          ],
+          [
+            385,
+            192.5
+          ],
+          [
+            401,
+            200.5
+          ],
+          [
+            417,
+            208.5
+          ],
+          [
+            433,
+            216.5
+          ],
+          [
+            449,
+            224.5
+          ],
+          [
+            465,
+            232.5
+          ],
+          [
+            481,
+            240.5
+          ],
+          [
+            497,
+            248.5
+          ],
+          [
+            513,
+            256.5
+          ],
+          [
+            528,
+            264
+          ],
+          [
+            544,
+            272
+          ],
+          [
+            560,
+            280
+          ],
+          [
+            576,
+            288
+          ],
+          [
+            592,
+            296
+          ],
+          [
+            608,
+            304
+          ],
+          [
+            624,
+            312
+          ],
+          [
+            640,
+            320
+          ],
+          [
+            656,
+            328
+          ],
+          [
+            672,
+            336
+          ],
+          [
+            688,
+            344
+          ],
+          [
+            704,
+            352
+          ],
+          [
+            720,
+            360
+          ],
+          [
+            736,
+            368
+          ],
+          [
+            752,
+            376
+          ],
+          [
+            768,
+            384
+          ],
+          [
+            784,
+            392
+          ],
+          [
+            800,
+            400
+          ],
+          [
+            816,
+            408
+          ],
+          [
+            832,
+            416
+          ],
+          [
+            848,
+            424
+          ],
+          [
+            864,
+            432
+          ],
+          [
+            880,
+            440
+          ],
+          [
+            896,
+            448
+          ],
+          [
+            912,
+            456
+          ],
+          [
+            928,
+            464
+          ],
+          [
+            944,
+            472
+          ],
+          [
+            960,
+            480
+          ],
+          [
+            976,
+            488
+          ],
+          [
+            992,
+            496
+          ],
+          [
+            1008,
+            504
+          ],
+          [
+            1024,
+            512
+          ]
+        ],
+        "crossoverLine": [
+          [
+            1,
+            295.2238805970149
+          ],
+          [
+            1024,
+            295.2238805970149
+          ]
+        ],
+        "selectedPoint": [
+          [
+            1,
+            0.49983256426410577
+          ]
+        ],
+        "xDomain": [
+          1,
+          1024
+        ],
+        "yDomain": [
+          0,
+          542.72
+        ],
+        "criticalBatch": 736.0267451578908,
+        "firstComputeBoundBatch": 737,
+        "intensityCeiling": 1492.6101694915253,
+        "timesUs": [
+          0.09118052173913044,
+          53.855369552238805
+        ],
+        "convention": "A[B,D] W[D,F] -> C[B,F]; once-read A/W and once-write C. Weight-only 2B/e neglects A/C traffic and is an approximation, not the B-to-infinity limit. Finite crossing solves I(B)=peak/bandwidth; null means no finite crossing, and first integer is null also outside safe integer range. Sampled polyline, ideal peak/overlap assumptions, no measured GPU performance."
+      },
+      "facts": {
+        "curves": {
+          "xDomain": [
+            1,
+            1024
+          ],
+          "yDomain": [
+            0,
+            542.72
+          ],
+          "xLabel": "B · 批量",
+          "yLabel": "强度 · FLOP/Byte",
+          "layers": [
+            {
+              "id": "exact",
+              "type": "curve",
+              "points": [
+                [
+                  1,
+                  0.49983256426410577
+                ],
+                [
+                  17,
+                  8.451868955744619
+                ],
+                [
+                  33,
+                  16.319595675979222
+                ],
+                [
+                  49,
+                  24.104346466017574
+                ],
+                [
+                  65,
+                  31.80742708223357
+                ],
+                [
+                  81,
+                  39.430116026466635
+                ],
+                [
+                  97,
+                  46.97366525342176
+                ],
+                [
+                  113,
+                  54.43930085615033
+                ],
+                [
+                  129,
+                  61.82822373040019
+                ],
+                [
+                  145,
+                  69.14161021859077
+                ],
+                [
+                  161,
+                  76.3806127341389
+                ],
+                [
+                  177,
+                  83.54636036683085
+                ],
+                [
+                  193,
+                  90.63995946990907
+                ],
+                [
+                  209,
+                  97.66249422951411
+                ],
+                [
+                  225,
+                  104.61502721709793
+                ],
+                [
+                  241,
+                  111.4985999253994
+                ],
+                [
+                  257,
+                  118.3142332885499
+                ],
+                [
+                  273,
+                  125.06292818685463
+                ],
+                [
+                  289,
+                  131.74566593677366
+                ],
+                [
+                  305,
+                  138.36340876660674
+                ],
+                [
+                  321,
+                  144.9171002783659
+                ],
+                [
+                  337,
+                  151.40766589630175
+                ],
+                [
+                  353,
+                  157.83601330253103
+                ],
+                [
+                  369,
+                  164.20303286019637
+                ],
+                [
+                  385,
+                  170.50959802457214
+                ],
+                [
+                  401,
+                  176.7565657425158
+                ],
+                [
+                  417,
+                  182.94477684064742
+                ],
+                [
+                  433,
+                  189.07505640262798
+                ],
+                [
+                  449,
+                  195.14821413589053
+                ],
+                [
+                  465,
+                  201.1650447281677
+                ],
+                [
+                  481,
+                  207.12632819414495
+                ],
+                [
+                  497,
+                  213.03283021255677
+                ],
+                [
+                  513,
+                  218.8853024540323
+                ],
+                [
+                  528,
+                  224.32358162871478
+                ],
+                [
+                  544,
+                  230.07345935146765
+                ],
+                [
+                  560,
+                  235.771437313547
+                ],
+                [
+                  576,
+                  241.41821504721293
+                ],
+                [
+                  592,
+                  247.0144795694034
+                ],
+                [
+                  608,
+                  252.56090566037736
+                ],
+                [
+                  624,
+                  258.0581561349463
+                ],
+                [
+                  640,
+                  263.50688210652305
+                ],
+                [
+                  656,
+                  268.9077232442094
+                ],
+                [
+                  672,
+                  274.2613080231351
+                ],
+                [
+                  688,
+                  279.56825396825394
+                ],
+                [
+                  704,
+                  284.82916789179654
+                ],
+                [
+                  720,
+                  290.04464612457
+                ],
+                [
+                  736,
+                  295.21527474129135
+                ],
+                [
+                  752,
+                  300.34162978013205
+                ],
+                [
+                  768,
+                  305.4242774566474
+                ],
+                [
+                  784,
+                  310.463774372257
+                ],
+                [
+                  800,
+                  315.460667717438
+                ],
+                [
+                  816,
+                  320.41549546978666
+                ],
+                [
+                  832,
+                  325.3287865870986
+                ],
+                [
+                  848,
+                  330.2010611956137
+                ],
+                [
+                  864,
+                  335.0328307735663
+                ],
+                [
+                  880,
+                  339.8245983301761
+                ],
+                [
+                  896,
+                  344.5768585802124
+                ],
+                [
+                  912,
+                  349.2900981142579
+                ],
+                [
+                  928,
+                  353.96479556479557
+                ],
+                [
+                  944,
+                  358.60142176823797
+                ],
+                [
+                  960,
+                  363.20043992301345
+                ],
+                [
+                  976,
+                  367.76230574382146
+                ],
+                [
+                  992,
+                  372.28746761216416
+                ],
+                [
+                  1008,
+                  376.77636672325974
+                ],
+                [
+                  1024,
+                  381.2294372294372
+                ]
+              ]
+            },
+            {
+              "id": "weight-only",
+              "type": "curve",
+              "points": [
+                [
+                  1,
+                  0.5
+                ],
+                [
+                  17,
+                  8.5
+                ],
+                [
+                  33,
+                  16.5
+                ],
+                [
+                  49,
+                  24.5
+                ],
+                [
+                  65,
+                  32.5
+                ],
+                [
+                  81,
+                  40.5
+                ],
+                [
+                  97,
+                  48.5
+                ],
+                [
+                  113,
+                  56.5
+                ],
+                [
+                  129,
+                  64.5
+                ],
+                [
+                  145,
+                  72.5
+                ],
+                [
+                  161,
+                  80.5
+                ],
+                [
+                  177,
+                  88.5
+                ],
+                [
+                  193,
+                  96.5
+                ],
+                [
+                  209,
+                  104.5
+                ],
+                [
+                  225,
+                  112.5
+                ],
+                [
+                  241,
+                  120.5
+                ],
+                [
+                  257,
+                  128.5
+                ],
+                [
+                  273,
+                  136.5
+                ],
+                [
+                  289,
+                  144.5
+                ],
+                [
+                  305,
+                  152.5
+                ],
+                [
+                  321,
+                  160.5
+                ],
+                [
+                  337,
+                  168.5
+                ],
+                [
+                  353,
+                  176.5
+                ],
+                [
+                  369,
+                  184.5
+                ],
+                [
+                  385,
+                  192.5
+                ],
+                [
+                  401,
+                  200.5
+                ],
+                [
+                  417,
+                  208.5
+                ],
+                [
+                  433,
+                  216.5
+                ],
+                [
+                  449,
+                  224.5
+                ],
+                [
+                  465,
+                  232.5
+                ],
+                [
+                  481,
+                  240.5
+                ],
+                [
+                  497,
+                  248.5
+                ],
+                [
+                  513,
+                  256.5
+                ],
+                [
+                  528,
+                  264
+                ],
+                [
+                  544,
+                  272
+                ],
+                [
+                  560,
+                  280
+                ],
+                [
+                  576,
+                  288
+                ],
+                [
+                  592,
+                  296
+                ],
+                [
+                  608,
+                  304
+                ],
+                [
+                  624,
+                  312
+                ],
+                [
+                  640,
+                  320
+                ],
+                [
+                  656,
+                  328
+                ],
+                [
+                  672,
+                  336
+                ],
+                [
+                  688,
+                  344
+                ],
+                [
+                  704,
+                  352
+                ],
+                [
+                  720,
+                  360
+                ],
+                [
+                  736,
+                  368
+                ],
+                [
+                  752,
+                  376
+                ],
+                [
+                  768,
+                  384
+                ],
+                [
+                  784,
+                  392
+                ],
+                [
+                  800,
+                  400
+                ],
+                [
+                  816,
+                  408
+                ],
+                [
+                  832,
+                  416
+                ],
+                [
+                  848,
+                  424
+                ],
+                [
+                  864,
+                  432
+                ],
+                [
+                  880,
+                  440
+                ],
+                [
+                  896,
+                  448
+                ],
+                [
+                  912,
+                  456
+                ],
+                [
+                  928,
+                  464
+                ],
+                [
+                  944,
+                  472
+                ],
+                [
+                  960,
+                  480
+                ],
+                [
+                  976,
+                  488
+                ],
+                [
+                  992,
+                  496
+                ],
+                [
+                  1008,
+                  504
+                ],
+                [
+                  1024,
+                  512
+                ]
+              ]
+            },
+            {
+              "id": "crossing",
+              "type": "curve",
+              "points": [
+                [
+                  1,
+                  295.2238805970149
+                ],
+                [
+                  1024,
+                  295.2238805970149
+                ]
+              ]
+            },
+            {
+              "id": "selected",
+              "type": "points",
+              "points": [
+                [
+                  1,
+                  0.49983256426410577
+                ]
+              ]
+            }
+          ],
+          "legend": [
+            {
+              "label": "完整账本",
+              "type": "curve",
+              "color": "blue"
+            },
+            {
+              "label": "只计权重",
+              "type": "curve",
+              "color": "muted"
+            },
+            {
+              "label": "算/搬阈值",
+              "type": "curve",
+              "color": "orange"
+            },
+            {
+              "label": "当前 B",
+              "type": "points",
+              "color": "blue"
+            }
+          ]
+        },
+        "numbers": {
+          "items": [
+            {
+              "label": "当前批量 B",
+              "value": 1
+            },
+            {
+              "label": "强度 · FLOP/Byte",
+              "value": 0.49983256426410577,
+              "color": "blue"
+            },
+            {
+              "label": "有限分界 B · 连续理想值",
+              "value": 736.0267451578908,
+              "nullText": "无有限分界"
+            },
+            {
+              "label": "计算, 搬运 · µs",
+              "value": [
+                0.09118052173913044,
+                53.855369552238805
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "fp32",
+      "batch": 320,
+      "inputs": {
+        "bytesPerElement": 4
+      },
+      "budget": {
+        "batch": 320,
+        "inputDim": 4096,
+        "outputDim": 11008,
+        "bytesPerElement": 4,
+        "computeTFLOPS": 989,
+        "memoryGBPS": 3350,
+        "minBatch": 1,
+        "maxBatch": 1024,
+        "samples": 65,
+        "selected": {
+          "m": 320,
+          "n": 11008,
+          "k": 4096,
+          "bytesPerElement": 4,
+          "aElements": 1310720,
+          "bElements": 45088768,
+          "cElements": 3522560,
+          "aBytes": 5242880,
+          "bBytes": 180355072,
+          "cBytes": 14090240,
+          "bytes": 199688192,
+          "flops": 28856811520,
+          "multiplies": 14428405760,
+          "additions": 14424883200,
+          "exactScalarOps": 28853288960,
+          "intensity": 144.50935346242204,
+          "aMiB": 5,
+          "bMiB": 172,
+          "cMiB": 13.4375,
+          "maxMiB": 172,
+          "convention": "Decimal GB and TFLOP; max(compute time, transfer time) is an ideal lower bound with overlap and peak rates, not measured runtime. Excludes latency, caches and utilization losses.",
+          "computeTFLOPS": 989,
+          "memoryGBPS": 3350,
+          "crossover": 295.2238805970149,
+          "computeMs": 0.029177766956521738,
+          "transferMs": 0.05960841552238806,
+          "idealMs": 0.05960841552238806,
+          "idealTFLOPS": 484.1063340991139,
+          "bound": "memory"
+        },
+        "intensityCurve": [
+          [
+            1,
+            0.49983256426410577
+          ],
+          [
+            17,
+            8.451868955744619
+          ],
+          [
+            33,
+            16.319595675979222
+          ],
+          [
+            49,
+            24.104346466017574
+          ],
+          [
+            65,
+            31.80742708223357
+          ],
+          [
+            81,
+            39.430116026466635
+          ],
+          [
+            97,
+            46.97366525342176
+          ],
+          [
+            113,
+            54.43930085615033
+          ],
+          [
+            129,
+            61.82822373040019
+          ],
+          [
+            145,
+            69.14161021859077
+          ],
+          [
+            161,
+            76.3806127341389
+          ],
+          [
+            177,
+            83.54636036683085
+          ],
+          [
+            193,
+            90.63995946990907
+          ],
+          [
+            209,
+            97.66249422951411
+          ],
+          [
+            225,
+            104.61502721709793
+          ],
+          [
+            241,
+            111.4985999253994
+          ],
+          [
+            257,
+            118.3142332885499
+          ],
+          [
+            273,
+            125.06292818685463
+          ],
+          [
+            289,
+            131.74566593677366
+          ],
+          [
+            305,
+            138.36340876660674
+          ],
+          [
+            321,
+            144.9171002783659
+          ],
+          [
+            337,
+            151.40766589630175
+          ],
+          [
+            353,
+            157.83601330253103
+          ],
+          [
+            369,
+            164.20303286019637
+          ],
+          [
+            385,
+            170.50959802457214
+          ],
+          [
+            401,
+            176.7565657425158
+          ],
+          [
+            417,
+            182.94477684064742
+          ],
+          [
+            433,
+            189.07505640262798
+          ],
+          [
+            449,
+            195.14821413589053
+          ],
+          [
+            465,
+            201.1650447281677
+          ],
+          [
+            481,
+            207.12632819414495
+          ],
+          [
+            497,
+            213.03283021255677
+          ],
+          [
+            513,
+            218.8853024540323
+          ],
+          [
+            528,
+            224.32358162871478
+          ],
+          [
+            544,
+            230.07345935146765
+          ],
+          [
+            560,
+            235.771437313547
+          ],
+          [
+            576,
+            241.41821504721293
+          ],
+          [
+            592,
+            247.0144795694034
+          ],
+          [
+            608,
+            252.56090566037736
+          ],
+          [
+            624,
+            258.0581561349463
+          ],
+          [
+            640,
+            263.50688210652305
+          ],
+          [
+            656,
+            268.9077232442094
+          ],
+          [
+            672,
+            274.2613080231351
+          ],
+          [
+            688,
+            279.56825396825394
+          ],
+          [
+            704,
+            284.82916789179654
+          ],
+          [
+            720,
+            290.04464612457
+          ],
+          [
+            736,
+            295.21527474129135
+          ],
+          [
+            752,
+            300.34162978013205
+          ],
+          [
+            768,
+            305.4242774566474
+          ],
+          [
+            784,
+            310.463774372257
+          ],
+          [
+            800,
+            315.460667717438
+          ],
+          [
+            816,
+            320.41549546978666
+          ],
+          [
+            832,
+            325.3287865870986
+          ],
+          [
+            848,
+            330.2010611956137
+          ],
+          [
+            864,
+            335.0328307735663
+          ],
+          [
+            880,
+            339.8245983301761
+          ],
+          [
+            896,
+            344.5768585802124
+          ],
+          [
+            912,
+            349.2900981142579
+          ],
+          [
+            928,
+            353.96479556479557
+          ],
+          [
+            944,
+            358.60142176823797
+          ],
+          [
+            960,
+            363.20043992301345
+          ],
+          [
+            976,
+            367.76230574382146
+          ],
+          [
+            992,
+            372.28746761216416
+          ],
+          [
+            1008,
+            376.77636672325974
+          ],
+          [
+            1024,
+            381.2294372294372
+          ]
+        ],
+        "weightOnlyCurve": [
+          [
+            1,
+            0.5
+          ],
+          [
+            17,
+            8.5
+          ],
+          [
+            33,
+            16.5
+          ],
+          [
+            49,
+            24.5
+          ],
+          [
+            65,
+            32.5
+          ],
+          [
+            81,
+            40.5
+          ],
+          [
+            97,
+            48.5
+          ],
+          [
+            113,
+            56.5
+          ],
+          [
+            129,
+            64.5
+          ],
+          [
+            145,
+            72.5
+          ],
+          [
+            161,
+            80.5
+          ],
+          [
+            177,
+            88.5
+          ],
+          [
+            193,
+            96.5
+          ],
+          [
+            209,
+            104.5
+          ],
+          [
+            225,
+            112.5
+          ],
+          [
+            241,
+            120.5
+          ],
+          [
+            257,
+            128.5
+          ],
+          [
+            273,
+            136.5
+          ],
+          [
+            289,
+            144.5
+          ],
+          [
+            305,
+            152.5
+          ],
+          [
+            321,
+            160.5
+          ],
+          [
+            337,
+            168.5
+          ],
+          [
+            353,
+            176.5
+          ],
+          [
+            369,
+            184.5
+          ],
+          [
+            385,
+            192.5
+          ],
+          [
+            401,
+            200.5
+          ],
+          [
+            417,
+            208.5
+          ],
+          [
+            433,
+            216.5
+          ],
+          [
+            449,
+            224.5
+          ],
+          [
+            465,
+            232.5
+          ],
+          [
+            481,
+            240.5
+          ],
+          [
+            497,
+            248.5
+          ],
+          [
+            513,
+            256.5
+          ],
+          [
+            528,
+            264
+          ],
+          [
+            544,
+            272
+          ],
+          [
+            560,
+            280
+          ],
+          [
+            576,
+            288
+          ],
+          [
+            592,
+            296
+          ],
+          [
+            608,
+            304
+          ],
+          [
+            624,
+            312
+          ],
+          [
+            640,
+            320
+          ],
+          [
+            656,
+            328
+          ],
+          [
+            672,
+            336
+          ],
+          [
+            688,
+            344
+          ],
+          [
+            704,
+            352
+          ],
+          [
+            720,
+            360
+          ],
+          [
+            736,
+            368
+          ],
+          [
+            752,
+            376
+          ],
+          [
+            768,
+            384
+          ],
+          [
+            784,
+            392
+          ],
+          [
+            800,
+            400
+          ],
+          [
+            816,
+            408
+          ],
+          [
+            832,
+            416
+          ],
+          [
+            848,
+            424
+          ],
+          [
+            864,
+            432
+          ],
+          [
+            880,
+            440
+          ],
+          [
+            896,
+            448
+          ],
+          [
+            912,
+            456
+          ],
+          [
+            928,
+            464
+          ],
+          [
+            944,
+            472
+          ],
+          [
+            960,
+            480
+          ],
+          [
+            976,
+            488
+          ],
+          [
+            992,
+            496
+          ],
+          [
+            1008,
+            504
+          ],
+          [
+            1024,
+            512
+          ]
+        ],
+        "crossoverLine": [
+          [
+            1,
+            295.2238805970149
+          ],
+          [
+            1024,
+            295.2238805970149
+          ]
+        ],
+        "selectedPoint": [
+          [
+            320,
+            144.50935346242204
+          ]
+        ],
+        "xDomain": [
+          1,
+          1024
+        ],
+        "yDomain": [
+          0,
+          542.72
+        ],
+        "criticalBatch": 736.0267451578908,
+        "firstComputeBoundBatch": 737,
+        "intensityCeiling": 1492.6101694915253,
+        "timesUs": [
+          29.177766956521737,
+          59.608415522388064
+        ],
+        "convention": "A[B,D] W[D,F] -> C[B,F]; once-read A/W and once-write C. Weight-only 2B/e neglects A/C traffic and is an approximation, not the B-to-infinity limit. Finite crossing solves I(B)=peak/bandwidth; null means no finite crossing, and first integer is null also outside safe integer range. Sampled polyline, ideal peak/overlap assumptions, no measured GPU performance."
+      },
+      "facts": {
+        "curves": {
+          "xDomain": [
+            1,
+            1024
+          ],
+          "yDomain": [
+            0,
+            542.72
+          ],
+          "xLabel": "B · 批量",
+          "yLabel": "强度 · FLOP/Byte",
+          "layers": [
+            {
+              "id": "exact",
+              "type": "curve",
+              "points": [
+                [
+                  1,
+                  0.49983256426410577
+                ],
+                [
+                  17,
+                  8.451868955744619
+                ],
+                [
+                  33,
+                  16.319595675979222
+                ],
+                [
+                  49,
+                  24.104346466017574
+                ],
+                [
+                  65,
+                  31.80742708223357
+                ],
+                [
+                  81,
+                  39.430116026466635
+                ],
+                [
+                  97,
+                  46.97366525342176
+                ],
+                [
+                  113,
+                  54.43930085615033
+                ],
+                [
+                  129,
+                  61.82822373040019
+                ],
+                [
+                  145,
+                  69.14161021859077
+                ],
+                [
+                  161,
+                  76.3806127341389
+                ],
+                [
+                  177,
+                  83.54636036683085
+                ],
+                [
+                  193,
+                  90.63995946990907
+                ],
+                [
+                  209,
+                  97.66249422951411
+                ],
+                [
+                  225,
+                  104.61502721709793
+                ],
+                [
+                  241,
+                  111.4985999253994
+                ],
+                [
+                  257,
+                  118.3142332885499
+                ],
+                [
+                  273,
+                  125.06292818685463
+                ],
+                [
+                  289,
+                  131.74566593677366
+                ],
+                [
+                  305,
+                  138.36340876660674
+                ],
+                [
+                  321,
+                  144.9171002783659
+                ],
+                [
+                  337,
+                  151.40766589630175
+                ],
+                [
+                  353,
+                  157.83601330253103
+                ],
+                [
+                  369,
+                  164.20303286019637
+                ],
+                [
+                  385,
+                  170.50959802457214
+                ],
+                [
+                  401,
+                  176.7565657425158
+                ],
+                [
+                  417,
+                  182.94477684064742
+                ],
+                [
+                  433,
+                  189.07505640262798
+                ],
+                [
+                  449,
+                  195.14821413589053
+                ],
+                [
+                  465,
+                  201.1650447281677
+                ],
+                [
+                  481,
+                  207.12632819414495
+                ],
+                [
+                  497,
+                  213.03283021255677
+                ],
+                [
+                  513,
+                  218.8853024540323
+                ],
+                [
+                  528,
+                  224.32358162871478
+                ],
+                [
+                  544,
+                  230.07345935146765
+                ],
+                [
+                  560,
+                  235.771437313547
+                ],
+                [
+                  576,
+                  241.41821504721293
+                ],
+                [
+                  592,
+                  247.0144795694034
+                ],
+                [
+                  608,
+                  252.56090566037736
+                ],
+                [
+                  624,
+                  258.0581561349463
+                ],
+                [
+                  640,
+                  263.50688210652305
+                ],
+                [
+                  656,
+                  268.9077232442094
+                ],
+                [
+                  672,
+                  274.2613080231351
+                ],
+                [
+                  688,
+                  279.56825396825394
+                ],
+                [
+                  704,
+                  284.82916789179654
+                ],
+                [
+                  720,
+                  290.04464612457
+                ],
+                [
+                  736,
+                  295.21527474129135
+                ],
+                [
+                  752,
+                  300.34162978013205
+                ],
+                [
+                  768,
+                  305.4242774566474
+                ],
+                [
+                  784,
+                  310.463774372257
+                ],
+                [
+                  800,
+                  315.460667717438
+                ],
+                [
+                  816,
+                  320.41549546978666
+                ],
+                [
+                  832,
+                  325.3287865870986
+                ],
+                [
+                  848,
+                  330.2010611956137
+                ],
+                [
+                  864,
+                  335.0328307735663
+                ],
+                [
+                  880,
+                  339.8245983301761
+                ],
+                [
+                  896,
+                  344.5768585802124
+                ],
+                [
+                  912,
+                  349.2900981142579
+                ],
+                [
+                  928,
+                  353.96479556479557
+                ],
+                [
+                  944,
+                  358.60142176823797
+                ],
+                [
+                  960,
+                  363.20043992301345
+                ],
+                [
+                  976,
+                  367.76230574382146
+                ],
+                [
+                  992,
+                  372.28746761216416
+                ],
+                [
+                  1008,
+                  376.77636672325974
+                ],
+                [
+                  1024,
+                  381.2294372294372
+                ]
+              ]
+            },
+            {
+              "id": "weight-only",
+              "type": "curve",
+              "points": [
+                [
+                  1,
+                  0.5
+                ],
+                [
+                  17,
+                  8.5
+                ],
+                [
+                  33,
+                  16.5
+                ],
+                [
+                  49,
+                  24.5
+                ],
+                [
+                  65,
+                  32.5
+                ],
+                [
+                  81,
+                  40.5
+                ],
+                [
+                  97,
+                  48.5
+                ],
+                [
+                  113,
+                  56.5
+                ],
+                [
+                  129,
+                  64.5
+                ],
+                [
+                  145,
+                  72.5
+                ],
+                [
+                  161,
+                  80.5
+                ],
+                [
+                  177,
+                  88.5
+                ],
+                [
+                  193,
+                  96.5
+                ],
+                [
+                  209,
+                  104.5
+                ],
+                [
+                  225,
+                  112.5
+                ],
+                [
+                  241,
+                  120.5
+                ],
+                [
+                  257,
+                  128.5
+                ],
+                [
+                  273,
+                  136.5
+                ],
+                [
+                  289,
+                  144.5
+                ],
+                [
+                  305,
+                  152.5
+                ],
+                [
+                  321,
+                  160.5
+                ],
+                [
+                  337,
+                  168.5
+                ],
+                [
+                  353,
+                  176.5
+                ],
+                [
+                  369,
+                  184.5
+                ],
+                [
+                  385,
+                  192.5
+                ],
+                [
+                  401,
+                  200.5
+                ],
+                [
+                  417,
+                  208.5
+                ],
+                [
+                  433,
+                  216.5
+                ],
+                [
+                  449,
+                  224.5
+                ],
+                [
+                  465,
+                  232.5
+                ],
+                [
+                  481,
+                  240.5
+                ],
+                [
+                  497,
+                  248.5
+                ],
+                [
+                  513,
+                  256.5
+                ],
+                [
+                  528,
+                  264
+                ],
+                [
+                  544,
+                  272
+                ],
+                [
+                  560,
+                  280
+                ],
+                [
+                  576,
+                  288
+                ],
+                [
+                  592,
+                  296
+                ],
+                [
+                  608,
+                  304
+                ],
+                [
+                  624,
+                  312
+                ],
+                [
+                  640,
+                  320
+                ],
+                [
+                  656,
+                  328
+                ],
+                [
+                  672,
+                  336
+                ],
+                [
+                  688,
+                  344
+                ],
+                [
+                  704,
+                  352
+                ],
+                [
+                  720,
+                  360
+                ],
+                [
+                  736,
+                  368
+                ],
+                [
+                  752,
+                  376
+                ],
+                [
+                  768,
+                  384
+                ],
+                [
+                  784,
+                  392
+                ],
+                [
+                  800,
+                  400
+                ],
+                [
+                  816,
+                  408
+                ],
+                [
+                  832,
+                  416
+                ],
+                [
+                  848,
+                  424
+                ],
+                [
+                  864,
+                  432
+                ],
+                [
+                  880,
+                  440
+                ],
+                [
+                  896,
+                  448
+                ],
+                [
+                  912,
+                  456
+                ],
+                [
+                  928,
+                  464
+                ],
+                [
+                  944,
+                  472
+                ],
+                [
+                  960,
+                  480
+                ],
+                [
+                  976,
+                  488
+                ],
+                [
+                  992,
+                  496
+                ],
+                [
+                  1008,
+                  504
+                ],
+                [
+                  1024,
+                  512
+                ]
+              ]
+            },
+            {
+              "id": "crossing",
+              "type": "curve",
+              "points": [
+                [
+                  1,
+                  295.2238805970149
+                ],
+                [
+                  1024,
+                  295.2238805970149
+                ]
+              ]
+            },
+            {
+              "id": "selected",
+              "type": "points",
+              "points": [
+                [
+                  320,
+                  144.50935346242204
+                ]
+              ]
+            }
+          ],
+          "legend": [
+            {
+              "label": "完整账本",
+              "type": "curve",
+              "color": "blue"
+            },
+            {
+              "label": "只计权重",
+              "type": "curve",
+              "color": "muted"
+            },
+            {
+              "label": "算/搬阈值",
+              "type": "curve",
+              "color": "orange"
+            },
+            {
+              "label": "当前 B",
+              "type": "points",
+              "color": "blue"
+            }
+          ]
+        },
+        "numbers": {
+          "items": [
+            {
+              "label": "当前批量 B",
+              "value": 320
+            },
+            {
+              "label": "强度 · FLOP/Byte",
+              "value": 144.50935346242204,
+              "color": "blue"
+            },
+            {
+              "label": "有限分界 B · 连续理想值",
+              "value": 736.0267451578908,
+              "nullText": "无有限分界"
+            },
+            {
+              "label": "计算, 搬运 · µs",
+              "value": [
+                29.177766956521737,
+                59.608415522388064
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "fp32",
+      "batch": 1024,
+      "inputs": {
+        "bytesPerElement": 4
+      },
+      "budget": {
+        "batch": 1024,
+        "inputDim": 4096,
+        "outputDim": 11008,
+        "bytesPerElement": 4,
+        "computeTFLOPS": 989,
+        "memoryGBPS": 3350,
+        "minBatch": 1,
+        "maxBatch": 1024,
+        "samples": 65,
+        "selected": {
+          "m": 1024,
+          "n": 11008,
+          "k": 4096,
+          "bytesPerElement": 4,
+          "aElements": 4194304,
+          "bElements": 45088768,
+          "cElements": 11272192,
+          "aBytes": 16777216,
+          "bBytes": 180355072,
+          "cBytes": 45088768,
+          "bytes": 242221056,
+          "flops": 92341796864,
+          "multiplies": 46170898432,
+          "additions": 46159626240,
+          "exactScalarOps": 92330524672,
+          "intensity": 381.2294372294372,
+          "aMiB": 16,
+          "bMiB": 172,
+          "cMiB": 43,
+          "maxMiB": 172,
+          "convention": "Decimal GB and TFLOP; max(compute time, transfer time) is an ideal lower bound with overlap and peak rates, not measured runtime. Excludes latency, caches and utilization losses.",
+          "computeTFLOPS": 989,
+          "memoryGBPS": 3350,
+          "crossover": 295.2238805970149,
+          "computeMs": 0.09336885426086956,
+          "transferMs": 0.07230479283582089,
+          "idealMs": 0.09336885426086956,
+          "idealTFLOPS": 989,
+          "bound": "compute"
+        },
+        "intensityCurve": [
+          [
+            1,
+            0.49983256426410577
+          ],
+          [
+            17,
+            8.451868955744619
+          ],
+          [
+            33,
+            16.319595675979222
+          ],
+          [
+            49,
+            24.104346466017574
+          ],
+          [
+            65,
+            31.80742708223357
+          ],
+          [
+            81,
+            39.430116026466635
+          ],
+          [
+            97,
+            46.97366525342176
+          ],
+          [
+            113,
+            54.43930085615033
+          ],
+          [
+            129,
+            61.82822373040019
+          ],
+          [
+            145,
+            69.14161021859077
+          ],
+          [
+            161,
+            76.3806127341389
+          ],
+          [
+            177,
+            83.54636036683085
+          ],
+          [
+            193,
+            90.63995946990907
+          ],
+          [
+            209,
+            97.66249422951411
+          ],
+          [
+            225,
+            104.61502721709793
+          ],
+          [
+            241,
+            111.4985999253994
+          ],
+          [
+            257,
+            118.3142332885499
+          ],
+          [
+            273,
+            125.06292818685463
+          ],
+          [
+            289,
+            131.74566593677366
+          ],
+          [
+            305,
+            138.36340876660674
+          ],
+          [
+            321,
+            144.9171002783659
+          ],
+          [
+            337,
+            151.40766589630175
+          ],
+          [
+            353,
+            157.83601330253103
+          ],
+          [
+            369,
+            164.20303286019637
+          ],
+          [
+            385,
+            170.50959802457214
+          ],
+          [
+            401,
+            176.7565657425158
+          ],
+          [
+            417,
+            182.94477684064742
+          ],
+          [
+            433,
+            189.07505640262798
+          ],
+          [
+            449,
+            195.14821413589053
+          ],
+          [
+            465,
+            201.1650447281677
+          ],
+          [
+            481,
+            207.12632819414495
+          ],
+          [
+            497,
+            213.03283021255677
+          ],
+          [
+            513,
+            218.8853024540323
+          ],
+          [
+            528,
+            224.32358162871478
+          ],
+          [
+            544,
+            230.07345935146765
+          ],
+          [
+            560,
+            235.771437313547
+          ],
+          [
+            576,
+            241.41821504721293
+          ],
+          [
+            592,
+            247.0144795694034
+          ],
+          [
+            608,
+            252.56090566037736
+          ],
+          [
+            624,
+            258.0581561349463
+          ],
+          [
+            640,
+            263.50688210652305
+          ],
+          [
+            656,
+            268.9077232442094
+          ],
+          [
+            672,
+            274.2613080231351
+          ],
+          [
+            688,
+            279.56825396825394
+          ],
+          [
+            704,
+            284.82916789179654
+          ],
+          [
+            720,
+            290.04464612457
+          ],
+          [
+            736,
+            295.21527474129135
+          ],
+          [
+            752,
+            300.34162978013205
+          ],
+          [
+            768,
+            305.4242774566474
+          ],
+          [
+            784,
+            310.463774372257
+          ],
+          [
+            800,
+            315.460667717438
+          ],
+          [
+            816,
+            320.41549546978666
+          ],
+          [
+            832,
+            325.3287865870986
+          ],
+          [
+            848,
+            330.2010611956137
+          ],
+          [
+            864,
+            335.0328307735663
+          ],
+          [
+            880,
+            339.8245983301761
+          ],
+          [
+            896,
+            344.5768585802124
+          ],
+          [
+            912,
+            349.2900981142579
+          ],
+          [
+            928,
+            353.96479556479557
+          ],
+          [
+            944,
+            358.60142176823797
+          ],
+          [
+            960,
+            363.20043992301345
+          ],
+          [
+            976,
+            367.76230574382146
+          ],
+          [
+            992,
+            372.28746761216416
+          ],
+          [
+            1008,
+            376.77636672325974
+          ],
+          [
+            1024,
+            381.2294372294372
+          ]
+        ],
+        "weightOnlyCurve": [
+          [
+            1,
+            0.5
+          ],
+          [
+            17,
+            8.5
+          ],
+          [
+            33,
+            16.5
+          ],
+          [
+            49,
+            24.5
+          ],
+          [
+            65,
+            32.5
+          ],
+          [
+            81,
+            40.5
+          ],
+          [
+            97,
+            48.5
+          ],
+          [
+            113,
+            56.5
+          ],
+          [
+            129,
+            64.5
+          ],
+          [
+            145,
+            72.5
+          ],
+          [
+            161,
+            80.5
+          ],
+          [
+            177,
+            88.5
+          ],
+          [
+            193,
+            96.5
+          ],
+          [
+            209,
+            104.5
+          ],
+          [
+            225,
+            112.5
+          ],
+          [
+            241,
+            120.5
+          ],
+          [
+            257,
+            128.5
+          ],
+          [
+            273,
+            136.5
+          ],
+          [
+            289,
+            144.5
+          ],
+          [
+            305,
+            152.5
+          ],
+          [
+            321,
+            160.5
+          ],
+          [
+            337,
+            168.5
+          ],
+          [
+            353,
+            176.5
+          ],
+          [
+            369,
+            184.5
+          ],
+          [
+            385,
+            192.5
+          ],
+          [
+            401,
+            200.5
+          ],
+          [
+            417,
+            208.5
+          ],
+          [
+            433,
+            216.5
+          ],
+          [
+            449,
+            224.5
+          ],
+          [
+            465,
+            232.5
+          ],
+          [
+            481,
+            240.5
+          ],
+          [
+            497,
+            248.5
+          ],
+          [
+            513,
+            256.5
+          ],
+          [
+            528,
+            264
+          ],
+          [
+            544,
+            272
+          ],
+          [
+            560,
+            280
+          ],
+          [
+            576,
+            288
+          ],
+          [
+            592,
+            296
+          ],
+          [
+            608,
+            304
+          ],
+          [
+            624,
+            312
+          ],
+          [
+            640,
+            320
+          ],
+          [
+            656,
+            328
+          ],
+          [
+            672,
+            336
+          ],
+          [
+            688,
+            344
+          ],
+          [
+            704,
+            352
+          ],
+          [
+            720,
+            360
+          ],
+          [
+            736,
+            368
+          ],
+          [
+            752,
+            376
+          ],
+          [
+            768,
+            384
+          ],
+          [
+            784,
+            392
+          ],
+          [
+            800,
+            400
+          ],
+          [
+            816,
+            408
+          ],
+          [
+            832,
+            416
+          ],
+          [
+            848,
+            424
+          ],
+          [
+            864,
+            432
+          ],
+          [
+            880,
+            440
+          ],
+          [
+            896,
+            448
+          ],
+          [
+            912,
+            456
+          ],
+          [
+            928,
+            464
+          ],
+          [
+            944,
+            472
+          ],
+          [
+            960,
+            480
+          ],
+          [
+            976,
+            488
+          ],
+          [
+            992,
+            496
+          ],
+          [
+            1008,
+            504
+          ],
+          [
+            1024,
+            512
+          ]
+        ],
+        "crossoverLine": [
+          [
+            1,
+            295.2238805970149
+          ],
+          [
+            1024,
+            295.2238805970149
+          ]
+        ],
+        "selectedPoint": [
+          [
+            1024,
+            381.2294372294372
+          ]
+        ],
+        "xDomain": [
+          1,
+          1024
+        ],
+        "yDomain": [
+          0,
+          542.72
+        ],
+        "criticalBatch": 736.0267451578908,
+        "firstComputeBoundBatch": 737,
+        "intensityCeiling": 1492.6101694915253,
+        "timesUs": [
+          93.36885426086957,
+          72.30479283582089
+        ],
+        "convention": "A[B,D] W[D,F] -> C[B,F]; once-read A/W and once-write C. Weight-only 2B/e neglects A/C traffic and is an approximation, not the B-to-infinity limit. Finite crossing solves I(B)=peak/bandwidth; null means no finite crossing, and first integer is null also outside safe integer range. Sampled polyline, ideal peak/overlap assumptions, no measured GPU performance."
+      },
+      "facts": {
+        "curves": {
+          "xDomain": [
+            1,
+            1024
+          ],
+          "yDomain": [
+            0,
+            542.72
+          ],
+          "xLabel": "B · 批量",
+          "yLabel": "强度 · FLOP/Byte",
+          "layers": [
+            {
+              "id": "exact",
+              "type": "curve",
+              "points": [
+                [
+                  1,
+                  0.49983256426410577
+                ],
+                [
+                  17,
+                  8.451868955744619
+                ],
+                [
+                  33,
+                  16.319595675979222
+                ],
+                [
+                  49,
+                  24.104346466017574
+                ],
+                [
+                  65,
+                  31.80742708223357
+                ],
+                [
+                  81,
+                  39.430116026466635
+                ],
+                [
+                  97,
+                  46.97366525342176
+                ],
+                [
+                  113,
+                  54.43930085615033
+                ],
+                [
+                  129,
+                  61.82822373040019
+                ],
+                [
+                  145,
+                  69.14161021859077
+                ],
+                [
+                  161,
+                  76.3806127341389
+                ],
+                [
+                  177,
+                  83.54636036683085
+                ],
+                [
+                  193,
+                  90.63995946990907
+                ],
+                [
+                  209,
+                  97.66249422951411
+                ],
+                [
+                  225,
+                  104.61502721709793
+                ],
+                [
+                  241,
+                  111.4985999253994
+                ],
+                [
+                  257,
+                  118.3142332885499
+                ],
+                [
+                  273,
+                  125.06292818685463
+                ],
+                [
+                  289,
+                  131.74566593677366
+                ],
+                [
+                  305,
+                  138.36340876660674
+                ],
+                [
+                  321,
+                  144.9171002783659
+                ],
+                [
+                  337,
+                  151.40766589630175
+                ],
+                [
+                  353,
+                  157.83601330253103
+                ],
+                [
+                  369,
+                  164.20303286019637
+                ],
+                [
+                  385,
+                  170.50959802457214
+                ],
+                [
+                  401,
+                  176.7565657425158
+                ],
+                [
+                  417,
+                  182.94477684064742
+                ],
+                [
+                  433,
+                  189.07505640262798
+                ],
+                [
+                  449,
+                  195.14821413589053
+                ],
+                [
+                  465,
+                  201.1650447281677
+                ],
+                [
+                  481,
+                  207.12632819414495
+                ],
+                [
+                  497,
+                  213.03283021255677
+                ],
+                [
+                  513,
+                  218.8853024540323
+                ],
+                [
+                  528,
+                  224.32358162871478
+                ],
+                [
+                  544,
+                  230.07345935146765
+                ],
+                [
+                  560,
+                  235.771437313547
+                ],
+                [
+                  576,
+                  241.41821504721293
+                ],
+                [
+                  592,
+                  247.0144795694034
+                ],
+                [
+                  608,
+                  252.56090566037736
+                ],
+                [
+                  624,
+                  258.0581561349463
+                ],
+                [
+                  640,
+                  263.50688210652305
+                ],
+                [
+                  656,
+                  268.9077232442094
+                ],
+                [
+                  672,
+                  274.2613080231351
+                ],
+                [
+                  688,
+                  279.56825396825394
+                ],
+                [
+                  704,
+                  284.82916789179654
+                ],
+                [
+                  720,
+                  290.04464612457
+                ],
+                [
+                  736,
+                  295.21527474129135
+                ],
+                [
+                  752,
+                  300.34162978013205
+                ],
+                [
+                  768,
+                  305.4242774566474
+                ],
+                [
+                  784,
+                  310.463774372257
+                ],
+                [
+                  800,
+                  315.460667717438
+                ],
+                [
+                  816,
+                  320.41549546978666
+                ],
+                [
+                  832,
+                  325.3287865870986
+                ],
+                [
+                  848,
+                  330.2010611956137
+                ],
+                [
+                  864,
+                  335.0328307735663
+                ],
+                [
+                  880,
+                  339.8245983301761
+                ],
+                [
+                  896,
+                  344.5768585802124
+                ],
+                [
+                  912,
+                  349.2900981142579
+                ],
+                [
+                  928,
+                  353.96479556479557
+                ],
+                [
+                  944,
+                  358.60142176823797
+                ],
+                [
+                  960,
+                  363.20043992301345
+                ],
+                [
+                  976,
+                  367.76230574382146
+                ],
+                [
+                  992,
+                  372.28746761216416
+                ],
+                [
+                  1008,
+                  376.77636672325974
+                ],
+                [
+                  1024,
+                  381.2294372294372
+                ]
+              ]
+            },
+            {
+              "id": "weight-only",
+              "type": "curve",
+              "points": [
+                [
+                  1,
+                  0.5
+                ],
+                [
+                  17,
+                  8.5
+                ],
+                [
+                  33,
+                  16.5
+                ],
+                [
+                  49,
+                  24.5
+                ],
+                [
+                  65,
+                  32.5
+                ],
+                [
+                  81,
+                  40.5
+                ],
+                [
+                  97,
+                  48.5
+                ],
+                [
+                  113,
+                  56.5
+                ],
+                [
+                  129,
+                  64.5
+                ],
+                [
+                  145,
+                  72.5
+                ],
+                [
+                  161,
+                  80.5
+                ],
+                [
+                  177,
+                  88.5
+                ],
+                [
+                  193,
+                  96.5
+                ],
+                [
+                  209,
+                  104.5
+                ],
+                [
+                  225,
+                  112.5
+                ],
+                [
+                  241,
+                  120.5
+                ],
+                [
+                  257,
+                  128.5
+                ],
+                [
+                  273,
+                  136.5
+                ],
+                [
+                  289,
+                  144.5
+                ],
+                [
+                  305,
+                  152.5
+                ],
+                [
+                  321,
+                  160.5
+                ],
+                [
+                  337,
+                  168.5
+                ],
+                [
+                  353,
+                  176.5
+                ],
+                [
+                  369,
+                  184.5
+                ],
+                [
+                  385,
+                  192.5
+                ],
+                [
+                  401,
+                  200.5
+                ],
+                [
+                  417,
+                  208.5
+                ],
+                [
+                  433,
+                  216.5
+                ],
+                [
+                  449,
+                  224.5
+                ],
+                [
+                  465,
+                  232.5
+                ],
+                [
+                  481,
+                  240.5
+                ],
+                [
+                  497,
+                  248.5
+                ],
+                [
+                  513,
+                  256.5
+                ],
+                [
+                  528,
+                  264
+                ],
+                [
+                  544,
+                  272
+                ],
+                [
+                  560,
+                  280
+                ],
+                [
+                  576,
+                  288
+                ],
+                [
+                  592,
+                  296
+                ],
+                [
+                  608,
+                  304
+                ],
+                [
+                  624,
+                  312
+                ],
+                [
+                  640,
+                  320
+                ],
+                [
+                  656,
+                  328
+                ],
+                [
+                  672,
+                  336
+                ],
+                [
+                  688,
+                  344
+                ],
+                [
+                  704,
+                  352
+                ],
+                [
+                  720,
+                  360
+                ],
+                [
+                  736,
+                  368
+                ],
+                [
+                  752,
+                  376
+                ],
+                [
+                  768,
+                  384
+                ],
+                [
+                  784,
+                  392
+                ],
+                [
+                  800,
+                  400
+                ],
+                [
+                  816,
+                  408
+                ],
+                [
+                  832,
+                  416
+                ],
+                [
+                  848,
+                  424
+                ],
+                [
+                  864,
+                  432
+                ],
+                [
+                  880,
+                  440
+                ],
+                [
+                  896,
+                  448
+                ],
+                [
+                  912,
+                  456
+                ],
+                [
+                  928,
+                  464
+                ],
+                [
+                  944,
+                  472
+                ],
+                [
+                  960,
+                  480
+                ],
+                [
+                  976,
+                  488
+                ],
+                [
+                  992,
+                  496
+                ],
+                [
+                  1008,
+                  504
+                ],
+                [
+                  1024,
+                  512
+                ]
+              ]
+            },
+            {
+              "id": "crossing",
+              "type": "curve",
+              "points": [
+                [
+                  1,
+                  295.2238805970149
+                ],
+                [
+                  1024,
+                  295.2238805970149
+                ]
+              ]
+            },
+            {
+              "id": "selected",
+              "type": "points",
+              "points": [
+                [
+                  1024,
+                  381.2294372294372
+                ]
+              ]
+            }
+          ],
+          "legend": [
+            {
+              "label": "完整账本",
+              "type": "curve",
+              "color": "blue"
+            },
+            {
+              "label": "只计权重",
+              "type": "curve",
+              "color": "muted"
+            },
+            {
+              "label": "算/搬阈值",
+              "type": "curve",
+              "color": "orange"
+            },
+            {
+              "label": "当前 B",
+              "type": "points",
+              "color": "blue"
+            }
+          ]
+        },
+        "numbers": {
+          "items": [
+            {
+              "label": "当前批量 B",
+              "value": 1024
+            },
+            {
+              "label": "强度 · FLOP/Byte",
+              "value": 381.2294372294372,
+              "color": "blue"
+            },
+            {
+              "label": "有限分界 B · 连续理想值",
+              "value": 736.0267451578908,
+              "nullText": "无有限分界"
+            },
+            {
+              "label": "计算, 搬运 · µs",
+              "value": [
+                93.36885426086957,
+                72.30479283582089
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "scope": "Actual runtime of the same reused scene. Independent arithmetic is separate; no model calls or art score."
+}

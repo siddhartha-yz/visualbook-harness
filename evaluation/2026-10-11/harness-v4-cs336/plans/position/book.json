@@ -1,0 +1,306 @@
+{
+  "figures": [
+    {
+      "title": "位置一起前移，夹角与内积保持",
+      "height": 280,
+      "mobileHeight": 440,
+      "params": [],
+      "interaction": "timeline",
+      "initialProgress": 1,
+      "durationMs": 4000,
+      "scene": {
+        "type": "compose",
+        "calculations": [
+          {
+            "id": "rope",
+            "operation": "rotary-pairs",
+            "inputs": {
+              "q": [
+                1,
+                0
+              ],
+              "k": [
+                0.8,
+                0.6
+              ],
+              "m": 0,
+              "n": 2,
+              "base": 10000,
+              "shift": {
+                "$progress": true
+              }
+            }
+          }
+        ],
+        "visual": {
+          "type": "columns",
+          "layout": {
+            "gap": 24,
+            "minColumnWidth": 260
+          },
+          "children": [
+            {
+              "type": "rotary-plane",
+              "props": {
+                "q": [
+                  1,
+                  0
+                ],
+                "k": [
+                  0.8,
+                  0.6
+                ],
+                "m": 0,
+                "n": 2,
+                "base": 10000,
+                "shift": {
+                  "$progress": true
+                },
+                "pairIndex": 0
+              },
+              "id": "shift-plane"
+            },
+            {
+              "type": "readout",
+              "props": {
+                "items": [
+                  {
+                    "label": "本平面内积 · 保持",
+                    "value": {
+                      "$result": "rope.dot"
+                    },
+                    "color": "orange"
+                  },
+                  {
+                    "label": "位置差 n − m",
+                    "value": 2
+                  },
+                  {
+                    "label": "共同前移 s",
+                    "value": {
+                      "$progress": true
+                    }
+                  }
+                ]
+              },
+              "id": "shift-values"
+            }
+          ]
+        }
+      },
+      "summary": "横/纵：第1/2坐标；蓝 q=(1,0)，橙 k=(0.8,0.6)。m=0、n=2、θ=1 rad/词元。淡线为原方向；s 连续插值。",
+      "id": "shared-shift",
+      "afterAnchor": "position-014",
+      "sourceDiagramAnchor": "position-014",
+      "presentation": "reading",
+      "placement": "wide"
+    },
+    {
+      "title": "同一位移，两个转速",
+      "height": 360,
+      "mobileHeight": 560,
+      "params": [
+        {
+          "key": "shift",
+          "label": "共同前移 s（词元）",
+          "min": 0,
+          "max": 12,
+          "step": 0.01,
+          "value": 4
+        }
+      ],
+      "interaction": "parameters",
+      "scene": {
+        "type": "compose",
+        "calculations": [
+          {
+            "id": "increments",
+            "operation": "dense",
+            "inputs": {
+              "input": [
+                [
+                  {
+                    "$param": "shift"
+                  }
+                ]
+              ],
+              "weights": [
+                [
+                  1,
+                  0.01
+                ]
+              ],
+              "bias": [
+                0,
+                0
+              ],
+              "activation": "linear"
+            }
+          }
+        ],
+        "visual": {
+          "type": "columns",
+          "layout": {
+            "gap": 18,
+            "minColumnWidth": 260
+          },
+          "children": [
+            {
+              "type": "stack",
+              "id": "frequency-pair-0",
+              "layout": {
+                "weights": [
+                  2.5,
+                  1
+                ],
+                "gap": 6
+              },
+              "children": [
+                {
+                  "type": "rotary-plane",
+                  "props": {
+                    "q": [
+                      1,
+                      0,
+                      1,
+                      0
+                    ],
+                    "k": [
+                      0.8,
+                      0.6,
+                      0.8,
+                      0.6
+                    ],
+                    "m": 0,
+                    "n": 2,
+                    "base": 10000,
+                    "shift": {
+                      "$param": "shift"
+                    },
+                    "pairIndex": 0
+                  },
+                  "id": "frequency-plane-0"
+                },
+                {
+                  "id": "frequency-readout-0",
+                  "type": "readout",
+                  "props": {
+                    "items": [
+                      {
+                        "label": "θ=1 · 增加转角(rad)",
+                        "value": {
+                          "$result": "increments.output.0.0"
+                        },
+                        "color": "orange"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "type": "stack",
+              "id": "frequency-pair-1",
+              "layout": {
+                "weights": [
+                  2.5,
+                  1
+                ],
+                "gap": 6
+              },
+              "children": [
+                {
+                  "type": "rotary-plane",
+                  "props": {
+                    "q": [
+                      1,
+                      0,
+                      1,
+                      0
+                    ],
+                    "k": [
+                      0.8,
+                      0.6,
+                      0.8,
+                      0.6
+                    ],
+                    "m": 0,
+                    "n": 2,
+                    "base": 10000,
+                    "shift": {
+                      "$param": "shift"
+                    },
+                    "pairIndex": 1
+                  },
+                  "id": "frequency-plane-1"
+                },
+                {
+                  "id": "frequency-readout-1",
+                  "type": "readout",
+                  "props": {
+                    "items": [
+                      {
+                        "label": "θ=0.01 · 增加转角(rad)",
+                        "value": {
+                          "$result": "increments.output.0.1"
+                        },
+                        "color": "orange"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "summary": "d=4，基数10000，θ 单位为 rad/词元。横/纵为各对第1/2坐标；两对都取 q=(1,0)、k=(0.8,0.6)，m=0、n=2。淡线为原方向。",
+      "id": "frequency-scales",
+      "afterAnchor": "position-028",
+      "presentation": "reading",
+      "placement": "wide"
+    }
+  ],
+  "annotations": [
+    {
+      "id": "note-equivariance",
+      "afterAnchor": "position-004",
+      "kind": "correction",
+      "placement": "margin",
+      "text": "严格说是置换等变：输入换序，输出同样换序。这里假设没有位置编码、位置偏置或固定因果掩码。"
+    },
+    {
+      "id": "note-absolute-relative-boundary",
+      "afterAnchor": "position-007",
+      "kind": "clarification",
+      "text": "加法展开共四项，其中两项是内容与位置的交叉项；存在交叉项不等于必然有害。有限位置表不能直接索引表外位置，但可另行扩展。相对偏置是在 QKᵀ 后加分数，不会取消这次 GEMM；额外成本取决于实现。"
+    },
+    {
+      "id": "note-angle-condition",
+      "afterAnchor": "position-013",
+      "kind": "correction",
+      "text": "实际夹角还包含原始 q、k 的方向差。保持内容向量固定时，共同前移只给两者增加相同转角；它消去的是绝对位置，而不是内容。以下用从 q 到 k 的有向角，取模 2π。",
+      "formula": "\\Delta\\phi=\\phi_k-\\phi_q+(n-m)\\theta\\pmod{2\\pi}"
+    },
+    {
+      "id": "note-frequency-boundary",
+      "afterAnchor": "position-028",
+      "kind": "clarification",
+      "placement": "margin",
+      "text": "快慢指角速度 θ；相位会绕回。频率本身不保证某对学到语法或长程关系，也不保证长度外推。"
+    },
+    {
+      "id": "note-value-boundary",
+      "afterAnchor": "position-032",
+      "kind": "clarification",
+      "placement": "margin",
+      "text": "标准 RoPE 旋转 Q/K、不旋转 V；这是本文的设计约定。旋转 V 并不破坏加权求和的线性，但会改变输出表示。"
+    },
+    {
+      "id": "note-extrapolation-boundary",
+      "afterAnchor": "position-035",
+      "kind": "condition",
+      "text": "相对位置恒等式并不保证超长上下文可用。部分旋转、频率缩放及外推效果需分别核查模型定义和实验；本文的手选向量图只展示旋转几何。"
+    }
+  ]
+}

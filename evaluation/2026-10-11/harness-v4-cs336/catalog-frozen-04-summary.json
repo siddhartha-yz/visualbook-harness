@@ -1,0 +1,417 @@
+{
+  "toolchain": "toolchain-04.json",
+  "modelCalls": 0,
+  "records": [
+    {
+      "id": "matrix-product",
+      "rawSha256": "28fb38bb870456109d967ded5930d7f01869ea1ff7cb0d5c91ea9208dd501ec5",
+      "findings": []
+    },
+    {
+      "id": "reshape",
+      "rawSha256": "41449df90a7a3b241fd097b11e97c01be22907904631476ddbeb23dd661b1bf3",
+      "findings": []
+    },
+    {
+      "id": "data-flow",
+      "rawSha256": "033e83e6411528e3deecb658d5129cc1c4e09b29204d6a0c3824e1060902c4e7",
+      "findings": []
+    },
+    {
+      "id": "optimizer",
+      "rawSha256": "18ee825211a1a826a4a137632b0a03690a18df6102f3fede750d207413b5b052",
+      "findings": []
+    },
+    {
+      "id": "probabilities",
+      "rawSha256": "c70dafc1541f131866f7a4c2f795299a66c1c57846073708ed70f0c9265ac26c",
+      "findings": []
+    },
+    {
+      "id": "convolution",
+      "rawSha256": "bfbf3ddb38fdaf1f2fa7254899cd587509f5362bd081391b2b57e07e057ed5c9",
+      "findings": []
+    },
+    {
+      "id": "projection",
+      "rawSha256": "dbdf504137008788bd02d2a6274c884ebed9ed0e5a2b97dff7ce89da780d6b8c",
+      "findings": []
+    },
+    {
+      "id": "linear-transform",
+      "rawSha256": "2dfa5d12e32840962f473e5d292362839390b6c2653f485ff5c40ea8a3b27440",
+      "findings": []
+    },
+    {
+      "id": "derivative",
+      "rawSha256": "366e36913738cba1d1f57302a7b88b7a97809b518773f1273372a220c31f6aac",
+      "findings": []
+    },
+    {
+      "id": "integral",
+      "rawSha256": "6060d8755238faef087e543c65b2810a58b542496a1745e14932bcf1c31baabc",
+      "findings": []
+    },
+    {
+      "id": "unit-circle",
+      "rawSha256": "c1abb88fa6e83c6e93a0f693b1b5eaf338b99487dcf08851a5c6e2bf4329b8ff",
+      "findings": []
+    },
+    {
+      "id": "activation",
+      "rawSha256": "11a3f0e24be8816c147e8560889c0b37a8cdc5a94f33571e4dabba581a73fa4d",
+      "findings": []
+    },
+    {
+      "id": "linked-plot",
+      "rawSha256": "6c3ca0ccee52286f6f305af18f85b7abece5ea1f984d9a41b8fc7cdcbce3fd3a",
+      "findings": []
+    },
+    {
+      "id": "autograd",
+      "rawSha256": "263017b9babde389b87c8a01f8957c1e454b009ea14e5e62021ed54b04dc688f",
+      "findings": []
+    },
+    {
+      "id": "dependency-graph",
+      "rawSha256": "6717f89fe7871ce5546e17691926c1bf683650b74d85048ff67da20803d11e4f",
+      "findings": []
+    },
+    {
+      "id": "normal-distribution",
+      "rawSha256": "f53f4592e8f86c682171e6d184956e9136e6488f2b6ac05c22975e8e05232b84",
+      "findings": []
+    },
+    {
+      "id": "binomial-distribution",
+      "rawSha256": "c6ec968c4c9251e62e5f6ac2a9329d7865d0c85cec4d7a73e12ada59c1aa4a0e",
+      "findings": []
+    },
+    {
+      "id": "bayes-area",
+      "rawSha256": "b2d1a69b9dddf26321ec13f3b14a1310e7fb70afb02ab4f1240e8c71779b6fdc",
+      "findings": []
+    },
+    {
+      "id": "histogram",
+      "rawSha256": "acf6ba1229f4877386cf8bb521723dc424a71b1283f4eda5a4bf655e9b69954f",
+      "findings": []
+    },
+    {
+      "id": "regression-residuals",
+      "rawSha256": "5434f5072c1edf7825a379cdd7f9de6d16188f47b942f3b5b7c1c5e89ed31ab7",
+      "findings": []
+    },
+    {
+      "id": "regularized-loss",
+      "rawSha256": "d07166206db0b57d7e7698bd344a60ea39fc9ed3ce762ad30a4175b82a3a4ca8",
+      "findings": []
+    },
+    {
+      "id": "decision-boundary",
+      "rawSha256": "814299784b2489a842290021078a711d1fe735a37fd036bdfc100f10a2358266",
+      "findings": []
+    },
+    {
+      "id": "pca-projection",
+      "rawSha256": "48e60769abb25f611b55b14ddf216223fa7d96f9676bafe1c39f638122f78e25",
+      "findings": []
+    },
+    {
+      "id": "matrix-selection",
+      "rawSha256": "40d62336ca46ef38ac77a163e36d2a306ac4c59f3acdff6bdb3e2a2b2efcdd0b",
+      "findings": []
+    },
+    {
+      "id": "attention-compose",
+      "rawSha256": "d6d89d69dd6bb51f3f4affc98271ba9928c4ed9661e5d0101883e9862d53b7b8",
+      "findings": []
+    },
+    {
+      "id": "normalization-axes",
+      "rawSha256": "eb16441bef2d270e41ff12a324e7aa5cf35233e56eb0cf54c45ad26167ecb6e1",
+      "findings": []
+    },
+    {
+      "id": "normalization-running",
+      "rawSha256": "148147ccf4b808d7210c90dbea71087e66449663ad3e36a0438f44c699945f8b",
+      "findings": []
+    },
+    {
+      "id": "dense-compose",
+      "rawSha256": "4cdacfca704e11b02665453c69545d3398a26ac335d89c5f9719172f7a9ed4f8",
+      "findings": []
+    },
+    {
+      "id": "dropout-mask",
+      "rawSha256": "102fbf45c89196d14576d94afe9fe9c89084522f40c4e25c3f4e2fd0abad1b8a",
+      "findings": []
+    },
+    {
+      "id": "pca-coordinates",
+      "rawSha256": "2ea7143c39ad757ae783767807583dbb52365a414a4252bba92a285c4c61eff6",
+      "findings": []
+    },
+    {
+      "id": "dense-backward",
+      "rawSha256": "36ae3c2fca9bc866c8a68c76c12f66d46ee798c1255e604b38299a90e3b7c260",
+      "findings": []
+    },
+    {
+      "id": "two-layer-gradient",
+      "rawSha256": "0776d87e5432aa96cdaec43cc07aa9096b98bd646b30cb13b9a8840a3a86a52a",
+      "findings": []
+    },
+    {
+      "id": "array-strides",
+      "rawSha256": "a0ddbd262938d8ba9778fce9772ec6eeb881f9a890767d65bc5aa3f89788798f",
+      "findings": []
+    },
+    {
+      "id": "broadcast-axes",
+      "rawSha256": "7008c1120bd3fd4602acf470198e3267bad736ac8cd8d5c7dcbcdd4543986b2e",
+      "findings": []
+    },
+    {
+      "id": "async-schedule",
+      "rawSha256": "c2be21e2080d9c7eceebc8106815f0291e9490b0a26be0828b4e8508267ffff8",
+      "findings": []
+    },
+    {
+      "id": "memory-alias",
+      "rawSha256": "7a2b62e038446d1b78ecae3760a5d61e8f92e815e1f9ee90f5e7aef9d5eab296",
+      "findings": []
+    },
+    {
+      "id": "gradient-contributions",
+      "rawSha256": "dc75e23929880d6fe386c38a000cf67ce0abd8a56ec9a7b3a904d68c1502ec08",
+      "findings": []
+    },
+    {
+      "id": "weighted-expectation",
+      "rawSha256": "7beb190cc1cb236f22eb1b6dba64ef7b19dc8680347ae64211a155784ce44e64",
+      "findings": []
+    },
+    {
+      "id": "cache-lifetimes",
+      "rawSha256": "4685ec2bac1b966e7409bbcb52976d87563f6021851e73e41c6677836db37ec5",
+      "findings": []
+    },
+    {
+      "id": "receptive-field",
+      "rawSha256": "3dba51f8cc2bb42a9b3de69d6caf244e57f6da6da8d057cd707f3401211ec2ea",
+      "findings": []
+    },
+    {
+      "id": "dilation-holes",
+      "rawSha256": "a948579e7f0b3f848cb8975ef225f9dcd2298d4cfbc1c4a48b9be8b789401843",
+      "findings": []
+    },
+    {
+      "id": "kernel-regression",
+      "rawSha256": "6ae8f2a328d6a5cb3e18b95a12648bedf0efca8b89a0df87f4310cf3f3a91226",
+      "findings": []
+    },
+    {
+      "id": "kernel-weight-composition",
+      "rawSha256": "f666365eea5609b794e311a7e940af5504b9e4f26e8831c752410e99722442de",
+      "findings": []
+    },
+    {
+      "id": "gradient-vectors",
+      "rawSha256": "e9e14613d7905f7a234e43ca203532225dbb69541bf85c913ac5cc3de320781c",
+      "findings": []
+    },
+    {
+      "id": "vector-addition",
+      "rawSha256": "10c9f64927c0ac6fa107ddb6d59d8e18fbb6f89a4583aaba5aec942cf810e56f",
+      "findings": []
+    },
+    {
+      "id": "quadratic-contours",
+      "rawSha256": "65e87036c0cc4c33fc893d7cf9f0ffaa3db9353f9f24060cebf864bf8b7c54c4",
+      "findings": []
+    },
+    {
+      "id": "rosenbrock-valley",
+      "rawSha256": "7a03e74318261be51881a09b185a16ce4a76a6b7f865a5dbee93ce7534781c91",
+      "findings": []
+    },
+    {
+      "id": "saddle-contours",
+      "rawSha256": "b9b75a34abad0ea0867678f7b45844433496716524c64ed99f0fa31e72449216",
+      "findings": []
+    },
+    {
+      "id": "normalization-points",
+      "rawSha256": "05a9d85df431f9a8953ef157ba0201732fcb16b12e95b8968bfc75687c257943",
+      "findings": []
+    },
+    {
+      "id": "paired-points",
+      "rawSha256": "792550c0b09e64ef6fab19de0ccd132d5def93f51a3e58c9a422bdb11e716bb8",
+      "findings": []
+    },
+    {
+      "id": "transpose-grid",
+      "rawSha256": "9e6c877249991ed34ab0fab6daa2df4811255eb09db0f5e9e3ad65f231a977ea",
+      "findings": []
+    },
+    {
+      "id": "neural-response",
+      "rawSha256": "3104f07b9b854a355770638da138487235e17fd7225e5c749cf1a47e398fd206",
+      "findings": []
+    },
+    {
+      "id": "sigmoid-response",
+      "rawSha256": "539e903dc79b033d14ab9d26a1bbc7a69261c120e613ea0b6b8b1b6498041b8e",
+      "findings": []
+    },
+    {
+      "id": "sampled-field",
+      "rawSha256": "bc34b84ae5700878be3fd7a28c7d2b8da936db9245098c1cc58d1480de7dbbc8",
+      "findings": []
+    },
+    {
+      "id": "polynomial-fit",
+      "rawSha256": "1b4196cdfdbba2e406a90b331ffa10164bc7860625e327468a8f583eb1edd6e0",
+      "findings": []
+    },
+    {
+      "id": "optimizer-landscape",
+      "rawSha256": "2775af35c4aad5d717fe806018df8fabf54a04621023ab5b7ab0ffe5aff5a4f7",
+      "findings": []
+    },
+    {
+      "id": "adam-bias",
+      "rawSha256": "85b6edd83dcce0c7f36ee6c031db0da38f12d14b6ad2a121f43fcb33bdfd1a58",
+      "findings": []
+    },
+    {
+      "id": "softmax-competition",
+      "rawSha256": "2cbdbbe8d5eae58152dca85680012173725a9162566710ee2b6a594c0012ce05",
+      "findings": []
+    },
+    {
+      "id": "softmax-gradient-step",
+      "rawSha256": "bd15b423bec1253d0a1e3d3aee4d582e81c37632e3b698ac4d5deee4db51b824",
+      "findings": []
+    },
+    {
+      "id": "head-reindex",
+      "rawSha256": "17a05dc079127aa2caa9f301cca12f7e836240b939b4d925d0c5ab97e024f9b9",
+      "findings": []
+    },
+    {
+      "id": "sparse-gradient-memory",
+      "rawSha256": "3999db899d068e51ca8376949e015c6437c82c5f8d63c23e43e448eeeb2856b2",
+      "findings": []
+    },
+    {
+      "id": "rope-shift",
+      "rawSha256": "214a98649c23cdb30a2787ecea5c6c84af7baf31651493b9de46fd3618b1fbe9",
+      "findings": []
+    },
+    {
+      "id": "rope-frequencies",
+      "rawSha256": "9f63c47ed02c53afa72cd9486987933ec9321cd87ca24ca312516688c429fa53",
+      "findings": []
+    },
+    {
+      "id": "roofline-balance",
+      "rawSha256": "15c8abecb7289679fea39c9b14eb23c470343f697de0887ca3f2ef6493cf4f4a",
+      "findings": []
+    },
+    {
+      "id": "kv-head-budget",
+      "rawSha256": "fd7ebc3653e806a64944bb2facb596ffca8da5905c5e52d6223d7a770790cdd4",
+      "findings": []
+    },
+    {
+      "id": "collective-semantics",
+      "rawSha256": "77379fc2dfda3ea7fe552dbe6ef7cce2500c193883a07c86f8c50f4294750346",
+      "findings": []
+    },
+    {
+      "id": "collective-gather",
+      "rawSha256": "9ae0c14d52356b66108289cc1e93b25490b0dd72f3b5476af4f1e6a89e0f1d5b",
+      "findings": []
+    },
+    {
+      "id": "token-partitions",
+      "rawSha256": "c06bdbbe6132219b4b4db652fb8f389fd998010ffec2db41aaec94764168b531",
+      "findings": []
+    },
+    {
+      "id": "partition-barrier",
+      "rawSha256": "23725d7809df6b18c4c5bc6e0ff492c3671c8c815ff8984d4b5b2bb2e27b48a3",
+      "findings": []
+    },
+    {
+      "id": "signed-category-bars",
+      "rawSha256": "483a1b80802dde881232be4dc0c68ec47acd34cb921bb56e5f2a914ed375e939",
+      "findings": []
+    },
+    {
+      "id": "pair-counts",
+      "rawSha256": "1b8790611f3b044af6e9d6599c2ba88a4a82df0e95b58497b405b6dae274d660",
+      "findings": []
+    },
+    {
+      "id": "kv-three-budgets",
+      "rawSha256": "2d789b5b456b164049e3117d2cbc50b46fbd256b77f92765995e6c081403c621",
+      "findings": []
+    },
+    {
+      "id": "weighted-flow",
+      "rawSha256": "28b1560481d1d51c9a27de7678ebb7130b68d2d1e8dbc89af1686773d89fd89a",
+      "findings": []
+    },
+    {
+      "id": "routing-top-k",
+      "rawSha256": "be044d203d9ed6f003836be445b7c0cfd9f4ef3dbea6f7e03531469e0952a1d0",
+      "findings": []
+    },
+    {
+      "id": "gemm-traffic",
+      "rawSha256": "92f37999ec3b27a30a319403340f99f7b38fbb3d5a458f895216793b785a64dc",
+      "findings": []
+    },
+    {
+      "id": "decode-head-comparison",
+      "rawSha256": "daa282e208ac0d9ba5de5c17c36d7821f7b184644410c8c4c4f6ec888bf454ac",
+      "findings": []
+    },
+    {
+      "id": "collective-factorization",
+      "rawSha256": "36a856a2243bdc2dd855f718f64baafd4c567d6bc4a5e4af684eb24bd2f7ccd2",
+      "findings": []
+    },
+    {
+      "id": "alltoall-provenance",
+      "rawSha256": "d2befaaf3410873a8d68731d85dcb362ef7c5ab0677ec5cf67deedbc30350e64",
+      "findings": []
+    },
+    {
+      "id": "head-sharing-cases",
+      "rawSha256": "a377484bb74cd013f2e16c9c8abf99dd747c47691e3efb97b189a51dd1023dc5",
+      "findings": []
+    },
+    {
+      "id": "head-sharing-families",
+      "rawSha256": "e3037de8a67c2a65de40a75f40cac78e7d19104bb8838ceb5c3ccde2d87a362d",
+      "findings": []
+    },
+    {
+      "id": "owner-group-map",
+      "rawSha256": "89e76ee72031a17f5bff50f635288cd706b8ab22bd6a237bfb59d4920555252b",
+      "findings": []
+    },
+    {
+      "id": "routing-gate-conventions",
+      "rawSha256": "284aa29737429e9472ae02e04434efb9357a91616f709c030bd00e72cd03deae",
+      "findings": []
+    }
+  ],
+  "scope": "82 reusable maintainers designs, three-width finite preview, not generated books or art review."
+}

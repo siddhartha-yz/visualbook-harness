@@ -1,0 +1,167 @@
+{
+  "figures": [
+    {
+      "id": "recount-pairs",
+      "title": "合并一次，下一轮要重新数",
+      "afterAnchor": "tokenization-015",
+      "height": 300,
+      "mobileHeight": 320,
+      "placement": "body",
+      "presentation": "reading",
+      "interaction": "static",
+      "initialProgress": 1,
+      "summary": "小语料：the × 3、thin × 2（独立块）。前/后指合并 t·h 前后；蓝色为各轮最高频对。h·e 消失，th·e 新出现。",
+      "scene": {
+        "id": "pair-comparison",
+        "type": "category-bars",
+        "props": {
+          "items": [
+            {
+              "label": "前 t·h",
+              "value": 5,
+              "color": "blue"
+            },
+            {
+              "label": "前 h·e",
+              "value": 3,
+              "color": "muted"
+            },
+            {
+              "label": "前 h·i",
+              "value": 2,
+              "color": "muted"
+            },
+            {
+              "label": "前 i·n",
+              "value": 2,
+              "color": "muted"
+            },
+            {
+              "label": "后 th·e",
+              "value": 3,
+              "color": "blue"
+            },
+            {
+              "label": "后 th·i",
+              "value": 2,
+              "color": "muted"
+            },
+            {
+              "label": "后 i·n",
+              "value": 2,
+              "color": "muted"
+            }
+          ],
+          "domain": [
+            0,
+            5
+          ],
+          "unit": "次"
+        }
+      }
+    },
+    {
+      "id": "chunk-boundary",
+      "design": "partition-barrier",
+      "afterAnchor": "tokenization-027",
+      "title": "规则存在，也不能越过分块边界",
+      "placement": "body",
+      "presentation": "reading",
+      "summary": "ASCII 示例 the!：块为 the 和 !。即使规则库含 e·!，也不能跨橙线合并；th·e 位于同一块内，仍是合法候选。图示给定规则与分组，不执行分词训练。",
+      "overrides": [
+        {
+          "path": "/scene/props/atoms",
+          "value": [
+            "t",
+            "h",
+            "e",
+            "!"
+          ]
+        },
+        {
+          "path": "/scene/props/barriers",
+          "value": [
+            3
+          ]
+        },
+        {
+          "path": "/scene/props/positionUnit",
+          "value": "字节位置"
+        },
+        {
+          "path": "/scene/props/rows",
+          "value": [
+            {
+              "label": "当前",
+              "groups": [
+                {
+                  "start": 0,
+                  "end": 2,
+                  "label": "th",
+                  "color": "blue"
+                },
+                {
+                  "start": 2,
+                  "end": 3,
+                  "label": "e"
+                },
+                {
+                  "start": 3,
+                  "end": 4,
+                  "label": "!"
+                }
+              ]
+            },
+            {
+              "label": "合法",
+              "groups": [
+                {
+                  "start": 0,
+                  "end": 3,
+                  "label": "the",
+                  "color": "blue"
+                },
+                {
+                  "start": 3,
+                  "end": 4,
+                  "label": "!"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "annotations": [
+    {
+      "id": "note-rank-is-fixed",
+      "afterAnchor": "tokenization-018",
+      "kind": "correction",
+      "placement": "body",
+      "text": "编码时按训练所得的合并顺序（rank）选择当前可用规则，不重新按新文本频次排序。同频规则也要保留训练时确定的先后顺序；实现时以记录的 rank 为准。"
+    },
+    {
+      "id": "note-heap-cost",
+      "afterAnchor": "tokenization-021",
+      "kind": "condition",
+      "placement": "margin",
+      "text": "链表替换可为 O(1)，堆的插入与弹出通常为 O(log L)。在候选更新次数为 O(L) 等条件下，整体常按 O(L log L) 分析；“接近线性”不等于严格线性。",
+      "formula": "\\mathcal{O}(L\\log L)"
+    },
+    {
+      "id": "note-regex-choice",
+      "afterAnchor": "tokenization-026",
+      "kind": "clarification",
+      "placement": "body",
+      "text": "这里的文本块是示意，实际边界由具体正则决定。块内仍可能包含前导空格或标点；预分词保证不跨已划定的块，不能保证每个 token 都是完整自然语言词。"
+    },
+    {
+      "id": "note-architecture-scope",
+      "afterAnchor": "tokenization-033",
+      "kind": "clarification",
+      "placement": "body",
+      "text": "这里的层次化与自适应计算是架构设计动机。“无法”“必须”“次优”应结合模型、任务与计算预算理解；本节未给出一般性不可能性证明，也未证明所有固定分块方案都较差。"
+    }
+  ]
+}

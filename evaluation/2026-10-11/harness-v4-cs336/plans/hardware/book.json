@@ -1,0 +1,85 @@
+{
+  "figures": [
+    {
+      "id": "gemm-balance",
+      "title": "批量越过 295，仍可能卡在搬运",
+      "afterAnchor": "hardware-018",
+      "height": 365,
+      "mobileHeight": 455,
+      "placement": "wide",
+      "presentation": "reading",
+      "interaction": "parameters",
+      "initialProgress": 0.5,
+      "params": [
+        {
+          "key": "batch",
+          "label": "批量 B",
+          "kind": "stepper",
+          "min": 1,
+          "max": 1024,
+          "step": 1,
+          "value": 320
+        }
+      ],
+      "code": "function draw(input){const{svg,width,height,params}=input;\nconst C={ink:'#263e47',muted:'#64777e',grid:'#d9e1e2',blue:'#287b91',rust:'#ad522f'};\nfunction el(id,tag,a,text){let e=svg.querySelector('[data-draw-id=\"'+id+'\"]');if(!e){e=svg.ownerDocument.createElementNS('http://www.w3.org/2000/svg',tag);e.setAttribute('data-draw-id',id);svg.appendChild(e);}for(const[k,v]of Object.entries(a))e.setAttribute(k,v);if(text!==undefined)e.textContent=text;return e;}\nfunction txt(id,x,y,s,color=C.ink,size=14,anchor='start'){return el(id,'text',{x,y,fill:color,'font-size':size,'font-family':'system-ui,sans-serif','text-anchor':anchor},s);}\nfunction ln(id,x1,y1,x2,y2,color=C.grid,dash=''){return el(id,'line',{x1,y1,x2,y2,stroke:color,'stroke-width':1,'stroke-dasharray':dash});}\nfunction path(id,d,color,dash=''){return el(id,'path',{d,fill:'none',stroke:color,'stroke-width':2.5,'stroke-dasharray':dash,'stroke-linejoin':'round'});}\nfunction dot(id,x,y,color,r=4){return el(id,'circle',{cx:x,cy:y,r,fill:color,stroke:'#faf9f5','stroke-width':2});}\nconst mobile=width<500;const L=48,R=width-16;\n\nconst B=Number(params.batch),D=4096,F=11008,P=989e12,M=3.35e12;\nconst ops=2*B*D*F,bytes=2*(B*D+D*F+B*F),I=ops/bytes,cross=P/M;\nconst critical=cross/(1-cross*(1/D+1/F));const compute=ops/P*1e6,transfer=bytes/M*1e6;\ntxt('condition',12,20,'BF16 · D=4096 · F=11008',C.muted,13);\nln('legend-exact',12,42,31,42,C.blue);txt('legend-exact-t',37,47,'精确 I',C.blue,13);\nln('legend-approx',112,42,135,42,C.muted,'5 4');txt('legend-approx-t',141,47,'近似 I=B',C.muted,13);\ntxt('ytitle',L,74,'强度 · FLOP/Byte',C.muted,12);\nconst plotR=mobile?R:width*.60;const top=86,bottom=mobile?252:290;const x=b=>L+(plotR-L)*b/1024,y=i=>bottom-(bottom-top)*i/1100;\nfor(const v of [0,500,1000]){ln('yg'+v,L,y(v),plotR,y(v));txt('yt'+v,L-8,y(v)+4,''+v,C.muted,12,'end');}\nconst ticks=mobile?[0,512,1024]:[0,256,512,768,1024];\nfor(const v of ticks){ln('xt'+v,x(v),bottom,x(v),bottom+5,C.muted);txt('xl'+v,x(v),bottom+20,''+v,C.muted,12,v===0?'start':v===1024?'end':'middle');}\ntxt('xtitle',plotR,bottom+39,'批量 B',C.muted,12,'end');\nln('boundary',L,y(cross),plotR,y(cross),C.rust,'3 4');txt('boundary-label',plotR,y(cross)-8,'拐点 295',C.rust,12,'end');\nlet d='';for(let i=0;i<=128;i++){const b=i*8;d+=(i?'L':'M')+x(b)+','+y(b/(1+b*(1/D+1/F)));}path('exact',d,C.blue);\npath('approx','M'+x(0)+','+y(0)+'L'+x(1024)+','+y(1024),C.muted,'6 5');\nln('selected',x(B),bottom,x(B),y(I),C.blue,'2 4');dot('selected-dot',x(B),y(I),C.blue,5);\nconst side=mobile?12:plotR+38;\nif(!mobile)txt('time-title',side,74,'理想时间下界 · μs',C.muted,14);\ntxt('current',side,mobile?313:118,'B='+B+'  →  I='+I.toFixed(1),C.blue,16);\ntxt('status',mobile?R:side,mobile?313:148,I<cross?'搬运较慢':'计算较慢',C.rust,13,mobile?'end':'start');\nconst barL=mobile?60:side+52,barR=R-64,bw=barR-barL;\nfor(const [key,label,val,color,yy] of [['compute','计算',compute,C.blue,mobile?344:199],['memory','搬运',transfer,C.rust,mobile?383:249]]){\ntxt(key+'label',side,yy+5,label,C.muted,13);ln(key+'track',barL,yy,barR,yy);el(key+'bar','rect',{x:barL,y:yy-4,width:Math.max(.4,bw*val/100),height:8,rx:2,fill:color});txt(key+'value',R,yy+5,val.toFixed(2)+' μs',color,12,'end');}\ntxt('time-scale',barL,mobile?412:286,'两条共用 0–100 μs 刻度',C.muted,12);\ntxt('critical',12,mobile?440:351,'精确分界：B≈'+critical.toFixed(0)+'，并非 B=295',C.ink,13);\nreturn{B,D,F,flops:ops,bytes,intensity:I,crossover:cross,criticalBatch:critical,computeUs:compute,transferUs:transfer,idealUs:Math.max(compute,transfer),convention:'峰值速率、一次理想读写、计算搬运完全重叠；非实测'};\n}",
+      "summary": "固定矩阵尺寸，仅改变 B。一次理想读写、峰值速率与完全重叠的时间下界。"
+    },
+    {
+      "id": "shared-private",
+      "title": "并发摊薄权重，摊不薄私有 KV",
+      "afterAnchor": "hardware-043",
+      "height": 435,
+      "mobileHeight": 435,
+      "placement": "body",
+      "presentation": "reading",
+      "interaction": "parameters",
+      "initialProgress": 0.5,
+      "params": [
+        {
+          "key": "batch",
+          "label": "并发 B",
+          "kind": "stepper",
+          "min": 1,
+          "max": 8,
+          "step": 1,
+          "value": 4
+        },
+        {
+          "key": "context",
+          "label": "上下文 S",
+          "min": 256,
+          "max": 4096,
+          "step": 256,
+          "value": 2048
+        }
+      ],
+      "code": "function draw(input){const{svg,width,height,params}=input;\nconst C={ink:'#263e47',muted:'#64777e',grid:'#d9e1e2',blue:'#287b91',rust:'#ad522f'};\nfunction el(id,tag,a,text){let e=svg.querySelector('[data-draw-id=\"'+id+'\"]');if(!e){e=svg.ownerDocument.createElementNS('http://www.w3.org/2000/svg',tag);e.setAttribute('data-draw-id',id);svg.appendChild(e);}for(const[k,v]of Object.entries(a))e.setAttribute(k,v);if(text!==undefined)e.textContent=text;return e;}\nfunction txt(id,x,y,s,color=C.ink,size=14,anchor='start'){return el(id,'text',{x,y,fill:color,'font-size':size,'font-family':'system-ui,sans-serif','text-anchor':anchor},s);}\nfunction ln(id,x1,y1,x2,y2,color=C.grid,dash=''){return el(id,'line',{x1,y1,x2,y2,stroke:color,'stroke-width':1,'stroke-dasharray':dash});}\nfunction path(id,d,color,dash=''){return el(id,'path',{d,fill:'none',stroke:color,'stroke-width':2.5,'stroke-dasharray':dash,'stroke-linejoin':'round'});}\nfunction dot(id,x,y,color,r=4){return el(id,'circle',{cx:x,cy:y,r,fill:color,stroke:'#faf9f5','stroke-width':2});}\nconst mobile=width<500;const L=48,R=width-16;\n\nconst B=Number(params.batch),S=Number(params.context),D=4096,F=11008,unit=1048576;\nconst weights=2*D*F,kv=4*S*D,weightPer=weights/B/ unit,kvPer=kv/unit;\ntxt('setup',12,20,'单个线性层 · BF16 · MHA',C.muted,13);\ntxt('setup2',12,43,'D=4096 · F=11008 · S='+S,C.muted,13);\ntxt('ytitle',L,73,'每请求读取 · MiB',C.muted,12);\nconst top=87,bottom=255,x=b=>L+(R-L)*(b-1)/7,y=v=>bottom-(bottom-top)*v/90;\nfor(const v of [0,32,64]){ln('yg'+v,L,y(v),R,y(v));txt('yl'+v,L-8,y(v)+4,''+v,C.muted,12,'end');}\nfor(const b of [1,2,4,6,8]){ln('tick'+b,x(b),bottom,x(b),bottom+5,C.muted);txt('ticktext'+b,x(b),bottom+20,''+b,C.muted,12,b===1?'start':b===8?'end':'middle');}\ntxt('xtitle',R,294,'并发 B',C.muted,12,'end');\nlet d='';for(let i=0;i<=140;i++){const b=1+i/20;d+=(i?'L':'M')+x(b)+','+y(weights/b/unit);}path('weights',d,C.blue);\npath('cache','M'+x(1)+','+y(kvPer)+'L'+x(8)+','+y(kvPer),C.rust);\nln('selected',x(B),top,x(B),bottom,C.muted,'3 4');dot('weightdot',x(B),y(weightPer),C.blue,5);dot('cachedot',x(B),y(kvPer),C.rust,5);\nln('key1',12,322,30,322,C.blue);txt('key1text',37,327,'共享权重 / B',C.blue,14);txt('weightval',R,327,weightPer.toFixed(1)+' MiB',C.blue,14,'end');\nln('key2',12,356,30,356,C.rust);txt('key2text',37,361,'私有 KV / 请求',C.rust,14);txt('kvval',R,361,kvPer.toFixed(1)+' MiB',C.rust,14,'end');\ntxt('totalw',12,395,'全批权重：'+(weights/unit).toFixed(1)+' MiB',C.muted,13);\ntxt('totalkv',12,420,'全批 KV：'+B+' × '+kvPer.toFixed(0)+' = '+(B*kvPer).toFixed(0)+' MiB',C.muted,13);\nreturn{B,S,D,F,bytesPerElement:2,queryHeadsEqualsKVHeads:true,weightBytes:weights,weightBytesPerRequest:weights/B,kvBytesPerRequest:kv,kvBytesTotal:B*kv,attentionFlops:4*B*S*D,attentionBytes:4*B*D*(S+1),attentionIntensity:S/(S+1),convention:'理想共享权重读取；密集MHA的KV读流量；不计Q与输出的小项于图上'};\n}",
+      "summary": "每步生成 1 token、相同请求长度；单个线性层权重按一次读取后共享估计，KV 每请求独有。只比较读取。"
+    }
+  ],
+  "annotations": [
+    {
+      "id": "note-roofline",
+      "afterAnchor": "hardware-018",
+      "kind": "condition",
+      "text": "这里是按峰值算力、峰值带宽和理想数据复用得到的 Roofline 下界。低强度只限制可达吞吐，不能直接推断“99% 的计算单元闲置”；超过拐点也不保证实际跑满。下图仅估算单个 BF16 GEMM。",
+      "placement": "body"
+    },
+    {
+      "id": "note-heads",
+      "afterAnchor": "hardware-024",
+      "kind": "correction",
+      "text": "QK 点积收缩的是 H，N 是保留的头索引。GQA 的 N 与 K 不能直接作为相同的批维相乘：应先按 N=K×G 将 Q 重排成 [B,K,G,T,H]，同一 KV 头在 G 个 Query 头间共享。",
+      "formula": "\\mathrm{Score}_{b,k,g,t,s}=\\sum_h Q_{b,k,g,t,h}\\,\\mathrm{Key}_{b,k,s,h}",
+      "placement": "body"
+    },
+    {
+      "id": "note-attention-count",
+      "afterAnchor": "hardware-042",
+      "kind": "clarification",
+      "text": "按一次乘加计 2 FLOPs，完整 QKᵀ 与 AV 两个乘法合计约 4BSTD；BF16 的 K、V 读取合计约 4BSKH 字节。图中取 MHA（K=N）、T=1，再计 Q/输出的 4BD 字节，故 I≈S/(S+1)。GQA 若充分复用 KV，可接近 GS/(S+G)，并不普遍小于 1。预填充的高强度还要求避免将 S² 得分矩阵写回 HBM。",
+      "formula": "I_{\\mathrm{decode}}\\approx\\frac{4BSD}{4BSKH+4BD}=\\frac{GS}{S+G}",
+      "placement": "body"
+    }
+  ]
+}

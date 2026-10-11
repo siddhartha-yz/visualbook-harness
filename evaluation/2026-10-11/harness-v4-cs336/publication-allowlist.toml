@@ -1,0 +1,71 @@
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "Exact recomputed public API.md source hashes, not credentials"
+regexTarget = "secret"
+regexes = [
+  '''^1b480c00db9eedd0841dccb531f998e0ee236072782822a199d3d7a45748f066$''',
+  '''^33feae3433ccdfafefe3da7a9443c1d636e927a83c59307d8bf5cfc9df18f980$''',
+  '''^7077b88a120848e58fed330c375fd926c14f3c21de87ba7b9b6bbd3e9d29403b$''',
+  '''^e31bf8b00a1cfc640b86fb4d82d5d94ab2cc1e3590df81070fa0b4b4ec30612b$''',
+]
+
+[[allowlists]]
+description = "Exact public tool source hashes independently rehashed from seven frozen commits; candidate invocation metadata only"
+regexTarget = "secret"
+regexes = [
+  '''^0f2a30869dd467050c2d540cb737317541220359ceab064992df6742329356da$''',
+  '''^209b9dc8b12e33ada87584f88917b4961c9ed1e050436cece260a869324dc284$''',
+  '''^5781f12606aaf0f41d291d81de354fa65a9bf961a7e20be0f40e4c2ffe147406$''',
+  '''^71873868da9891dbdb5ec03873a388fa9293662a7bfe89d849f595208dfa12b7$''',
+  '''^7dc52b7f20ceb9d389945d968c53d78b38a6053edf878e6eb1ec6349b93f7196$''',
+  '''^c2489619f76d63c58344b888b53e132f68e5184895aad6dcfc3c5ce34569910d$''',
+  '''^cc1a21799d0d06ace88a1a4804e5aea6a40e4299e0453a73f349568b7b5184a9$''',
+]
+
+[[allowlists]]
+description = "Exact independently rehashed f0505b9 API.md public source hash in phase7 invocation metadata"
+regexTarget = "secret"
+regexes = ['''^935ffbc010af3a9ca697bec8ca38f4ca7912158877710aa558edcdeea80eca05$''']
+
+[[allowlists]]
+description = "Exact independently rehashed 5ca03d7 API.md public source hash in phase8 invocation metadata"
+regexTarget = "secret"
+regexes = ['''^4b6908793c167dd2e2d793ec5fcb5337d9676cdcb6a4a1acb61c717314d8953b$''']
+
+[[allowlists]]
+description = "Exact independently rehashed cec6a00 API.md public source hash in phase9 invocation metadata"
+regexTarget = "secret"
+regexes = ['''^2b9fc4f532017f7c3a5fc7cae38bb389d68885b9b4733db8cd96185738077e5a$''']
+
+[[allowlists]]
+description = "Exact independently rehashed owned API source hashes; value-only, no file exclusions"
+regexTarget = "secret"
+regexes = [
+  '''^2061c859798b9f52bfc93bab4e794023282dff70ccda94feecee6247fd575c55$''',
+  '''^4723a4c139816feb608dc73ce4c9eb99f6dd2526c5fe9c599636ae81d90fd0fd$''',
+  '''^991a2a54dfee355c751b3c59f82b33ceb705089773a52596d6393c2f6811497e$''',
+  '''^c2489619f76d63c58344b888b53e132f68e5184895aad6dcfc3c5ce34569910d$''',
+]
+
+[[allowlists]]
+description = "Exact independently rehashed owned API source hashes in toolchain-05 metadata"
+regexTarget = "secret"
+regexes = [
+  '''^c632b6a64da06be1dfd63f2e8a9df59b6df87be90402222f8e19769dbf71bdd0$''',
+  '''^c2489619f76d63c58344b888b53e132f68e5184895aad6dcfc3c5ce34569910d$''',
+]
+
+[[allowlists]]
+description = "Exact independently rehashed tokenization candidate HTML SHA in math provenance"
+regexTarget = "secret"
+regexes = ['''^cc90bcbac50e63b4b5b3343f11fcf871af57621e5dabdb22e067eef00c3ddc45$''']
+
+[[allowlists]]
+description = "Exact rehashed toolchain-05 API source hashes in private verification record"
+regexTarget = "secret"
+regexes = [
+  '''^c632b6a64da06be1dfd63f2e8a9df59b6df87be90402222f8e19769dbf71bdd0$''',
+  '''^c2489619f76d63c58344b888b53e132f68e5184895aad6dcfc3c5ce34569910d$''',
+]
