@@ -2,6 +2,8 @@
 (function (global) {
   const instances = [];
   const reduced = matchMedia("(prefers-reduced-motion: reduce)");
+  const toc = document.querySelector(".vh-toc details");
+  if (toc && matchMedia("(min-width:1200px)").matches) toc.open = true;
   const clamp = (p) => {
     if (!Number.isFinite(p)) throw Error("Progress must be finite");
     return Math.max(0, Math.min(1, p));
@@ -98,7 +100,7 @@
     if (board) board.controls = controls;
     function refreshControls() {
       if (playButton) {
-        playButton.textContent = playing ? "暂停" : "播放";
+        playButton.textContent = playing ? "暂停" : "看一遍";
         playButton.setAttribute("aria-pressed", String(playing));
         playButton.setAttribute(
           "aria-label",
@@ -119,6 +121,36 @@
             ? params[key] <= spec.min
             : params[key] >= spec.max;
       }
+      for (const button of element.querySelectorAll("[data-preset]")) {
+        const preset = figure.presets.find(p => p.id === button.dataset.preset);
+        button.setAttribute("aria-pressed", String(Object.entries(preset.params).every(([k, v]) => params[k] === v) &&
+          (preset.progress === undefined || Math.abs(progress - preset.progress) < 1e-8)));
+      }
+    }
+    function formatParameter(value) {
+      return global.VisualBook?.formatNumber ? global.VisualBook.formatNumber(value) : String(value);
+    }
+    function syncParameter(key) {
+      const spec = parameterSpecs[key], input = element.querySelector(`[data-param="${key}"]`);
+      if (!input) return;
+      input.value = spec.kind === "select" ? spec.options.findIndex(o => o.value === params[key]) : params[key];
+      if (input.nextElementSibling) input.nextElementSibling.value = formatParameter(params[key]);
+    }
+    function checkParameter(key, value) {
+      const spec = Object.hasOwn(parameterSpecs, key) ? parameterSpecs[key] : null;
+      if (!spec || (spec.kind === "select" ? !spec.options.some(o => o.value === value) :
+          !Number.isFinite(value) || value < spec.min || value > spec.max) ||
+          (spec.kind === "stepper" && !Number.isSafeInteger(value)))
+        throw Error("Invalid parameter " + key);
+    }
+    function setParams(values, nextProgress = progress) {
+      if (!values || typeof values !== "object" || Array.isArray(values)) throw Error("Explicit parameter values required");
+      for (const [key, value] of Object.entries(values)) checkParameter(key, value);
+      const next = clamp(nextProgress); // Validate everything before changing any input.
+      pause();
+      Object.assign(params, values);
+      for (const key of Object.keys(values)) syncParameter(key);
+      paint(interaction === "timeline" ? next : initialProgress);
     }
     function pause() {
       if (raf !== null) cancelAnimationFrame(raf);
@@ -170,7 +202,7 @@
                 Math.floor(progress * figure.stages.length),
               )
             ]
-          : "拖动观察";
+          : "演示 " + Math.round(progress * 100) + "%";
       refreshControls();
     }
     function setProgress(p) {
@@ -212,15 +244,7 @@
       Object.assign(state, structuredClone(initialState));
       for (const [key, spec] of Object.entries(parameterSpecs)) {
         params[key] = spec.value;
-        const input = element.querySelector(`[data-param="${key}"]`);
-        if (input) {
-          input.value =
-            spec.kind === "select"
-              ? spec.options.findIndex((o) => o.value === spec.value)
-              : spec.value;
-          if (input.nextElementSibling)
-            input.nextElementSibling.value = spec.value;
-        }
+        syncParameter(key);
       }
       paint(initialProgress);
     }
@@ -252,32 +276,19 @@
       },
       // Compatibility for callers of the old API; it resets, never follows scroll.
       resume: reset,
+      setParams,
+      setPreset(id) {
+        const preset = (figure.presets ?? []).find(p => p.id === id);
+        if (!preset) throw Error("Unknown parameter case");
+        setParams(preset.params, preset.progress ?? progress);
+      },
       setParam(key, value) {
-        const spec = parameterSpecs[key];
-        if (
-          !spec ||
-          (spec.kind === "select"
-            ? !spec.options.some((o) => o.value === value)
-            : !Number.isFinite(value) ||
-              value < spec.min ||
-              value > spec.max) ||
-          (spec?.kind === "stepper" && !Number.isSafeInteger(value))
-        )
-          throw Error("Invalid parameter " + key);
-        pause();
-        params[key] = value;
-        const input = element.querySelector(`[data-param="${key}"]`);
-        if (input) {
-          input.value =
-            spec.kind === "select"
-              ? spec.options.findIndex((o) => o.value === value)
-              : value;
-          if (input.nextElementSibling) input.nextElementSibling.value = value;
-        }
-        paint(progress);
+        setParams({ [key]: value });
       },
     };
     range?.addEventListener("input", () => setProgress(+range.value));
+    // Opening/closing exploration changes reading layout, never the diagram state.
+    element.querySelector(".vh-explore")?.addEventListener("toggle", pause);
     for (const input of element.querySelectorAll("[data-param]")) {
       const spec = parameterSpecs[input.dataset.param];
       input.addEventListener("input", () =>
@@ -301,6 +312,8 @@
           ),
         );
       });
+    for (const button of element.querySelectorAll("[data-preset]"))
+      button.addEventListener("click", () => instance.setPreset(button.dataset.preset));
     playButton?.addEventListener("click", () => (playing ? pause() : play()));
     previousButton?.addEventListener("click", () => step(-1));
     nextButton?.addEventListener("click", () => step(1));
@@ -321,6 +334,7 @@
     });
     intersection.observe(element);
     instances.push(instance);
+    for (const key of Object.keys(parameterSpecs)) syncParameter(key);
     paint(initialProgress);
     return instance;
   }

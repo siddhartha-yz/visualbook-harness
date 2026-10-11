@@ -68,7 +68,7 @@ def main():
     ]
     definitions += [
         {"name":"inspect_source","description":"Inspect up to three actual source anchors, neighbouring text and safe insertion advice. No source rewrite or quality verdict.","inputSchema":{"type":"object","properties":{"anchors":{"type":"array","minItems":1,"maxItems":3,"items":{"type":"string"}}},"required":["anchors"],"additionalProperties":False}},
-        {"name":"put_annotation","description":"Add a concise visible condition/clarification/correction beside original source; optional TeX is actually compiled. Original text and hashes remain unchanged. Explicit replace=true to revise a note. Saves before/after and builds; still inspect the real page.","inputSchema":{"type":"object","properties":{"id":{"type":"string"},"afterAnchor":{"type":"string"},"kind":{"type":"string","enum":["condition","clarification","correction"]},"text":{"type":"string","maxLength":360},"formula":{"type":"string","maxLength":500},"replace":{"type":"boolean"}},"required":["id","afterAnchor","kind","text"],"additionalProperties":False}}
+        {"name":"put_annotation","description":"Add a concise visible condition/clarification/correction beside original source; optional TeX is actually compiled. Original text and hashes remain unchanged. Explicit replace=true to revise a note. Saves before/after and builds; still inspect the real page.","inputSchema":{"type":"object","properties":{"id":{"type":"string"},"afterAnchor":{"type":"string"},"kind":{"type":"string","enum":["condition","clarification","correction"]},"text":{"type":"string","maxLength":360},"formula":{"type":"string","maxLength":500},"placement":{"type":"string","enum":["body","margin"]},"marginSide":{"type":"string","enum":["left","right"]},"replace":{"type":"boolean"}},"required":["id","afterAnchor","kind","text"],"additionalProperties":False}}
     ]
     if args.library_first:
         definitions += [{"name":"declare_drawing_gap","description":"After checking 1..3 named designs, record why this figure needs custom drawing. Binds the escape to this exact code hash; later code changes require a new declaration. Twelve declarations maximum, failed requests count. Does not certify that the reason is true or the custom figure is good.","inputSchema":{"type":"object","properties":{"figureId":{"type":"string"},"attemptedDesigns":{"type":"array","minItems":1,"maxItems":3,"items":{"type":"string"}},"reason":{"type":"string","minLength":30,"maxLength":600}},"required":["figureId","attemptedDesigns","reason"],"additionalProperties":False}}]
@@ -82,6 +82,8 @@ def main():
                     "design":{"type":"string","enum":[d['id'] for d in catalog]},
                     "afterAnchor":{"type":"string"},"endAnchor":{"type":"string"},
                     "title":{"type":"string","maxLength":80},"summary":{"type":"string","maxLength":180},
+                    "placement":{"type":"string","enum":["body","wide","margin"]},"marginSide":{"type":"string","enum":["left","right"]},"presentation":{"type":"string","enum":["reading","exploration"]},"initialProgress":{"type":"number","minimum":0,"maximum":1},"sourceDiagramAnchor":{"type":"string"},
+                    "presets":{"type":"array","maxItems":6,"items":{"type":"object","properties":{"id":{"type":"string"},"label":{"type":"string","maxLength":24},"params":{"type":"object"},"progress":{"type":"number","minimum":0,"maximum":1}},"required":["id","label","params"],"additionalProperties":False}},
                     "overrides":{"type":"array","maxItems":32,"items":{"type":"object","properties":{"path":{"type":"string","maxLength":240},"value":{}},"required":["path","value"],"additionalProperties":False}},
                     "replace":{"type":"boolean"}
                 },"required":["id","design","afterAnchor"],"additionalProperties":False},
@@ -343,7 +345,7 @@ def main():
                 for index,child in enumerate(node.get('children',[])):collect(child,pointer+'/children/'+str(index))
                 if node.get('visual'):collect(node['visual'],pointer+'/visual')
             if design.get('scene'):collect(design['scene'],'/scene')
-            result={'id':design['id'],'title':design['title'],'limits':design['limits'],'params':design.get('params',[]),'state':design.get('state',{}),'slots':slots[:64],'truncated':len(slots)>64,'usesCode':bool(design.get('code')),'usage':{'design':design['id'],'id':'your-figure-id','afterAnchor':'a-real-source-anchor','overrides':[]},'scope':'Existing data replacement paths only; not a suitability or quality verdict'}
+            result={'id':design['id'],'title':design['title'],'limits':design['limits'],'params':design.get('params',[]),'presets':design.get('presets',[]),'placement':design.get('placement','body'),'presentation':design.get('presentation','reading'),'state':design.get('state',{}),'slots':slots[:64],'truncated':len(slots)>64,'usesCode':bool(design.get('code')),'usage':{'design':design['id'],'id':'your-figure-id','afterAnchor':'a-real-source-anchor','overrides':[]},'scope':'Existing data replacement paths only; not a suitability or quality verdict'}
         elif name == "search_designs":
             query=arguments.get("query")
             if not isinstance(query,str) or not query.strip() or len(query)>120:
@@ -574,8 +576,10 @@ def main():
                 p
                 for p in screenshots
                 if Path(p).name.endswith("-0.5.png")
+                or Path(p).name.endswith("-reading.png")
                 or Path(p).name.endswith("-context.png")
                 or Path(p).name.startswith("failure-")
+                or Path(p).name == "failed-render.png"
             ]
             if not selected:
                 selected = screenshots
@@ -613,7 +617,7 @@ def main():
         }
         with (workspace / "mcp-evidence.jsonl").open("a") as stream:
             stream.write(json.dumps(entry, ensure_ascii=False) + "\n")
-        return {"content": content, "isError": name == "export_motion" and result.get("status") != "completed"}
+        return {"content": content, "isError": (name == "export_motion" and result.get("status") != "completed") or (name == "preview_book" and result.get("status") == "failed")}
 
     for line in sys.stdin:
         ident = None

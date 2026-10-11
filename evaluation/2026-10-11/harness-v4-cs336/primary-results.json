@@ -1,0 +1,131 @@
+{
+  "toolchain": "toolchain-01",
+  "model": "gpt-6.1-sol",
+  "reasoningEffort": "high",
+  "startedSessions": 5,
+  "readyChapters": 2,
+  "chapters": [
+    {
+      "id": "tokenization",
+      "gate": {
+        "ready_for_export": false,
+        "reasons": [
+          "known-unresolved-issues"
+        ],
+        "render_findings": [],
+        "quality": "Engineering gate only; does not establish teaching or aesthetic quality."
+      },
+      "wallSeconds": 526.437,
+      "previewCount": 3,
+      "sourceUnchanged": true,
+      "toolSourcesUnchanged": true,
+      "planSha256": "5c9df77dd7040e88af190b1e9d32b524d98e9824a7b397a53a44d3abcfd07737",
+      "knownIssues": [
+        {
+          "figureId": "bpe-recount",
+          "condition": "1280/375，灰色柱内的深色数值标签",
+          "description": "标签仍带浅色描边，数字有细小双边轮廓。数值可辨，但画面不够干净；三轮预览已用尽，本轮保留此问题，不继续修改未预览的候选。"
+        }
+      ]
+    },
+    {
+      "id": "position",
+      "gate": {
+        "ready_for_export": true,
+        "reasons": [],
+        "render_findings": [],
+        "quality": "Engineering gate only; does not establish teaching or aesthetic quality."
+      },
+      "wallSeconds": 424.091,
+      "previewCount": 3,
+      "sourceUnchanged": true,
+      "toolSourcesUnchanged": true,
+      "planSha256": "d629e7369ba1109cd103cb0414d6d9297992685afc7c37c9459b307ebfc88e53",
+      "knownIssues": []
+    },
+    {
+      "id": "hardware",
+      "gate": {
+        "ready_for_export": true,
+        "reasons": [],
+        "render_findings": [],
+        "quality": "Engineering gate only; does not establish teaching or aesthetic quality."
+      },
+      "wallSeconds": 583.829,
+      "previewCount": 2,
+      "sourceUnchanged": true,
+      "toolSourcesUnchanged": true,
+      "planSha256": "b96d4d2c3683b2181eb87a0b656cba8e86e54012e17126ac7f31df58db34a59d",
+      "knownIssues": []
+    },
+    {
+      "id": "communication",
+      "gate": {
+        "ready_for_export": false,
+        "reasons": [
+          "preview-incomplete",
+          "unresolved-render-findings",
+          "no-final-issue-review"
+        ],
+        "render_findings": [
+          {
+            "width": 375,
+            "kind": "javascript",
+            "errors": [
+              "Error: Tensor cells need at least30px in each direction; reduce shape or allocate more space"
+            ]
+          },
+          {
+            "width": 375,
+            "id": "allreduce-factor",
+            "progress": 0,
+            "kind": "render-runtime-error",
+            "error": "Error: page.evaluate: Error: Tensor cells need at least30px in each direction; reduce shape or allocate more space\n    at tensor (file:///home/yang-zhi/%E6%96%87%E6%A1%A3/ChatGPT/concept2motion/work/harness-v4-cs336/toolchain-01/work/campaign/primary/sessions/communication/book.html:7085:13)\n    at visit (file:///home/yang-zhi/%E6%96%87%E6%A1%A3/ChatGPT/concept2motion/work/harness-v4-cs336/toolchain-01/work/campaign/primary/sessions/communication/book.html:4806:21)\n    at file:///home/yang-zhi/%E6%96%87%E6%A1%A3/ChatGPT/concept2motion/work/harness-v4-cs336/toolchain-01/work/campaign/primary/sessions/communication/book.html:4799:15\n    at Board.region (file:///home/yang-zhi/%E6%96%87%E6%A1%A3/ChatGPT/concept2motion/work/harness-v4-cs336/toolchain-01/work/campaign/primary/sessions/communication/book.html:3583:21)\n    at file:///home/yang-zhi/%E6%96%87%E6%A1%A3/ChatGPT/concept2motion/work/harness-v4-cs336/toolchain-01/work/campaign/primary/sessions/communication/book.html:4798:15\n    at Array.map (<anonymous>)\n    at visit (file:///home/yang-zhi/%E6%96%87%E6%A1%A3/ChatGPT/concept2motion/work/harness-v4-cs336/toolchain-01/work/campaign/primary/sessions/communication/book.html:4796:25)\n    at visit (file:///home/yang-zhi/%E6%96%87%E6%A1%A3/ChatGPT/concept2motion/work/harness-v4-cs336/toolchain-01/work/campaign/primary/sessions/communication/book.html:4783:16)\n    at Object.renderScene (file:///home/yang-zhi/%E6%96%87%E6%A1%A3/ChatGPT/concept2motion/work/harness-v4-cs336/toolchain-01/work/campaign/primary/sessions/communication/book.html:4814:12)\n    at draw (file:///home/yang-zhi/%E6%96%87%E6%A1%A3/ChatGPT/concept2motion/work/harness-v4-cs336/toolchain-01/work/campaign/primary/sessions/communication/book.html:10028:471)"
+          }
+        ],
+        "quality": "Engineering gate only; does not establish teaching or aesthetic quality."
+      },
+      "wallSeconds": 324.492,
+      "previewCount": 2,
+      "sourceUnchanged": true,
+      "toolSourcesUnchanged": true,
+      "planSha256": "32f068ccb212bf34f91945aa896f09ed70cbbbf7d7dccd560b67ffdedd03bdd7",
+      "knownIssues": null
+    },
+    {
+      "id": "cache",
+      "gate": {
+        "ready_for_export": false,
+        "reasons": [
+          "known-unresolved-issues"
+        ],
+        "render_findings": [],
+        "quality": "Engineering gate only; does not establish teaching or aesthetic quality."
+      },
+      "wallSeconds": 681.31,
+      "previewCount": 2,
+      "sourceUnchanged": true,
+      "toolSourcesUnchanged": true,
+      "planSha256": "bbda28b3f170afdf48521387d28176b2e6767e309fb58d009adcbc905800f008",
+      "knownIssues": [
+        {
+          "figureId": "rope-order",
+          "condition": "展开参数面板，初始θ=π/4，1280和375宽",
+          "description": "角度控件显示完整浮点小数。1280端点PNG中角度读数与后一控件标签重叠，375端点PNG中读数被右边界截断。默认收起的阅读图可读，但展开探索未完成排版。"
+        },
+        {
+          "figureId": "rope-order",
+          "condition": "所有当前阅读帧",
+          "description": "坐标轴有统一数值刻度，却未明确标出第一坐标/第二坐标；含义依赖图下的二维反例说明，轴标签仍需补齐。"
+        },
+        {
+          "figureId": "window-reach",
+          "condition": "1920-window-reach-reading-context.png",
+          "description": "1920阅读上下文截图中输入编号4、5挤在一起；1920单图reading PNG和1280/375单图未复现该位置差异。尚未定位是上下文绘制布局还是截图姿态造成，保留两种证据。"
+        }
+      ]
+    }
+  ],
+  "modelFeedbackFromUser": 0,
+  "scope": "Independent author sessions, render gates and authors known-issue reviews. Not independent teaching or aesthetic validation; retries will be labeled separately."
+}

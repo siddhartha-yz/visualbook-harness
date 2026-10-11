@@ -1,6 +1,7 @@
 // General Markdown adapter. D2L/Sphinx keeps its separately pinned adapter.
 import fs from "node:fs";
 import { normalizeEmphasis } from "./emphasis.mjs";
+import { prepareMathMarkdown } from "./markdown-math.mjs";
 import path from "node:path";
 import crypto from "node:crypto";
 import { pathToFileURL } from "node:url";
@@ -47,14 +48,27 @@ export function importMarkdown(
   const sourcePath = fs.realpathSync(file),
     base = path.dirname(sourcePath),
     raw = fs.readFileSync(sourcePath, "utf8"),
-    tree = parser.parse(raw),
-    adaptation = { images: 0, mathExpected: 0, mathRendered: 0 };
+    prepared = prepareMathMarkdown(raw),
+    tree = parser.parse(prepared.text),
+    adaptation = { images: 0, mathExpected: 0, mathRendered: 0,
+      displayFenceAdapted: prepared.adapted, quotedMathLinesJoined: prepared.quotedLinesJoined };
+  walk(tree, (node) => {
+    if (!node.position) return;
+    for (const edge of ["start", "end"]) {
+      const offset = prepared.sourceOffset(node.position[edge].offset);
+      node.position[edge] = { offset, line: raw.slice(0, offset).split("\n").length,
+        column: offset - raw.lastIndexOf("\n", offset - 1) };
+    }
+  });
   walk(tree, (node) => {
     if (node.type === "html")
       throw Error(
         "Raw HTML is unsupported in the Markdown adapter; keep a source-specific adapter instead of silently dropping it",
       );
+    if (["footnoteDefinition", "footnoteReference"].includes(node.type))
+      throw Error("Footnotes require a source-specific adapter; generic import refuses to drop or duplicate their content");
   });
+  const definitions = tree.children.filter(n => n.type === "definition");
   const blocks = tree.children.map((node, i) => {
     const text = raw.slice(
       node.position.start.offset,
@@ -82,7 +96,7 @@ export function importMarkdown(
     }
     render = renderingMath(render, adaptation);
     const hast = toHast(
-      { type: "root", children: [render] },
+      { type: "root", children: [render, ...definitions.filter(n => n !== node)] },
       { allowDangerousHtml: false },
     );
     const diagnostics = new VFile();

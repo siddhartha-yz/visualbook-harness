@@ -29,10 +29,10 @@ export async function auditParameters(file, out) {
     findings: [],
     modelCalls: 0,
     scope:
-      "Parameter extremes at progress 0.5 and 1, not exhaustive parameter combinations or artistic review.",
+      "Parameter extremes and all declared cases at 1280/375/1920, with progress 0.5/1 or explicit case progress. Not exhaustive combinations or artistic review.",
   };
   try {
-    for (const width of [1280, 375]) {
+    for (const width of [1280, 375, 1920]) {
       const page = await browser.newPage({ viewport: { width, height: 900 } });
       await page.addInitScript(() => (window.__VH_SNAPSHOT = true));
       await page.addInitScript({
@@ -44,6 +44,7 @@ export async function auditParameters(file, out) {
         VisualBookRuntime.instances.map((i) => ({
           id: i.id,
           params: i.figure.params ?? [],
+          presets: i.figure.presets ?? [],
         })),
       );
       for (const figure of figures) {
@@ -91,15 +92,16 @@ export async function auditParameters(file, out) {
             ),
           });
         }
+        for (const preset of figure.presets)
+          cases.push({ name: "case-" + preset.id, values: { ...cases[0].values, ...preset.params }, progress: preset.progress });
         for (const c of cases)
-          for (const progress of [0.5, 1]) {
+          for (const progress of c.progress === undefined ? [0.5, 1] : [c.progress]) {
             const state = await page.evaluate(
               ({ id, values, progress }) => {
                 const i = VisualBookRuntime.instances.find((i) => i.id === id);
                 let error = null;
                 try {
-                  for (const [k, v] of Object.entries(values)) i.setParam(k, v);
-                  i.setProgress(progress, true);
+                  i.setParams(values, progress);
                 } catch (e) {
                   error = String(e);
                 }

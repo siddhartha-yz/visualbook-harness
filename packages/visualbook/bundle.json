@@ -13,6 +13,10 @@
     "reindex.cjs",
     "calculations.cjs",
     "format.cjs",
+    "reading.cjs",
+    "presets.cjs",
+    "systems.cjs",
+    "routing.cjs",
     "viz.js",
     "compose.js",
     "designs.js",
@@ -30,6 +34,10 @@
     "components.aligned.js",
     "components.raster.js",
     "components.plot-legend.js",
+    "components.systems.js",
+    "components.sequence.js",
+    "components.flow.js",
+    "components.table.js",
     "math-reader.js"
   ],
   "note": "Ordered original modules. Third-party D3/Dagre, fonts and math rendering are pinned separately in the dependency lock."

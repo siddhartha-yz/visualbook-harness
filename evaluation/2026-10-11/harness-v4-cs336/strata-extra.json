@@ -1,0 +1,15 @@
+{
+  "title": "CS336 · 追加路由抽样",
+  "description": "第一组生成后的追加未生成章节，仅作独立工具迁移试验，不是盲选对照。",
+  "glob": "*.md",
+  "level": 3,
+  "minCharacters": 1800,
+  "maxCharacters": 16000,
+  "strata": [
+    {
+      "id": "routing",
+      "file": "模块02",
+      "heading": "专家.*核心动机|混合专家.*设计空间|混合专家.*训练动态"
+    }
+  ]
+}

@@ -1,0 +1,311 @@
+{
+  "status": "completed",
+  "modelCalls": 0,
+  "scope": "Source-only real browser preflight: 375/1280 CSS layout, complete formula coverage and local image decoding with scripts disabled. No generated diagram or art/teaching assessment.",
+  "manifestSha256": "87beadaa12ae2b62e5146b5796afb512abbb24cc4dd4b3fa747d03895c9ec291",
+  "records": [
+    {
+      "id": "volume-1",
+      "sourceJsonSha256": "c324a73e3161d9f36e0774fa411cce57d6f1ca65548d25a3195b35f182127d6c",
+      "htmlSha256": "aa9d399b67195698a5b20ed480c928249e4f0cf1d6841d3af5198b73d7060294",
+      "expectedFormulas": 425,
+      "cases": [
+        {
+          "width": 375,
+          "pageWidth": 375,
+          "renderedFormulas": 425,
+          "formulaErrors": 0,
+          "images": [],
+          "localOverflow": [
+            "volume-1-439",
+            "volume-1-516"
+          ],
+          "rawMath": [],
+          "javaScriptEnabled": false,
+          "findings": []
+        },
+        {
+          "width": 1280,
+          "pageWidth": 1280,
+          "renderedFormulas": 425,
+          "formulaErrors": 0,
+          "images": [],
+          "localOverflow": [],
+          "rawMath": [],
+          "javaScriptEnabled": false,
+          "findings": []
+        }
+      ]
+    },
+    {
+      "id": "volume-2",
+      "sourceJsonSha256": "2d20ce715792f5985fe213e546fc11c2d481ed1df77c2b0e32d34e29e6d1a24d",
+      "htmlSha256": "fadd8765c0d83355a7fc2fe1377e9589652da0a800b2959b00e08be1e785b22d",
+      "expectedFormulas": 537,
+      "cases": [
+        {
+          "width": 375,
+          "pageWidth": 375,
+          "renderedFormulas": 537,
+          "formulaErrors": 0,
+          "images": [],
+          "localOverflow": [
+            "volume-2-005",
+            "volume-2-055",
+            "volume-2-561",
+            "volume-2-734",
+            "volume-2-837"
+          ],
+          "rawMath": [],
+          "javaScriptEnabled": false,
+          "findings": []
+        },
+        {
+          "width": 1280,
+          "pageWidth": 1280,
+          "renderedFormulas": 537,
+          "formulaErrors": 0,
+          "images": [],
+          "localOverflow": [],
+          "rawMath": [],
+          "javaScriptEnabled": false,
+          "findings": []
+        }
+      ]
+    },
+    {
+      "id": "volume-3",
+      "sourceJsonSha256": "0d1b1a77075c6520244e3cb77c560a692995445bc615362d8a9e6bf6610d0227",
+      "htmlSha256": "87863152b4747312e011d62477bb4e5e406b6b274f517f32aed9f7c732623529",
+      "expectedFormulas": 455,
+      "cases": [
+        {
+          "width": 375,
+          "pageWidth": 375,
+          "renderedFormulas": 455,
+          "formulaErrors": 0,
+          "images": [],
+          "localOverflow": [
+            "volume-3-191",
+            "volume-3-674",
+            "volume-3-728"
+          ],
+          "rawMath": [],
+          "javaScriptEnabled": false,
+          "findings": []
+        },
+        {
+          "width": 1280,
+          "pageWidth": 1280,
+          "renderedFormulas": 455,
+          "formulaErrors": 0,
+          "images": [],
+          "localOverflow": [],
+          "rawMath": [],
+          "javaScriptEnabled": false,
+          "findings": []
+        }
+      ]
+    },
+    {
+      "id": "volume-4",
+      "sourceJsonSha256": "9cd14489305f55b64decdb54461305bb1677901a7bc375dd7e48e75baa9c2fa2",
+      "htmlSha256": "8a81ce9a29720f2daaf237196ae6f46bc10a70a043a9d2a0d89fd5959cd05bbb",
+      "expectedFormulas": 175,
+      "cases": [
+        {
+          "width": 375,
+          "pageWidth": 375,
+          "renderedFormulas": 175,
+          "formulaErrors": 0,
+          "images": [],
+          "localOverflow": [
+            "volume-4-400",
+            "volume-4-491",
+            "volume-4-538"
+          ],
+          "rawMath": [],
+          "javaScriptEnabled": false,
+          "findings": []
+        },
+        {
+          "width": 1280,
+          "pageWidth": 1280,
+          "renderedFormulas": 175,
+          "formulaErrors": 0,
+          "images": [],
+          "localOverflow": [],
+          "rawMath": [],
+          "javaScriptEnabled": false,
+          "findings": []
+        }
+      ]
+    },
+    {
+      "id": "volume-5",
+      "sourceJsonSha256": "c6034a6acda167252edc57c2fd834527ddffc8c227c9e03cd9f3d0af0bfe52d7",
+      "htmlSha256": "9a371fdfabcb8677b7c4e6ffe72269be7045d64682cfad96d3f126227ed6d862",
+      "expectedFormulas": 354,
+      "cases": [
+        {
+          "width": 375,
+          "pageWidth": 375,
+          "renderedFormulas": 354,
+          "formulaErrors": 0,
+          "images": [],
+          "localOverflow": [
+            "volume-5-175",
+            "volume-5-482",
+            "volume-5-790"
+          ],
+          "rawMath": [],
+          "javaScriptEnabled": false,
+          "findings": []
+        },
+        {
+          "width": 1280,
+          "pageWidth": 1280,
+          "renderedFormulas": 354,
+          "formulaErrors": 0,
+          "images": [],
+          "localOverflow": [],
+          "rawMath": [],
+          "javaScriptEnabled": false,
+          "findings": []
+        }
+      ]
+    },
+    {
+      "id": "volume-6",
+      "sourceJsonSha256": "919b447217b53f089800d284c68f9166851d119a10538d046a177ac8a8617879",
+      "htmlSha256": "9feba6ecc893b9318921a6cf9e25b8d2bbad2dfb9e63f88e06c7c3682e2629a2",
+      "expectedFormulas": 483,
+      "cases": [
+        {
+          "width": 375,
+          "pageWidth": 375,
+          "renderedFormulas": 483,
+          "formulaErrors": 0,
+          "images": [],
+          "localOverflow": [
+            "volume-6-005",
+            "volume-6-023",
+            "volume-6-143",
+            "volume-6-722"
+          ],
+          "rawMath": [],
+          "javaScriptEnabled": false,
+          "findings": []
+        },
+        {
+          "width": 1280,
+          "pageWidth": 1280,
+          "renderedFormulas": 483,
+          "formulaErrors": 0,
+          "images": [],
+          "localOverflow": [],
+          "rawMath": [],
+          "javaScriptEnabled": false,
+          "findings": []
+        }
+      ]
+    },
+    {
+      "id": "volume-7",
+      "sourceJsonSha256": "ff66138b85152ac85339d66e8919d22a84c5c00a17b870239bc8c92c79743432",
+      "htmlSha256": "2f9f14fe2b2331b9c70e739369be208f1a228f79eb33b7c7b88eb3633daf1557",
+      "expectedFormulas": 67,
+      "cases": [
+        {
+          "width": 375,
+          "pageWidth": 375,
+          "renderedFormulas": 67,
+          "formulaErrors": 0,
+          "images": [],
+          "localOverflow": [
+            "volume-7-005",
+            "volume-7-206"
+          ],
+          "rawMath": [],
+          "javaScriptEnabled": false,
+          "findings": []
+        },
+        {
+          "width": 1280,
+          "pageWidth": 1280,
+          "renderedFormulas": 67,
+          "formulaErrors": 0,
+          "images": [],
+          "localOverflow": [],
+          "rawMath": [],
+          "javaScriptEnabled": false,
+          "findings": []
+        }
+      ]
+    },
+    {
+      "id": "volume-8",
+      "sourceJsonSha256": "936ed6ffb2428c498e3d82aff7ec46799d3c17dfe228831732a7eb4a5ca87dfc",
+      "htmlSha256": "28a160d808becaa24dff5173029d2240cc438516e02bae2ba605d0796d5be681",
+      "expectedFormulas": 252,
+      "cases": [
+        {
+          "width": 375,
+          "pageWidth": 375,
+          "renderedFormulas": 252,
+          "formulaErrors": 0,
+          "images": [],
+          "localOverflow": [
+            "volume-8-005"
+          ],
+          "rawMath": [],
+          "javaScriptEnabled": false,
+          "findings": []
+        },
+        {
+          "width": 1280,
+          "pageWidth": 1280,
+          "renderedFormulas": 252,
+          "formulaErrors": 0,
+          "images": [],
+          "localOverflow": [],
+          "rawMath": [],
+          "javaScriptEnabled": false,
+          "findings": []
+        }
+      ]
+    },
+    {
+      "id": "volume-9",
+      "sourceJsonSha256": "3c28eae526d9d66dc36aa4c4fb85af99d9acfeef23c95fde89ade3eb79ff4abf",
+      "htmlSha256": "74ad614509cd072e1b83ba0f631ec58c133f1bf6aaac846dfc1211f8cf264c75",
+      "expectedFormulas": 184,
+      "cases": [
+        {
+          "width": 375,
+          "pageWidth": 375,
+          "renderedFormulas": 184,
+          "formulaErrors": 0,
+          "images": [],
+          "localOverflow": [],
+          "rawMath": [],
+          "javaScriptEnabled": false,
+          "findings": []
+        },
+        {
+          "width": 1280,
+          "pageWidth": 1280,
+          "renderedFormulas": 184,
+          "formulaErrors": 0,
+          "images": [],
+          "localOverflow": [],
+          "rawMath": [],
+          "javaScriptEnabled": false,
+          "findings": []
+        }
+      ]
+    }
+  ],
+  "findings": [],
+  "browserVersion": "151.0.7922.34"
+}

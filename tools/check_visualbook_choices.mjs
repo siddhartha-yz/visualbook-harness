@@ -31,6 +31,7 @@ const figure = {
   height: 400,
   mobileHeight: 560,
   interaction: "parameters",
+      presentation: "exploration",
   state: { cell: [0, 0] },
   params: [
     {

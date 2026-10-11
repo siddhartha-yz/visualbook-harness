@@ -1,0 +1,15 @@
+{
+  "title": "CS336 · 从文本到推理系统",
+  "description": "五个完整选章，来自本地九册教材；阅读优先的可视化试读，不代表九册全文已转换。",
+  "glob": "*.md",
+  "level": 3,
+  "minCharacters": 1800,
+  "maxCharacters": 16000,
+  "strata": [
+    {"id":"tokenization","file":"模块01","heading":"字节对编码|文本表示与分词"},
+    {"id":"position","file":"模块02","heading":"位置依赖|位置嵌入"},
+    {"id":"hardware","file":"模块01|模块05|模块06","heading":"算术强度|访存墙|屋顶线"},
+    {"id":"communication","file":"模块03|模块04","heading":"集合通信原语"},
+    {"id":"cache","file":"模块05|模块06","heading":"键值缓存|KV Cache"}
+  ]
+}

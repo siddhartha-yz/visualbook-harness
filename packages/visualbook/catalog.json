@@ -5587,6 +5587,1395 @@
           ]
         }
       }
+    },
+    {
+      "id": "rope-shift",
+      "title": "整体移动位置，点积仍由相对距离决定",
+      "topic": "深度学习",
+      "keywords": "RoPE 旋转位置编码 相对位置 内积",
+      "limits": "手选4维q/k，相邻二维配对；整体移位的内积恒等式，不是训练或外推证明",
+      "interaction": "timeline",
+      "placement": "wide",
+      "height": 320,
+      "mobileHeight": 520,
+      "initialProgress": 1,
+      "durationMs": 4000,
+      "params": [],
+      "scene": {
+        "type": "compose",
+        "calculations": [
+          {
+            "id": "rope",
+            "operation": "rotary-pairs",
+            "inputs": {
+              "q": [
+                1,
+                0,
+                0.8,
+                0.6
+              ],
+              "k": [
+                0.8,
+                0.6,
+                1,
+                0
+              ],
+              "m": 0,
+              "n": 2,
+              "base": 10000,
+              "shift": {
+                "$progress": true
+              }
+            }
+          }
+        ],
+        "visual": {
+          "type": "columns",
+          "layout": {
+            "gap": 24,
+            "minColumnWidth": 260
+          },
+          "children": [
+            {
+              "type": "rotary-plane",
+              "props": {
+                "q": [
+                  1,
+                  0,
+                  0.8,
+                  0.6
+                ],
+                "k": [
+                  0.8,
+                  0.6,
+                  1,
+                  0
+                ],
+                "m": 0,
+                "n": 2,
+                "base": 10000,
+                "shift": {
+                  "$progress": true
+                },
+                "pairIndex": 0
+              }
+            },
+            {
+              "type": "readout",
+              "props": {
+                "items": [
+                  {
+                    "label": "旋转后内积",
+                    "value": {
+                      "$result": "rope.dot"
+                    },
+                    "color": "orange"
+                  },
+                  {
+                    "label": "相对位移 n − m",
+                    "value": 2
+                  },
+                  {
+                    "label": "共同移动量",
+                    "value": {
+                      "$progress": true
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "rope-frequencies",
+      "title": "同一位置变化，不同坐标对转得快慢不同",
+      "topic": "深度学习",
+      "keywords": "RoPE 多频旋转 基频 位置编码",
+      "limits": "手选4维q/k，两个二维对；基频分别1和0.01；不假定频率已学习",
+      "interaction": "parameters",
+      "placement": "wide",
+      "height": 340,
+      "mobileHeight": 540,
+      "params": [
+        {
+          "key": "shift",
+          "label": "共同移动量",
+          "min": 0,
+          "max": 12,
+          "step": 0.01,
+          "value": 4
+        }
+      ],
+      "scene": {
+        "type": "columns",
+        "layout": {
+          "gap": 24,
+          "minColumnWidth": 260
+        },
+        "children": [
+          {
+            "type": "rotary-plane",
+            "props": {
+              "q": [
+                1,
+                0,
+                0.8,
+                0.6
+              ],
+              "k": [
+                0.8,
+                0.6,
+                1,
+                0
+              ],
+              "m": 0,
+              "n": 2,
+              "base": 10000,
+              "shift": {
+                "$param": "shift"
+              },
+              "pairIndex": 0
+            }
+          },
+          {
+            "type": "rotary-plane",
+            "props": {
+              "q": [
+                1,
+                0,
+                0.8,
+                0.6
+              ],
+              "k": [
+                0.8,
+                0.6,
+                1,
+                0
+              ],
+              "m": 0,
+              "n": 2,
+              "base": 10000,
+              "shift": {
+                "$param": "shift"
+              },
+              "pairIndex": 1
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "roofline-balance",
+      "title": "更长的一条时间，决定理想下界",
+      "topic": "编程",
+      "keywords": "roofline 算术强度 GPU 内存墙 FLOP byte",
+      "limits": "固定3.35GB搬运量与示意峰值速率；完全重叠简化下界，不是实测GPU时间",
+      "interaction": "parameters",
+      "height": 250,
+      "mobileHeight": 260,
+      "params": [
+        {
+          "key": "flops",
+          "label": "计算量 · FLOP",
+          "min": 1000000000.0,
+          "max": 2000000000000.0,
+          "step": 1000000000.0,
+          "value": 1000000000000.0
+        }
+      ],
+      "scene": {
+        "type": "compose",
+        "calculations": [
+          {
+            "id": "time",
+            "operation": "roofline",
+            "inputs": {
+              "flops": {
+                "$param": "flops"
+              },
+              "bytes": 3350000000.0,
+              "computeTFLOPS": 989,
+              "memoryGBPS": 3350
+            }
+          }
+        ],
+        "visual": {
+          "type": "roofline-times",
+          "props": {
+            "flops": {
+              "$param": "flops"
+            },
+            "bytes": 3350000000.0,
+            "computeTFLOPS": 989,
+            "memoryGBPS": 3350
+          }
+        }
+      },
+      "presets": [
+        {
+          "id": "low",
+          "label": "低算术强度",
+          "params": {
+            "flops": 10000000000.0
+          }
+        },
+        {
+          "id": "balanced",
+          "label": "近平衡点",
+          "params": {
+            "flops": 989000000000.0
+          }
+        },
+        {
+          "id": "high",
+          "label": "高算术强度",
+          "params": {
+            "flops": 2000000000000.0
+          }
+        }
+      ]
+    },
+    {
+      "id": "kv-head-budget",
+      "title": "Q 头保持数量，K/V 可以共享",
+      "topic": "深度学习",
+      "keywords": "GQA MQA MHA KV cache 显存 共享头",
+      "limits": "示意32层、32个Q头、2048tokens，FP16密集KV；不包含权重、分页或量化元数据",
+      "interaction": "parameters",
+      "height": 250,
+      "mobileHeight": 260,
+      "params": [
+        {
+          "key": "heads",
+          "label": "KV 头数",
+          "kind": "select",
+          "value": 8,
+          "options": [
+            {
+              "label": "1 · MQA",
+              "value": 1
+            },
+            {
+              "label": "8 · GQA",
+              "value": 8
+            },
+            {
+              "label": "32 · MHA",
+              "value": 32
+            }
+          ]
+        }
+      ],
+      "scene": {
+        "type": "cache-budget",
+        "props": {
+          "layers": 32,
+          "batch": 1,
+          "tokens": 2048,
+          "queryHeads": 32,
+          "kvHeads": {
+            "$param": "heads"
+          },
+          "headDim": 128,
+          "bytesPerElement": 2
+        }
+      },
+      "presets": [
+        {
+          "id": "mha",
+          "label": "MHA",
+          "params": {
+            "heads": 32
+          }
+        },
+        {
+          "id": "gqa",
+          "label": "GQA",
+          "params": {
+            "heads": 8
+          }
+        },
+        {
+          "id": "mqa",
+          "label": "MQA",
+          "params": {
+            "heads": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "collective-semantics",
+      "title": "同一组设备数据，四种集合通信结果",
+      "topic": "编程",
+      "keywords": "AllReduce ReduceScatter Broadcast 集合通信 AllToAll 交换 分片",
+      "limits": "4设备各4个数，Sum归约；显示输入输出语义，不模拟Ring网络/带宽",
+      "interaction": "parameters",
+      "placement": "wide",
+      "height": 280,
+      "mobileHeight": 470,
+      "params": [
+        {
+          "key": "kind",
+          "label": "操作",
+          "kind": "select",
+          "value": "allreduce",
+          "options": [
+            {
+              "label": "AllReduce",
+              "value": "allreduce"
+            },
+            {
+              "label": "ReduceScatter",
+              "value": "reduce-scatter"
+            },
+            {
+              "label": "Broadcast D0",
+              "value": "broadcast"
+            },
+            {
+              "label": "AllToAll",
+              "value": "alltoall"
+            }
+          ]
+        }
+      ],
+      "scene": {
+        "type": "collective-view",
+        "props": {
+          "input": [
+            [
+              1,
+              2,
+              3,
+              4
+            ],
+            [
+              5,
+              6,
+              7,
+              8
+            ],
+            [
+              9,
+              10,
+              11,
+              12
+            ],
+            [
+              13,
+              14,
+              15,
+              16
+            ]
+          ],
+          "kind": {
+            "$param": "kind"
+          },
+          "root": 0,
+          "progress": 1
+        }
+      },
+      "presets": [
+        {
+          "id": "sum",
+          "label": "各有总和",
+          "params": {
+            "kind": "allreduce"
+          }
+        },
+        {
+          "id": "shard",
+          "label": "各有一片总和",
+          "params": {
+            "kind": "reduce-scatter"
+          }
+        },
+        {
+          "id": "copy",
+          "label": "复制 D0",
+          "params": {
+            "kind": "broadcast"
+          }
+        },
+        {
+          "id": "exchange",
+          "label": "各交一片",
+          "params": {
+            "kind": "alltoall"
+          }
+        }
+      ]
+    },
+    {
+      "id": "collective-gather",
+      "title": "各有一块，收集后每台都有全部",
+      "topic": "编程",
+      "keywords": "AllGather 集合通信 连续演示",
+      "limits": "4设备各2个数，按设备顺序收集；移动圆点是逻辑传输提示，不代表真实网络时序",
+      "interaction": "timeline",
+      "placement": "wide",
+      "height": 280,
+      "mobileHeight": 470,
+      "initialProgress": 1,
+      "durationMs": 3000,
+      "params": [],
+      "scene": {
+        "type": "collective-view",
+        "props": {
+          "input": [
+            [
+              1,
+              2
+            ],
+            [
+              3,
+              4
+            ],
+            [
+              5,
+              6
+            ],
+            [
+              7,
+              8
+            ]
+          ],
+          "kind": "allgather",
+          "progress": {
+            "$progress": true
+          }
+        }
+      }
+    },
+    {
+      "topic": "编程",
+      "interaction": "static",
+      "height": 220,
+      "mobileHeight": 220,
+      "params": [],
+      "id": "token-partitions",
+      "title": "标记变长，原有位置不变",
+      "keywords": "BPE token 分词 merge 合并 文本位置",
+      "limits": "给定6个ASCII字符的两种分组；共用字符位置，不执行分词训练或假称Unicode字节",
+      "scene": {
+        "type": "sequence-strips",
+        "props": {
+          "atoms": [
+            "t",
+            "h",
+            "e",
+            "h",
+            "a",
+            "t"
+          ],
+          "positionUnit": "字符位置",
+          "rows": [
+            {
+              "label": "原来",
+              "groups": [
+                {
+                  "start": 0,
+                  "end": 1
+                },
+                {
+                  "start": 1,
+                  "end": 2
+                },
+                {
+                  "start": 2,
+                  "end": 3
+                },
+                {
+                  "start": 3,
+                  "end": 4
+                },
+                {
+                  "start": 4,
+                  "end": 5
+                },
+                {
+                  "start": 5,
+                  "end": 6
+                }
+              ]
+            },
+            {
+              "label": "合并后",
+              "groups": [
+                {
+                  "start": 0,
+                  "end": 2,
+                  "color": "blue"
+                },
+                {
+                  "start": 2,
+                  "end": 3
+                },
+                {
+                  "start": 3,
+                  "end": 4
+                },
+                {
+                  "start": 4,
+                  "end": 5
+                },
+                {
+                  "start": 5,
+                  "end": 6
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "topic": "编程",
+      "interaction": "static",
+      "height": 220,
+      "mobileHeight": 220,
+      "params": [],
+      "id": "partition-barrier",
+      "title": "输入分块，先限制合法分组",
+      "keywords": "pretokenization 分词 边界 分块 编程 序列",
+      "limits": "橙线是声明的分块边界；只展示给定合法分组，跨界分组会被工具拒绝，不执行合并规则匹配",
+      "scene": {
+        "type": "sequence-strips",
+        "props": {
+          "atoms": [
+            "t",
+            "h",
+            "e",
+            "h",
+            "a",
+            "t"
+          ],
+          "barriers": [
+            3
+          ],
+          "positionUnit": "字符位置",
+          "rows": [
+            {
+              "label": "原来",
+              "groups": [
+                {
+                  "start": 0,
+                  "end": 1
+                },
+                {
+                  "start": 1,
+                  "end": 2
+                },
+                {
+                  "start": 2,
+                  "end": 3
+                },
+                {
+                  "start": 3,
+                  "end": 4
+                },
+                {
+                  "start": 4,
+                  "end": 5
+                },
+                {
+                  "start": 5,
+                  "end": 6
+                }
+              ]
+            },
+            {
+              "label": "组块",
+              "groups": [
+                {
+                  "start": 0,
+                  "end": 2,
+                  "color": "blue"
+                },
+                {
+                  "start": 2,
+                  "end": 3
+                },
+                {
+                  "start": 3,
+                  "end": 5,
+                  "color": "orange"
+                },
+                {
+                  "start": 5,
+                  "end": 6
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "topic": "机器学习",
+      "interaction": "static",
+      "height": 220,
+      "mobileHeight": 220,
+      "params": [],
+      "id": "signed-category-bars",
+      "title": "正负变化，共用一个零点",
+      "keywords": "gradient 梯度 正负 条形图 比较",
+      "limits": "三个手选梯度分量，不是训练得到的数值；共用显式[-1,1]尺度",
+      "scene": {
+        "type": "category-bars",
+        "props": {
+          "items": [
+            {
+              "label": "w₁",
+              "value": -1,
+              "color": "orange"
+            },
+            {
+              "label": "w₂",
+              "value": 0.4
+            },
+            {
+              "label": "w₃",
+              "value": 0.8
+            }
+          ],
+          "domain": [
+            -1,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "topic": "编程",
+      "interaction": "static",
+      "height": 220,
+      "mobileHeight": 220,
+      "params": [],
+      "id": "pair-counts",
+      "title": "分类频次，直接比较数量",
+      "keywords": "frequency count 相邻对 计数 分类 频率",
+      "limits": "手选的相邻对计数，未执行语料统计或分词训练；显式共用0..8尺度",
+      "scene": {
+        "type": "category-bars",
+        "props": {
+          "items": [
+            {
+              "label": "t·h",
+              "value": 5
+            },
+            {
+              "label": "h·e",
+              "value": 5,
+              "color": "muted"
+            },
+            {
+              "label": "h·a",
+              "value": 3,
+              "color": "muted"
+            },
+            {
+              "label": "a·t",
+              "value": 3,
+              "color": "muted"
+            }
+          ],
+          "domain": [
+            0,
+            8
+          ],
+          "unit": "次"
+        }
+      }
+    },
+    {
+      "topic": "深度学习",
+      "interaction": "static",
+      "height": 220,
+      "mobileHeight": 220,
+      "params": [],
+      "id": "kv-three-budgets",
+      "title": "同样的上下文，三种 KV 预算",
+      "keywords": "KV cache MHA GQA MQA 显存 静态比较",
+      "limits": "同一32层/32个Q头/2048tokens/FP16输入，KV头数32/8/1；密集K与V总计，不含权重、分页、量化元数据或质量结论",
+      "scene": {
+        "type": "compose",
+        "calculations": [
+          {
+            "id": "mha",
+            "operation": "cache-footprint",
+            "inputs": {
+              "kvHeads": 32
+            }
+          },
+          {
+            "id": "gqa",
+            "operation": "cache-footprint",
+            "inputs": {
+              "kvHeads": 8
+            }
+          },
+          {
+            "id": "mqa",
+            "operation": "cache-footprint",
+            "inputs": {
+              "kvHeads": 1
+            }
+          }
+        ],
+        "visual": {
+          "type": "category-bars",
+          "props": {
+            "items": [
+              {
+                "label": "MHA",
+                "value": {
+                  "$result": "mha.totalMiB"
+                },
+                "color": "muted"
+              },
+              {
+                "label": "GQA",
+                "value": {
+                  "$result": "gqa.totalMiB"
+                },
+                "color": "blue"
+              },
+              {
+                "label": "MQA",
+                "value": {
+                  "$result": "mqa.totalMiB"
+                },
+                "color": "orange"
+              }
+            ],
+            "domain": [
+              0,
+              1024
+            ],
+            "unit": "MiB"
+          }
+        }
+      }
+    },
+    {
+      "id": "weighted-flow",
+      "title": "同一批数量，流向不同分组",
+      "topic": "数学 / 编程",
+      "keywords": "flow sankey 分配 流向 数量 贡献",
+      "limits": "手选非负矩阵，带子粗细共用尺度；两列总量均为8。节点条含留白，交叉不等于依赖，不模拟传输",
+      "interaction": "static",
+      "height": 300,
+      "mobileHeight": 340,
+      "params": [],
+      "scene": {
+        "type": "ribbon-flow",
+        "props": {
+          "matrix": [
+            [
+              3,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "sources": [
+            "A",
+            "B",
+            "C"
+          ],
+          "targets": [
+            "甲",
+            "乙"
+          ]
+        }
+      }
+    },
+    {
+      "id": "routing-top-k",
+      "title": "一个输入，可以选一个或两个专家",
+      "topic": "深度学习",
+      "keywords": "MoE expert routing top-k 稀疏 专家 路由",
+      "limits": "3个输入、3个专家，手选分数；选中的softmax权重重新归一化，非所有实现统一约定。无训练、容量、丢弃、负载均衡损失或速度证明",
+      "interaction": "parameters",
+      "height": 310,
+      "mobileHeight": 340,
+      "params": [
+        {
+          "key": "k",
+          "label": "每个输入选几个专家",
+          "kind": "select",
+          "value": 1,
+          "options": [
+            {
+              "label": "Top-1",
+              "value": 1
+            },
+            {
+              "label": "Top-2",
+              "value": 2
+            }
+          ]
+        }
+      ],
+      "presets": [
+        {
+          "id": "one",
+          "label": "Top-1",
+          "params": {
+            "k": 1
+          }
+        },
+        {
+          "id": "two",
+          "label": "Top-2",
+          "params": {
+            "k": 2
+          }
+        }
+      ],
+      "scene": {
+        "type": "compose",
+        "calculations": [
+          {
+            "id": "route",
+            "operation": "top-k-route",
+            "inputs": {
+              "scores": [
+                [
+                  3,
+                  1,
+                  0
+                ],
+                [
+                  2,
+                  3,
+                  1
+                ],
+                [
+                  3,
+                  2,
+                  1
+                ]
+              ],
+              "k": {
+                "$param": "k"
+              },
+              "temperature": 1
+            }
+          }
+        ],
+        "visual": {
+          "type": "ribbon-flow",
+          "props": {
+            "matrix": {
+              "$result": "route.weights"
+            },
+            "sources": [
+              "T₀",
+              "T₁",
+              "T₂"
+            ],
+            "targets": [
+              "E₀",
+              "E₁",
+              "E₂"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "topic": "编程 / 深度学习",
+      "interaction": "parameters",
+      "height": 300,
+      "mobileHeight": 520,
+      "placement": "wide",
+      "id": "gemm-traffic",
+      "title": "批量变大，先摊薄同一份权重",
+      "keywords": "GEMM matmul 算术强度 矩阵乘法 内存 带宽 shared weights",
+      "limits": "A[B,4096]·W[4096,11008]；BF16统一2字节，一次读取/写出账本及示意989TFLOP/s、3350GB/s下界，不是实测GPU时间",
+      "params": [
+        {
+          "key": "batch",
+          "label": "矩阵行数 B",
+          "kind": "stepper",
+          "min": 1,
+          "max": 1024,
+          "step": 1,
+          "value": 64
+        }
+      ],
+      "presets": [
+        {
+          "id": "one",
+          "label": "一行",
+          "params": {
+            "batch": 1
+          }
+        },
+        {
+          "id": "balanced",
+          "label": "接近分界",
+          "params": {
+            "batch": 328
+          }
+        },
+        {
+          "id": "large",
+          "label": "更多行",
+          "params": {
+            "batch": 1024
+          }
+        }
+      ],
+      "scene": {
+        "type": "compose",
+        "calculations": [
+          {
+            "id": "ledger",
+            "operation": "matmul-traffic",
+            "inputs": {
+              "m": {
+                "$param": "batch"
+              },
+              "n": 11008,
+              "k": 4096,
+              "bytesPerElement": 2
+            }
+          }
+        ],
+        "visual": {
+          "type": "columns",
+          "layout": {
+            "gap": 24,
+            "minColumnWidth": 260
+          },
+          "children": [
+            {
+              "id": "traffic",
+              "type": "category-bars",
+              "props": {
+                "items": [
+                  {
+                    "label": "输入 A",
+                    "value": {
+                      "$result": "ledger.aMiB"
+                    }
+                  },
+                  {
+                    "label": "权重 W",
+                    "value": {
+                      "$result": "ledger.bMiB"
+                    },
+                    "color": "muted"
+                  },
+                  {
+                    "label": "输出 Y",
+                    "value": {
+                      "$result": "ledger.cMiB"
+                    },
+                    "color": "orange"
+                  }
+                ],
+                "domain": [
+                  0,
+                  {
+                    "$result": "ledger.maxMiB"
+                  }
+                ],
+                "unit": "MiB"
+              }
+            },
+            {
+              "id": "times",
+              "type": "roofline-times",
+              "props": {
+                "flops": {
+                  "$result": "ledger.flops"
+                },
+                "bytes": {
+                  "$result": "ledger.bytes"
+                },
+                "computeTFLOPS": 989,
+                "memoryGBPS": 3350
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "decode-head-comparison",
+      "title": "共享 KV，提高每个字节的使用次数",
+      "topic": "深度学习",
+      "keywords": "decode GQA MQA MHA arithmetic intensity 推理 算术强度 KV 共享",
+      "limits": "2048历史tokens、32Q头、128维、BF16的单步QK/AV理想读取账本；三种KV头数，不含softmax、投影、缓存写回和中间张量，非prefill或实测",
+      "interaction": "static",
+      "height": 230,
+      "mobileHeight": 230,
+      "params": [],
+      "scene": {
+        "type": "compose",
+        "calculations": [
+          {
+            "id": "mha",
+            "operation": "decode-attention-traffic",
+            "inputs": {
+              "kvHeads": 32
+            }
+          },
+          {
+            "id": "gqa",
+            "operation": "decode-attention-traffic",
+            "inputs": {
+              "kvHeads": 8
+            }
+          },
+          {
+            "id": "mqa",
+            "operation": "decode-attention-traffic",
+            "inputs": {
+              "kvHeads": 1
+            }
+          }
+        ],
+        "visual": {
+          "type": "category-bars",
+          "props": {
+            "items": [
+              {
+                "label": "MHA",
+                "value": {
+                  "$result": "mha.intensity"
+                },
+                "color": "muted"
+              },
+              {
+                "label": "GQA",
+                "value": {
+                  "$result": "gqa.intensity"
+                },
+                "color": "blue"
+              },
+              {
+                "label": "MQA",
+                "value": {
+                  "$result": "mqa.intensity"
+                },
+                "color": "orange"
+              }
+            ],
+            "domain": [
+              0,
+              32
+            ],
+            "unit": "FLOP/B"
+          }
+        }
+      }
+    },
+    {
+      "topic": "编程",
+      "height": 300,
+      "mobileHeight": 520,
+      "placement": "wide",
+      "id": "collective-factorization",
+      "title": "先各有一片总和，再各有完整总和",
+      "keywords": "AllReduce ReduceScatter AllGather collective 集合通信 分解 拼接 sum",
+      "limits": "四设备四分量、Sum归约，按Rank顺序拼接分片；仅输入/输出语义等式，不模拟Ring时序、通信量或性能",
+      "interaction": "static",
+      "params": [],
+      "scene": {
+        "type": "compose",
+        "calculations": [
+          {
+            "id": "scatter",
+            "operation": "collective",
+            "inputs": {
+              "input": [
+                [
+                  1,
+                  2,
+                  3,
+                  4
+                ],
+                [
+                  5,
+                  6,
+                  7,
+                  8
+                ],
+                [
+                  9,
+                  10,
+                  11,
+                  12
+                ],
+                [
+                  13,
+                  14,
+                  15,
+                  16
+                ]
+              ],
+              "kind": "reduce-scatter"
+            }
+          },
+          {
+            "id": "gather",
+            "operation": "collective",
+            "inputs": {
+              "input": {
+                "$result": "scatter.output"
+              },
+              "kind": "allgather"
+            }
+          }
+        ],
+        "visual": {
+          "type": "columns",
+          "layout": {
+            "gap": 14,
+            "minColumnWidth": 240
+          },
+          "children": [
+            {
+              "id": "before",
+              "type": "matrix-table",
+              "props": {
+                "data": [
+                  [
+                    1,
+                    2,
+                    3,
+                    4
+                  ],
+                  [
+                    5,
+                    6,
+                    7,
+                    8
+                  ],
+                  [
+                    9,
+                    10,
+                    11,
+                    12
+                  ],
+                  [
+                    13,
+                    14,
+                    15,
+                    16
+                  ]
+                ],
+                "rowLabels": [
+                  "R0",
+                  "R1",
+                  "R2",
+                  "R3"
+                ],
+                "columnLabels": [
+                  "j0",
+                  "j1",
+                  "j2",
+                  "j3"
+                ],
+                "title": "① 各卡输入"
+              }
+            },
+            {
+              "id": "shards",
+              "type": "matrix-table",
+              "props": {
+                "data": {
+                  "$result": "scatter.output"
+                },
+                "rowLabels": [
+                  "R0·j0",
+                  "R1·j1",
+                  "R2·j2",
+                  "R3·j3"
+                ],
+                "columnLabels": [
+                  "和"
+                ],
+                "title": "② 各留一片总和"
+              }
+            },
+            {
+              "id": "full",
+              "type": "matrix-table",
+              "props": {
+                "data": {
+                  "$result": "gather.output"
+                },
+                "rowLabels": [
+                  "R0",
+                  "R1",
+                  "R2",
+                  "R3"
+                ],
+                "columnLabels": [
+                  "j0",
+                  "j1",
+                  "j2",
+                  "j3"
+                ],
+                "title": "③ 每卡补齐"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "topic": "编程",
+      "height": 300,
+      "mobileHeight": 520,
+      "placement": "wide",
+      "id": "alltoall-provenance",
+      "title": "每台都把不同的一片交给目标设备",
+      "keywords": "AllToAll transpose provenance 集合通信 交换 分片 来源 MoE",
+      "limits": "四设备各四值，等长一值分片，输出每行按来源Rank拼接；保留数字与来源色，非网络时序、性能或不等长AllToAllv",
+      "interaction": "static",
+      "params": [],
+      "scene": {
+        "type": "compose",
+        "calculations": [
+          {
+            "id": "exchange",
+            "operation": "collective",
+            "inputs": {
+              "input": [
+                [
+                  1,
+                  2,
+                  3,
+                  4
+                ],
+                [
+                  5,
+                  6,
+                  7,
+                  8
+                ],
+                [
+                  9,
+                  10,
+                  11,
+                  12
+                ],
+                [
+                  13,
+                  14,
+                  15,
+                  16
+                ]
+              ],
+              "kind": "alltoall"
+            }
+          }
+        ],
+        "visual": {
+          "type": "columns",
+          "layout": {
+            "gap": 32,
+            "minColumnWidth": 240
+          },
+          "children": [
+            {
+              "id": "send",
+              "type": "matrix-table",
+              "props": {
+                "data": [
+                  [
+                    1,
+                    2,
+                    3,
+                    4
+                  ],
+                  [
+                    5,
+                    6,
+                    7,
+                    8
+                  ],
+                  [
+                    9,
+                    10,
+                    11,
+                    12
+                  ],
+                  [
+                    13,
+                    14,
+                    15,
+                    16
+                  ]
+                ],
+                "rowLabels": [
+                  "R0",
+                  "R1",
+                  "R2",
+                  "R3"
+                ],
+                "columnLabels": [
+                  "至R0",
+                  "至R1",
+                  "至R2",
+                  "至R3"
+                ],
+                "rowColors": [
+                  "blue",
+                  "orange",
+                  "green",
+                  "violet"
+                ],
+                "title": "每行来自同一设备"
+              }
+            },
+            {
+              "id": "receive",
+              "type": "matrix-table",
+              "props": {
+                "data": {
+                  "$result": "exchange.output"
+                },
+                "rowLabels": [
+                  "R0",
+                  "R1",
+                  "R2",
+                  "R3"
+                ],
+                "columnLabels": [
+                  "从R0",
+                  "从R1",
+                  "从R2",
+                  "从R3"
+                ],
+                "columnColors": [
+                  "blue",
+                  "orange",
+                  "green",
+                  "violet"
+                ],
+                "title": "每行是目标设备所得"
+              }
+            }
+          ]
+        }
+      }
     }
   ]
 }

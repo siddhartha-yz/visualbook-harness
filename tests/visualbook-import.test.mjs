@@ -61,6 +61,14 @@ test(
         () => importMarkdown(path.join(dir, "invalid.md")),
         /Formula coverage failed/,
       );
+      fs.writeFileSync(path.join(dir, "references.md"), "# Reference context\n\n![本地图][figure]\n\n[原书][book]\n\n[figure]: figure.svg\n[book]: https://example.org/book\n");
+      const referenced = importMarkdown(path.join(dir, "references.md"));
+      assert.equal(referenced.adaptation.images, 1);
+      assert.match(referenced.blocks[1].html, /data:image\/svg\+xml/);
+      assert.match(referenced.blocks[2].html, /href="https:\/\/example.org\/book"/);
+      assert.equal(referenced.blocks.filter(b => b.type === "definition").length, 2);
+      fs.writeFileSync(path.join(dir, "footnotes.md"), "A note[^a].\n\n[^a]: source content\n");
+      assert.throws(() => importMarkdown(path.join(dir, "footnotes.md")), /Footnotes require/);
     } finally {
       fs.rmSync(dir, { recursive: true, force: true });
     }

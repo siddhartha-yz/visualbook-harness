@@ -70,6 +70,7 @@ const plan = {
       mobileHeight: 560,
       state: { v: [1.5, 1] },
       interaction: "parameters",
+      presentation: "exploration",
       initialProgress: 1,
       scene,
       params: [],

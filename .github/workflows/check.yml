@@ -25,7 +25,7 @@ jobs:
         run: python3 experiments/visualbook/check-frozen.py
       - name: Verify reusable tools and ordinary Markdown import
         run: |
-          node --test tests/visualbook-math.test.mjs tests/visualbook-import.test.mjs tests/visualbook-numeric.test.mjs tests/visualbook-neural.test.mjs tests/visualbook-program.test.mjs tests/visualbook-relations.test.mjs tests/visualbook-recipes.test.mjs tests/visualbook-spatial.test.mjs tests/visualbook-format.test.mjs tests/visualbook-fields.test.mjs tests/visualbook-transpose.test.mjs tests/visualbook-sampling-fit.test.mjs tests/visualbook-source-context.test.mjs tests/visualbook-optimizer-reindex.test.mjs
+          node --test tests/visualbook-*.test.mjs
           node tools/check_visualbook.mjs work/visualbook/ci-tools
           node tools/check_visualbook_controls.mjs work/visualbook/ci-reader-controls
           node tools/check_visualbook_composition.mjs work/visualbook/ci-composition
@@ -39,6 +39,9 @@ jobs:
           python3 tools/check_visualbook_source_policy.py work/visualbook/ci-source-policy
           python3 tools/check_visualbook_preparation.py work/visualbook/ci-preparation
           node tools/check_visualbook_source_capture.mjs work/visualbook/ci-source-capture
+          node tools/check_visualbook_reading.mjs work/visualbook/ci-reading
+          node tools/check_visualbook_cases.mjs work/visualbook/ci-cases
+          python3 tools/check_visualbook_partition.py work/visualbook/ci-partition
           node tools/check_visualbook_auto_spacing.mjs work/visualbook/ci-auto-spacing
           node tools/check_visualbook_aligned_inputs.mjs work/visualbook/ci-aligned-inputs
           node tools/check_visualbook_failures.mjs work/visualbook/ci-failures
@@ -68,6 +71,9 @@ jobs:
             work/visualbook/ci-design-protocol
             work/visualbook/ci-preparation
             work/visualbook/ci-source-capture
+            work/visualbook/ci-reading
+            work/visualbook/ci-cases
+            work/visualbook/ci-partition
             work/visualbook/ci-auto-spacing
             work/visualbook/ci-aligned-inputs
             work/visualbook/ci-failures

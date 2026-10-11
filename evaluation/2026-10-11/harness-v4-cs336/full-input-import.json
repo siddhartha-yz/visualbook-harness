@@ -1,0 +1,118 @@
+{
+  "records": [
+    {
+      "file": "模块01_卷一：语言模型基础与分词架构工程_精读全书.md",
+      "status": "failed",
+      "error": "Error: Formula coverage failed: KaTeX parse error: Can't use function '$' in math mode at position 114: …硬件理论算力：\n   \n   $̲$\\text{稠密峰值算力} …"
+    },
+    {
+      "file": "模块02_卷二：现代 Transformer 架构与高效注意力机制_精读全书.md",
+      "status": "imported",
+      "sourceSha256": "f2d13669a24606ef0f2dcfe13d7e9d3d8df42f7abc61cf372767b4fced9deec7",
+      "blocks": 888,
+      "adaptation": {
+        "images": 0,
+        "mathExpected": 537,
+        "mathRendered": 537,
+        "displayFenceAdapted": 1
+      }
+    },
+    {
+      "file": "模块03_卷三：硬件加速、自定义内核与并行训练体系（上）_精读全书.md",
+      "status": "imported",
+      "sourceSha256": "19eee7d2a0abbd9a4f96db8ba6f39ecb3c21a0a2f6fd772d0b22e13cbf85569d",
+      "blocks": 904,
+      "adaptation": {
+        "images": 0,
+        "mathExpected": 455,
+        "mathRendered": 455,
+        "displayFenceAdapted": 0
+      }
+    },
+    {
+      "file": "模块04_卷三：硬件加速、自定义内核与并行训练体系（下）_精读全书.md",
+      "status": "imported",
+      "sourceSha256": "61e05f3e35c6ed26a592d6494a7a2734c18ef50c28d489397defdd39e54ca20a",
+      "blocks": 557,
+      "adaptation": {
+        "images": 0,
+        "mathExpected": 175,
+        "mathRendered": 175,
+        "displayFenceAdapted": 0
+      }
+    },
+    {
+      "file": "模块05_卷四：扩展定律、推理加速与数据工程管线（上）_精读全书.md",
+      "status": "imported",
+      "sourceSha256": "9490befc9c9810ff0faae32948cbd5123bffce5b279f3cef10956a1818040e29",
+      "blocks": 839,
+      "adaptation": {
+        "images": 0,
+        "mathExpected": 354,
+        "mathRendered": 354,
+        "displayFenceAdapted": 0
+      }
+    },
+    {
+      "file": "模块06_卷四：扩展定律、推理加速与数据工程管线（中）_精读全书.md",
+      "status": "imported",
+      "sourceSha256": "24936e838348c2d6a12721be81857bfa0473da54426554eb0693f590edb30f6f",
+      "blocks": 918,
+      "adaptation": {
+        "images": 0,
+        "mathExpected": 483,
+        "mathRendered": 483,
+        "displayFenceAdapted": 0
+      }
+    },
+    {
+      "file": "模块07_卷四：扩展定律、推理加速与数据工程管线（下）_精读全书.md",
+      "status": "imported",
+      "sourceSha256": "7b219f6d00c00a76ba5d99144f8f6e72fc64bc5afa51856a3bf2c159ba811ecd",
+      "blocks": 328,
+      "adaptation": {
+        "images": 0,
+        "mathExpected": 67,
+        "mathRendered": 67,
+        "displayFenceAdapted": 0
+      }
+    },
+    {
+      "file": "模块08_卷五：模型后训练、强化学习对齐与前沿演进（上）_精读全书.md",
+      "status": "imported",
+      "sourceSha256": "8ad767ebfe32ba7a2ee0dc004db8fbfa3dab9e2587cea326f134a2d5c8cc4f5c",
+      "blocks": 679,
+      "adaptation": {
+        "images": 0,
+        "mathExpected": 252,
+        "mathRendered": 252,
+        "displayFenceAdapted": 2
+      }
+    },
+    {
+      "file": "模块09_卷五：模型后训练、强化学习对齐与前沿演进（下）_精读全书.md",
+      "status": "imported",
+      "sourceSha256": "bfc7dab5f6c6c1ba5bb32b50a5fb51f124439427970eb545db2931ce5293d238",
+      "blocks": 592,
+      "adaptation": {
+        "images": 0,
+        "mathExpected": 184,
+        "mathRendered": 184,
+        "displayFenceAdapted": 5
+      }
+    }
+  ],
+  "modelCalls": 0,
+  "scope": "Full nine-volume Markdown import only; not browser rendering, correctness or generated-book quality",
+  "revision": {
+    "reason": "Preserve list-item indentation when inserting display fence line breaks",
+    "volume-1": {
+      "status": "imported",
+      "blocks": 598,
+      "mathExpected": 425,
+      "mathRendered": 425,
+      "displayFenceAdapted": 4
+    },
+    "originalFailureRetained": true
+  }
+}

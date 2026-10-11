@@ -45,6 +45,41 @@
       ? require("./reindex.cjs")
       : global.VisualBookReindex;
   const operations = {
+    "matmul-traffic": {
+      keys: ["m", "n", "k", "bytesPerElement"], required: [],
+      outputs: ["m","n","k","bytesPerElement","aElements","bElements","cElements","aBytes","bBytes","cBytes","bytes","flops","multiplies","additions","exactScalarOps","intensity","aMiB","bMiB","cMiB","maxMiB","convention"],
+      run: input => (typeof module !== "undefined" && module.exports ? require("./systems.cjs") : global.VisualBookSystems).matmulTraffic(input),
+    },
+    "decode-attention-traffic": {
+      keys: ["batch","tokens","queryHeads","kvHeads","headDim","bytesPerElement"], required: [],
+      outputs: ["batch","tokens","queryHeads","kvHeads","headDim","bytesPerElement","flops","queryOutputBytes","kvBytes","bytes","intensity","groupSize","convention"],
+      run: input => (typeof module !== "undefined" && module.exports ? require("./systems.cjs") : global.VisualBookSystems).decodeAttentionTraffic(input),
+    },
+    "top-k-route": {
+      keys: ["scores", "k", "temperature"], required: ["scores"],
+      outputs: ["scores", "k", "temperature", "experts", "tokens", "selected", "probability", "weights", "counts", "weightedLoads", "assignments", "convention"],
+      run: (input) => (typeof module !== "undefined" && module.exports ? require("./routing.cjs") : global.VisualBookRouting).topKRoute(input),
+    },
+    "rotary-pairs": {
+      keys: ["q","k","m","n","base","shift"], required: ["q","k"],
+      outputs: ["q","k","m","n","shift","base","dimension","pairs","dot","relativeDot","convention"],
+      run: (input) => (typeof module !== "undefined" && module.exports ? require("./systems.cjs") : global.VisualBookSystems).rotaryPairs(input),
+    },
+    roofline: {
+      keys: ["flops","bytes","computeTFLOPS","memoryGBPS"], required: ["flops","bytes"],
+      outputs: ["flops","bytes","computeTFLOPS","memoryGBPS","intensity","crossover","computeMs","transferMs","idealMs","idealTFLOPS","bound","convention"],
+      run: (input) => (typeof module !== "undefined" && module.exports ? require("./systems.cjs") : global.VisualBookSystems).roofline(input),
+    },
+    "cache-footprint": {
+      keys: ["layers","batch","tokens","queryHeads","kvHeads","headDim","bytesPerElement"], required: [],
+      outputs: ["layers","batch","tokens","queryHeads","kvHeads","headDim","bytesPerElement","keyBytes","valueBytes","totalBytes","totalMiB","baselineBytes","baselineMiB","savingFraction","queryHeadsPerKV","bytesPerToken","convention"],
+      run: (input) => (typeof module !== "undefined" && module.exports ? require("./systems.cjs") : global.VisualBookSystems).cacheFootprint(input),
+    },
+    collective: {
+      keys: ["input","kind","root"], required: ["input"],
+      outputs: ["input","kind","root","ranks","inputWidth","outputWidth","reduced","output","convention"],
+      run: (input) => (typeof module !== "undefined" && module.exports ? require("./systems.cjs") : global.VisualBookSystems).collective(input),
+    },
     "tensor-reindex": {
       keys: [
         "values",

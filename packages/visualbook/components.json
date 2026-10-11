@@ -1309,6 +1309,260 @@
         "sampled-field"
       ],
       "limits": "5..31 square grid, N×C <=4096 values; at least260×240 region. Canvas colours plus SVG axes and controls. Cell sampling, not exact interpolation/training/calibration."
+    },
+    {
+      "id": "rotary-plane",
+      "title": "旋转位置编码的一个二维对",
+      "props": {
+        "q": "Equal finite even vector 2..16",
+        "k": "Same length as q",
+        "m": "Position of Q",
+        "n": "Position of K",
+        "base": "Frequency base in (1,1e9], default 10000",
+        "shift": "Shared absolute position shift; finite, total position <=1e7",
+        "pairIndex": "Which adjacent pair to display"
+      },
+      "required": [],
+      "outputs": [
+        "q",
+        "k",
+        "m",
+        "n",
+        "shift",
+        "base",
+        "dimension",
+        "pairs",
+        "dot",
+        "relativeDot",
+        "convention",
+        "pairIndex",
+        "selected"
+      ],
+      "examples": [
+        "rope-shift",
+        "rope-frequencies"
+      ],
+      "limits": "相邻坐标对；一个平面显示一对，多个平面可共享位移；不证明学习效果或长度外推",
+      "keywords": "RoPE rotary position 位置编码 旋转 相对位置"
+    },
+    {
+      "id": "roofline-times",
+      "title": "计算与搬运的时间下界",
+      "props": {
+        "flops": "Positive operation count",
+        "bytes": "Positive transferred bytes",
+        "computeTFLOPS": "Positive decimal TFLOP/s",
+        "memoryGBPS": "Positive decimal GB/s",
+        "progress": "Optional reader progress; does not change the timing model"
+      },
+      "required": [],
+      "outputs": [
+        "flops",
+        "bytes",
+        "computeTFLOPS",
+        "memoryGBPS",
+        "intensity",
+        "crossover",
+        "computeMs",
+        "transferMs",
+        "idealMs",
+        "idealTFLOPS",
+        "bound",
+        "convention"
+      ],
+      "examples": [
+        "roofline-balance"
+      ],
+      "limits": "160×200最小空间；峰值速率、完全重叠下的简化下界，不能当实测性能",
+      "keywords": "roofline arithmetic intensity 算术强度 访存 计算 GPU 时间"
+    },
+    {
+      "id": "cache-budget",
+      "title": "共享 KV 头的存储预算",
+      "props": {
+        "layers": "Positive integer",
+        "batch": "Positive integer",
+        "tokens": "Positive integer",
+        "queryHeads": "Positive integer, divisible by kvHeads",
+        "kvHeads": "Positive integer <= queryHeads",
+        "headDim": "Positive integer",
+        "bytesPerElement": "1,2,4,8"
+      },
+      "required": [],
+      "outputs": [
+        "layers",
+        "batch",
+        "tokens",
+        "queryHeads",
+        "kvHeads",
+        "headDim",
+        "bytesPerElement",
+        "keyBytes",
+        "valueBytes",
+        "totalBytes",
+        "baselineBytes",
+        "savingFraction",
+        "queryHeadsPerKV",
+        "bytesPerToken",
+        "convention",
+        "totalMiB",
+        "baselineMiB"
+      ],
+      "examples": [
+        "kv-head-budget"
+      ],
+      "limits": "180×220最小空间；仅密集K/V存储，以MiB显示；不包括权重、分页或精度损失",
+      "keywords": "KV cache MHA MQA GQA 键值缓存 共享头 显存 推理"
+    },
+    {
+      "id": "collective-view",
+      "title": "集合通信前后的设备数据",
+      "props": {
+        "input": "2..4 equal finite rank vectors, drawn input/output width <=8",
+        "kind": "allreduce, allgather, reduce-scatter, broadcast",
+        "root": "Broadcast root rank, zero-based",
+        "progress": "Continuous payload-marker progress 0..1; does not interpolate mathematical results"
+      },
+      "required": [],
+      "outputs": [
+        "input",
+        "kind",
+        "root",
+        "ranks",
+        "inputWidth",
+        "outputWidth",
+        "reduced",
+        "output",
+        "convention",
+        "displayProgress"
+      ],
+      "examples": [
+        "collective-semantics",
+        "collective-gather"
+      ],
+      "limits": "手机至少380px；只显示Sum语义与逻辑传输，不声称Ring协议/时序/实测带宽",
+      "keywords": "collective AllReduce AllGather ReduceScatter Broadcast 集合通信 分布式 数据并行"
+    },
+    {
+      "id": "sequence-strips",
+      "title": "共用位置的标记分组",
+      "props": {
+        "atoms": "1..16 explicit short atom strings; not inferred bytes",
+        "weights": "One supplied integer position width per atom, 1..64; defaults to 1",
+        "rows": "1..4 {label,groups:[{start,end,label?,color?}]} partitions. Zero-based half-open ranges cover atoms exactly once",
+        "barriers": "Distinct internal atom boundaries; groups may not cross them",
+        "positionUnit": "Short label for supplied coordinate units, default 位置"
+      },
+      "required": [
+        "atoms",
+        "rows"
+      ],
+      "outputs": [
+        "atoms",
+        "weights",
+        "offsets",
+        "total",
+        "barriers",
+        "rows",
+        "convention"
+      ],
+      "examples": [
+        "token-partitions",
+        "partition-barrier"
+      ],
+      "limits": "给定分组的图形工具，不执行BPE训练；分组标签必须容纳；共同坐标宽度来自显式单位，不自动把字符当UTF-8字节",
+      "keywords": "token 分词 BPE 文本 序列 内存布局 alignment 分组 边界"
+    },
+    {
+      "id": "category-bars",
+      "title": "共用尺度的分类比较",
+      "props": {
+        "items": "1..8 {label,value,color?} short labels, finite values, known palette colors",
+        "domain": "Explicit finite increasing [min,max], includes zero and every value; no clipping",
+        "unit": "Short shared number unit",
+        "progress": "0..1 construction interpolation, default 1"
+      },
+      "required": [
+        "items",
+        "domain"
+      ],
+      "outputs": [
+        "items",
+        "domain",
+        "unit",
+        "visibleValues",
+        "constructionProgress",
+        "convention"
+      ],
+      "examples": [
+        "signed-category-bars",
+        "kv-three-budgets",
+        "pair-counts"
+      ],
+      "limits": "显式共用数轴；数值置于条形外，无浅色描边；插值是绘图构造，不是实测过程",
+      "keywords": "bar 条形图 分类计数 frequency 频率 梯度 显存 比较"
+    },
+    {
+      "id": "ribbon-flow",
+      "title": "共用尺度的数量流向",
+      "props": {
+        "matrix": "1..6 by 1..6 nonnegative finite values, positive finite total, at most 18 nonzero links",
+        "sources": "One short source name per matrix row",
+        "targets": "One short target name per matrix column",
+        "colors": "At least one known palette color per target; six defaults"
+      },
+      "required": [
+        "matrix",
+        "sources",
+        "targets"
+      ],
+      "outputs": [
+        "matrix",
+        "sources",
+        "targets",
+        "rowTotals",
+        "colTotals",
+        "total",
+        "scale",
+        "edges",
+        "convention"
+      ],
+      "examples": [
+        "routing-top-k",
+        "weighted-flow"
+      ],
+      "limits": "两列给定流量；带子粗细共用尺度，节点条含留白不单独编码总量；交叉不表示依赖或真实通信线路",
+      "keywords": "flow sankey 数量流向 专家 路由 attention 权重 分配 加权 贡献"
+    },
+    {
+      "id": "matrix-table",
+      "title": "紧凑的数值与身份表",
+      "props": {
+        "data": "Finite 1..8 by 1..8 numeric matrix",
+        "rowLabels": "One short identity per row; defaults r0, r1, ...",
+        "columnLabels": "One short identity per column; defaults c0, c1, ...",
+        "rowColors": "Optional one palette key per row, mutually exclusive with columnColors",
+        "columnColors": "Optional one palette key per column",
+        "title": "Optional short stage title; no duplicate paragraph"
+      },
+      "required": [
+        "data"
+      ],
+      "outputs": [
+        "data",
+        "shape",
+        "rowLabels",
+        "columnLabels",
+        "rowColors",
+        "columnColors",
+        "convention"
+      ],
+      "examples": [
+        "collective-factorization",
+        "alltoall-provenance"
+      ],
+      "limits": "每格至少28×24px、文字至少12px；颜色只表示声明的来源，不表示大小或真实执行",
+      "keywords": "matrix table 矩阵 通信 collective rank 表格 identity 身份 数值 紧凑 阶段"
     }
   ]
 }

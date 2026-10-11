@@ -162,6 +162,8 @@ export async function auditInteractions(
         const scope = page.locator("#figure-" + figure.id),
           tested = new Set(),
           registered = new Set();
+        const disclosure = scope.locator(".vh-explore > summary");
+        if (await disclosure.count()) await disclosure.click();
         for (const progress of [...new Set([figure.initial, 0, 0.5, 1])]) {
           await scope.locator(".vh-reset").click();
           await page.evaluate(

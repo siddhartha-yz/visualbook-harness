@@ -228,6 +228,7 @@ try {
     await page.waitForFunction(() => document.fonts.status === "loaded");
     const figure = page.locator("#figure-matrix-product");
     await figure.scrollIntoViewIfNeeded();
+    await figure.locator(".vh-explore").evaluateAll(ns=>ns.forEach(n=>n.open=true));
     await figure.locator(".vh-play").click();
     await page.waitForFunction(
       () => VisualBookRuntime.instances[0].progress > 0.03,
@@ -252,6 +253,7 @@ try {
       paused.p,
     );
     await figure.locator(".vh-reset").click();
+    await figure.locator(".vh-explore").evaluateAll(ns=>ns.forEach(n=>n.open=true));
     await figure.locator(".vh-play").click();
     await page.waitForFunction(
       () => VisualBookRuntime.instances[0].progress === 1,

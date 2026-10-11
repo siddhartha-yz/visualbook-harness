@@ -12,6 +12,10 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 # Also works when loaded for gate checks with importlib, without changing sys.path.
 import importlib.util
+_workspace_spec = importlib.util.spec_from_file_location("visualbook_workspace", ROOT / "tools/visualbook_workspace.py")
+_workspace = importlib.util.module_from_spec(_workspace_spec)
+_workspace_spec.loader.exec_module(_workspace)
+workspace_root = _workspace.workspace_root
 _preparation_spec = importlib.util.spec_from_file_location("visualbook_preparation", ROOT / "tools/prepare_visualbook.py")
 _preparation = importlib.util.module_from_spec(_preparation_spec)
 _preparation_spec.loader.exec_module(_preparation)
@@ -88,6 +92,7 @@ def main():
     parser.add_argument("--campaign", type=Path, help="Optional shared ignored parent campaign; includes this output and earlier startup attempts")
     parser.add_argument("--attempt-limit", type=int, default=16, help="Global startup limit when --campaign is supplied; failures count")
     parser.add_argument("--composition-policy",choices=["prefer-library","open"],default="prefer-library")
+    parser.add_argument("--split-level",type=int,choices=[2,3],help="For one Markdown book, split at original H2/H3 titles, retaining every imported block. Counts against --max-chapters before any model call.")
     parser.add_argument("--prepare-only", action="store_true", help="Import and freeze every chapter without starting any model session")
     parser.add_argument("--keep-going", action="store_true", help="Evaluate later chapters after a chapter gate fails; still refuse book export if any chapter fails")
     parser.add_argument(
@@ -113,7 +118,7 @@ def main():
     )
     args = parser.parse_args()
     output = args.output.resolve()
-    work = (ROOT / "work").resolve()
+    work = (workspace_root(ROOT) / "work").resolve()
     if not output.is_relative_to(work):
         raise SystemExit(
             "Raw generation output must be in ignored work/ to keep provider logs out of Git"
@@ -136,7 +141,7 @@ def main():
         raise SystemExit("Resume input changed; use a fresh run")
     save(identity_path, identity)
     try:
-        manifest = _preparation.prepare(args.manifest, output, max_chapters=args.max_chapters, source_url=args.source_url, source_name=args.source_name)
+        manifest = _preparation.prepare(args.manifest, output, max_chapters=args.max_chapters, source_url=args.source_url, source_name=args.source_name, split_level=args.split_level)
     except Exception as error:
         raise SystemExit(str(error))
     # Check the complete source reader before the first author, including prepare-only.

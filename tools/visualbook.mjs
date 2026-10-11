@@ -10,7 +10,9 @@ import { operations as calculations } from "./visualbook_math.mjs";
 import { pathToFileURL } from "node:url";
 import { auditParameters } from "./audit_visualbook_parameters.mjs";
 import { auditInteractions } from "./audit_visualbook_interactions.mjs";
-import { invalidGeometry } from "./visualbook_inspection.mjs";
+import { invalidGeometry, sourceMathLeaks } from "./visualbook_inspection.mjs";
+import reading from "../packages/visualbook/reading.cjs";
+import presetTools from "../packages/visualbook/presets.cjs";
 const root = path.resolve(import.meta.dirname, "..");
 const runtime = path.join(root, "work/visualbook/runtime/node_modules");
 const lib = path.join(root, "packages/visualbook");
@@ -50,6 +52,10 @@ export function resolvePlan(plan) {
         "params",
         "state",
         "interaction",
+        "placement",
+        "marginSide",
+        "presentation",
+        "presets",
         "initialProgress",
         "durationMs",
         "checkpoints",
@@ -278,6 +284,7 @@ export function validatePlan(book, plan) {
   const ids = new Set(),
     scopes = [];
   for (const f of plan.figures) {
+    reading.readingSpec(f);
     if (
       typeof f.id !== "string" ||
       !/^[a-z][a-z0-9-]*$/.test(f.id) ||
@@ -308,6 +315,7 @@ export function validatePlan(book, plan) {
     )
       throw Error("Use at most 8 uniquely named parameter controls " + f.id);
     const interaction = f.interaction ?? "timeline";
+    presetTools.validatePresets(f);
     if (!["timeline", "parameters", "static"].includes(interaction))
       throw Error("Bad interaction mode " + f.id);
     if (
@@ -368,6 +376,13 @@ export function validatePlan(book, plan) {
         "Keep source introduction with its continuation; place figure after " +
           context.recommendedAnchor,
       );
+    if (f.sourceDiagramAnchor !== undefined) {
+      const original = book.blocks[start];
+      if (f.sourceDiagramAnchor !== f.afterAnchor || original.type !== "code" ||
+          !/```(?:text|plaintext|ascii)?\s*\n/.test(original.raw) ||
+          !/[+┌┐└┘][─\-]{3,}|[│|].*[│|]/.test(original.raw))
+        throw Error("Only the adjacent original text/ASCII diagram can be collapsed " + f.id);
+    }
     if (
       f.scene !== undefined &&
       (!f.scene || typeof f.scene !== "object" || Array.isArray(f.scene))
@@ -457,8 +472,9 @@ export function build(book, plan, { direct = false } = {}) {
     book.sourceName ?? (book.sourceCommit ? "D2L" : "输入教材");
   const first = book.blocks[0],
     hasCover = first?.type === "heading" && (first.depth ?? 1) === 1;
+  const collapsedDiagrams = new Set(plan.figures.map((f) => f.sourceDiagramAnchor).filter(Boolean));
   const block = (b) =>
-    `<div class="source-block" id="${b.id}" data-source-sha256="${b.sha256}" data-math-expected="${b.math?.expected ?? 0}">${b.html}</div>`;
+    `<div class="source-block" id="${b.id}" data-source-sha256="${b.sha256}" data-math-expected="${b.math?.expected ?? 0}">${collapsedDiagrams.has(b.id) ? `<details class="vh-original-diagram"><summary>原文文本示意</summary>${b.html}</details>` : b.html}</div>`;
   const cover = hasCover ? block(first) : `<h1>${esc(book.title)}</h1>`;
   const scopes = validatePlan(book, plan),
     mathExpected = book.blocks.reduce((s, b) => s + (b.math?.expected ?? 0), 0);
@@ -466,34 +482,48 @@ export function build(book, plan, { direct = false } = {}) {
     c.kind === "select"
       ? `<label>${esc(c.label)}<select data-param="${c.key}" aria-label="${esc(c.label)}">${c.options.map((o, i) => `<option value="${i}"${o.value === c.value ? " selected" : ""}>${esc(o.label)}</option>`).join("")}</select></label>`
       : `<div class="vh-param-row${c.kind === "stepper" ? " vh-stepper" : ""}"><label>${esc(c.label)}<input type="range" data-param="${c.key}" min="${c.min}" max="${c.max}" step="${c.step}" value="${c.value}" aria-label="${esc(c.label)}"><output>${c.value}</output></label>${c.kind === "stepper" ? `<button type="button" data-param-step="${c.key}" data-direction="-1" aria-label="${esc(c.label)}：上一步">←</button><button type="button" data-param-step="${c.key}" data-direction="1" aria-label="${esc(c.label)}：下一步">→</button>` : ""}</div>`;
-  const figure = (f) =>
-    `<figure class="vh-figure" id="figure-${f.id}" data-viz-id="${f.id}" data-interaction="${f.interaction ?? "timeline"}"><h3>${esc(f.title)}</h3><div class="vh-canvas"><svg role="img" aria-label="${esc(f.summary ?? f.title)}"><title>${esc(f.title)}</title></svg></div><div class="vh-toolbar"><div class="vh-bar"><input class="vh-progress" type="range" min="0" max="1" step="0.001" value="${f.initialProgress ?? 0}" aria-label="${esc(f.title)}：连续演示进度"><span class="vh-status"></span></div><div class="vh-transport"><button type="button" class="vh-prev" aria-label="${esc(f.title)}：上一步">←</button><button type="button" class="vh-play" aria-label="${esc(f.title)}：播放演示" aria-pressed="false">播放</button><button type="button" class="vh-next" aria-label="${esc(f.title)}：下一步">→</button><button type="button" class="vh-reset" aria-label="${esc(f.title)}：重置进度与参数">重置</button></div></div><div class="vh-params">${(f.params ?? []).map(parameter).join("")}</div>${f.summary ? `<p class="vh-caption">${esc(f.summary)}</p>` : ""}</figure>`;
   const renderFigure = (f) => {
-    let html = figure(f);
-    if (f.interaction === "static")
-      html = html.replace(
-        /<div class="vh-toolbar">[\s\S]*?<div class="vh-params">/,
-        '<div class="vh-params">',
-      );
-    else if (f.interaction === "parameters")
-      html = html.replace(
-        /<div class="vh-toolbar">[\s\S]*?<div class="vh-params">/,
-        `<div class="vh-toolbar vh-toolbar-parameters"><button type="button" class="vh-reset" aria-label="${esc(f.title)}：重置参数">重置</button></div><div class="vh-params">`,
-      );
-    return html;
+    const { placement, presentation } = reading.readingSpec(f);
+    const mode = f.interaction ?? "timeline";
+    const play = `<button type="button" class="vh-play" aria-label="${esc(f.title)}：播放演示" aria-pressed="false">看一遍</button>`;
+    const progress = `<div class="vh-bar"><input class="vh-progress" type="range" min="0" max="1" step="0.001" value="${f.initialProgress ?? 0}" aria-label="${esc(f.title)}：连续演示进度"><span class="vh-status"></span></div>`;
+    const transport = `<div class="vh-transport"><button type="button" class="vh-prev" aria-label="${esc(f.title)}：上一步">←</button>${presentation === "exploration" ? play : ""}<button type="button" class="vh-next" aria-label="${esc(f.title)}：下一步">→</button><button type="button" class="vh-reset" aria-label="${esc(f.title)}：重置进度与参数">重置</button></div>`;
+    let controls = mode === "timeline" ? `<div class="vh-toolbar">${progress}${transport}</div>` : mode === "parameters" ? `<div class="vh-toolbar vh-toolbar-parameters"><button type="button" class="vh-reset" aria-label="${esc(f.title)}：重置参数">重置</button></div>` : "";
+    if (mode !== "static") controls += `<div class="vh-params">${(f.params ?? []).map(parameter).join("")}</div>`;
+    if (presentation === "reading" && mode !== "static")
+      controls = `<div class="vh-reading-actions">${mode === "timeline" ? play : ""}<details class="vh-explore"><summary>${mode === "timeline" ? "逐步查看 / 自己试" : "自己试一下"}</summary><div class="vh-explore-content">${controls}</div></details></div>`;
+    if (f.presets?.length)
+      controls = `<div class="vh-cases" role="group" aria-label="${esc(f.title)}：典型情况">${f.presets.map(p => `<button type="button" data-preset="${p.id}" aria-pressed="false">${esc(p.label)}</button>`).join("")}</div>` + controls;
+    return `<figure class="vh-figure" id="figure-${f.id}" data-viz-id="${f.id}" data-interaction="${mode}" data-placement="${placement}" data-presentation="${presentation}" aria-describedby="caption-${f.id}"><h3>${esc(f.title)}</h3><div class="vh-canvas"><svg role="img" aria-label="${esc(f.summary ?? f.title)}"><title>${esc(f.title)}</title></svg></div>${controls}<figcaption id="caption-${f.id}" class="vh-caption">${esc(f.summary ?? "")}</figcaption></figure>`;
   };
   const annotations = validateAnnotations(book, plan.annotations);
   const noteHtml = (note) =>
-    `<aside class="vh-annotation" id="${esc(note.id)}" data-kind="${esc(note.kind)}" data-math-expected="${note.formula ? 1 : 0}"><p><span>${{ condition: "适用条件", clarification: "补充说明", correction: "勘误" }[note.kind]}</span>${esc(note.text)}</p>${note.formula ? katex.renderToString(note.formula, { displayMode: true, throwOnError: true, trust: false, strict: "ignore" }) : ""}</aside>`;
+    `<aside class="vh-annotation" id="${esc(note.id)}" data-kind="${esc(note.kind)}" data-placement="${note.placement ?? "body"}" data-math-expected="${note.formula ? 1 : 0}"><p><span>${{ condition: "适用条件", clarification: "补充说明", correction: "勘误" }[note.kind]}</span>${esc(note.text)}</p>${note.formula ? katex.renderToString(note.formula, { displayMode: true, throwOnError: true, trust: false, strict: "ignore" }) : ""}</aside>`;
   let body = "";
   for (let i = 0; i < book.blocks.length; i++) {
     const b = book.blocks[i],
       scope = scopes.find((s) => s.start === i);
     if (scope) body += '<section class="vh-scope">';
+    const notes = annotations.filter((n) => n.afterAnchor === b.id);
+    const marginFigure = scope && reading.readingSpec(scope.f).placement === "margin";
+    const marginal = marginFigure || notes.some((n) => n.placement === "margin");
+    if (marginal) body += '<div class="vh-anchor-row"><div class="vh-anchor-text">';
     if (!(i === 0 && hasCover)) body += block(b);
-    for (const note of annotations.filter((n) => n.afterAnchor === b.id))
-      body += noteHtml(note);
-    if (scope) body += renderFigure(scope.f);
+    for (const note of notes.filter((n) => n.placement !== "margin")) body += noteHtml(note);
+    if (marginal) {
+      body += "</div>";
+      for (const side of ["left", "right"]) {
+        const sideNotes = notes.filter(n => n.placement === "margin" && (n.marginSide ?? "right") === side);
+        const sideFigure = marginFigure && reading.readingSpec(scope.f).marginSide === side;
+        if (!sideNotes.length && !sideFigure) continue;
+        body += `<div class="vh-margin-content" data-side="${side}">`;
+        for (const note of sideNotes) body += noteHtml(note);
+        if (sideFigure) body += renderFigure(scope.f);
+        body += "</div>";
+      }
+      body += "</div>";
+    }
+    if (scope && !marginFigure) body += renderFigure(scope.f);
     if (scopes.some((s) => s.end === i)) body += "</section>";
   }
   const library = direct
@@ -523,7 +553,9 @@ export function build(book, plan, { direct = false } = {}) {
         `VisualBookRuntime.mount(document.getElementById('figure-${f.id}'),${JSON.stringify({ ...f, code: undefined, scene: undefined }).replaceAll("<", "\\u003c")},(${f.scene ? "function draw(input){return VisualBook.renderScene(input.board," + JSON.stringify(f.scene).replaceAll("<", "\\u003c") + ",input);}" : f.code}),${!direct});`,
     )
     .join("\n");
-  return `<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; font-src data:; connect-src 'none'; base-uri 'none'"><title>${esc(book.title)}</title><style>${fs.readFileSync(path.join(lib, "theme.css"), "utf8")}\n${katexCss()}</style></head><body data-source-name="${esc(sourceName)}" data-math-expected="${mathExpected}" data-source-sha="${book.sourceSha256}"><header><a href="index.html">VisualBook</a>${book.sourceUrl ? `<a href="${esc(book.sourceUrl)}">原版教材 ↗</a>` : ""}</header><main><div class="eyebrow">读 · 看 · 自己试一下</div>${cover}<p class="source-note">正文来自 ${esc(sourceName)}。图解可拖动、单步查看，也可以主动播放或暂停。</p>${body}</main><script>${library}\n${fs.readFileSync(path.join(lib, "runtime.js"), "utf8")}\n${startup}</script></body></html>`;
+  const headings = book.blocks.filter((b) => b.type === "heading" && b.depth > 1 && b.depth <= 4);
+  const toc = headings.length >= 3 ? `<nav class="vh-toc" aria-label="本章目录"><details><summary>本章</summary><ol>${headings.map((b) => `<li data-depth="${b.depth}"><a href="#${b.id}">${esc(b.raw.replace(/^#+\s*/, ""))}</a></li>`).join("")}</ol></details></nav>` : "";
+  return `<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; font-src data:; connect-src 'none'; base-uri 'none'"><title>${esc(book.title)}</title><style>${fs.readFileSync(path.join(lib, "theme.css"), "utf8")}\n${katexCss()}</style></head><body data-source-name="${esc(sourceName)}" data-math-expected="${mathExpected}" data-source-sha="${book.sourceSha256}"><header><a href="index.html">VisualBook</a>${book.sourceUrl ? `<a href="${esc(book.sourceUrl)}">原版教材 ↗</a>` : ""}</header><main><div class="vh-opening">${toc}<div class="vh-cover"><div class="eyebrow">读 · 看 · 有需要再试</div>${cover}<p class="source-note">正文来自 ${esc(sourceName)}。先读图；需要时可以看一遍演示，或展开探索。</p></div></div>${body}</main><script>${library}\n${fs.readFileSync(path.join(lib, "runtime.js"), "utf8")}\n${startup}</script></body></html>`;
 }
 export async function preview(file, out) {
   if (fs.existsSync(out))
@@ -566,7 +598,7 @@ export async function preview(file, out) {
       headless: true,
       executablePath: process.env.CHROMIUM_PATH ?? chromium.executablePath(),
     });
-    for (const width of [1280, 375]) {
+    for (const width of [1280, 375, 1920]) {
       const page = await browser.newPage({
         viewport: { width, height: 900 },
         deviceScaleFactor: 1,
@@ -644,6 +676,7 @@ export async function preview(file, out) {
           .map((b) => b.id),
         overflow: document.documentElement.scrollWidth > innerWidth + 2,
       }));
+      math.raw = await page.evaluate(sourceMathLeaks);
       if (
         math.expected !== math.rendered ||
         math.annotationExpected !== math.annotationRendered ||
@@ -657,6 +690,18 @@ export async function preview(file, out) {
       const instances = await page.evaluate(
         () => window.VisualBookRuntime?.instances.map((i) => i.id) ?? [],
       );
+      const readingLayout = await page.evaluate(() => {
+        const rect = (n) => { const r = n.getBoundingClientRect(); return { x:r.x, y:r.y + scrollY, width:r.width, height:r.height }; };
+        const notes = [...document.querySelectorAll('.vh-anchor-row')].flatMap((row) => {
+          const text = row.querySelector('.vh-anchor-text');
+          return [...row.querySelectorAll('.vh-margin-content')].map(margin => ({ text:rect(text), margin:rect(margin), side:margin.dataset.side, row:rect(row) }));
+        });
+        return { sourceWidths:[...document.querySelectorAll('.source-block')].map((n) => rect(n).width), notes };
+      });
+      if (readingLayout.sourceWidths.some((w) => w > 744) || readingLayout.notes.some(({text,margin}) =>
+        text.x < margin.x + margin.width - 2 && text.x + text.width > margin.x + 2 &&
+        text.y < margin.y + margin.height - 2 && text.y + text.height > margin.y + 2))
+        report.findings.push({width,kind:"reading-layout",...readingLayout});
       const shapes = [];
       for (const id of instances) {
         const interaction = await page.evaluate(
@@ -677,6 +722,26 @@ export async function preview(file, out) {
               .initialProgress ?? 0,
           id,
         );
+        await page.locator("#figure-" + id).scrollIntoViewIfNeeded();
+        await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+        const readingFile = path.join(out, `${width}-${id}-reading.png`);
+        await page.locator("#figure-" + id).screenshot({ path: readingFile });
+        report.screenshots.push(path.resolve(readingFile));
+        const readingState = await page.locator("#figure-" + id).evaluate((n) => ({
+          placement:n.dataset.placement, presentation:n.dataset.presentation,
+          canvasWidth:n.querySelector('.vh-canvas').clientWidth,
+          visibleControls:[...n.querySelectorAll('button,input,select')].filter((e) => e.checkVisibility()).length,
+          explorationOpen:n.querySelector('.vh-explore')?.open ?? null,
+        }));
+        if (width === 1920 || id === instances[0]) {
+          const contextFile = path.join(out, `${width}-${id}-reading-context.png`);
+          await page.locator("#figure-" + id).evaluate((n) => scrollTo(0, Math.max(0, n.getBoundingClientRect().top + scrollY - 240)));
+          await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+          await page.screenshot({path:contextFile});
+          report.screenshots.push(path.resolve(contextFile));
+        }
+        // Explore separately: initial reading screenshots above retain the default UI.
+        await page.locator("#figure-" + id + " .vh-explore").evaluateAll((nodes) => nodes.forEach((n) => n.open = true));
         const frames = [];
         for (const progress of [
           ...new Set([0, 0.25, 0.26, 0.5, 1, initialProgress]),
@@ -834,6 +899,8 @@ export async function preview(file, out) {
           id,
           interaction,
           initialProgress,
+          readingState,
+          declaredParameterControls: await page.locator("#figure-" + id + " [data-param]").count(),
           interactiveTargets,
           frames,
         });
@@ -841,7 +908,7 @@ export async function preview(file, out) {
       const filename = path.join(out, `${width}-page.png`);
       await page.screenshot({ path: filename, fullPage: true });
       report.screenshots.push(path.resolve(filename));
-      report.viewports.push({ width, math, sourceImages, shapes });
+      report.viewports.push({ width, math, sourceImages, readingLayout, shapes });
       if (consoleErrors.length)
         report.findings.push({
           width,
@@ -916,12 +983,7 @@ export async function preview(file, out) {
       if (
         shape.interaction === "parameters" &&
         !shape.interactiveTargets &&
-        !parameters.cases.some(
-          (c) =>
-            c.id === shape.id &&
-            c.width === viewport.width &&
-            c.control !== "default",
-        )
+        !shape.declaredParameterControls
       )
         report.findings.push({
           kind: "no-interaction",
@@ -1001,7 +1063,7 @@ export function staticExport(file, previewDir, out) {
     .replace('<html lang="zh-CN">', '<html lang="zh-CN" class="no-js">')
     .replace(
       "</head>",
-      '<style>.no-js .vh-static{display:block}.no-js .vh-canvas,.no-js .vh-toolbar,.no-js .vh-bar,.no-js .vh-params{display:none}</style><script>document.documentElement.classList.remove("no-js")</script></head>',
+      '<style>.no-js .vh-static{display:block}.no-js .vh-canvas,.no-js .vh-toolbar,.no-js .vh-bar,.no-js .vh-params,.no-js .vh-reading-actions,.no-js .vh-cases{display:none}</style><script>document.documentElement.classList.remove("no-js")</script></head>',
     );
   fs.writeFileSync(out, html);
   const licenses = [
@@ -1124,6 +1186,8 @@ async function main() {
     const report = await preview(args[0], args[1]);
     console.log(
       JSON.stringify({
+        status: report.status,
+        candidateSha256: report.sha256,
         report: path.resolve(args[1], "report.json"),
         findings: report.findings,
         screenshots: report.screenshots,

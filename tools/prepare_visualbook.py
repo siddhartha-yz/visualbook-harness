@@ -31,7 +31,7 @@ def check_compiled_math(data):
         total+=expected
     return total
 
-def prepare(input_file, output, *, max_chapters=3, source_url='', source_name='输入教材'):
+def prepare(input_file, output, *, max_chapters=3, source_url='', source_name='输入教材', split_level=None):
     input_file=input_file.resolve();output=output.resolve();output.mkdir(parents=True,exist_ok=True)
     attempts=output/'preparation';attempts.mkdir(exist_ok=True)
     attempt=attempts/f'attempt-{len(list(attempts.glob("attempt-*")))+1:03d}';attempt.mkdir()
@@ -40,7 +40,21 @@ def prepare(input_file, output, *, max_chapters=3, source_url='', source_name='�
     def record():save(attempt/'report.json',report)
     record()
     try:
-        if input_file.suffix.lower()=='.md':
+        preimported={}
+        if split_level is not None:
+            if split_level not in [2,3] or input_file.suffix.lower()!='.md':
+                raise ValueError('Title partitioning requires one Markdown book and level 2/3')
+            partition=attempt/'partition'
+            options={'id':'chapter','sourceUrl':source_url,'sourceName':source_name,'level':split_level,'maxChapters':max_chapters}
+            process=subprocess.run(['node',str(ROOT/'tools/partition_visualbook.mjs'),str(input_file),str(partition),json.dumps(options,ensure_ascii=False)],capture_output=True,text=True,cwd=ROOT,timeout=120)
+            (attempt/'partition.stdout').write_text(process.stdout);(attempt/'partition.stderr').write_text(process.stderr)
+            if process.returncode:raise ValueError('Book partition failed before model calls; see preparation diagnostics')
+            manifest=json.loads((partition/'manifest.json').read_text())
+            report['partitionCoverage']=json.loads((partition/'coverage.json').read_text())
+            for c in manifest['chapters']:
+                preimported[c['id']]=json.loads((partition/c['source']).read_text())
+                c['source']=str(input_file)
+        elif input_file.suffix.lower()=='.md':
             manifest={'chapters':[{'id':'chapter','source':str(input_file),'sourceUrl':source_url,'sourceName':source_name}]}
         else:
             manifest=json.loads(input_file.read_text())
@@ -57,7 +71,9 @@ def prepare(input_file, output, *, max_chapters=3, source_url='', source_name='�
             source=Path(c['source']);source=source.resolve() if source.is_absolute() else (input_file.parent/source).resolve()
             candidate=attempt/(c['id']+'.source.json')
             entry={'id':c['id'],'original':str(source),'status':'importing'};report['records'].append(entry);record()
-            if source.suffix.lower()=='.md':
+            if c['id'] in preimported:
+                save(candidate,preimported[c['id']])
+            elif source.suffix.lower()=='.md':
                 options={k:c.get(k,default) for k,default in [('id',c['id']),('sourceUrl',source_url),('sourceName',source_name),('license',None)]}
                 process=subprocess.run(['node',str(ROOT/'packages/visualbook/import.mjs'),str(source),str(candidate),json.dumps(options,ensure_ascii=False)],capture_output=True,text=True,cwd=ROOT,timeout=60)
                 (attempt/(c['id']+'.import.stdout')).write_text(process.stdout)
@@ -78,6 +94,7 @@ def prepare(input_file, output, *, max_chapters=3, source_url='', source_name='�
         prepared_manifest={'title':manifest.get('title',candidates[0][1]['title']),'description':manifest.get('description'),'chapters':[{'id':c['id'],'source':str(output/'inputs'/(c['id']+'.source.json'))} for c,_,_ in candidates]}
         identity={'inputSha256':digest(input_file),'sourceUrl':source_url,'sourceName':source_name,
                   'chapters':[{k:entry[k] for k in ['id','original','originalSha256','importedSha256']} for entry in report['records']]}
+        if split_level is not None:identity['splitLevel']=split_level
         frozen=output/'prepared-inputs.json'
         if frozen.exists():
             prior=json.loads(frozen.read_text())

@@ -231,7 +231,7 @@
         anchor = "start",
         opacity = 1,
         weight = 400,
-        halo = true,
+        halo = false,
         family = "system-ui, sans-serif",
       } = {},
     ) {
@@ -265,6 +265,7 @@
         maxWidth = 140,
         anchor = "start",
         avoid = true,
+        halo = true,
       } = {},
     ) {
       const wrapped = lines(text, maxWidth, size),
@@ -294,6 +295,7 @@
         this.text(`${id}-${i}`, v, left, top + size + i * (size + 4), {
           size,
           color,
+          halo,
         }),
       );
       return { x: left, y: top, w, h };

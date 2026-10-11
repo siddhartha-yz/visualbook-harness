@@ -166,6 +166,18 @@ const imageReport = await preview(
   out + "/bad-image-preview",
 );
 assert(imageReport.findings.some((f) => f.kind === "source-image-decode"));
+// TeX nested inside a paragraph used to escape the direct-child text check.
+// Explicit code samples remain literal, so fixing the leak check must not reject code.
+const leak = structuredClone(source);
+leak.blocks[0].html = '<p>Broken formula: \\frac{1}{2} + \\alpha</p>';
+fs.writeFileSync(out + "/math-leak.html", build(leak, { figures: [] }));
+const leakReport = await preview(out + "/math-leak.html", out + "/math-leak-preview");
+assert(leakReport.findings.some(f => f.kind === "source-math-leak"));
+const literal = structuredClone(source);
+literal.blocks[0].html = '<p>Literal syntax: <code>\\frac{1}{2} + \\alpha</code></p>';
+fs.writeFileSync(out + "/literal-code.html", build(literal, { figures: [] }));
+const literalReport = await preview(out + "/literal-code.html", out + "/literal-code-preview");
+assert.deepEqual(literalReport.findings, []);
 fs.writeFileSync(
   out + "/control.json",
   JSON.stringify(
@@ -183,6 +195,8 @@ fs.writeFileSync(
       preflightPositiveCases: 2,
       badLastChapterStoppedBeforeSession: true,
       brokenImageRejected: true,
+      nestedParagraphMathLeakRejected: true,
+      literalCodePreserved: true,
       scope:
         "Offscreen lazy original image loading before full-page capture, actual image decode, two source widths, valid-formula bad final chapter blocked before any author. Not image semantics, all lazy-image/browser behaviours or art quality.",
     },

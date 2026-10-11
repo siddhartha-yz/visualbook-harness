@@ -1,5 +1,7 @@
 # 模型可调用的可视化工具
 
+阅读时默认收起参数和进度条，timeline显示“看一遍”，static不带控制。复杂图可用placement:"wide"占用两侧空白，少量局部对象可用placement:"margin"及marginSide:"left"/"right"；正文仍约720px。presentation:"exploration"显式展开控制。手机保留全部页边信息。详见AUTHOR_API.md的布局与presets输入；命名设计会继承这些默认值。
+
 先读取 source.md 的完整正文与锚点（source-map.json是结构，source.json是编译器内部数据），选择原书没有说明清楚的联系。输出 book.json：
 
 ```json
@@ -32,7 +34,7 @@ draw每次收到同一个board；工具负责begin/end、尺寸和键值复用�
 - `board.matrix(id,values,{x,y,cell,activeRow,activeCol,activeCell,label,color,precision})`：矩阵格、数值、高亮行列；返回尺寸。小屏须安排合适cell及上下排布，不要让矩阵超宽。
 - `board.sequence(id,[{id,label},...],{active,x,y,width,height})`：宽屏横排、窄屏竖排的流程；active允许连续值，让信息位置持续变化。推荐3–5个短节点。
 - `board.label(id,text,x,y,{maxWidth,size,color,anchor,avoid})`：实测字体宽度、换行、边界限制与有限避让。避让不保证所有组合无碰撞，必须看预览。
-- `board.text(id,text,x,y,{size,color,anchor,opacity,weight})`：精确短数值。默认15px。勿塞段落。
+- `board.text(id,text,x,y,{size,color,anchor,opacity,weight,halo})`：精确短数值，默认15px、无描边；图形交叠确需背景描边时显式 `halo:true`。条形内/外数值用普通文字，勿塞段落。`board.label` 默认保留几何注释的背景描边，可用 `halo:false` 关闭。
 - `board.line(id,x1,y1,x2,y2,color,width,opacity)`、`board.circle(id,x,y,r,color)`、`board.rect(id,x,y,w,h,fill,attrs)`、`board.path(id,points,options)`：基础图元。
 - `board.mark(id,tag,attrs,text)`：自定义SVG扩展，保留对象身份。
 

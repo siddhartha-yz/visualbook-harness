@@ -22,6 +22,7 @@ const blocks = Array.from({ length: 6 }, (_, i) => ({
 const figures = [0, 1].map((i) => ({
   id: `manual-${i}`,
   title: "读者控制样本 " + i,
+  presentation: "exploration",
   afterAnchor: `control-${i * 2}`,
   endAnchor: `control-${i * 2 + 1}`,
   height: 260,

@@ -4,6 +4,7 @@ import path from "node:path";
 import crypto from "node:crypto";
 import { pathToFileURL } from "node:url";
 import { build } from "./visualbook.mjs";
+import { sourceMathLeaks } from "./visualbook_inspection.mjs";
 const [manifestFile, output] = process.argv.slice(2);
 const root = path.resolve(import.meta.dirname, ".."),
   out = path.resolve(output);
@@ -108,11 +109,13 @@ try {
               .map((n) => n.id),
           };
         });
+        facts.rawMath = await page.evaluate(sourceMathLeaks);
         const findings = [
           ...(facts.pageWidth > width + 2 ? ["page-overflow"] : []),
           ...(facts.renderedFormulas !== expected || facts.formulaErrors
             ? ["formula-coverage"]
             : []),
+          ...(facts.rawMath.length ? ["unrendered-math-text"] : []),
           ...(facts.images.some((i) => !i.decoded) ? ["image-decode"] : []),
           ...(requests.length ? ["external-request"] : []),
         ];

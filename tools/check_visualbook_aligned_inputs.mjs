@@ -42,6 +42,7 @@ try {
           height: 300,
           mobileHeight: 300,
           interaction: "parameters",
+      presentation: "exploration",
           state: { item: 0 },
           scene: {
             type: "aligned-points",

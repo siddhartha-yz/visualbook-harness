@@ -41,7 +41,7 @@ export function validateAnnotations(book, annotations = []) {
     if (
       !note ||
       Object.keys(note).some(
-        (k) => !["id", "afterAnchor", "kind", "text", "formula"].includes(k),
+        (k) => !["id", "afterAnchor", "kind", "text", "formula", "placement", "marginSide"].includes(k),
       ) ||
       typeof note.id !== "string" ||
       !/^note-[a-z][a-z0-9-]*$/.test(note.id) ||
@@ -49,6 +49,10 @@ export function validateAnnotations(book, annotations = []) {
     )
       throw Error("Unique valid note id and known annotation fields required");
     seen.add(note.id);
+    if (note.placement !== undefined && !["body", "margin"].includes(note.placement))
+      throw Error("Annotation placement must be body or margin");
+    if (note.marginSide !== undefined && (note.placement !== "margin" || !["left", "right"].includes(note.marginSide)))
+      throw Error("Annotation margin side requires margin placement and left/right");
     if (!["condition", "clarification", "correction"].includes(note.kind))
       throw Error("Annotation kind is condition, clarification or correction");
     if (
