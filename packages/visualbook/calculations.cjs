@@ -56,8 +56,8 @@
       run: input => (typeof module !== "undefined" && module.exports ? require("./systems.cjs") : global.VisualBookSystems).decodeAttentionTraffic(input),
     },
     "top-k-route": {
-      keys: ["scores", "k", "temperature"], required: ["scores"],
-      outputs: ["scores", "k", "temperature", "experts", "tokens", "selected", "probability", "weights", "counts", "weightedLoads", "assignments", "convention"],
+      keys: ["scores", "k", "temperature", "normalization"], required: ["scores"],
+      outputs: ["scores", "k", "temperature", "normalization", "experts", "tokens", "selected", "probability", "weights", "weightSums", "counts", "weightedLoads", "assignments", "convention"],
       run: (input) => (typeof module !== "undefined" && module.exports ? require("./routing.cjs") : global.VisualBookRouting).topKRoute(input),
     },
     "rotary-pairs": {

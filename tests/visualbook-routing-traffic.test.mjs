@@ -20,6 +20,11 @@ test("top-k ties, probability conventions and counts agree with analytic example
   assert.deepEqual(compute("top-k-route", { scores: scores.map(row => row.map(x => x + 10000)), k: 2 }).weights, two.weights);
   assert.throws(() => compute("top-k-route", { scores, k: 4 }));
   assert.throws(() => compute("top-k-route", { scores, temperature: 0 }));
+  const full=compute('top-k-route',{scores:[[2,0]],k:1,normalization:'full'}),selected=compute('top-k-route',{scores:[[2,0]],k:1});
+  assert.deepEqual(full.selected,selected.selected);assert.ok(Math.abs(full.weights[0][0]-1/(1+Math.exp(-2)))<1e-14);
+  assert.ok(full.weightSums[0]<1);assert.equal(selected.weightSums[0],1);
+  assert.deepEqual(compute('top-k-route',{scores:[[2,0]],k:2,normalization:'full'}).weights,compute('top-k-route',{scores:[[2,0]],k:2}).weights);
+  assert.throws(()=>compute('top-k-route',{scores,normalization:'unknown'}));
 });
 test("GEMM ledger separates conventional hardware FLOPs from exact scalar operations", () => {
   const r = compute("matmul-traffic", { m: 2, k: 3, n: 4, bytesPerElement: 2 });

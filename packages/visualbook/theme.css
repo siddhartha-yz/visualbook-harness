@@ -364,7 +364,9 @@ a:focus-visible {
 .vh-toolbar .vh-status {
   font-size: 12px;
   min-width: 50px;
+  flex: 0 0 auto;
 }
+.vh-toolbar .vh-progress { min-width: 0; flex: 1 1 auto; }
 .vh-scope .vh-figure {
   position: static;
 }

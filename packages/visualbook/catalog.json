@@ -6976,6 +6976,256 @@
           ]
         }
       }
+    },
+    {
+      "height": 290,
+      "mobileHeight": 550,
+      "interaction": "parameters",
+      "presentation": "reading",
+      "initialProgress": 1,
+      "keywords": "group query KV share 分组 共享 引用 多对一",
+      "topic": "深度学习 · 编程",
+      "id": "head-sharing-cases",
+      "title": "Query头不减少，K/V按组共享",
+      "limits": "保持8个Q头，选8/4/1对KV；连线只表示引用关系，不是实际分数或速度。显存关系按相同层/长度/精度比较。",
+      "placement": "wide",
+      "params": [
+        {
+          "key": "kv",
+          "label": "K/V头对数",
+          "kind": "select",
+          "options": [
+            {
+              "value": 8,
+              "label": "8 · MHA"
+            },
+            {
+              "value": 4,
+              "label": "4 · GQA"
+            },
+            {
+              "value": 2,
+              "label": "2 · GQA"
+            },
+            {
+              "value": 1,
+              "label": "1 · MQA"
+            }
+          ],
+          "value": 4
+        }
+      ],
+      "presets": [
+        {
+          "id": "mha",
+          "label": "各用各的",
+          "params": {
+            "kv": 8
+          }
+        },
+        {
+          "id": "gqa",
+          "label": "两头共享",
+          "params": {
+            "kv": 4
+          }
+        },
+        {
+          "id": "mqa",
+          "label": "全部共享",
+          "params": {
+            "kv": 1
+          }
+        }
+      ],
+      "scene": {
+        "type": "columns",
+        "layout": {
+          "gap": 26,
+          "minColumnWidth": 300
+        },
+        "children": [
+          {
+            "type": "head-sharing",
+            "props": {
+              "queryHeads": 8,
+              "kvHeads": {
+                "$param": "kv"
+              }
+            }
+          },
+          {
+            "type": "cache-budget",
+            "props": {
+              "queryHeads": 8,
+              "kvHeads": {
+                "$param": "kv"
+              },
+              "layers": 32,
+              "tokens": 2048,
+              "headDim": 128,
+              "bytesPerElement": 2
+            }
+          }
+        ]
+      }
+    },
+    {
+      "height": 230,
+      "mobileHeight": 560,
+      "interaction": "static",
+      "presentation": "reading",
+      "initialProgress": 1,
+      "keywords": "group query KV share 分组 共享 引用 多对一",
+      "topic": "深度学习 · 编程",
+      "id": "head-sharing-families",
+      "title": "三种共享方式，Query头数保持不变",
+      "placement": "wide",
+      "limits": "参照GQA论文的分组关系重新绘制，未复制图片。4个Q头，KV为4/2/1对；不表示各方式准确度必然排序。",
+      "scene": {
+        "type": "columns",
+        "layout": {
+          "gap": 24,
+          "minColumnWidth": 265
+        },
+        "children": [
+          {
+            "type": "head-sharing",
+            "props": {
+              "queryHeads": 4,
+              "kvHeads": 4,
+              "title": "MHA · 各自引用"
+            }
+          },
+          {
+            "type": "head-sharing",
+            "props": {
+              "queryHeads": 4,
+              "kvHeads": 2,
+              "title": "GQA · 组内共享"
+            }
+          },
+          {
+            "type": "head-sharing",
+            "props": {
+              "queryHeads": 4,
+              "kvHeads": 1,
+              "title": "MQA · 全部共享"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "height": 250,
+      "mobileHeight": 260,
+      "interaction": "static",
+      "presentation": "reading",
+      "initialProgress": 1,
+      "keywords": "group query KV share 分组 共享 引用 多对一",
+      "topic": "数学 · 编程",
+      "id": "owner-group-map",
+      "title": "保持对象身份，改变共享的归属",
+      "limits": "显式6个来源、3个目标；线只表示归属，交叉不代表额外操作。可用来解释线程分组、对象池或给定路由。",
+      "scene": {
+        "type": "group-map",
+        "props": {
+          "sources": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F"
+          ],
+          "targets": [
+            "组0",
+            "组1",
+            "组2"
+          ],
+          "assignment": [
+            0,
+            1,
+            0,
+            2,
+            2,
+            1
+          ],
+          "sourceTitle": "来源对象 · 顺序保留",
+          "targetTitle": "共享目标 · 每组两个来源"
+        }
+      }
+    },
+    {
+      "id": "routing-gate-conventions",
+      "title": "选中同一个专家，输出权重也可能不同",
+      "topic": "数学 · 深度学习",
+      "height": 230,
+      "mobileHeight": 250,
+      "interaction": "static",
+      "presentation": "reading",
+      "initialProgress": 1,
+      "keywords": "MoE routing gate normalize softmax 归一化 专家 分数 权重",
+      "limits": "给定分数[2,0]、top-1；比较保留原softmax与选中后重归一化的权重。只解释门值约定，不复现任何训练、容量策略或质量/速度。",
+      "scene": {
+        "type": "compose",
+        "calculations": [
+          {
+            "id": "full",
+            "operation": "top-k-route",
+            "inputs": {
+              "scores": [
+                [
+                  2,
+                  0
+                ]
+              ],
+              "k": 1,
+              "normalization": "full"
+            }
+          },
+          {
+            "id": "selected",
+            "operation": "top-k-route",
+            "inputs": {
+              "scores": [
+                [
+                  2,
+                  0
+                ]
+              ],
+              "k": 1,
+              "normalization": "selected"
+            }
+          }
+        ],
+        "visual": {
+          "type": "category-bars",
+          "props": {
+            "items": [
+              {
+                "label": "原softmax",
+                "value": {
+                  "$result": "full.weights.0.0"
+                },
+                "color": "blue"
+              },
+              {
+                "label": "重归一化",
+                "value": {
+                  "$result": "selected.weights.0.0"
+                },
+                "color": "orange"
+              }
+            ],
+            "domain": [
+              0,
+              1
+            ],
+            "unit": "门值"
+          }
+        }
+      }
     }
   ]
 }

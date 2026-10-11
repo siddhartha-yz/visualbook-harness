@@ -4,6 +4,7 @@ import crypto from "node:crypto";
 const sha = (bytes) => crypto.createHash("sha256").update(bytes).digest("hex");
 import path from "node:path";
 import { build, preview, staticExport } from "./visualbook.mjs";
+import { bookNavigation } from "../packages/visualbook/book-navigation.mjs";
 const esc = (s) =>
   String(s)
     .replaceAll("&", "&amp;")
@@ -19,6 +20,8 @@ const manifest = JSON.parse(fs.readFileSync(manifestFile)),
   out = path.resolve(outDir),
   records = [];
 if (!Array.isArray(manifest.chapters)) throw Error("Missing chapters");
+if (manifest.navigation !== undefined && typeof manifest.navigation !== "boolean") throw Error("navigation must be boolean");
+const chapterTitles = manifest.chapters.map(c => ({ id:c.id, title:JSON.parse(fs.readFileSync(c.source)).title }));
 if (
   !manifest.chapters.length ||
   manifest.chapters.length > 32 ||
@@ -100,6 +103,11 @@ try {
       );
     }
     const exported = staticExport(rawFile, previewDir, file);
+    if(manifest.navigation) {
+      fs.writeFileSync(file,bookNavigation(fs.readFileSync(file,'utf8'),chapterTitles,records.length));
+      exported.preNavigationSha256=exported.sha256;
+      exported.sha256=sha(fs.readFileSync(file));
+    }
     records.push({
       id: c.id,
       title: source.title,
@@ -115,6 +123,7 @@ try {
         fs.readFileSync(path.join(previewDir, "report.json")),
       ),
       reusedReviewedCandidate: reuse,
+      navigation: manifest.navigation ? "Original header links preserved; deterministic previous/next links outside main. Reviewed source/figures unchanged; final export needs separate reader check." : false,
       rawFile: path.relative(out, rawFile),
       exported,
       renderFindings: report.findings,

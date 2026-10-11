@@ -1563,6 +1563,64 @@
       ],
       "limits": "每格至少28×24px、文字至少12px；颜色只表示声明的来源，不表示大小或真实执行",
       "keywords": "matrix table 矩阵 通信 collective rank 表格 identity 身份 数值 紧凑 阶段"
+    },
+    {
+      "id": "group-map",
+      "title": "显式多对一共享关系",
+      "props": {
+        "sources": "1..8 short identities",
+        "targets": "1..8 short target identities",
+        "assignment": "One valid target index per source",
+        "sourceTitle": "Short source-row title",
+        "targetTitle": "Short target-row title",
+        "highlight": "null or one target index"
+      },
+      "required": [
+        "sources",
+        "targets",
+        "assignment"
+      ],
+      "outputs": [
+        "sources",
+        "targets",
+        "assignment",
+        "counts",
+        "highlight",
+        "convention"
+      ],
+      "examples": [
+        "owner-group-map"
+      ],
+      "limits": "只显示给定关联；不表示注意力权重、实际流量、训练或并行执行。保持源端顺序，长标签需更多宽度。",
+      "keywords": "group share owner mapping 共享 分组 归属 引用 线程 专家 指针 多对一"
+    },
+    {
+      "id": "head-sharing",
+      "title": "Q头引用共享K/V",
+      "props": {
+        "queryHeads": "Integer 1..8, divisible by kvHeads",
+        "kvHeads": "Integer divisor of queryHeads",
+        "title": "Optional short family name"
+      },
+      "required": [],
+      "outputs": [
+        "sources",
+        "targets",
+        "assignment",
+        "counts",
+        "highlight",
+        "queryHeads",
+        "kvHeads",
+        "queryHeadsPerKV",
+        "cacheRatio",
+        "convention"
+      ],
+      "examples": [
+        "head-sharing-cases",
+        "head-sharing-families"
+      ],
+      "limits": "等长连续Q头分组，KV指一对K/V；不模拟注意力分数、训练权重、迁移训练或实测质量/速度。",
+      "keywords": "MHA GQA MQA query key value heads attention 头 共享 分组 缓存"
     }
   ]
 }

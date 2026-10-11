@@ -183,7 +183,15 @@ MCP可选 `export_motion({label,id,width:375,fps:20,duration:6,formats:["gif","m
 
 张量cellAspect:auto默认使单行/单列向量可以是矩形格，矩阵保持方格；square/free显式选择。aligned-points的compact:auto按可用空间选择50px或68px行间隔；compact:true/false可显式选择，字号仍12..13px。列/堆叠权重与总高度仍需安排，任意复杂场景不保证自动适配。
 
-长公式不缩小到难读的字号：行内及展示公式在自己的区域横向查看，保持整页宽度；只有实际超宽公式获得焦点和长公式标签，左右/Home/End在该区域操作。禁用脚本仍保留局部滚动的CSS和完整公式。
+长公式不缩小到难读的字号：展示公式优先在关系符和运算符处自然换行，无法拆开的矩阵、行内公式保留局部横向查看。只有实际超宽公式获得焦点和长公式标签，左右/Home/End在该区域操作；禁用脚本仍保留局部滚动的CSS和完整公式。
+
+## 分组共享与专家门控
+
+`group-map`把1..8个显式source节点按assignment连接到1..8个target节点，返回实际分组；它展示引用或归属，没有通信方向或注意力权重。`head-sharing`是具体注意力头共享关系：1..8个queryHeads，kvHeads必须整除queryHeads，同组Q引用同一对K/V。读数cacheRatio只表示相同长度、精度和头维度下的KV存储比例，不表示质量或速度。
+
+设计`head-sharing-cases`用同一个kvHeads参数连接共享关系与真实cache-footprint账本，MHA/GQA/MQA按钮一次更新两幅视图。`head-sharing-families`是三种关系的静态并列，手机按列顺序排列；`owner-group-map`用任意显式assignment展示对象归属。关系模块和数值账本可独立拼接，不要求使用注意力示例。
+
+`top-k-route`增加可选normalization，默认`selected`保持旧行为：只对选中分数做softmax，选中权重之和为1。`full`先对全部专家做softmax，选中后保留原权重，选中和可能小于1。返回normalization与每个token的weightSums。两种约定没有通用优劣；作者必须按来源选择。`routing-gate-conventions`用相同分数、相同选中集合静态比较两种数值，不能冒充实际训练、负载均衡或容量溢出模拟。
 
 ## 原文与预览图片
 

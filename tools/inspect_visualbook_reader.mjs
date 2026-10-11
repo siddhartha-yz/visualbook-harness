@@ -25,7 +25,7 @@ export async function inspectReader(file, out, { anchor, width = 375 }) {
     report.browserVersion=browser.version();
     const page = await browser.newPage({viewport:{width,height:950}}), requests=[];
     page.on("request", r => {if(/^https?:/.test(r.url())) requests.push(r.url());});
-    await page.goto(pathToFileURL(file).href);await page.evaluate(()=>document.fonts.ready);
+    await page.goto(pathToFileURL(file).href);await page.waitForFunction(()=>document.fonts.status==='loaded',{},{timeout:20000,polling:100});
     const source=page.locator(".source-block#"+anchor);
     if(await source.count()!==1) throw Error("Source anchor was not found exactly once");
     await source.scrollIntoViewIfNeeded();

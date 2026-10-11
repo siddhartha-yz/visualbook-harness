@@ -19,25 +19,30 @@ fs.writeFileSync(out + "/book.html", build(source, { figures: [] }));
 const r = await preview(out + "/book.html", out + "/preview");
 assert.equal(r.findings.length, 0);
 staticExport(out + "/book.html", out + "/preview", out + "/offline.html");
-const { chromium } = await import(
+const engine=process.argv[3]??"chromium";if(!["chromium","firefox"].includes(engine))throw Error("Use chromium or firefox");
+const { [engine]:launcher } = await import(
   pathToFileURL(
     root + "/work/visualbook/runtime/node_modules/playwright-core/index.mjs",
   )
 );
-const browser = await chromium.launch({
+const browser = await launcher.launch({
     headless: true,
-    executablePath: process.env.CHROMIUM_PATH ?? chromium.executablePath(),
+    executablePath: engine==="chromium"?(process.env.CHROMIUM_PATH ?? launcher.executablePath()):launcher.executablePath(),
   }),
   cases = [];
 try {
   for (const width of [375, 1280])
     for (const javaScriptEnabled of [true, false]) {
+      const progress=phase=>fs.writeFileSync(out+'/progress.json',JSON.stringify({phase,width,javaScriptEnabled,completedCases:cases.length})+'\n');
+      progress('new-page');
       const page = await browser.newPage({
         viewport: { width, height: 900 },
         javaScriptEnabled,
       });
       await page.goto(pathToFileURL(out + "/offline.html").href);
-      await page.evaluate(() => document.fonts.ready);
+      progress('font-wait');
+      await page.waitForFunction(()=>document.fonts.status==='loaded',{},{timeout:20000,polling:100});
+      progress('read-math');
       await page.waitForTimeout(40);
       const result = await page.evaluate(() => ({
         width: innerWidth,
@@ -86,10 +91,12 @@ try {
         await page.screenshot({ path: out + "/375-reader.png" });
       }
       cases.push({ ...result, javaScriptEnabled });
+      progress('case-completed');
       await page.close();
     }
 } finally {
   await browser.close();
+  fs.writeFileSync(out+'/partial-cases.json',JSON.stringify({engine,cases,scope:'Completed cases retained even when a later reader case fails.'},null,2)+'\n');
 }
 assert.equal(JSON.stringify(source), original);
 fs.writeFileSync(
@@ -98,6 +105,7 @@ fs.writeFileSync(
     {
       passed: true,
       modelCalls: 0,
+      engine,
       cases,
       sourceUnchanged: true,
       scope:

@@ -497,6 +497,10 @@ export function build(book, plan, { direct = false } = {}) {
     return `<figure class="vh-figure" id="figure-${f.id}" data-viz-id="${f.id}" data-interaction="${mode}" data-placement="${placement}" data-presentation="${presentation}" aria-describedby="caption-${f.id}"><h3>${esc(f.title)}</h3><div class="vh-canvas"><svg role="img" aria-label="${esc(f.summary ?? f.title)}"><title>${esc(f.title)}</title></svg></div>${controls}<figcaption id="caption-${f.id}" class="vh-caption">${esc(f.summary ?? "")}</figcaption></figure>`;
   };
   const annotations = validateAnnotations(book, plan.annotations);
+  const marginSides = reading.assignMarginSides([
+    ...annotations.filter(n=>n.placement==="margin").map(item=>({item,anchorIndex:book.blocks.findIndex(b=>b.id===item.afterAnchor)})),
+    ...scopes.filter(s=>reading.readingSpec(s.f).placement==="margin").map(s=>({item:s.f,anchorIndex:s.start})),
+  ]);
   const noteHtml = (note) =>
     `<aside class="vh-annotation" id="${esc(note.id)}" data-kind="${esc(note.kind)}" data-placement="${note.placement ?? "body"}" data-math-expected="${note.formula ? 1 : 0}"><p><span>${{ condition: "适用条件", clarification: "补充说明", correction: "勘误" }[note.kind]}</span>${esc(note.text)}</p>${note.formula ? katex.renderToString(note.formula, { displayMode: true, throwOnError: true, trust: false, strict: "ignore" }) : ""}</aside>`;
   let body = "";
@@ -513,8 +517,8 @@ export function build(book, plan, { direct = false } = {}) {
     if (marginal) {
       body += "</div>";
       for (const side of ["left", "right"]) {
-        const sideNotes = notes.filter(n => n.placement === "margin" && (n.marginSide ?? "right") === side);
-        const sideFigure = marginFigure && reading.readingSpec(scope.f).marginSide === side;
+        const sideNotes = notes.filter(n => n.placement === "margin" && marginSides.get(n) === side);
+        const sideFigure = marginFigure && marginSides.get(scope.f) === side;
         if (!sideNotes.length && !sideFigure) continue;
         body += `<div class="vh-margin-content" data-side="${side}">`;
         for (const note of sideNotes) body += noteHtml(note);
@@ -664,16 +668,7 @@ export async function preview(file, out) {
         annotationRendered: document.querySelectorAll(".vh-annotation .katex")
           .length,
         errors: document.querySelectorAll(".katex-error").length,
-        raw: [...document.querySelectorAll(".source-block")]
-          .filter((b) =>
-            /\\(?:frac|sum|mathbf|alpha|mathbb)\b/.test(
-              [...b.childNodes]
-                .filter((n) => n.nodeType === 3)
-                .map((n) => n.textContent)
-                .join(""),
-            ),
-          )
-          .map((b) => b.id),
+        raw: [], // Canonical descendant scan runs below; code/math are excluded.
         overflow: document.documentElement.scrollWidth > innerWidth + 2,
       }));
       math.raw = await page.evaluate(sourceMathLeaks);
@@ -1051,7 +1046,9 @@ export function staticExport(file, previewDir, out) {
           "data:image/svg+xml;base64," + Buffer.from(svg).toString("base64")
         );
       });
-    const fallback = `<div class="vh-static"><picture><source media="(max-width:600px)" srcset="${picture[1]}"><img src="${picture[0]}" alt="图解初始状态：${esc(shape.id)}"></picture></div>`;
+    const section = html.match(new RegExp(`<figure\\b[^>]*\\bid="figure-${shape.id}"[^>]*>[\\s\\S]*?</figure>`))?.[0];
+    const title = section?.match(/<h3>(.*?)<\/h3>/)?.[1] ?? esc(shape.id);
+    const fallback = `<div class="vh-static"><picture><source media="(max-width:600px)" srcset="${picture[1]}"><img src="${picture[0]}" alt="${title}的静态图"></picture></div>`;
     const marker = new RegExp(
       `(<figure\\b[^>]*\\bid="figure-${shape.id}"[^>]*>)`,
     );

@@ -267,6 +267,7 @@ def main():
         {
             "title": manifest.get("title", "VisualBook"),
             "description": manifest.get("description"),
+            "navigation": True,
             "chapters": [
                 {k: r[k] for k in ["id", "source", "plan", "arm", "html", "preview", "review"]} for r in records
             ],
