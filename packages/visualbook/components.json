@@ -66,14 +66,18 @@
         "title": "Optional short title; omit if figure heading already names the idea",
         "equalUnits": "See executable example and numeric limits",
         "layers": "At most 16 {id,type,color,label,...} records. curve/area: finite points <=1000; points: finite points <=200 and radius; vector: from/to; handle: point/stateKey. legend=true needs distinct labels <=24 characters. Curves/scatter/areas use the same domain and clip.",
-        "legend": "Boolean, default false. When true, generate actual mark glyphs from each non-handle layer; up to six unique short layer labels required."
+        "legend": "Boolean, default false. When true, generate actual mark glyphs from each non-handle layer; up to six unique short layer labels required.",
+        "xLabel": "Optional x-axis quantity/unit, <=32 characters and actual measured region width.",
+        "yLabel": "Optional y-axis quantity/unit, <=32 characters and actual measured region width. Reserved space; smaller plot regions are rejected."
       },
       "required": [],
       "outputs": [
         "xDomain",
         "yDomain",
         "layers",
-        "legend"
+        "legend",
+        "xLabel",
+        "yLabel"
       ],
       "examples": [
         "linked-plot",
@@ -86,7 +90,7 @@
       "id": "readout",
       "title": "紧凑数值读数",
       "props": {
-        "items": "Short label/value/color records; value can bind to an earlier $result",
+        "items": "Short label/value/color records; value can bind to an earlier $result Optional nullText (<=32 characters) explains an actual null value; default 未定义.",
         "title": "Optional short title; omit if figure heading already names the idea"
       },
       "required": [],

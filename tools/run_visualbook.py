@@ -29,6 +29,19 @@ def save(path, data):
     path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n")
 
 
+def deliver(output):
+    attempts = output / "delivery"
+    attempts.mkdir(exist_ok=True)
+    count = max([int(p.name.split("-")[1]) for p in attempts.glob("attempt-[0-9][0-9][0-9]")] or [0]) + 1
+    if count > 999:
+        raise SystemExit("Delivery attempt limit reached; retain evidence and use a fresh run")
+    target = attempts / ("attempt-%03d" % count)
+    p = subprocess.run([sys.executable, str(ROOT / "tools/deliver_visualbook.py"), str(output / "book"), str(target)], cwd=ROOT)
+    if p.returncode: raise SystemExit(p.returncode)
+    print("Verified offline book: " + str(output / "book/index.html"))
+    print("Offline ZIP: " + str(target / "book.zip"))
+
+
 def inspect(job):
     result = (
         json.loads((job / "result.json").read_text())
@@ -282,7 +295,7 @@ def main():
             raise SystemExit(
                 "Assembled book identity changed or predates export hashes; rebuild into a fresh directory"
             )
-        print("Existing book: " + str(output / "book/index.html"))
+        deliver(output)
         return
     p = subprocess.run(
         [
@@ -295,7 +308,7 @@ def main():
     )
     if p.returncode:
         raise SystemExit(p.returncode)
-    print("Book: " + str(output / "book/index.html"))
+    deliver(output)
 
 
 if __name__ == "__main__":

@@ -57,7 +57,28 @@
     return {batch,tokens,queryHeads,kvHeads,headDim,bytesPerElement,flops,queryOutputBytes,kvBytes,bytes,intensity:flops/bytes,groupSize:queryHeads/kvHeads,
       convention:"One new query per sequence; QK and AV conventional multiply-add FLOPs, once-read dense K/V and Q/output traffic. Shared KV heads are ideally reused across their Q groups. Excludes QKV projections, softmax, scores/intermediates, cache writes, repeated reads, weights, paging and measured performance. Not prefill."};
   }
-  const api={rotaryPairs,roofline,cacheFootprint,collective,matmulTraffic,decodeAttentionTraffic};
+  function matmulBatchSweep({batch=320,inputDim=4096,outputDim=11008,bytesPerElement=2,
+    computeTFLOPS=989,memoryGBPS=3350,minBatch=1,maxBatch=1024,samples=65}={}){
+    for(const [name,v]of Object.entries({batch,inputDim,outputDim,minBatch,maxBatch}))integer(v,name);
+    integer(samples,"samples",129);
+    if(samples<2||minBatch>=maxBatch||batch<minBatch||batch>maxBatch)throw Error("Use 2..129 samples, increasing batch range and selected batch inside it");
+    const at=b=>{const traffic=matmulTraffic({m:b,k:inputDim,n:outputDim,bytesPerElement});
+      return {...traffic,...roofline({flops:traffic.flops,bytes:traffic.bytes,computeTFLOPS,memoryGBPS})};};
+    const selected=at(batch),batches=[...new Set(Array.from({length:samples},(_,i)=>Math.round(minBatch+(maxBatch-minBatch)*i/(samples-1))))],
+      intensityCurve=batches.map(b=>[b,at(b).intensity]),weightOnlyCurve=batches.map(b=>[b,2*b/bytesPerElement]),
+      c=selected.crossover,product=inputDim*outputDim,denominator=2*product-c*bytesPerElement*(inputDim+outputDim),
+      criticalBatch=denominator>0?c*bytesPerElement*product/denominator:null,
+      firstComputeBoundBatch=criticalBatch!==null&&Number.isSafeInteger(Math.ceil(criticalBatch))?Math.ceil(criticalBatch):null,
+      intensityCeiling=2*product/(bytesPerElement*(inputDim+outputDim)),
+      yMax=Math.max(c,intensityCurve.at(-1)[1],weightOnlyCurve.at(-1)[1])*1.06;
+    if(![selected.computeMs,selected.transferMs,c,intensityCeiling,yMax].every(v=>Number.isFinite(v)&&v>0)||criticalBatch!==null&&!Number.isFinite(criticalBatch))throw Error("Batch sweep exceeds finite numerical witness range");
+    return {batch,inputDim,outputDim,bytesPerElement,computeTFLOPS,memoryGBPS,minBatch,maxBatch,samples:batches.length,
+      selected,intensityCurve,weightOnlyCurve,crossoverLine:[[minBatch,c],[maxBatch,c]],selectedPoint:[[batch,selected.intensity]],
+      xDomain:[minBatch,maxBatch],yDomain:[0,yMax],criticalBatch,firstComputeBoundBatch,intensityCeiling,
+      timesUs:[selected.computeMs*1000,selected.transferMs*1000],
+      convention:"A[B,D] W[D,F] -> C[B,F]; once-read A/W and once-write C. Weight-only 2B/e neglects A/C traffic and is an approximation, not the B-to-infinity limit. Finite crossing solves I(B)=peak/bandwidth; null means no finite crossing, and first integer is null also outside safe integer range. Sampled polyline, ideal peak/overlap assumptions, no measured GPU performance."};
+  }
+  const api={rotaryPairs,roofline,cacheFootprint,collective,matmulTraffic,decodeAttentionTraffic,matmulBatchSweep};
   if(typeof module!=="undefined"&&module.exports)module.exports=api;
   global.VisualBookSystems=api;
 })(typeof window!=="undefined"?window:globalThis);

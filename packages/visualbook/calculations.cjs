@@ -45,6 +45,11 @@
       ? require("./reindex.cjs")
       : global.VisualBookReindex;
   const operations = {
+    "matmul-batch-sweep": {
+      keys: ["batch","inputDim","outputDim","bytesPerElement","computeTFLOPS","memoryGBPS","minBatch","maxBatch","samples"], required: [],
+      outputs: ["batch","inputDim","outputDim","bytesPerElement","computeTFLOPS","memoryGBPS","minBatch","maxBatch","samples","selected","intensityCurve","weightOnlyCurve","crossoverLine","selectedPoint","xDomain","yDomain","criticalBatch","firstComputeBoundBatch","intensityCeiling","timesUs","convention"],
+      run: input => (typeof module !== "undefined" && module.exports ? require("./systems.cjs") : global.VisualBookSystems).matmulBatchSweep(input),
+    },
     "matmul-traffic": {
       keys: ["m", "n", "k", "bytesPerElement"], required: [],
       outputs: ["m","n","k","bytesPerElement","aElements","bElements","cElements","aBytes","bBytes","cBytes","bytes","flops","multiplies","additions","exactScalarOps","intensity","aMiB","bMiB","cMiB","maxMiB","convention"],

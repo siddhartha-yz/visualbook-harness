@@ -3,9 +3,11 @@
 Every HTML identity must match its assembly record. This is a deterministic
 offline ZIP, not publication or an artistic/math acceptance tool.
 """
-import argparse, hashlib, json, re, zipfile
+import argparse, hashlib, importlib.util, json, re, zipfile
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
+_spec=importlib.util.spec_from_file_location('visualbook_workspace',Path(__file__).with_name('visualbook_workspace.py'))
+_workspace=importlib.util.module_from_spec(_spec);_spec.loader.exec_module(_workspace)
 def sha(b):return hashlib.sha256(b).hexdigest()
 def package(book:Path,out:Path):
  book=book.resolve();out=out.resolve()
@@ -39,6 +41,6 @@ def package(book:Path,out:Path):
  return {'archiveSha256':sha(out.read_bytes()),'files':len(files),'chapters':len(rows),'bytes':out.stat().st_size,'modelCalls':0,'scope':'Identity-checked packaging, not mathematical/artistic review or publication.'}
 def main():
  p=argparse.ArgumentParser(description=__doc__);p.add_argument('book',type=Path);p.add_argument('output',type=Path);a=p.parse_args()
- if not a.output.resolve().is_relative_to(ROOT/'work'):raise SystemExit('Use ignored work/ for local source-derived packages')
+ if not a.output.resolve().is_relative_to((_workspace.workspace_root(ROOT)/'work').resolve()):raise SystemExit('Use ignored work/ for local source-derived packages')
  print(json.dumps(package(a.book,a.output)))
 if __name__=='__main__':main()

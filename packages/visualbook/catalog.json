@@ -7226,6 +7226,172 @@
           }
         }
       }
+    },
+    {
+      "id": "gemm-batch-balance",
+      "title": "批量相同，完整字节账本与近似可以不同",
+      "topic": "数学 · 深度学习",
+      "height": 340,
+      "mobileHeight": 550,
+      "placement": "wide",
+      "presentation": "reading",
+      "interaction": "parameters",
+      "initialProgress": 1,
+      "keywords": "GEMM batch roofline arithmetic intensity 批量 算术强度 字节账本 峰值 带宽",
+      "limits": "BF16、D=4096、F=11008、989 TFLOP/s和3350 GB/s为给定理想参数；一次读A/W、一次写C，曲线为65点采样；近似只计权重，不表示实际GPU吞吐。可替换矩阵/精度/速率输入。",
+      "params": [
+        {
+          "key": "batch",
+          "label": "批量 B",
+          "kind": "stepper",
+          "min": 1,
+          "max": 1024,
+          "step": 1,
+          "value": 320
+        }
+      ],
+      "presets": [
+        {
+          "id": "before",
+          "label": "B=327",
+          "params": {
+            "batch": 327
+          }
+        },
+        {
+          "id": "after",
+          "label": "B=328",
+          "params": {
+            "batch": 328
+          }
+        },
+        {
+          "id": "larger",
+          "label": "B=512",
+          "params": {
+            "batch": 512
+          }
+        }
+      ],
+      "scene": {
+        "type": "compose",
+        "calculations": [
+          {
+            "id": "budget",
+            "operation": "matmul-batch-sweep",
+            "inputs": {
+              "batch": {
+                "$param": "batch"
+              },
+              "inputDim": 4096,
+              "outputDim": 11008,
+              "bytesPerElement": 2,
+              "computeTFLOPS": 989,
+              "memoryGBPS": 3350,
+              "minBatch": 1,
+              "maxBatch": 1024,
+              "samples": 65
+            }
+          }
+        ],
+        "visual": {
+          "type": "columns",
+          "layout": {
+            "gap": 20,
+            "minColumnWidth": 260
+          },
+          "children": [
+            {
+              "id": "curves",
+              "type": "plot",
+              "props": {
+                "xDomain": {
+                  "$result": "budget.xDomain"
+                },
+                "yDomain": {
+                  "$result": "budget.yDomain"
+                },
+                "legend": true,
+                "layers": [
+                  {
+                    "id": "exact",
+                    "type": "curve",
+                    "label": "完整账本",
+                    "color": "blue",
+                    "points": {
+                      "$result": "budget.intensityCurve"
+                    }
+                  },
+                  {
+                    "id": "weight-only",
+                    "type": "curve",
+                    "label": "只计权重",
+                    "color": "muted",
+                    "points": {
+                      "$result": "budget.weightOnlyCurve"
+                    }
+                  },
+                  {
+                    "id": "crossing",
+                    "type": "curve",
+                    "label": "算/搬阈值",
+                    "color": "orange",
+                    "points": {
+                      "$result": "budget.crossoverLine"
+                    }
+                  },
+                  {
+                    "id": "selected",
+                    "type": "points",
+                    "label": "当前 B",
+                    "color": "blue",
+                    "radius": 4,
+                    "points": {
+                      "$result": "budget.selectedPoint"
+                    }
+                  }
+                ],
+                "xLabel": "B · 批量",
+                "yLabel": "强度 · FLOP/Byte"
+              }
+            },
+            {
+              "id": "numbers",
+              "type": "readout",
+              "props": {
+                "items": [
+                  {
+                    "label": "当前批量 B",
+                    "value": {
+                      "$result": "budget.batch"
+                    }
+                  },
+                  {
+                    "label": "强度 · FLOP/Byte",
+                    "value": {
+                      "$result": "budget.selected.intensity"
+                    },
+                    "color": "blue"
+                  },
+                  {
+                    "label": "有限分界 B · 连续理想值",
+                    "value": {
+                      "$result": "budget.criticalBatch"
+                    },
+                    "nullText": "无有限分界"
+                  },
+                  {
+                    "label": "计算, 搬运 · µs",
+                    "value": {
+                      "$result": "budget.timesUs"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
     }
   ]
 }

@@ -7,6 +7,7 @@ import { spawnSync } from "node:child_process";
 import { pathToFileURL } from "node:url";
 import { invalidGeometry } from "./visualbook_inspection.mjs";
 import { workspaceRoot } from "./visualbook_workspace.mjs";
+import { rasterSvg } from "./visualbook_svg_raster.mjs";
 
 const root = path.resolve(import.meta.dirname, "..");
 const hash = (bytes) => crypto.createHash("sha256").update(bytes).digest("hex");
@@ -207,6 +208,11 @@ export async function exportMotion(file, previewDirectory, out, config) {
     const svg = page.locator("#figure-" + id + " svg");
     await svg.scrollIntoViewIfNeeded();
     await page.mouse.move(0, 0);
+    const rasterDimensions = await svg.evaluate(n => ({ width: n.clientWidth, height: n.clientHeight,
+      background: getComputedStyle(document.body).backgroundColor }));
+    const rasterPage = await browser.newPage({ viewport: { width, height: 900 }, deviceScaleFactor: 1 });
+    report.rasterMethod = { ...rasterDimensions,
+      method: "Actual serialized SVG decoded as a standalone image at a fixed pixel origin. Source values/geometry remain exact; strict SVG and PNG replay still required." };
     const pose = async (index, filename) => {
       const t = index / (report.frameCount - 1);
       let sweepValue = sweep ? sweep.from + (sweep.to - sweep.from) * t : null;
@@ -238,16 +244,10 @@ export async function exportMotion(file, previewDirectory, out, config) {
         });
         throw Error("Frame geometry or browser error at " + index);
       }
-      // Flush Chromium's SVG/compositor paint. Progress stays fixed; this is
-      // not the time source of the animation. The first capture otherwise can
-      // contain an old marker position despite correct serialized SVG.
-      await page.evaluate(
-        () =>
-          new Promise((resolve) =>
-            requestAnimationFrame(() => requestAnimationFrame(resolve)),
-          ),
-      );
-      await svg.screenshot({ path: filename, animations: "disabled" });
+      // Live SVG paint can differ slightly with its update history even when
+      // exact SVG/facts match. Decode the actual snapshot independently instead
+      // of weakening the pixel replay gate or using screen-recording time.
+      await rasterSvg(rasterPage, state.svg, rasterDimensions, filename);
       fs.writeFileSync(filename.replace(/\.png$/, ".svg"), state.svg);
       return {
         index,

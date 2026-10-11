@@ -200,3 +200,9 @@ run默认在第一场模型前用真实Chromium检查整本原文在375/1280宽�
 optimizer-trace新增Yogi的D2L PyTorch递推约定及每维firstMomentCurves/squareMomentCurves；算法的二次状态不是EWMA，不声称校正后无偏。epsilon仍显式可选，默认1e−8，不冒充D2L演示的1e−3。新稀疏梯度设计使用eta=0仅比较状态。aligned-points compact默认auto，有限空间使用50px行距，宽松空间68px；显式布尔选择可覆盖，字号保持，空间不足仍拒绝。
 
 相等数值的点选区域按本行最近项分区，重复值保留原x和非定量纵向微偏移，鼠标/Enter选择保持同一项目；1/3/4项、375/1280的实际软件输入已核对。密集到不可辨的值仍需其它阅读方式，不声称真实触摸已验证。
+
+`matmul-batch-sweep`把B、D、F、元素字节、峰值算力、带宽连接到同一曲线和当前读数；2..129个整数批量采样，明确一次读A/W、一次写C。criticalBatch解完整强度与峰值/带宽比的连续分界，无有限解时为null；intensityCeiling是真正的B趋于无穷上界，weightOnlyCurve的2B/e则忽略输入/输出字节，不能当成那个上界。设计gemm-batch-balance直接连接plot/readout；典型按钮只命名B值，不把不同精度下的固定327/328自动称作分界。换矩阵、精度或速率时应同步核对说明。
+
+plot支持xLabel/yLabel的实际数量与单位，<=32字且真实测量能放下；为标签留位置，不缩字号，空间不足拒绝。readout项目可用nullText给真正的null结果提供短解释。
+
+固定帧导出从真实绘制结果的序列化SVG独立解码成图像，避开动态SVG重绘历史的微小像素差异；SVG与PNG仍要求精确重放，不采用像素容差。帧时间由配置控制，输出实际FFmpeg解码、抽样图和时间记录，不是屏幕录制。SVG应自包含，图形作者仍要核查实际导出画面。

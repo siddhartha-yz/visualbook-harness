@@ -257,11 +257,19 @@
       title = null,
       equalUnits = false,
       layers = [],
+      xLabel = "",
+      yLabel = "",
     } = {},
     context = {},
   ) {
-    const f = frame(board, "axes", { title, xDomain, yDomain, equalUnits }),
-      facts = { xDomain, yDomain, layers: [] };
+    for (const label of [xLabel, yLabel])
+      if (typeof label !== "string" || label.length > 32 || V.measure(label, 13) > board.width - 60)
+        throw Error("Plot axis labels must be short strings that fit the actual region");
+    const f = frame(board, "axes", { title, xDomain, yDomain, equalUnits,
+      headerHeight: yLabel ? 20 : 0, footerHeight: xLabel ? 22 : 0 }),
+      facts = { xDomain, yDomain, xLabel, yLabel, layers: [] };
+    if (xLabel) board.text("x-label", xLabel, f.right, board.height - 7, { size:13, anchor:"end", color:P.muted });
+    if (yLabel) board.text("y-label", yLabel, f.left, f.top - 12, { size:13, color:P.muted });
     if (!Array.isArray(layers) || layers.length > 16)
       throw Error("Plot needs at most 16 layers");
     const ids = layers.map((l, i) => l.id ?? "layer-" + i);
@@ -351,12 +359,14 @@
           "Readout expects a scalar or 1D array; choose an explicit result field",
         );
       const y = (i + (title ? 1 : 0)) * h + 14;
+      if (item.nullText !== undefined && (typeof item.nullText !== "string" || item.nullText.length > 32))
+        throw Error("Readout nullText must be a short string");
       const value = Array.isArray(item.value)
         ? item.value.map((v) => (typeof v === "number" ? fmt(v) : v)).join(", ")
         : typeof item.value === "number"
           ? fmt(item.value)
           : item.value === null
-            ? "未定义"
+            ? item.nullText ?? "未定义"
             : typeof item.value === "boolean"
               ? item.value
                 ? "是"

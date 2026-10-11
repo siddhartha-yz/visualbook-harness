@@ -15,6 +15,11 @@ const sha = b => crypto.createHash("sha256").update(b).digest("hex");
 const report = { status: "running", modelCalls: 0, engine, cases: [], findings: [], captureFailures: [],
   scope: "Actual final offline chapters: identity, three widths, scripts on/off, source formulas/images, native chapter navigation. No mathematical truth, artistic acceptance or learner study is inferred." };
 const save = () => fs.writeFileSync(out + "/report.json", JSON.stringify(report, null, 2) + "\n");
+async function bounded(promise, ms, label) {
+  let timer;
+  try { return await Promise.race([promise, new Promise((_, reject) => { timer = setTimeout(() => reject(Error(label + " timed out")), ms); })]); }
+  finally { clearTimeout(timer); }
+}
 save(); let browser;
 try {
   const bytes = fs.readFileSync(book + "/build-record.json"), record = JSON.parse(bytes);
@@ -40,16 +45,33 @@ try {
     for (const width of [375, 1280, 1920]) for (const javaScriptEnabled of [true, false]) {
       const page = await browser.newPage({ viewport: { width, height: 900 }, javaScriptEnabled }), remote = [];
       const c = { chapter: chapter.id, htmlSha256: chapter.finalHtmlSha256, width, javaScriptEnabled, findings: [] };
+      report.activeCase = { chapter: chapter.id, width, javaScriptEnabled, stage: "navigation" }; save();
       page.on("request", r => { if (/^https?:/.test(r.url())) remote.push(r.url()); });
       try {
         await page.goto(pathToFileURL(file).href, { timeout: 30000 });
+        report.activeCase.stage = "fonts"; save();
         await page.waitForFunction(() => document.fonts.status === "loaded", {}, { timeout: 20000, polling: 100 });
-        c.facts = await page.evaluate(async ({ blocks, expectedMath, figureCount, sourceSha }) => {
+        report.activeCase.stage = "images"; save();
+        const images = page.locator(".source-block img, .vh-static img");
+        await images.evaluateAll(ns => ns.forEach(n => n.loading = "eager"));
+        await page.waitForFunction(() => [...document.querySelectorAll(".source-block img, .vh-static img")].every(n => n.complete && n.naturalWidth > 0), {}, { timeout: 20000, polling: 100 });
+        if (javaScriptEnabled) {
+          await bounded(images.evaluateAll(async ns => { for (const n of ns) await n.decode(); }), 20000, "Native image decode");
+          c.imageDecodeMethod = "native Image.decode with host deadline";
+        } else {
+          // Firefox disables page Promise continuations. Inspect the actual raster output instead.
+          c.imagePngs = [];
+          for (let i = 0; i < await images.count(); i++) {
+            const png = out + `/${chapter.id}-${width}-noscript-image-${i}.png`;
+            await images.nth(i).screenshot({ path: png }); c.imagePngs.push(png);
+          }
+          c.imageDecodeMethod = "actual rendered image PNG plus complete/naturalWidth; no disabled-page Promise";
+        }
+        report.activeCase.stage = "source facts"; save();
+        c.facts = await page.evaluate(({ blocks, expectedMath, figureCount, sourceSha }) => {
           const imageFacts = [];
           for (const img of document.querySelectorAll(".source-block img, .vh-static img")) {
-            img.loading = "eager"; let decoded = true;
-            try { await img.decode(); } catch { decoded = false; }
-            imageFacts.push({ decoded: decoded && img.naturalWidth > 0, alt: img.alt });
+            imageFacts.push({ decoded: img.complete && img.naturalWidth > 0, alt: img.alt });
           }
           return { pageWidth: document.documentElement.scrollWidth, h1: document.querySelectorAll("h1").length,
             sourceIdentity: document.body.dataset.sourceSha === sourceSha,
@@ -87,6 +109,7 @@ try {
     }
   }
   report.status = "completed";
+  delete report.activeCase;
 } catch (error) { report.status = "failed"; report.error = String(error); report.findings.push({ kind: "collection-error" }); }
 finally { if (browser) await browser.close(); save(); }
 console.log(JSON.stringify({ status: report.status, cases: report.cases.length, findings: report.findings.length, modelCalls: 0 }));

@@ -45,6 +45,7 @@ jobs:
           python3 tools/check_visualbook_reader_protocol.py work/visualbook/ci-reader-protocol
           node tools/check_visualbook_rebuild.mjs work/visualbook/ci-rebuild
           node tools/check_visualbook_assembly.mjs work/visualbook/ci-assembly
+          node tools/check_visualbook_batch_sweep.mjs work/visualbook/ci-batch-sweep
           node tools/check_visualbook_auto_spacing.mjs work/visualbook/ci-auto-spacing
           node tools/check_visualbook_aligned_inputs.mjs work/visualbook/ci-aligned-inputs
           node tools/check_visualbook_failures.mjs work/visualbook/ci-failures
@@ -80,6 +81,7 @@ jobs:
             work/visualbook/ci-reader-protocol
             work/visualbook/ci-rebuild
             work/visualbook/ci-assembly
+            work/visualbook/ci-batch-sweep
             work/visualbook/ci-auto-spacing
             work/visualbook/ci-aligned-inputs
             work/visualbook/ci-failures

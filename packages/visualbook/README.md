@@ -53,7 +53,7 @@ python3 tools/run_visualbook.py chapters.json work/prepared-book --resume
 
 最后预览与最终问题记录必须匹配最终HTML和绘图计划哈希，公式完整，源文件和工具未被改动，图片确实返回给模型、起点终点已通过工具查看、最终问题记录没有已知遗留问题，渲染没有待处理问题，否则停止导出并保存 export-gate.json。停在诊断不等于教材完成；通过这些检查也不证明美观、严谨、易学。
 
-成功后 book/index.html、各章HTML和许可证可以离线阅读。生成入口自动加入原生上一章/下一章链接；旧--resume不重写已有交付。禁用脚本时显示真实渲染的初始图，控制检查要求图片实际解码；它不能替代全部交互状态。完整正文保留，图解可以拖动、单步或主动播放一次，滚动页面会暂停演示。默认最多3章，显式调整 --max-chapters 才扩大调用范围；目前不支持直接输入PDF/EPUB。
+成功后自动检查组装后的最终阅读页，检查通过才生成delivery/attempt-NNN/book.zip；失败保留诊断。book/index.html、各章HTML和许可证可以离线阅读。生成入口自动加入原生上一章/下一章链接；旧--resume不重写已有交付。禁用脚本时显示真实渲染的初始图，控制检查要求图片实际解码；它不能替代全部交互状态。完整正文保留，图解可以拖动、单步或主动播放一次，滚动页面会暂停演示。默认最多3章，显式调整 --max-chapters 才扩大调用范围；目前不支持直接输入PDF/EPUB。
 
 整本Markdown可加`--split-level 2`或`3`，在原有H2/H3处拆分，前言与最后内容均保留，每个原文块只出现一次。拆分后章节数仍受`--max-chapters`限制；超预算在模型启动前拒绝。普通引用式图片/链接支持，脚注语法目前显式拒绝，需对应的来源适配器；不会悄悄吞掉脚注。部分多行`$$`与引用容器会只在渲染时适配，原文及位置映射保持原始字节。
 
@@ -80,7 +80,7 @@ CLI构建book.html继续使用resolved-plan.json；其它输出如chapter-one.ht
 
 默认--composition-policy prefer-library：先检索并调用设计/组件，使用原生组合或put_design；缺少必要关系时仍允许自写，必须留下缺口说明和对应代码哈希，方便后续补工具。--composition-policy open保留开放绘图模式供对照；两个政策不能混作同一试验。这个记录不是质量评分或安全沙箱。
 
-当前51组件、82设计、38数值操作。相同state/param可以连接多幅视图，$result连接之前计算的输出。除优化、张量与程序状态外，新增分词边界条带、按数量绘制的流带、RoPE、GEMM/单步decode访存、KV账本、紧凑通信矩阵和top-k路由。所有示例都有具体边界，手选参数不冒充训练。
+当前51组件、83设计、39数值操作。相同state/param可以连接多幅视图，$result连接之前计算的输出。除优化、张量与程序状态外，新增分词边界条带、按数量绘制的流带、RoPE、GEMM/单步decode访存、KV账本、紧凑通信矩阵和top-k路由。所有示例都有具体边界，手选参数不冒充训练。
 
 阅读默认收起探索，复杂图可占用宽幅，小图与短说明可贴在当前段落左侧/右侧。静态图不带按钮，演示主动看一遍；典型情况按钮同时切换实际参数，避免多个滑块之间来回调整。具体声明见[生成入口](AUTHOR_API.md)。
 
@@ -89,6 +89,8 @@ CLI构建book.html继续使用resolved-plan.json；其它输出如chapter-one.ht
 ## 组装后的阅读检查与打包
 
 ```bash
+python3 tools/deliver_visualbook.py work/my-book/book work/final-delivery
+# 也可独立检查：
 node tools/check_visualbook_collection.mjs work/my-book/book work/reader-check
 python3 tools/package_visualbook.py work/my-book/book work/my-book.zip
 ```
@@ -98,3 +100,5 @@ python3 tools/package_visualbook.py work/my-book/book work/my-book.zip
 打包只收录阅读HTML、运行库许可证和去除本地路径的来源记录，不收录原始教材文件、会话日志或中间图。ZIP文件顺序和时间固定；相同交付可复现相同归档哈希。旧组装入口可在manifest指定navigation:true，新生成入口默认启用。
 
 已有失败候选可用`node tools/rebuild_visualbook.mjs original.source.json unchanged-book.json work/fresh-rebuild`复编译。它先重导入原始Markdown，检查正文、公式、图片和计划身份，再实际预览；结果停在awaiting-review，不把维护者修复算成新的模型生成成功。
+
+生成入口和--resume都会调用最终交付检查，旧记录保留，新的交付在新attempt目录。一次交付检查通过才创建ZIP；书文件被改动则拒绝，也不会补跑模型。无脚本时保存实际图片PNG，避免Firefox禁用页面Promise造成检查无限等待；有脚本时使用原生decode与宿主上限。

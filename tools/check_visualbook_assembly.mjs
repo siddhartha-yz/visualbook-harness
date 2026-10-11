@@ -40,12 +40,14 @@ try{
   checks.push({width,javaScriptEnabled,chapter:chapters[n].id,sourceIdentityPreserved:true,actualNativeNavigation:true,externalRequests:requests.length});await page.close();
  }
 }finally{await browser.close();fs.writeFileSync(out+'/reader-cases.json',JSON.stringify(checks,null,2)+'\n');fs.writeFileSync(out+'/capture-failures.json',JSON.stringify(captureFailures,null,2)+'\n');}
-const reader=spawnSync(process.execPath,[root+'/tools/check_visualbook_collection.mjs',out+'/book',out+'/collection'],{encoding:'utf8'});
+const reader=spawnSync('python3',[root+'/tools/deliver_visualbook.py',out+'/book',out+'/delivery'],{encoding:'utf8'});
 fs.writeFileSync(out+'/collection.log',reader.stdout+reader.stderr);assert.equal(reader.status,0);
-const readerReport=JSON.parse(fs.readFileSync(out+'/collection/report.json'));assert.equal(readerReport.cases.length,12);assert.equal(readerReport.findings.length,0);
+const readerReport=JSON.parse(fs.readFileSync(out+'/delivery/reader/report.json'));assert.equal(readerReport.cases.length,12);assert.equal(readerReport.findings.length,0);
+const delivered=JSON.parse(fs.readFileSync(out+'/delivery/delivery-record.json'));assert.equal(delivered.ready,true);assert.equal(delivered.package.archiveSha256,a.archiveSha256);
 fs.appendFileSync(out+'/book/one.html','\n');pack('changed-reader',1);assert.ok(!fs.existsSync(out+'/changed-reader.zip'));
-const changed=spawnSync(process.execPath,[root+'/tools/check_visualbook_collection.mjs',out+'/book',out+'/collection-changed'],{encoding:'utf8'});
-fs.writeFileSync(out+'/collection-changed.log',changed.stdout+changed.stderr);assert.equal(changed.status,1);
-assert.match(JSON.parse(fs.readFileSync(out+'/collection-changed/report.json')).error,/changed/);
+const changed=spawnSync('python3',[root+'/tools/deliver_visualbook.py',out+'/book',out+'/delivery-changed'],{encoding:'utf8'});
+fs.writeFileSync(out+'/collection-changed.log',changed.stdout+changed.stderr);assert.equal(changed.status,2);
+assert.match(JSON.parse(fs.readFileSync(out+'/delivery-changed/reader/report.json')).error,/changed/);
+assert.equal(JSON.parse(fs.readFileSync(out+'/delivery-changed/delivery-record.json')).ready,false);assert.ok(!fs.existsSync(out+'/delivery-changed/book.zip'));
 fs.writeFileSync(out+'/control.json',JSON.stringify({passed:true,modelCalls:0,readerCases:checks.length,deterministicArchiveSha256:a.archiveSha256,changedHtmlRejected:true,scope:'Actual local assembly, three widths, script on/off, native chapter links, source identity, ZIP reproducibility and changed-HTML refusal. Maintainer fixtures, not model output or learner review.'},null,2)+'\n');
 console.log(JSON.stringify({passed:true,modelCalls:0,readerCases:checks.length}));
