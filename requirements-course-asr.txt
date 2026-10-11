@@ -1,0 +1,4 @@
+# Isolated Python 3.12 runtime; no changes to system Python/CUDA are required.
+faster-whisper==1.2.1
+ctranslate2==4.6.0
+av==16.0.1
