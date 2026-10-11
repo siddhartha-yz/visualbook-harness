@@ -51,4 +51,14 @@ python3 tools/run_visualbook.py chapters.json work/my-book --max-chapters 3
 
 最新 [CS336阅读迭代](evaluation/2026-10-11/harness-v4-cs336/REPORT.md)提供五章本地试读及来源/计划/数值/重建证据。八次正式启动3次通过原门禁；五章最终合集是共同工具重新编译加维护者复核，不是五次新自动成功。共用成书入口会先检查阅读结果再打包，原文教材和完整成书留在ignored本地输出。
 
+本地阅读服务在 Linux 上用用户级 systemd 托管，独立于调用它的终端或工具会话。以下命令只读取既有 `outputs/visualbook/`，不会调用模型或重建教材；启动后检查实际 HTTP 内容与本地首页哈希一致：
+
+```bash
+python3 tools/serve_visualbook.py start
+python3 tools/serve_visualbook.py status
+python3 tools/serve_visualbook.py stop
+```
+
+CS336 入口为 <http://127.0.0.1:8768/v4-cs336/index.html>。服务仅监听本机地址，异常退出会重启；它是临时用户服务，没有配置开机自启，注销或重启后需要再次执行 `start`。也可以解压 `outputs/visualbook/v4-cs336/cs336-offline.zip`，直接打开 `index.html`。
+
 D3按固定版本与ISC许可证使用，KaTeX与D2L许可证随导出保留。维护者编写的设计示例不冒充模型生成样本。[旧动画设施和研究入口](docs/legacy-infrastructure.md)继续保留，避免把负结果和历史证据丢掉。
