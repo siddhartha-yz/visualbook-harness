@@ -6,6 +6,7 @@ import { performance } from "node:perf_hooks";
 import { spawnSync } from "node:child_process";
 import { pathToFileURL } from "node:url";
 import { invalidGeometry } from "./visualbook_inspection.mjs";
+import { workspaceRoot } from "./visualbook_workspace.mjs";
 
 const root = path.resolve(import.meta.dirname, "..");
 const hash = (bytes) => crypto.createHash("sha256").update(bytes).digest("hex");
@@ -16,7 +17,7 @@ const write = (file, value) =>
 export async function exportMotion(file, previewDirectory, out, config) {
   file = path.resolve(file);
   out = path.resolve(out);
-  const work = fs.realpathSync(path.join(root, "work"));
+  const work = fs.realpathSync(path.join(workspaceRoot(root), "work"));
   const parent = fs.realpathSync(path.dirname(out));
   if (parent !== work && !parent.startsWith(work + path.sep))
     throw Error("Keep motion frames and intermediates inside ignored work/");

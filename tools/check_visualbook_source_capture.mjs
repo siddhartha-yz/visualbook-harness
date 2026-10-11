@@ -172,7 +172,7 @@ const leak = structuredClone(source);
 leak.blocks[0].html = '<p>Broken formula: \\frac{1}{2} + \\alpha</p>';
 fs.writeFileSync(out + "/math-leak.html", build(leak, { figures: [] }));
 const leakReport = await preview(out + "/math-leak.html", out + "/math-leak-preview");
-assert(leakReport.findings.some(f => f.kind === "source-math-leak"));
+assert(leakReport.findings.some(f => f.kind === "formula-render" && f.raw?.length));
 const literal = structuredClone(source);
 literal.blocks[0].html = '<p>Literal syntax: <code>\\frac{1}{2} + \\alpha</code></p>';
 fs.writeFileSync(out + "/literal-code.html", build(literal, { figures: [] }));

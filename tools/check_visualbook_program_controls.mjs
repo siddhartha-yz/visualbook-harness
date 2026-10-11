@@ -61,6 +61,7 @@ try {
             .facts,
       );
     assert.equal((await facts()).snapshot.objects.buf[1], 9);
+    await memory.locator(".vh-explore > summary").click();
     await memory
       .getByRole("button", { name: "已执行语句：上一步", exact: true })
       .click();

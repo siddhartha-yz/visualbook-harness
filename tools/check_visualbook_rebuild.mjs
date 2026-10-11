@@ -1,0 +1,53 @@
+/* Rebuild identity and refusal controls, with one real browser preview. */
+import assert from "node:assert/strict";
+import fs from "node:fs";
+import path from "node:path";
+import crypto from "node:crypto";
+import { spawnSync } from "node:child_process";
+import { importMarkdown } from "../packages/visualbook/import.mjs";
+const root = path.resolve(import.meta.dirname, "..");
+const out = path.resolve(process.argv[2]);
+fs.mkdirSync(out, { recursive: true });
+const sha = v => crypto.createHash("sha256").update(v).digest("hex");
+const markdown = "# 保留原文\n\n增加**块级预分词（Chunking）**机制。\n\n> $$x = y + z$$\n\n![本地图](image.svg)\n";
+fs.writeFileSync(out + "/chapter.md", markdown);
+const image = '<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10"><rect width="10" height="10" fill="blue"/></svg>';
+fs.writeFileSync(out + "/image.svg", image);
+const original = importMarkdown(out + "/chapter.md");
+fs.writeFileSync(out + "/source.json", JSON.stringify(original));
+fs.writeFileSync(out + "/plan.json", '{"figures":[]}\n');
+const before = Object.fromEntries(["chapter.md", "source.json", "plan.json", "image.svg"].map(n => [n, sha(fs.readFileSync(out + "/" + n))]));
+const results = [];
+function run(id, expected, source="source.json", plan="plan.json") {
+  const p = spawnSync(process.execPath, [root + "/tools/rebuild_visualbook.mjs", out + "/" + source, out + "/" + plan, out + "/" + id], { encoding: "utf8" });
+  fs.writeFileSync(out + "/" + id + ".log", p.stdout + p.stderr);
+  assert.equal(p.status, expected, id);
+  const record = JSON.parse(fs.readFileSync(out + "/" + id + "/rebuild-record.json"));
+  results.push({ id, status: record.status, modelCalls: record.modelCalls, error: record.error });
+  return record;
+}
+const rebuilt = run("unchanged", 0);
+assert.equal(rebuilt.status, "awaiting-review");
+assert.equal(rebuilt.inputPlanUnchanged, true);
+assert.equal(rebuilt.originalBlocksPreserved, true);
+assert.equal(rebuilt.originalAssetsPreserved, true);
+assert.deepEqual(rebuilt.renderFindings, []);
+assert.equal(rebuilt.planSha256, before["plan.json"]);
+for (const [n, h] of Object.entries(before)) assert.equal(sha(fs.readFileSync(out + "/" + n)), h, n);
+fs.writeFileSync(out + "/chapter.md", markdown + "\n新增原文。\n");
+assert.match(run("changed-source", 1).error, /Markdown content changed/);
+fs.writeFileSync(out + "/chapter.md", markdown);
+fs.writeFileSync(out + "/image.svg", image.replace("blue", "red"));
+assert.match(run("changed-image", 1).error, /image content changed/);
+fs.writeFileSync(out + "/image.svg", image);
+const altered = structuredClone(original); altered.blocks[1].raw += " ";
+fs.writeFileSync(out + "/altered.json", JSON.stringify(altered));
+assert.match(run("changed-block", 1, "altered.json").error, /block coverage/);
+fs.writeFileSync(out + "/invalid-plan.json", '{"figures":[{"id":"broken"}]}');
+assert.equal(run("invalid-plan", 1, "source.json", "invalid-plan.json").status, "failed");
+const reused = spawnSync(process.execPath, [root + "/tools/rebuild_visualbook.mjs", out + "/source.json", out + "/plan.json", out + "/unchanged"], { encoding: "utf8" });
+assert.notEqual(reused.status, 0);
+assert.equal(JSON.parse(fs.readFileSync(out + "/unchanged/rebuild-record.json")).status, "awaiting-review");
+fs.writeFileSync(out + "/control.json", JSON.stringify({ passed: true, results, attempts: results.length + 1, modelCalls: 0,
+  scope: "One actual three-width preview; changed source/image/block and invalid plan refused, prior output preserved. No automatic artistic or semantic acceptance." }, null, 2) + "\n");
+console.log(JSON.stringify({ passed: true, attempts: results.length + 1, modelCalls: 0 }));

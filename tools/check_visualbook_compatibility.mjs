@@ -6,14 +6,14 @@ import assert from "node:assert/strict";
 import { pathToFileURL } from "node:url";
 import { invalidGeometry } from "./visualbook_inspection.mjs";
 import { auditInteractions } from "./audit_visualbook_interactions.mjs";
-const [catalogDir, bookDir, outDir, engine = "firefox"] = process.argv.slice(2);
+const [catalogDir, bookDir, outDir, engine = "firefox", selectionFile] = process.argv.slice(2);
 if (
   !catalogDir ||
   !bookDir ||
   !outDir ||
   !["chromium", "firefox", "webkit"].includes(engine)
 )
-  throw Error("Usage: catalog-directory book-directory fresh-output [engine]");
+  throw Error("Usage: catalog-directory book-directory-or-dash fresh-output [engine] [design-id-array.json]");
 const root = path.resolve(import.meta.dirname, ".."),
   out = path.resolve(outDir),
   sha = (v) => crypto.createHash("sha256").update(v).digest("hex");
@@ -32,7 +32,7 @@ const report = {
   status: "running",
   engine,
   scope:
-    "Alternate browser: twenty-seven frozen maintainer designs at two widths/four poses, registered input actions, live playback/wheel pause, five reviewed model chapters from multiple stages with scripts disabled and images decoded. No exhaustive browser/device or art guarantee.",
+    "Alternate browser: explicitly recorded frozen designs at all baseline widths/finite poses, registered input actions, two-width live playback/wheel pause and optional offline assembled chapters with images decoded. No exhaustive browser/device or art guarantee.",
   modelCalls: 0,
   cases: [],
   offline: [],
@@ -69,7 +69,7 @@ try {
       process.env[engine.toUpperCase() + "_PATH"] ?? type.executablePath(),
   });
   report.browserVersion = browser.version();
-  const ids = [
+  const defaultIds = [
     "matrix-product",
     "reshape",
     "optimizer",
@@ -98,6 +98,12 @@ try {
     "head-reindex",
     "sparse-gradient-memory",
   ];
+  const ids = selectionFile ? JSON.parse(fs.readFileSync(selectionFile)) : defaultIds;
+  if (!Array.isArray(ids) || !ids.length || ids.length > 100 || new Set(ids).size !== ids.length ||
+      ids.some(id => typeof id !== "string" || !/^[a-z][a-z0-9-]*$/.test(id)))
+    throw Error("Provide 1..100 unique design ids");
+  report.selectedDesigns = ids;
+  save();
   for (const id of ids) {
     const file = path.resolve(catalogDir, "sources", id, "book.html"),
       baseline = JSON.parse(
@@ -106,7 +112,7 @@ try {
         ),
       );
     assert.equal(baseline.sha256, sha(fs.readFileSync(file)));
-    for (const width of [1280, 375]) {
+    for (const width of baseline.viewports.map(v => v.width)) {
       const page = await browser.newPage({ viewport: { width, height: 900 } }),
         errors = [],
         external = [];
@@ -161,9 +167,11 @@ try {
       for (const probe of parameters.cases.filter((c) => c.width === width)) {
         const actual = await page.evaluate(({ params, progress }) => {
           const i = VisualBookRuntime.instances[0];
-          for (const [key, value] of Object.entries(params))
-            i.setParam(key, value);
-          i.setProgress(progress, true);
+          if (i.setParams) i.setParams(params, progress);
+          else {
+            for (const [key, value] of Object.entries(params)) i.setParam(key, value);
+            i.setProgress(progress, true);
+          }
           return {
             facts: i.facts,
             error: i.error ?? null,
@@ -286,11 +294,12 @@ try {
     await page.close();
     save();
   }
+  if (bookDir !== "-") {
   const book = JSON.parse(
     fs.readFileSync(path.resolve(bookDir, "build-record.json")),
   );
   for (const chapter of book.records)
-    for (const width of [1280, 375]) {
+    for (const width of [1280, 375, 1920]) {
       const context = await browser.newContext({
           javaScriptEnabled: false,
           viewport: { width, height: 900 },
@@ -352,6 +361,7 @@ try {
       await context.close();
       save();
     }
+  }
   report.status = "completed";
 } catch (error) {
   report.status = "failed";

@@ -91,6 +91,7 @@ try {
       event: "mouse and Enter choose real boundary supports",
     });
     const dil = page.locator("#figure-dilation-holes");
+    await dil.locator(".vh-explore > summary").click();
     await dil
       .getByRole("button", { name: "查看输出位置 12", exact: true })
       .click();

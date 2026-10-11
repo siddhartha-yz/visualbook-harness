@@ -42,6 +42,8 @@ jobs:
           node tools/check_visualbook_reading.mjs work/visualbook/ci-reading
           node tools/check_visualbook_cases.mjs work/visualbook/ci-cases
           python3 tools/check_visualbook_partition.py work/visualbook/ci-partition
+          python3 tools/check_visualbook_reader_protocol.py work/visualbook/ci-reader-protocol
+          node tools/check_visualbook_rebuild.mjs work/visualbook/ci-rebuild
           node tools/check_visualbook_auto_spacing.mjs work/visualbook/ci-auto-spacing
           node tools/check_visualbook_aligned_inputs.mjs work/visualbook/ci-aligned-inputs
           node tools/check_visualbook_failures.mjs work/visualbook/ci-failures
@@ -74,6 +76,8 @@ jobs:
             work/visualbook/ci-reading
             work/visualbook/ci-cases
             work/visualbook/ci-partition
+            work/visualbook/ci-reader-protocol
+            work/visualbook/ci-rebuild
             work/visualbook/ci-auto-spacing
             work/visualbook/ci-aligned-inputs
             work/visualbook/ci-failures

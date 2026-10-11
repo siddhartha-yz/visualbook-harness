@@ -32,7 +32,9 @@ for(const width of [375,960,1200,1280,1920]){
  await quiet.locator('[data-param="scale"]').focus();await page.keyboard.press('ArrowRight');
  assert.ok(await page.evaluate(()=>VisualBookRuntime.instances[0].facts.value>.5));
  await quiet.locator('.vh-reset').click();await quiet.locator('summary').click();
- await quiet.locator('.vh-play').click();await page.waitForFunction(()=>VisualBookRuntime.instances[0].progress===1&&!VisualBookRuntime.instances[0].playing);
+ await quiet.locator('.vh-play').evaluate(n=>n.addEventListener('click',()=>window.__readingPlayStart=VisualBookRuntime.instances[0].progress));
+ await quiet.locator('.vh-play').click();assert.equal(await page.evaluate(()=>window.__readingPlayStart),0);
+ await page.waitForFunction(()=>VisualBookRuntime.instances[0].progress===1&&!VisualBookRuntime.instances[0].playing);
  await page.waitForTimeout(150);assert.equal(await page.evaluate(()=>VisualBookRuntime.instances[0].progress),1);
  const layout=await page.evaluate(()=>{const rect=s=>{const r=document.querySelector(s).getBoundingClientRect();return {x:r.x,y:r.y,width:r.width,height:r.height};};return{main:rect('main'),source:rect('#reading-2'),wide:rect('#figure-quiet'),text:rect('#reading-9'),margin:rect('#figure-aside'),next:rect('#reading-10'),note:rect('#note-bound'),noteLeft:rect('#note-left'),toc:rect('.vh-toc')};});
  assert.ok(layout.source.width<=744);

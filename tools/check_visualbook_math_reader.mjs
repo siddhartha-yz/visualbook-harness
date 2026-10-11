@@ -10,7 +10,7 @@ const root = path.resolve(import.meta.dirname, ".."),
 if (fs.existsSync(out)) throw Error("Fresh output required");
 fs.mkdirSync(out, { recursive: true });
 const md =
-  "# 长公式阅读控制\n\n短公式$x$放在正文里。\n\n依次考虑$\\{\\text{婴儿},\\text{儿童},\\text{青少年},\\text{青年人},\\text{中年人},\\text{老年人}\\}$的不同取值，公式之后仍有正文。\n\n$$\\hat{\\mathbf y}=\\operatorname{softmax}(\\mathbf o)\\quad \\text{其中}\\quad \\hat y_j=\\frac{\\exp(o_j)}{\\sum_k\\exp(o_k)}$$\n";
+  "# 长公式阅读控制\n\n短公式$x$放在正文里。\n\n依次考虑$\\{\\text{婴儿},\\text{儿童},\\text{青少年},\\text{青年人},\\text{中年人},\\text{老年人}\\}$的不同取值，公式之后仍有正文。\n\n$$\\hat{\\mathbf y}=\\operatorname{softmax}(\\mathbf o)\\quad \\text{其中}\\quad \\hat y_j=\\frac{\\exp(o_j)}{\\sum_k\\exp(o_k)}$$\n\n$$a+b+c+d+e+f+g+h+i+j+k+l+m+n+o+p+q+r+s=t$$\n\n$$\\begin{pmatrix}" + Array(14).fill("1000").join("&") + "\\end{pmatrix}$$\n";
 fs.writeFileSync(out + "/chapter.md", md);
 const source = importMarkdown(out + "/chapter.md", { id: "math-reader" });
 fs.writeFileSync(out + "/source.json", JSON.stringify(source, null, 2));
@@ -47,6 +47,12 @@ try {
         shortFocusable: [...document.querySelectorAll(".source-block .katex")]
           .filter((n) => n.querySelector("annotation")?.textContent === "x")
           .some((n) => n.hasAttribute("tabindex")),
+        wrapped: [...document.querySelectorAll(".source-block .katex")].filter(n =>
+          n.querySelector("annotation")?.textContent.startsWith("a+b+c+d")).map(n => ({
+            client:n.clientWidth,scroll:n.scrollWidth,
+            tops:[...n.querySelectorAll(".katex-html>.katex-base,.katex-html>.base")].map(b=>b.getBoundingClientRect().top),
+            tex:n.querySelector("annotation").textContent,
+          })),
         regions: [...document.querySelectorAll(".vh-math-scroll")].map((n) => ({
           role: n.getAttribute("role"),
           tab: n.tabIndex,
@@ -55,9 +61,11 @@ try {
         })),
       }));
       assert(result.scroll <= width + 2);
-      assert.equal(result.math, 3);
+      assert.equal(result.math, 5);
       assert.equal(result.errors, 0);
       assert.equal(result.shortFocusable, false);
+      assert.equal(result.wrapped[0].tex,"a+b+c+d+e+f+g+h+i+j+k+l+m+n+o+p+q+r+s=t");
+      if(width===375){assert.ok(result.wrapped[0].scroll<=result.wrapped[0].client+2);assert.ok(Math.max(...result.wrapped[0].tops)-Math.min(...result.wrapped[0].tops)>15);}
       if (width === 375 && javaScriptEnabled) {
         assert.equal(result.regions.length, 2);
         assert(
@@ -93,7 +101,7 @@ fs.writeFileSync(
       cases,
       sourceUnchanged: true,
       scope:
-        "Actual local region keyboard movement, formula coverage, two widths, script-disabled offline output. Not mathematical truth, all browsers or all source syntax.",
+        "Actual relation wrapping without TeX edits, indivisible formula keyboard scrolling, coverage, two widths and script-disabled offline output. Not mathematical truth, all browsers or all source syntax.",
     },
     null,
     2,

@@ -84,9 +84,9 @@ assert.equal(
   report.findings.filter(
     (f) => f.id === "inert-timeline" && f.kind === "no-fractional-change",
   ).length,
-  2,
+  report.viewports.length,
 );
-assert.equal(report.findings.filter((f) => f.id === "inert-param").length, 2);
+assert.equal(report.findings.filter((f) => f.id === "inert-param").length, report.viewports.length);
 fs.writeFileSync(
   path.join(out, "checks.json"),
   JSON.stringify(

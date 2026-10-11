@@ -68,6 +68,7 @@ def main():
     ]
     definitions += [
         {"name":"inspect_source","description":"Inspect up to three actual source anchors, neighbouring text and safe insertion advice. No source rewrite or quality verdict.","inputSchema":{"type":"object","properties":{"anchors":{"type":"array","minItems":1,"maxItems":3,"items":{"type":"string"}}},"required":["anchors"],"additionalProperties":False}},
+        {"name":"inspect_reader","description":"Inspect one actual source anchor as a reader: real PNGs, formula wrapping and native Home/End access to long formulas. Use when a full-page screenshot looks clipped. Does not rewrite source/candidate or certify math; twelve inspections maximum.","inputSchema":{"type":"object","properties":{"anchor":{"type":"string"},"width":{"type":"integer","enum":[375,1280,1920]}},"required":["anchor"],"additionalProperties":False}},
         {"name":"put_annotation","description":"Add a concise visible condition/clarification/correction beside original source; optional TeX is actually compiled. Original text and hashes remain unchanged. Explicit replace=true to revise a note. Saves before/after and builds; still inspect the real page.","inputSchema":{"type":"object","properties":{"id":{"type":"string"},"afterAnchor":{"type":"string"},"kind":{"type":"string","enum":["condition","clarification","correction"]},"text":{"type":"string","maxLength":360},"formula":{"type":"string","maxLength":500},"placement":{"type":"string","enum":["body","margin"]},"marginSide":{"type":"string","enum":["left","right"]},"replace":{"type":"boolean"}},"required":["id","afterAnchor","kind","text"],"additionalProperties":False}}
     ]
     if args.library_first:
@@ -202,7 +203,7 @@ def main():
     def tool_fingerprint():
         library=ROOT/'packages/visualbook'
         modules=json.loads((library/'bundle.json').read_text())['modules']
-        files=[library/n for n in modules+['bundle.json','runtime.js','theme.css','math.mjs','anchors.mjs','components.json','catalog.json']]+[tool,Path(__file__).resolve(),ROOT/'tools/audit_visualbook_parameters.mjs',ROOT/'tools/audit_visualbook_interactions.mjs',ROOT/'tools/visualbook_math.mjs',ROOT/'tools/visualbook_inspection.mjs',ROOT/'tools/export_visualbook_motion.mjs',ROOT/'tools/build_visualbook_catalog.mjs']
+        files=[library/n for n in modules+['bundle.json','runtime.js','theme.css','math.mjs','anchors.mjs','components.json','catalog.json']]+[tool,Path(__file__).resolve(),ROOT/'tools/audit_visualbook_parameters.mjs',ROOT/'tools/audit_visualbook_interactions.mjs',ROOT/'tools/visualbook_math.mjs',ROOT/'tools/visualbook_inspection.mjs',ROOT/'tools/export_visualbook_motion.mjs',ROOT/'tools/build_visualbook_catalog.mjs',ROOT/'tools/inspect_visualbook_reader.mjs',ROOT/'tools/visualbook_workspace.mjs']
         return hashlib.sha256(json.dumps({str(p.relative_to(ROOT)):digest(p) for p in files},sort_keys=True).encode()).hexdigest()
 
     def build_inputs():
@@ -386,6 +387,16 @@ def main():
                 if not isinstance(fields,list) or not 1<=len(fields)<=8 or len(set(fields))!=len(fields) or any(k not in result['result'] for k in fields):raise ValueError('Choose one to eight distinct actual result fields')
                 directory=inside('math-results');directory.mkdir(exist_ok=True);artifact=directory/f'result-{len(list(directory.glob("result-*")))+1:03d}.json';artifact.write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n')
                 result={**result,'result':{k:result['result'][k] for k in fields},'selectedFields':fields,'fullResultPath':str(artifact.relative_to(workspace))}
+        elif name == "inspect_reader":
+            require_current_build()
+            if len(list(workspace.glob('reader-inspection-*')))>=12:raise ValueError('Twelve source-reader inspections reached; failures count')
+            anchor=arguments.get('anchor');width=arguments.get('width',375)
+            if not isinstance(anchor,str) or not re.fullmatch(r'[a-z][a-z0-9-]*',anchor) or width not in [375,1280,1920]:raise ValueError('Use an actual source anchor and a supported width')
+            out=inside(f'reader-inspection-{len(list(workspace.glob("reader-inspection-*")))+1:03d}')
+            process=subprocess.run(['node',str(ROOT/'tools/inspect_visualbook_reader.mjs'),str(inside('book.html')),str(out),json.dumps({'anchor':anchor,'width':width})],cwd=workspace,capture_output=True,text=True,timeout=90)
+            if not (out/'report.json').exists():raise ValueError(process.stderr[-3000:])
+            result=json.loads((out/'report.json').read_text())
+            result['candidateSha256']=result['htmlSha256']
         elif name == "inspect_frame":
             directory, report = latest_preview()
             ident = arguments.get("id")
@@ -570,7 +581,7 @@ def main():
                 for destination in [inside('build-receipt.json'),snapshot/'receipt.json']:destination.write_text(json.dumps(receipt,indent=2)+'\n')
                 result['buildReceipt']=receipt
         content = [{"type": "text", "text": json.dumps(result, ensure_ascii=False)}]
-        if name in ["preview_book", "show_design", "inspect_frame", "export_motion"]:
+        if name in ["preview_book", "show_design", "inspect_frame", "export_motion", "inspect_reader"]:
             screenshots = result["screenshots"]
             selected = [
                 p
@@ -617,7 +628,7 @@ def main():
         }
         with (workspace / "mcp-evidence.jsonl").open("a") as stream:
             stream.write(json.dumps(entry, ensure_ascii=False) + "\n")
-        return {"content": content, "isError": (name == "export_motion" and result.get("status") != "completed") or (name == "preview_book" and result.get("status") == "failed")}
+        return {"content": content, "isError": (name in ["export_motion", "inspect_reader"] and result.get("status") != "completed") or (name == "preview_book" and result.get("status") == "failed")}
 
     for line in sys.stdin:
         ident = None

@@ -510,6 +510,13 @@ select:focus-visible {
 summary:focus-visible { outline: 2px solid var(--orange); outline-offset: 4px; }
 .vh-annotation[data-placement="margin"] { margin-top: 14px; font-size: 14px; }
 .source-block:has(table) { overflow-x: auto; scrollbar-width: thin; }
+.source-block blockquote { margin: 22px 0; padding-left: 18px; border-left: 2px solid #dce5e6; }
+/* KaTeX keeps indivisible terms/matrices together; relations may wrap without
+   changing TeX, MathML, font size or the source. Long indivisible terms scroll. */
+.source-block .katex-display > .katex,
+.vh-annotation .katex-display > .katex { white-space: normal; }
+.katex-display > .katex > .katex-html > .katex-base,
+.katex-display > .katex > .katex-html > .base { margin: .18em 0; }
 table { border-collapse: collapse; font-size: 15px; line-height: 1.6; max-width: 100%; }
 td, th { padding: 9px 12px; border-bottom: 1px solid #dce5e6; text-align: left; }
 @media (min-width: 1200px) {

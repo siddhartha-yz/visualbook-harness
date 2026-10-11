@@ -16,8 +16,18 @@ export function prepareMathMarkdown(raw) {
       const start = /^ {0,3}(?:> ?)*\$\$/.exec(line);
       if (!start) continue;
       const local = line.indexOf("$$");
-      // Existing one-line displays are already handled by the Markdown adapter.
-      if (line.indexOf("$$", local + 2) !== -1) continue;
+      // Inside a quote/list, a one-line display can be parsed as inline math in
+      // the surrounding paragraph. Preserve the container and give it real fences.
+      const close = line.indexOf("$$", local + 2);
+      if (close !== -1) {
+        const prefix = line.slice(0, local);
+        if (prefix && !line.slice(close + 2).trim()) {
+          insertions.set(offset + local + 2, "\n" + prefix);
+          insertions.set(offset + close, "\n" + prefix);
+          adapted++;
+        }
+        continue;
+      }
       open = { offset: offset + local, prefix: line.slice(0, local) };
       if (line.slice(local + 2).trim()) insertions.set(open.offset + 2, "\n" + open.prefix);
     } else {

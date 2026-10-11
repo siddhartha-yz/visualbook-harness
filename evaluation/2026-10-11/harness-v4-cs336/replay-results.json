@@ -1,0 +1,72 @@
+{
+  "toolchain": "toolchain-02",
+  "model": "gpt-6.1-sol",
+  "reasoningEffort": "high",
+  "startedSessions": 3,
+  "readyChapters": 1,
+  "chapters": [
+    {
+      "id": "tokenization",
+      "gate": {
+        "ready_for_export": false,
+        "reasons": [
+          "known-unresolved-issues"
+        ],
+        "render_findings": [],
+        "quality": "Engineering gate only; does not establish teaching or aesthetic quality."
+      },
+      "wallSeconds": 430.056,
+      "previewCount": 3,
+      "sourceUnchanged": true,
+      "toolSourcesUnchanged": true,
+      "planSha256": "c7369ec99c0128fc2997e0a6ec42fecfccf5e60ace651fc5d9a55b53f904a360",
+      "issues": [
+        {
+          "figureId": "chunk-boundary",
+          "condition": "原文 tokenization-024；1920 与 375 整页截图",
+          "description": "预分词引导句在编译后的原文中显示字面 **（Chunking) **机制），粗体边界未正确呈现。该问题属于原文编译显示，未修改 source 或工具；保留待修，停止进一步导出。"
+        }
+      ]
+    },
+    {
+      "id": "communication",
+      "gate": {
+        "ready_for_export": false,
+        "reasons": [
+          "known-unresolved-issues"
+        ],
+        "render_findings": [],
+        "quality": "Engineering gate only; does not establish teaching or aesthetic quality."
+      },
+      "wallSeconds": 354.963,
+      "previewCount": 3,
+      "sourceUnchanged": true,
+      "toolSourcesUnchanged": true,
+      "planSha256": "f7611c9181aa81d38f7594fee1a64eb6ce9d83ae199f40580d3a2cf22fc03e6c",
+      "issues": [
+        {
+          "figureId": "reduce-factorization",
+          "condition": "375px 手机，原文 communication-036，preview-final/375-page.png 默认阅读画面",
+          "description": "原文 All-Reduce = All-Gather(Reduce-Scatter(...)) 的长等式右侧被阅读容器截住，未能在默认画面中完整阅读。截图不证明能否通过横向滚动看到剩余部分。新增图解本身可读；未改原文或编译器，三轮预览额度已用完，因此保留此问题并停止导出。"
+        }
+      ]
+    },
+    {
+      "id": "cache",
+      "gate": {
+        "ready_for_export": true,
+        "reasons": [],
+        "render_findings": [],
+        "quality": "Engineering gate only; does not establish teaching or aesthetic quality."
+      },
+      "wallSeconds": 538.134,
+      "previewCount": 3,
+      "sourceUnchanged": true,
+      "toolSourcesUnchanged": true,
+      "planSha256": "1d5f5bb0624f41bb2e1e7e24a2b46cad30e29cd864cb231324831f6025ab0b2e",
+      "issues": []
+    }
+  ],
+  "priorExposure": "Known failures from primary group, shared tools revised. Not a blind or fair model comparison.",
+  "scope": "Original formal author outcomes; later reimport/recompile and maintainer reviews are separate, not model regeneration."
+}

@@ -44,3 +44,14 @@ test("a quoted multiline formula retains its source even when continuation lines
  const code="> ```text\n> $$ not math\n> ```\n";assert.equal(prepareMathMarkdown(code).text,code);
  }finally{fs.rmSync(dir,{recursive:true});}
 });
+test("one-line display math inside a quoted explanation stays display math, preserving one outer source block",()=>{
+ const raw="> 前文：\n> $$a=b+c$$\n> 后文。\n\n最后正文。\n";
+ const dir=fs.mkdtempSync(path.join(os.tmpdir(),'vh-quote-display-'));
+ try {const file=path.join(dir,'input.md');fs.writeFileSync(file,raw);const book=importMarkdown(file);
+ assert.equal(book.blocks[0].raw,raw.slice(0,raw.indexOf('\n\n最后')));
+ assert.equal(book.blocks[0].type,'blockquote');assert.match(book.blocks[0].html,/katex-display/);
+ assert.equal(book.adaptation.mathExpected,1);assert.equal(book.adaptation.mathRendered,1);
+ assert.equal(book.blocks[1].raw,'最后正文。');
+ assert.equal(book.sourceSha256,crypto.createHash('sha256').update(raw).digest('hex'));
+ }finally{fs.rmSync(dir,{recursive:true});}
+});

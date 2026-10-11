@@ -223,7 +223,7 @@
     function play() {
       if (reduced.matches || interaction !== "timeline") return false;
       pauseAll();
-      if (progress >= 1) paint(0);
+      if (figure.presentation !== "exploration" || progress >= 1) paint(0);
       playing = true;
       startProgress = progress;
       started = performance.now();

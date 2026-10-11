@@ -471,11 +471,11 @@ export function build(book, plan, { direct = false } = {}) {
   const sourceName =
     book.sourceName ?? (book.sourceCommit ? "D2L" : "输入教材");
   const first = book.blocks[0],
-    hasCover = first?.type === "heading" && (first.depth ?? 1) === 1;
+    hasCover = first?.type === "heading";
   const collapsedDiagrams = new Set(plan.figures.map((f) => f.sourceDiagramAnchor).filter(Boolean));
   const block = (b) =>
     `<div class="source-block" id="${b.id}" data-source-sha256="${b.sha256}" data-math-expected="${b.math?.expected ?? 0}">${collapsedDiagrams.has(b.id) ? `<details class="vh-original-diagram"><summary>原文文本示意</summary>${b.html}</details>` : b.html}</div>`;
-  const cover = hasCover ? block(first) : `<h1>${esc(book.title)}</h1>`;
+  const cover = hasCover ? block(first).replace(/<(\/?)h[1-6](?=[\s>])/g,"<$1h1") : `<h1>${esc(book.title)}</h1>`;
   const scopes = validatePlan(book, plan),
     mathExpected = book.blocks.reduce((s, b) => s + (b.math?.expected ?? 0), 0);
   const parameter = (c) =>
