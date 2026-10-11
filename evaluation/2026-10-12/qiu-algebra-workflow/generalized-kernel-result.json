@@ -1,0 +1,218 @@
+{
+  "status": "bounded-tool-extension-verified",
+  "modelCalls": 0,
+  "counts": {
+    "components": 59,
+    "designs": 110,
+    "calculationOperations": 55,
+    "independentCertificateOperations": 16
+  },
+  "mathematics": {
+    "seed": 20261012,
+    "sympyVersion": "1.14.0",
+    "existingReplayCases": 593,
+    "newIndependentSympyCases": 100,
+    "independentFractionCases": 693,
+    "newCount": 100,
+    "passed": true,
+    "elapsedSeconds": 3.4265547650284134,
+    "kernelSha256": "b217d6ca66c68ee41207e9b940883090fef35098189284f8a9012a941734bdc1",
+    "scope": "Existing593 output replay unchanged, new selected-root exact values independently compared with SymPy, all recorded inputs/results independently Fraction checked. No rendering/art/source-wide theorem certification."
+  },
+  "actualSameFaultyPlanNowRejects": {
+    "expectedReject": true,
+    "error": "Unknown figure fields: inputs. Use existing scene/params/state JSON-pointer overrides for named-design data changes.",
+    "modelCalls": 0,
+    "originalPlanSha256": "7d5fae486fb7363c6c3589f717bf4924ad313a716dba01b67e0adc704ddf62ee",
+    "scope": "Actual same faulty plan now rejected before rendering; original negative artifacts unmodified"
+  },
+  "originalSemanticFailure": {
+    "status": "maintainer-rejected-semantic-mismatch",
+    "expectedEigenvalues": {
+      "root-two": 2,
+      "root-five": 5
+    },
+    "actualEigenvalues": {
+      "root-two": [
+        2
+      ],
+      "root-five": [
+        2
+      ]
+    },
+    "oldPreviewFindings": [],
+    "oldExportSha256": "59e1b22187bc6c54b86094decb430d0f795f7bf463758c90ba8863a309f473a6",
+    "cause": "Maintainer supplied unsupported figure.inputs field; compiler silently retained default eigenvalue2. Mathematical certificate verified actual2, not intended5. Old artifacts retained unchanged and not adopted.",
+    "scope": "Actual maintained source chapter19 experiment; no model generation or full book acceptance"
+  },
+  "correctedChapter19": {
+    "intendedAndRecordedEigenvalues": {
+      "root-two": 2,
+      "root-five": 5
+    },
+    "mathAudit": {
+      "status": "passed",
+      "counts": {
+        "states": 42,
+        "legacyStates": 0,
+        "recordedCalculations": 42,
+        "uniqueCalculations": 2,
+        "verifiedCalculations": 2,
+        "unsupportedCalculations": 0,
+        "statesWithoutCalculations": 0
+      },
+      "unsupportedOperations": {},
+      "findings": [],
+      "supportedOperations": [
+        "bilinear-congruence",
+        "change-basis",
+        "complex-inner-product",
+        "complex-operator",
+        "determinant-expansion",
+        "dual-basis",
+        "exact-row-reduction",
+        "generalized-kernel-profile",
+        "matrix-polynomial",
+        "minimal-polynomial",
+        "nilpotent-profile",
+        "orthogonalize",
+        "polynomial-divide",
+        "polynomial-gcd",
+        "residue-table",
+        "symmetric-inertia"
+      ],
+      "scope": "Independent finite algebra certificates and numeric/exact agreement for recorded synchronous compute calls and exported algebra-kernel calls. Unsupported operations, legacy runtime, opaque custom math, source-to-figure meaning, general theorems and artistic quality are unverified.",
+      "inputSha256": "8870b1f6102cdc61c248ae57040d39320784fa7b5947fea9d0e70195a9cdc41f",
+      "elapsedSeconds": 0.004351527022663504
+    },
+    "actuallyViewedFrames": [
+      "375-root-two-reading.png",
+      "375-root-five-reading.png",
+      "1280-root-two-reading.png",
+      "1280-root-five-reading.png"
+    ],
+    "scope": "Maintainer actual chapter19 experiment; no model generation or whole book acceptance"
+  },
+  "syntheticBoundaryRender": {
+    "summary": {
+      "variants": 4,
+      "widths": [
+        375,
+        1280,
+        1920
+      ],
+      "findings": [],
+      "scope": "Actual synthetic fixture rendering and recorded exact calculations. No model generation, course coverage, aesthetic score or teacher review."
+    },
+    "mathAudit": {
+      "status": "passed",
+      "counts": {
+        "states": 84,
+        "legacyStates": 0,
+        "recordedCalculations": 84,
+        "uniqueCalculations": 4,
+        "verifiedCalculations": 4,
+        "unsupportedCalculations": 0,
+        "statesWithoutCalculations": 0
+      },
+      "unsupportedOperations": {},
+      "findings": [],
+      "supportedOperations": [
+        "bilinear-congruence",
+        "change-basis",
+        "complex-inner-product",
+        "complex-operator",
+        "determinant-expansion",
+        "dual-basis",
+        "exact-row-reduction",
+        "generalized-kernel-profile",
+        "matrix-polynomial",
+        "minimal-polynomial",
+        "nilpotent-profile",
+        "orthogonalize",
+        "polynomial-divide",
+        "polynomial-gcd",
+        "residue-table",
+        "symmetric-inertia"
+      ],
+      "scope": "Independent finite algebra certificates and numeric/exact agreement for recorded synchronous compute calls and exported algebra-kernel calls. Unsupported operations, legacy runtime, opaque custom math, source-to-figure meaning, general theorems and artistic quality are unverified.",
+      "inputSha256": "7ff664e0a3f0bb1c8258021aa3c721c869fe7652270fa206f45fcbf33ef5a0e4",
+      "elapsedSeconds": 0.007910668035037816
+    },
+    "actuallyViewed": [
+      "375-largest-reading.png",
+      "1280-rational-reading.png",
+      "375-absent-reading.png"
+    ],
+    "scope": "Synthetic n6/n1/rational/absent selected-root controls; sparse quiet layout inspected, not human aesthetic/learning rating"
+  },
+  "programControl": {
+    "kind": "actual Chromium controls and linked state; not model generation or artistic acceptance",
+    "modelCalls": 0,
+    "passed": true,
+    "events": [
+      {
+        "width": 1280,
+        "event": "previous step shows pre-write snapshot"
+      },
+      {
+        "width": 1280,
+        "event": "integer boundary and next-step button"
+      },
+      {
+        "width": 1280,
+        "event": "reset restores identity links and copied value"
+      },
+      {
+        "width": 1280,
+        "event": "pointer and keyboard select actual logical address"
+      },
+      {
+        "width": 375,
+        "event": "previous step shows pre-write snapshot"
+      },
+      {
+        "width": 375,
+        "event": "integer boundary and next-step button"
+      },
+      {
+        "width": 375,
+        "event": "reset restores identity links and copied value"
+      },
+      {
+        "width": 375,
+        "event": "pointer and keyboard select actual logical address"
+      }
+    ]
+  },
+  "tests": {
+    "node": 170,
+    "python": 108,
+    "firstControlFailure": "Control incorrectly read envelope instead of result; original failed log retained, subsequent21 controls pass. Kernel was not changed for this assertion.",
+    "fullCatalogStatus": "Completed actual110 design build/preview/export, all0findings",
+    "fullCatalogCountsSumAcrossDesigns": {
+      "states": 4260,
+      "legacyStates": 0,
+      "recordedCalculations": 3934,
+      "uniqueCalculations": 257,
+      "verifiedCalculations": 30,
+      "unsupportedCalculations": 227,
+      "statesWithoutCalculations": 2061
+    },
+    "catalogScope": "Maintainer reusable controls, not model generated full course. 30 unique calculations supported and verified,227 unsupported explicit; no claim all3934 records independently certified."
+  },
+  "sourceHashes": {
+    "packages/visualbook/algebra.cjs": "b217d6ca66c68ee41207e9b940883090fef35098189284f8a9012a941734bdc1",
+    "packages/visualbook/calculations.cjs": "a8c2bec0f3663dae3ca313aedec012cfff7fb03c86242856f10a77030bd09340",
+    "packages/visualbook/components.algebra.js": "97abe66fc4f35b05831cec83c2ba7bd061dbc382762b48318cbe9bc5345e585c",
+    "tools/check_visualbook_calculations.py": "285f59cef0f20333943c656a20600a5f8427c96a4f60b9a95566aecc5672deb4",
+    "tools/check_visualbook_generalized.mjs": "7fe36bb18dc08bc5927997170bd05ff0cb234e0ebb8c96e49c4a84a59196d054",
+    "tools/visualbook.mjs": "2ab05ab9564a6cba2fdf5e3640f15817aa92d4e06c1e3e0e968e50bcbf14d6c5"
+  },
+  "limits": [
+    "Explicit rational eigenvalue, square rational matrix dimension1..6; no root solving, full field splitting, actual basis/chains or whole Jordan form certification.",
+    "Dimension bands display dimension counts, not actual subspace coordinates or angles.",
+    "Unknown figure-field rejection detects ignored input typos, not arbitrary semantic mismatch.",
+    "Full25chapter model visual generation pending; will use fresh frozenv3 after successful CI, preserving v2 historical source preflights."
+  ]
+}

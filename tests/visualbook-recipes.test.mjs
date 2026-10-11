@@ -81,3 +81,13 @@ test("recipe replacements reject typos, prototype paths, conflicts and invalid r
     /Bad range/,
   );
 });
+test('mistyped figure data cannot silently keep a named design default',()=>{
+ const figure={id:'root',afterAnchor:'one',design:'generalized-eigen-kernels'};
+ assert.throws(()=>build(source,{figures:[{...figure,inputs:{'calculations.root.eigenvalue':5}}]}),/Unknown figure fields: inputs/);
+ assert.throws(()=>resolvePlan({figures:[{...figure,initialProgess:1}]}),/Unknown figure fields: initialProgess/);
+ const changed={figures:[{...figure,overrides:[{path:'/scene/calculations/0/inputs/eigenvalue',value:5}]}]};
+ assert.equal(resolvePlan(changed).figures[0].scene.calculations[0].inputs.eigenvalue,5);
+ assert.equal(validatePlan(source,changed).length,1);
+ assert(build(source,changed).includes('"eigenvalue":5'));
+ assert.equal(resolvePlan({figures:[figure]}).figures[0].scene.calculations[0].inputs.eigenvalue,2);
+});

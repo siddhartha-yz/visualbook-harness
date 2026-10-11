@@ -48,6 +48,7 @@ jobs:
           node tools/check_visualbook_batch_sweep.mjs work/visualbook/ci-batch-sweep
           node tools/check_visualbook_auto_spacing.mjs work/visualbook/ci-auto-spacing
           node tools/check_visualbook_aligned_inputs.mjs work/visualbook/ci-aligned-inputs
+          node tools/check_visualbook_generalized.mjs work/visualbook/ci-generalized-kernels
           node tools/check_visualbook_failures.mjs work/visualbook/ci-failures
           node tools/check_visualbook_program_controls.mjs work/visualbook/ci-program-controls
           node tools/check_visualbook_spatial_controls.mjs work/visualbook/ci-spatial-controls
@@ -84,6 +85,7 @@ jobs:
             work/visualbook/ci-batch-sweep
             work/visualbook/ci-auto-spacing
             work/visualbook/ci-aligned-inputs
+            work/visualbook/ci-generalized-kernels
             work/visualbook/ci-failures
             work/visualbook/ci-program-controls
             work/visualbook/ci-spatial-controls

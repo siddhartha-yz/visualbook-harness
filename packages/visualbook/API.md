@@ -206,3 +206,7 @@ optimizer-trace新增Yogi的D2L PyTorch递推约定及每维firstMomentCurves/sq
 plot支持xLabel/yLabel的实际数量与单位，<=32字且真实测量能放下；为标签留位置，不缩字号，空间不足拒绝。readout项目可用nullText给真正的null结果提供短解释。
 
 固定帧导出从真实绘制结果的序列化SVG独立解码成图像，避开动态SVG重绘历史的微小像素差异；SVG与PNG仍要求精确重放，不采用像素容差。帧时间由配置控制，输出实际FFmpeg解码、抽样图和时间记录，不是屏幕录制。SVG应自包含，图形作者仍要核查实际导出画面。
+
+指定有理特征值的`generalized-kernel-profile`返回shifted/powers的精确与数值版本、ranks/nullities、atLeast/blockCounts/blockSizes及rootSpaceDimension/complementDimension。输入必须是1..6阶有理方阵和显式有理eigenvalue；没有选中根时块列表为空。wholeShiftNilpotent独立表示整个移位矩阵是否幂零，不能从所选根的核稳定推出全矩阵幂为零。dimension-filtration可复用地显示2..8个非降维数及同一总容量，不提供真实子空间坐标。
+
+顶层figure只允许已支持字段，命名设计数据用`overrides:[{path:"/scene/calculations/0/inputs/eigenvalue",value:5}]`等既有JSON指针替换。未知inputs/data/拼错的控制字段直接报错，避免渲染成功但实际数据没有变化。

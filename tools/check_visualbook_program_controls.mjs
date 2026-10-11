@@ -28,11 +28,10 @@ const file = path.join(out, "book.html");
 fs.writeFileSync(
   file,
   build(source, {
-    figures: ids.map((id, i) => ({
-      ...designs.find((d) => d.id === id),
-      afterAnchor: "program-" + i,
-      scopeEnd: "program-" + i,
-    })),
+    figures: ids.map((id, i) => {
+      const {topic,limits,keywords,...figure}=designs.find((d) => d.id === id);
+      return {...figure,afterAnchor:"program-"+i,endAnchor:"program-"+i};
+    }),
   }),
 );
 const { chromium } = await import(

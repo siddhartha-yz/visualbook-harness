@@ -119,6 +119,11 @@
       outputs: ["input", "powers", "ranks", "nullities", "atLeast", "blockCounts", "blockSizes", "nilpotencyIndex", "convention"],
       run: A.jordanProfile,
     },
+    "generalized-kernel-profile": {
+      keys:["input","eigenvalue"],required:["input","eigenvalue"],
+      outputs:["input","inputExact","eigenvalue","eigenvalueExact","shifted","shiftedExact","powers","powersExact","dimension","ranks","nullities","atLeast","blockCounts","blockSizes","hasEigenvalue","eigenspaceDimension","rootSpaceDimension","complementDimension","maxBlockSize","stabilizationPower","wholeShiftNilpotent","convention"],
+      run:A.generalizedKernelProfile,
+    },
     "bilinear-congruence": {
       keys: ["input", "basis", "point"], required: ["input", "basis"],
       outputs: ["input", "basis", "transformed", "transformedExact", "rank", "transformedRank", "symmetric", "values", "field", "transformedField", "convention"],

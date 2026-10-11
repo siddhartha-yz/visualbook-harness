@@ -9421,6 +9421,76 @@
           ]
         }
       }
+    },
+    {
+      "id": "generalized-eigen-kernels",
+      "title": "指定一个 λ，观察核与秩",
+      "topic": "数学 / 高等代数",
+      "limits": "Exact rational matrix and explicitly supplied rational eigenvalue. Shows only this primary component; other eigenvalues need not split over Q. No root finding, complete Jordan form or actual chain basis construction. Shifted powers include0 throughn+1.",
+      "keywords": "Jordan 广义特征空间 核 维数 幂 秩 rank nullity eigenvalue generalized kernel",
+      "height": 330,
+      "mobileHeight": 350,
+      "interaction": "static",
+      "presentation": "reading",
+      "placement": "body",
+      "initialProgress": 1,
+      "summary": "蓝色是核维数，灰色是秩；两者之和是总维数。",
+      "params": [],
+      "scene": {
+        "type": "compose",
+        "calculations": [
+          {
+            "id": "root",
+            "operation": "generalized-kernel-profile",
+            "inputs": {
+              "input": [
+                [
+                  2,
+                  1,
+                  2,
+                  0
+                ],
+                [
+                  0,
+                  2,
+                  1,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  2,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  0,
+                  5
+                ]
+              ],
+              "eigenvalue": 2
+            }
+          }
+        ],
+        "visual": {
+          "type": "dimension-filtration",
+          "props": {
+            "dimensions": {
+              "$result": "root.nullities"
+            },
+            "ambientDimension": {
+              "$result": "root.dimension"
+            },
+            "displayLabel": "λ",
+            "displayValue": {
+              "$result": "root.eigenvalueExact"
+            },
+            "filledLabel": "核维数",
+            "remainingLabel": "秩"
+          }
+        }
+      }
     }
   ]
 }

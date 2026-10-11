@@ -38,6 +38,8 @@ export async function buildCatalog(out, { ids = null } = {}) {
   fs.mkdirSync(out, { recursive: true });
   const records = [];
   for (const design of designs) {
+    // Catalogue search metadata is not part of the figure's executable inputs.
+    const {topic,limits,keywords,...figure} = design;
     const blocks = [
       {
         id: "design-001",
@@ -58,7 +60,7 @@ export async function buildCatalog(out, { ids = null } = {}) {
       plan = {
         figures: [
           {
-            ...design,
+            ...figure,
             afterAnchor: "design-001",
             summary: design.summary ?? design.limits,
           },

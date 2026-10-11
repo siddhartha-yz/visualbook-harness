@@ -1834,6 +1834,35 @@
       ],
       "limits": "Each mark is one complex scalar; equal Re/Im units. Reflection preserves real coordinates and flips imaginary endpoints. Intermediates are a real-coordinate guide, not complex-linear/unitary transformations. Does not depict arbitrary complex-dimensional geometry.",
       "keywords": "复数 共轭 内积 酉空间 real imaginary conjugate complex Hermitian unitary"
+    },
+    {
+      "id": "dimension-filtration",
+      "title": "逐层增加的维数",
+      "props": {
+        "dimensions": "2..8 nondecreasing integer counts, one row per k starting0",
+        "ambientDimension": "Integer1..8; equal band capacity for all rows",
+        "title": "Optional short title,24 characters maximum",
+        "filledLabel": "Short label for supplied dimensions",
+        "remainingLabel": "Short label for ambientDimension minus dimension",
+        "displayLabel": "Optional short scalar identity",
+        "displayValue": "Optional supplied scalar number/string; no computation or inferred eigenvalue",
+        "color": "Known palette key"
+      },
+      "required": [
+        "dimensions",
+        "ambientDimension"
+      ],
+      "outputs": [
+        "dimensions",
+        "ambientDimension",
+        "remaining",
+        "convention"
+      ],
+      "examples": [
+        "generalized-eigen-kernels"
+      ],
+      "limits": "Dimension counts only, not actual subspace coordinates or a constructed Jordan basis. Caller must establish meanings and nestedness; colors carry supplied identity rather than proof. Minimum28px rows and12px text.",
+      "keywords": "核 维数 增量 过滤 子空间 rank nullity generalized eigen kernel filtration"
     }
   ]
 }

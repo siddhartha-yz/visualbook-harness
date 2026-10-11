@@ -28,6 +28,12 @@ const esc = (s) =>
     .replaceAll('"', "&quot;");
 const json = (filename) => JSON.parse(fs.readFileSync(filename, "utf8"));
 const hash = (bytes) => crypto.createHash("sha256").update(bytes).digest("hex");
+const figureFields = new Set([
+  'id','title','afterAnchor','endAnchor','sourceDiagramAnchor','summary',
+  'height','mobileHeight','design','overrides','stages','params','state',
+  'interaction','placement','marginSide','presentation','presets',
+  'initialProgress','durationMs','checkpoints','scene','code','designRef',
+]);
 export function resolvePlan(plan) {
   if (!Array.isArray(plan?.figures) || plan.figures.length > 4)
     throw Error("Expected zero to four figures");
@@ -36,6 +42,9 @@ export function resolvePlan(plan) {
   return {
     ...structuredClone(plan),
     figures: plan.figures.map((figure) => {
+      if(!figure || typeof figure!=='object' || Array.isArray(figure)) throw Error('Figure must be an object');
+      const unknown=Object.keys(figure).filter(key=>!figureFields.has(key));
+      if(unknown.length) throw Error('Unknown figure fields: '+unknown.join(', ')+'. Use existing scene/params/state JSON-pointer overrides for named-design data changes.');
       if (!figure.design) {
         if (figure.overrides !== undefined)
           throw Error("Overrides require a named design");

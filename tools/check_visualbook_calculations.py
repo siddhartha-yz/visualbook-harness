@@ -283,6 +283,29 @@ def check_nilpotent(data, r):
     require(r['nilpotencyIndex'] == next(k for k in range(1, n + 1) if not ranks[k]), 'nilpotency index')
 
 
+def check_generalized_kernels(data, r):
+    a, value = mat(data['input']), q(data['eigenvalue'])
+    n = len(a)
+    shifted = [[v - value if i == j else v for j, v in enumerate(row)] for i, row in enumerate(a)]
+    powers = matrix_powers(shifted, n + 1)
+    ranks = [rank(p) for p in powers]
+    nullities = [n - v for v in ranks]
+    increments = [nullities[k] - nullities[k-1] for k in range(1, n+1)]
+    counts = [increments[k] - (increments[k+1] if k+1 < n else 0) for k in range(n)]
+    sizes = [k+1 for k in reversed(range(n)) for _ in range(counts[k])]
+    require(q(r['eigenvalueExact']) == value, 'selected eigenvalue identity')
+    close(r['eigenvalue'], value, 'selected eigenvalue numeric')
+    require(exact(r['shiftedExact']) == shifted and exact(r['powersExact']) == powers, 'exact shifted powers')
+    close(r['shifted'], shifted, 'shifted drawing matrix')
+    close(r['powers'], powers, 'shifted drawing powers')
+    require(r['dimension'] == n and r['ranks'] == ranks and r['nullities'] == nullities, 'generalized ranks/nullities')
+    require(nullities[n] == nullities[n+1] and r['atLeast'] == increments and r['blockCounts'] == counts and r['blockSizes'] == sizes, 'selected-root block counts')
+    require(sum(sizes) == nullities[n] and r['rootSpaceDimension'] == nullities[n] and r['complementDimension'] == ranks[n], 'root/complement dimensions')
+    require(r['eigenspaceDimension'] == nullities[1] and r['hasEigenvalue'] is (nullities[1] > 0), 'eigenvalue presence')
+    require(r['maxBlockSize'] == max(sizes, default=0) and r['stabilizationPower'] == next(k for k in range(n+1) if nullities[k] == nullities[k+1]), 'kernel stabilization')
+    require(r['wholeShiftNilpotent'] is (ranks[n] == 0), 'whole-space nilpotence is separate')
+
+
 def check_bilinear(data, r):
     a, b = mat(data['input']), mat(data['basis']); c = multiply(multiply(transpose(b), a), b)
     require(det(b) != 0 and exact(r['transformedExact']) == c and r['rank'] == rank(a) and r['transformedRank'] == rank(c), 'congruence')
@@ -457,6 +480,7 @@ def check_complex_operator(data, r):
 
 CHECKS = {'exact-row-reduction': check_rows, 'change-basis': check_change, 'polynomial-divide': check_divide,
           'polynomial-gcd': check_gcd, 'residue-table': check_residue, 'nilpotent-profile': check_nilpotent,
+          'generalized-kernel-profile': check_generalized_kernels,
           'bilinear-congruence': check_bilinear, 'determinant-expansion': check_expansion, 'dual-basis': check_dual,
           'symmetric-inertia': check_inertia, 'orthogonalize': check_orthogonal, 'matrix-polynomial': check_matrix_polynomial,
           'minimal-polynomial': check_minimal, 'complex-inner-product': check_complex_inner, 'complex-operator': check_complex_operator}

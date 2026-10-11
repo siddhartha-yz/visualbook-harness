@@ -111,6 +111,10 @@ custom draw(input)收到svg,width,height,progress,params,state,controls,board。
 矩阵多项式可用 `matrix-polynomial`（方阵 `input`、升幂 `coefficients`，可选离散 `selectedPower` 或单独的 `vector`），常数项严格乘单位矩阵。`minimal-polynomial` 从固定有理方阵的首次幂依赖计算首一最小多项式，并返回特征多项式系数、次数与精确零矩阵核验；它不求根或构造约当基。先确认数域、维数、基与系数顺序，不能把 `vectorValue=0` 当成整个矩阵 `value=0`。可复用 `matrix-polynomial-cancellation` / `minimal-versus-characteristic`，系数条与矩阵图可接到同一计算结果。
 
 
-计算检查记录实际重绘的已解析输入与输出，包括compose、compute和原生代数调用；15项精确运算用另一份Python Fraction证书复核。错误阻止导出，未支持运算单列未验证。不能替代图与原文一致性检查。相同输入按图缓存最多16项，改变输入重新计算；不要依赖修改返回对象影响后续计算。
+计算检查记录实际重绘的已解析输入与输出，包括compose、compute和原生代数调用；16项精确运算用另一份Python Fraction证书复核。错误阻止导出，未支持运算单列未验证。不能替代图与原文一致性检查。相同输入按图缓存最多16项，改变输入重新计算；不要依赖修改返回对象影响后续计算。
 
 共享源文导入检查数学片段中疑似漏反斜杠的quad/qquad；可编译不等于排版正确。发现时保存原件并显式修订，不静默替换。
+
+`generalized-kernel-profile`接受有理矩阵input与明确给出的有理eigenvalue，计算(A−λI)各次幂的核、秩与该特征值的块大小。它不搜索根，不要求其余根在Q中分裂，也不构造约当基；其他分量可能使秩保持非零。`generalized-eigen-kernels`把nullities接到通用dimension-filtration：等长条带是维数容量，蓝色表示核维数，灰色表示秩；不是实际基向量图。无该特征值时返回空块与零核维数。
+
+命名设计的数据替换使用describe_design_inputs返回的既有JSON路径与overrides。figures里的未知字段会被拒绝；不要写inputs/data让编译器默默使用默认数据。实际绘图证书核对的是已解析输入，不替你证明它就是原文想说明的例子。

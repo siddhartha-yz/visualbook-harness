@@ -173,6 +173,29 @@
     return { input: numeric(a), powers, ranks, nullities, atLeast, blockCounts, blockSizes, nilpotencyIndex: ranks.findIndex((rank, i) => i > 0 && rank === 0),
       convention: "Exact nilpotent profile over Q. dim ker N^k increments count blocks of size>=k; second differences count exact sizes. Does not construct a Jordan basis or assert arbitrary matrices are nilpotent." };
   }
+  function generalizedKernelProfile({ input, eigenvalue } = {}) {
+    const a = matrix(input), n = a.length, lambda = rational(eigenvalue);
+    if (a[0].length !== n) throw Error('Square matrix required for generalized kernels');
+    const shifted = a.map((row,i)=>row.map((v,j)=>i===j?sub(v,lambda):v));
+    let power = identity(n);
+    const powers = [copy(power)], ranks = [n], nullities = [0];
+    for(let k=1;k<=n+1;k++) {
+      power = product(power,shifted); powers.push(copy(power));
+      const rank = reduce(power).pivots.length;
+      ranks.push(rank); nullities.push(n-rank);
+    }
+    const atLeast = Array.from({length:n},(_,i)=>nullities[i+1]-nullities[i]);
+    const blockCounts = atLeast.map((count,i)=>count-(atLeast[i+1]??0));
+    if(blockCounts.some(v=>v<0) || nullities[n]!==nullities[n+1]) throw Error('Generalized kernel stabilization failed');
+    const blockSizes = blockCounts.flatMap((count,i)=>Array(count).fill(i+1)).reverse();
+    return {input:numeric(a),inputExact:exact(a),eigenvalue:number(lambda),eigenvalueExact:literal(lambda),
+      shifted:numeric(shifted),shiftedExact:exact(shifted),powers:powers.map(numeric),powersExact:powers.map(exact),
+      dimension:n,ranks,nullities,atLeast,blockCounts,blockSizes,
+      hasEigenvalue:nullities[1]>0,eigenspaceDimension:nullities[1],rootSpaceDimension:nullities[n],
+      complementDimension:ranks[n],maxBlockSize:blockSizes[0]??0,
+      stabilizationPower:nullities.findIndex((v,i)=>i<=n&&v===nullities[i+1]),wholeShiftNilpotent:ranks[n]===0,
+      convention:'Exact rational A and supplied rational lambda, not root finding. dim ker(A-lambda I)^k stabilizes by dimension n. Increments count lambda-blocks of size at least k; second differences count exact sizes. Other primary components can keep nonzero rank. Only the selected rational eigenvalue component is described; no complete Jordan form, eigenbasis, constructed chains or splitting claim for other roots.'};
+  }
   function evaluateMatrixPolynomial(a, coefficients) {
     let power = identity(a.length), total = a.map(row => row.map(Z));
     const powers = [], terms = [], partials = [];
@@ -381,10 +404,10 @@
       unitary,hermitian,normal,unitaryIndicator:unitary?1:0,hermitianIndicator:hermitian?1:0,normalIndicator:normal?1:0,
       convention:'Exact square complex matrix over Q(i). Adjoint means conjugate transpose, never plain transpose. Unitary is A* A=A A*=I; Hermitian is A=A*; normal is A* A=A A*. Flags are exact for supplied finite data; no eigenvector/spectral theorem, arbitrary-field or approximate-tolerance claim.'};
   }
-  const api = { rowReduction, changeBasis, polynomialDivide, polynomialGcd, modularTable, jordanProfile, matrixPolynomial, minimalPolynomial, bilinearChange, determinantExpansion, dualBasis, symmetricInertia, coefficientLiterals, orthogonalize, complexInnerProduct, complexOperator };
+  const api = { rowReduction, changeBasis, polynomialDivide, polynomialGcd, modularTable, jordanProfile, generalizedKernelProfile, matrixPolynomial, minimalPolynomial, bilinearChange, determinantExpansion, dualBasis, symmetricInertia, coefficientLiterals, orthogonalize, complexInnerProduct, complexOperator };
   // Native components also call this kernel directly. Record their resolved
   // finite data during a synchronous runtime frame, without changing returns.
-  const recordedOperations = {rowReduction:'exact-row-reduction',changeBasis:'change-basis',polynomialDivide:'polynomial-divide',polynomialGcd:'polynomial-gcd',modularTable:'residue-table',jordanProfile:'nilpotent-profile',matrixPolynomial:'matrix-polynomial',minimalPolynomial:'minimal-polynomial',bilinearChange:'bilinear-congruence',determinantExpansion:'determinant-expansion',dualBasis:'dual-basis',symmetricInertia:'symmetric-inertia',orthogonalize:'orthogonalize',complexInnerProduct:'complex-inner-product',complexOperator:'complex-operator'};
+  const recordedOperations = {rowReduction:'exact-row-reduction',changeBasis:'change-basis',polynomialDivide:'polynomial-divide',polynomialGcd:'polynomial-gcd',modularTable:'residue-table',jordanProfile:'nilpotent-profile',generalizedKernelProfile:'generalized-kernel-profile',matrixPolynomial:'matrix-polynomial',minimalPolynomial:'minimal-polynomial',bilinearChange:'bilinear-congruence',determinantExpansion:'determinant-expansion',dualBasis:'dual-basis',symmetricInertia:'symmetric-inertia',orthogonalize:'orthogonalize',complexInnerProduct:'complex-inner-product',complexOperator:'complex-operator'};
   for (const [name,operation] of Object.entries(recordedOperations)) {
     const original=api[name];
     api[name]=function(input) {

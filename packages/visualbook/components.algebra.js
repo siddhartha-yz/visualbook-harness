@@ -119,6 +119,30 @@
     return {...facts,selectedPower,selectedRank:facts.ranks[selectedPower],selectedNullity:facts.nullities[selectedPower],convention:'Canonical chain-size illustration inferred from exact nullities. e labels are illustrative Jordan coordinates; this tool has not constructed a Jordan basis for the supplied matrix.'};
   }
   function superscript(n) {return String(n).replace(/\d/g,c=>'⁰¹²³⁴⁵⁶⁷⁸⁹'[Number(c)]);}
+  function dimensionFiltration(board,{dimensions,ambientDimension,title='',filledLabel='已占维数',remainingLabel='剩余维数',displayLabel='',displayValue=null,color='blue'}={}) {
+    if(!Number.isInteger(ambientDimension)||ambientDimension<1||ambientDimension>8||!Array.isArray(dimensions)||dimensions.length<2||dimensions.length>8||dimensions.some((v,i)=>!Number.isInteger(v)||v<0||v>ambientDimension||(i>0&&v<dimensions[i-1]))) throw Error('Use2..8 nondecreasing integer dimensions within an ambient dimension1..8');
+    short(title,24);short(filledLabel,8);short(remainingLabel,8);short(displayLabel,8);
+    if(!Object.hasOwn(P,color)||displayValue!==null&&(typeof displayValue!=='string'&&typeof displayValue!=='number'||typeof displayValue==='number'&&!Number.isFinite(displayValue))) throw Error('Known color and optional finite scalar display value required');
+    const tag=displayValue===null?'':displayLabel+' = '+String(displayValue);short(tag,24);
+    const left=46,right=board.width-63,top=title||tag?47:24,bottom=board.height-38,rh=(bottom-top)/dimensions.length;
+    if(right-left<130||rh<28||(title&&V.measure(title,14)+(tag?V.measure(tag,13)+30:0)>board.width-24)) throw Error('Dimension bands need130px width,28px rows and readable header labels');
+    if(title)board.text('title',title,12,18,{size:14,halo:false});
+    if(tag)board.text('selected-value',tag,board.width-12,18,{size:13,anchor:'end',color:P.muted,halo:false});
+    dimensions.forEach((d,k)=>{
+      const y=top+(k+.5)*rh,barHeight=Math.min(22,rh-9),w=right-left;
+      board.text('power-'+k,'k='+k,left-9,y+4,{size:12,anchor:'end',color:P.muted,halo:false});
+      board.rect('capacity-'+k,left,y-barHeight/2,w,barHeight,P.faint,{opacity:.55,rx:3});
+      if(d)board.rect('dimension-'+k,left,y-barHeight/2,w*d/ambientDimension,barHeight,P[color],{opacity:.72,rx:3});
+      for(let j=1;j<ambientDimension;j++)board.line(`unit-${k}-${j}`,left+w*j/ambientDimension,y-barHeight/2,left+w*j/ambientDimension,y+barHeight/2,P.paper,1,.7);
+      board.text('dimension-value-'+k,String(d),right+12,y+4,{size:13,color:P[color],halo:false});
+      board.text('remaining-value-'+k,String(ambientDimension-d),right+39,y+4,{size:13,color:P.muted,halo:false});
+    });
+    const y=board.height-12,second=24+V.measure(filledLabel,12)+35;
+    if(second+V.measure(remainingLabel,12)+16>board.width-12)throw Error('Dimension legend needs more width');
+    board.rect('legend-filled',12,y-9,10,10,P[color],{opacity:.72,rx:2});board.text('legend-filled-label',filledLabel,27,y,{size:12,color:P[color],halo:false});
+    board.rect('legend-empty',second,y-9,10,10,P.faint,{opacity:.7,rx:2});board.text('legend-empty-label',remainingLabel,second+15,y,{size:12,color:P.muted,halo:false});
+    return {dimensions,ambientDimension,remaining:dimensions.map(d=>ambientDimension-d),convention:'Dimension-only nested bands. Equal slots represent counts, not constructed basis vectors, coordinates, angles or an independently verified subspace chain. The caller supplies actual mathematical dimensions and their meanings.'};
+  }
   function coefficientStrip(board,{coefficients,title='',color='blue'}={}) {
     if(!Array.isArray(coefficients)||coefficients.length<1||coefficients.length>13||!Object.hasOwn(P,color))throw Error('Use 1..13 exact coefficients and a palette color');short(title);
     const n=coefficients.length,available=board.width-24,columns=Math.min(n,Math.floor(available/54)),rows=Math.ceil(n/columns),top=title?34:12,rh=(board.height-top-8)/rows,cw=available/columns;
@@ -173,5 +197,5 @@
     });
     return {points,transformed,reflect,progress,convention:'Each labelled point is one complex scalar component on the real/imaginary plane. Reflection endpoint is conjugation; intermediate points are a continuous real-coordinate illustration, not complex-linear or unitary operators. Equal units on both axes; no representation of C^n as an intrinsic real2D space.'};
   }
-  Object.assign(V.components,{'exact-matrix':exactMatrix,'basis-frame':basisFrame,'residue-grid':residueGrid,'jordan-chains':jordanChains,'coefficient-strip':coefficientStrip,'quotient-plane':quotientPlane,'complex-plane':complexPlane});
+  Object.assign(V.components,{'exact-matrix':exactMatrix,'basis-frame':basisFrame,'residue-grid':residueGrid,'jordan-chains':jordanChains,'dimension-filtration':dimensionFiltration,'coefficient-strip':coefficientStrip,'quotient-plane':quotientPlane,'complex-plane':complexPlane});
 })(window);

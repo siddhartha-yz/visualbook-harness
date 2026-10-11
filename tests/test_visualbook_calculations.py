@@ -48,6 +48,30 @@ class RecordedCalculationTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'value'):
             module.numeric_pairs({'value': [[2]], 'valueExact': [['1/2']]})
 
+    def test_root_component_is_not_the_whole_space_and_changes_cannot_hide(self):
+        # Directional synthetic diagonal fixture: only one of two dimensions
+        # belongs to lambda2; the other contributes rank1 at every positive power.
+        result = {'input': [[2, 0], [0, 5]], 'inputExact': [['2', '0'], ['0', '5']],
+                  'eigenvalue': 2, 'eigenvalueExact': '2', 'dimension': 2,
+                  'shifted': [[0, 0], [0, 3]], 'shiftedExact': [['0', '0'], ['0', '3']],
+                  'powers': [[[1, 0], [0, 1]], [[0, 0], [0, 3]], [[0, 0], [0, 9]], [[0, 0], [0, 27]]],
+                  'powersExact': [[['1', '0'], ['0', '1']], [['0', '0'], ['0', '3']], [['0', '0'], ['0', '9']], [['0', '0'], ['0', '27']]],
+                  'ranks': [2, 1, 1, 1], 'nullities': [0, 1, 1, 1],
+                  'atLeast': [1, 0], 'blockCounts': [1, 0], 'blockSizes': [1],
+                  'hasEigenvalue': True, 'eigenspaceDimension': 1, 'rootSpaceDimension': 1,
+                  'complementDimension': 1, 'maxBlockSize': 1, 'stabilizationPower': 1,
+                  'wholeShiftNilpotent': False}
+        document = {'states': [{'id': 'synthetic-root', 'calculationTraceVersion': 2,
+                    'calculations': [{'id': 'c', 'operation': 'generalized-kernel-profile',
+                    'inputs': {'input': [[2, 0], [0, 5]], 'eigenvalue': 2}, 'result': result}]}]}
+        self.assertEqual(module.audit(document)['counts']['verifiedCalculations'], 1)
+        for key, value in [('wholeShiftNilpotent', True), ('blockSizes', [2]), ('eigenvalueExact', '5')]:
+            bad = copy.deepcopy(document)
+            bad['states'][0]['calculations'][0]['result'][key] = value
+            audit = module.audit(bad)
+            self.assertEqual(audit['status'], 'failed', key)
+            self.assertEqual(audit['counts']['verifiedCalculations'], 0, key)
+
 
 if __name__ == '__main__':
     unittest.main()

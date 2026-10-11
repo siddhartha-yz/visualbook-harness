@@ -30,6 +30,26 @@ test('Polynomial division and Bezout use ascending exact coefficients',()=>{
 test('Nilpotent zero matrix has one size-one block per dimension',()=>{
  const r=A.jordanProfile({input:[[0,0],[0,0]]});assert.deepEqual(r.blockSizes,[1,1]);assert.deepEqual(r.ranks,[2,0,0]);assert.equal(r.nilpotencyIndex,1);
 });
+test('Selected-root kernels retain the rank of other eigenvalue components',()=>{
+ const input=[[2,1,2,0],[0,2,1,0],[0,0,2,0],[0,0,0,5]];
+ const a=C.compute('generalized-kernel-profile',{input,eigenvalue:2}).result;
+ assert.deepEqual(a.ranks,[4,3,2,1,1,1]);assert.deepEqual(a.nullities,[0,1,2,3,3,3]);
+ assert.deepEqual(a.blockSizes,[3]);assert.equal(a.rootSpaceDimension,3);assert.equal(a.complementDimension,1);
+ assert.equal(a.stabilizationPower,3);assert.equal(a.wholeShiftNilpotent,false);
+ const b=A.generalizedKernelProfile({input,eigenvalue:5});assert.deepEqual(b.blockSizes,[1]);assert.equal(b.eigenspaceDimension,1);
+ assert.throws(()=>A.jordanProfile({input:input.map((row,i)=>row.map((x,j)=>i===j?x-2:x))}),/not nilpotent/);
+});
+test('Generalized kernel profiles handle absent roots, rational scalars and unsplit other factors',()=>{
+ const empty=A.generalizedKernelProfile({input:[[0,-1],[1,0]],eigenvalue:0});
+ assert.equal(empty.hasEigenvalue,false);assert.deepEqual(empty.blockSizes,[]);assert.equal(empty.stabilizationPower,0);
+ const r=A.generalizedKernelProfile({input:[['1/2',1,0],[0,'1/2',0],[0,0,'3/2']],eigenvalue:'1/2'});
+ assert.equal(r.eigenvalueExact,'1/2');assert.deepEqual(r.blockSizes,[2]);assert.equal(r.wholeShiftNilpotent,false);
+ const mixed=A.generalizedKernelProfile({input:[[2,0,0],[0,0,-1],[0,1,0]],eigenvalue:2});
+ assert.deepEqual(mixed.blockSizes,[1]);assert.equal(mixed.complementDimension,2);
+ assert.throws(()=>C.compute('generalized-kernel-profile',{input:[[1]],eigenvalue:'1/0'}),/denominator/);
+ assert.throws(()=>C.compute('generalized-kernel-profile',{input:[[1,2]],eigenvalue:1}),/Square/);
+ assert.throws(()=>C.compute('generalized-kernel-profile',{input:[[1]]}),/eigenvalue/);
+});
 test('Congruence preserves the actual quadratic value and the field half-factor',()=>{
  const r=A.bilinearChange({input:[[2,1],[1,3]],basis:[[1,1],[0,1]],point:[2,3]});
  assert.deepEqual(r.transformedExact,[['2','3'],['3','7']]);assert.equal(r.values.oldValueExact,'107');assert.equal(r.values.newValueExact,'107');
