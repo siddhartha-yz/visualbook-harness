@@ -94,5 +94,23 @@ test('Conjugate transpose differs from transpose for unitary complex phases',()=
  assert.deepEqual(r.adjointProduct.real,[[1,0],[0,1]]);assert.deepEqual(r.transposeProduct.real,[[-1,0],[0,1]]);
  assert.deepEqual(r.adjoint.imaginary,[[-1,0],[0,0]]);
  const h=A.complexOperator({input:[[1,{re:0,im:1}],[{re:0,im:-1},2]]});assert.equal(h.hermitian,true);assert.equal(h.unitary,false);
- assert.equal(A.complexOperator({input:[[0,1],[0,0]]}).normal,false);
+  assert.equal(A.complexOperator({input:[[0,1],[0,0]]}).normal,false);
+});
+test('Matrix polynomial constants multiply the identity and vector annihilation is separate',()=>{
+ const r=A.matrixPolynomial({input:[[0,0],[0,1]],coefficients:[0,1],vector:[1,0]});
+ assert.equal(r.isZero,false);assert.deepEqual(r.vectorValueExact,['0','0']);
+ assert.deepEqual(A.matrixPolynomial({input:[[2,1],[0,2]],coefficients:[3]}).valueExact,[['3','0'],['0','3']]);
+ const z=A.matrixPolynomial({input:[[2,1],[0,2]],coefficients:[0,0],selectedPower:12});
+ assert.equal(z.degree,null);assert.equal(z.selectionClamped,true);assert.equal(z.isZero,true);
+ assert.throws(()=>A.matrixPolynomial({input:[[1,2]],coefficients:[1]}),/Square/);
+});
+test('Minimal polynomial distinguishes a repeated scalar from a Jordan block',()=>{
+ const scalar=A.minimalPolynomial({input:[[2,0],[0,2]]});
+ assert.deepEqual(scalar.coefficientsExact,['-2','1']);assert.deepEqual(scalar.characteristicCoefficientsExact,['4','-4','1']);
+ const jordan=A.minimalPolynomial({input:[[2,1],[0,2]]});
+ assert.deepEqual(jordan.coefficientsExact,['4','-4','1']);assert.deepEqual(jordan.ranks,[1,2,2]);
+ assert.deepEqual(jordan.valueExact,[['0','0'],['0','0']]);
+ const rotation=A.minimalPolynomial({input:[[0,-1],[1,0]]});
+ assert.deepEqual(rotation.coefficientsExact,['1','0','1']);
+ assert.deepEqual(A.minimalPolynomial({input:[[0]]}).coefficientsExact,['0','1']);
 });

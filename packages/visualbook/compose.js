@@ -330,11 +330,9 @@
             throw Error(
               "Unique calculation id required within scene size limit",
             );
-          current.results[calculation.id] =
-            global.VisualBookCalculations.compute(
-              calculation.operation,
-              resolve(calculation.inputs, current),
-            ).result;
+          const inputs = resolve(calculation.inputs, current);
+          const result = global.VisualBookCalculations.compute(calculation.operation, inputs, {id:calculation.id}).result;
+          current.results[calculation.id] = result;
         }
         return visit(b, node.visual, depth + 1);
       }

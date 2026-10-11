@@ -173,6 +173,66 @@
     return { input: numeric(a), powers, ranks, nullities, atLeast, blockCounts, blockSizes, nilpotencyIndex: ranks.findIndex((rank, i) => i > 0 && rank === 0),
       convention: "Exact nilpotent profile over Q. dim ker N^k increments count blocks of size>=k; second differences count exact sizes. Does not construct a Jordan basis or assert arbitrary matrices are nilpotent." };
   }
+  function evaluateMatrixPolynomial(a, coefficients) {
+    let power = identity(a.length), total = a.map(row => row.map(Z));
+    const powers = [], terms = [], partials = [];
+    coefficients.forEach((coefficient, index) => {
+      if (index) power = product(power, a);
+      const term = power.map(row => row.map(v => mul(v, coefficient)));
+      total = total.map((row, i) => row.map((v, j) => add(v, term[i][j])));
+      powers.push(copy(power)); terms.push(term); partials.push(copy(total));
+    });
+    return { powers, terms, partials, total };
+  }
+  function matrixPolynomial({ input, coefficients, selectedPower, vector } = {}) {
+    const a = matrix(input), p = polynomial(coefficients), n = a.length;
+    if (a[0].length !== n) throw Error('Square matrix polynomial input required');
+    const r = evaluateMatrixPolynomial(a, p), last = p.length - 1;
+    const requested = selectedPower ?? last;
+    if (!Number.isInteger(requested) || requested < 0 || requested > 12) throw Error('Selected polynomial power must be integer0..12');
+    const index = Math.min(requested, last);
+    let vectorValue = null, vectorValueExact = null;
+    if (vector !== undefined) {
+      if (!Array.isArray(vector) || vector.length !== n) throw Error('Polynomial vector dimension mismatch');
+      const v = product(r.total, vector.map(x => [rational(x)]));
+      vectorValue = numeric(v).map(row => row[0]); vectorValueExact = exact(v).map(row => row[0]);
+    }
+    const isZero = r.total.every(row => row.every(v => v.n === 0n));
+    return { input:numeric(a), inputExact:exact(a), coefficients:p.map(number), coefficientsExact:p.map(literal),
+      degree:zeroPoly(p) ? null : last, lastPower:last, selectedPower:index, selectionClamped:index !== requested,
+      powers:r.powers.map(numeric), powersExact:r.powers.map(exact), terms:r.terms.map(numeric), termsExact:r.terms.map(exact),
+      partials:r.partials.map(numeric), partialsExact:r.partials.map(exact), currentTerm:numeric(r.terms[index]), currentTermExact:exact(r.terms[index]),
+      current:numeric(r.partials[index]), currentExact:exact(r.partials[index]), value:numeric(r.total), valueExact:exact(r.total), isZero, vectorValue, vectorValueExact,
+      convention:'Exact rational p(A)=sum c_k A^k with ascending coefficients; constant term is c_0 I, never scalar addition to matrix entries. Discrete partials are terms accumulated in increasing powers. Zero polynomial degree is null; trailing zero coefficients are trimmed. A vector killed by p(A) does not imply p(A) is the zero operator.' };
+  }
+  function minimalPolynomial({ input } = {}) {
+    const a = matrix(input), n = a.length;
+    if (a[0].length !== n) throw Error('Square matrix required for minimal polynomial');
+    const powers = [identity(n)];
+    for (let k = 1; k <= n; k++) powers.push(product(powers.at(-1), a));
+    const dependence = [{power:0,rank:1,dependent:false}]; let coefficients = null;
+    for (let k = 1; k <= n; k++) {
+      const rows = a.flatMap((row, i) => row.map((_, j) => powers.slice(0,k+1).map(p => p[i][j])));
+      const reduced = reduce(rows, k);
+      const consistent = !reduced.current.some(row => row.slice(0,k).every(v => v.n === 0n) && row[k].n !== 0n);
+      if (reduced.pivots.length !== k) throw Error('Earlier matrix powers unexpectedly dependent');
+      dependence.push({power:k,rank:consistent ? k : k+1,dependent:consistent});
+      if (consistent) { coefficients = [...reduced.current.slice(0,k).map(row => neg(row[k])),O()]; break; }
+    }
+    if (!coefficients) throw Error('No bounded minimal polynomial found');
+    const descending = [O()], traces = powers.slice(1).map(p => p.reduce((sum,row,i) => add(sum,row[i]),Z()));
+    for (let k = 1; k <= n; k++) {
+      const sum = Array.from({length:k},(_,i) => mul(descending[k-i-1],traces[i])).reduce(add,Z());
+      descending.push(neg(div(sum,q(BigInt(k)))));
+    }
+    const characteristic = descending.reverse(), quotient = division(characteristic, coefficients);
+    const value = evaluateMatrixPolynomial(a, coefficients).total, characteristicValue = evaluateMatrixPolynomial(a, characteristic).total;
+    if (!zeroPoly(quotient.remainder) || value.some(row => row.some(v => v.n !== 0n)) || characteristicValue.some(row => row.some(v => v.n !== 0n))) throw Error('Exact matrix polynomial invariant failed');
+    return { input:numeric(a), inputExact:exact(a), dimension:n, degree:coefficients.length-1, coefficients:coefficients.map(number), coefficientsExact:coefficients.map(literal),
+      characteristicDegree:n, characteristicCoefficients:characteristic.map(number), characteristicCoefficientsExact:characteristic.map(literal),
+      value:numeric(value), valueExact:exact(value), characteristicValueExact:exact(characteristicValue), quotientExact:quotient.quotient.map(literal), dependence, ranks:dependence.map(x => x.rank),
+      convention:'First exact dependence of I,A,...,A^n gives the monic minimal polynomial over Q. Characteristic polynomial uses exact Newton trace identities; minimum divides it, and both evaluations are checked. No roots, eigenbasis, Jordan basis or diagonalizability claim from degree alone. Bounded rational arithmetic can reject oversized intermediates.' };
+  }
   function bilinearChange({ input, basis, point } = {}) {
     const a = matrix(input), b = matrix(basis), n = a.length;
     if (a[0].length !== n || b.length !== n || b[0].length !== n) throw Error("Bilinear/basis dimensions differ");
@@ -321,7 +381,22 @@
       unitary,hermitian,normal,unitaryIndicator:unitary?1:0,hermitianIndicator:hermitian?1:0,normalIndicator:normal?1:0,
       convention:'Exact square complex matrix over Q(i). Adjoint means conjugate transpose, never plain transpose. Unitary is A* A=A A*=I; Hermitian is A=A*; normal is A* A=A A*. Flags are exact for supplied finite data; no eigenvector/spectral theorem, arbitrary-field or approximate-tolerance claim.'};
   }
-  const api = { rowReduction, changeBasis, polynomialDivide, polynomialGcd, modularTable, jordanProfile, bilinearChange, determinantExpansion, dualBasis, symmetricInertia, coefficientLiterals, orthogonalize, complexInnerProduct, complexOperator };
+  const api = { rowReduction, changeBasis, polynomialDivide, polynomialGcd, modularTable, jordanProfile, matrixPolynomial, minimalPolynomial, bilinearChange, determinantExpansion, dualBasis, symmetricInertia, coefficientLiterals, orthogonalize, complexInnerProduct, complexOperator };
+  // Native components also call this kernel directly. Record their resolved
+  // finite data during a synchronous runtime frame, without changing returns.
+  const recordedOperations = {rowReduction:'exact-row-reduction',changeBasis:'change-basis',polynomialDivide:'polynomial-divide',polynomialGcd:'polynomial-gcd',modularTable:'residue-table',jordanProfile:'nilpotent-profile',matrixPolynomial:'matrix-polynomial',minimalPolynomial:'minimal-polynomial',bilinearChange:'bilinear-congruence',determinantExpansion:'determinant-expansion',dualBasis:'dual-basis',symmetricInertia:'symmetric-inertia',orthogonalize:'orthogonalize',complexInnerProduct:'complex-inner-product',complexOperator:'complex-operator'};
+  for (const [name,operation] of Object.entries(recordedOperations)) {
+    const original=api[name];
+    api[name]=function(input) {
+      const invoke=global.VisualBookCalculations?.invokeRecorded;
+      if(invoke)return invoke(operation,input??{},()=>original(input));
+      const recorder=global.__VisualBookCalculationRecorder;
+      const inputs=recorder?JSON.parse(JSON.stringify(input??{})):null;
+      const result=original(input);
+      if(recorder) recorder({id:null,origin:'algebra-kernel',operation,inputs,result:JSON.parse(JSON.stringify(result))});
+      return result;
+    };
+  }
   if (typeof module !== "undefined" && module.exports) module.exports = api;
   global.VisualBookAlgebra = api;
 })(typeof window !== "undefined" ? window : globalThis);

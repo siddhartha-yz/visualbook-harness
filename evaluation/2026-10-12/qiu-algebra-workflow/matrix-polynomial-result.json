@@ -1,0 +1,90 @@
+{
+  "status": "completed-bounded-tool-extension",
+  "modelCalls": 0,
+  "newOperations": [
+    "matrix-polynomial",
+    "minimal-polynomial"
+  ],
+  "numericCheck": {
+    "seed": 20261012,
+    "sympyVersion": "1.14.0",
+    "cases": 593,
+    "counts": {
+      "exact-row-reduction": 36,
+      "change-basis": 24,
+      "polynomial-divide": 48,
+      "polynomial-gcd": 48,
+      "residue-table": 22,
+      "nilpotent-profile": 15,
+      "bilinear-congruence": 12,
+      "determinant-expansion": 48,
+      "dual-basis": 24,
+      "symmetric-inertia": 84,
+      "orthogonalize": 72,
+      "complex-inner-product": 48,
+      "complex-operator": 24,
+      "matrix-polynomial": 48,
+      "minimal-polynomial": 40
+    },
+    "passed": true,
+    "elapsedSeconds": 2.038,
+    "sourceSha256": "d9e48f0e504bf3b8c4b663cd6b531a0a67c9e52a4d298151d07992f098cfdb7c",
+    "scope": "Independent exact numeric comparison, not source accuracy, rendering or artistic review"
+  },
+  "inventory": {
+    "components": 58,
+    "designs": 109,
+    "operations": 54
+  },
+  "nodeTests": {
+    "passed": 157,
+    "failed": 0
+  },
+  "render": {
+    "designs": 2,
+    "widths": [
+      375,
+      1280,
+      1920
+    ],
+    "findings": 0,
+    "exports": [
+      {
+        "id": "matrix-polynomial-cancellation",
+        "sha256": "ddf3e1cb3754e7a714ec2ef7311213b8a21e69575b16110fb73d4306c0a5d4a2"
+      },
+      {
+        "id": "minimal-versus-characteristic",
+        "sha256": "1ba8ae467786bba0ba0690e80fda0a830c47ca68f58e0c44d47f53fe9ca6ea57"
+      }
+    ]
+  },
+  "retainedFailures": [
+    {
+      "run": "matrix-polynomial-render-01",
+      "kind": "Wrong parameter schema id/initial instead ofkey/value; unknownsceneparameter power; firstdesign notrendered"
+    }
+  ],
+  "revisions": [
+    "Correct parameter schema",
+    "Usebody width forsmallmatrices toreduce excessive wide emptyarea",
+    "Improve engineering reference prose spacing",
+    "Display actual selectedpower so defaultview isunderstandable withoutopening controls"
+  ],
+  "maintainerImageReview": {
+    "reviewer": "primary maintainer AI; nohuman/teacher",
+    "samples": [
+      "final cancellation375readingcontext",
+      "final two-polynomial1280readingcontext"
+    ],
+    "scope": "Selected real pictures andexact polynomial identities; noart score orclaim ofgeneral userlearning benefit"
+  },
+  "courseProgress": {
+    "textbookAdopted": 9,
+    "coursePartsCovered": 54,
+    "totalParts": 151,
+    "selectedTextbookMathChecks": 114,
+    "sourceOnlyFormulaPreflight": 4679,
+    "visualCourseAuthorsStarted": 0
+  }
+}

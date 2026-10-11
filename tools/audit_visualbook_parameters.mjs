@@ -197,6 +197,8 @@ export async function auditParameters(file, out) {
                 return {
                   error: error ?? i.error ?? null,
                   facts: i.facts,
+                  calculations: i.calculations ?? [],
+                  calculationTraceVersion: i.calculationTraceVersion ?? 0,
                   svg: svg.outerHTML,
                   outside: nodes.filter(
                     (n) =>

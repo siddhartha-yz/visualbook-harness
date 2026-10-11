@@ -1,0 +1,275 @@
+{
+  "kind": "reusable calculation evidence, bounded cache and notation gate milestone",
+  "modelCalls": 0,
+  "runtimeTraceVersion": 2,
+  "supportedExactOperations": 15,
+  "kernelComparison": {
+    "seed": 20261012,
+    "sympyVersion": "1.14.0",
+    "cases": 593,
+    "counts": {
+      "exact-row-reduction": 36,
+      "change-basis": 24,
+      "polynomial-divide": 48,
+      "polynomial-gcd": 48,
+      "residue-table": 22,
+      "nilpotent-profile": 15,
+      "bilinear-congruence": 12,
+      "determinant-expansion": 48,
+      "dual-basis": 24,
+      "symmetric-inertia": 84,
+      "orthogonalize": 72,
+      "complex-inner-product": 48,
+      "complex-operator": 24,
+      "matrix-polynomial": 48,
+      "minimal-polynomial": 40
+    },
+    "passed": true,
+    "elapsedSeconds": 2.055,
+    "sourceSha256": "e6c5f8191c43571bc3b77c32482a3b9c0391d434e268db552d7202b51ecfbf40",
+    "scope": "Independent exact numeric comparison, not source accuracy, rendering or artistic review"
+  },
+  "actualCatalogBeforeCache": {
+    "records": 109,
+    "findings": 0,
+    "counts": {
+      "states": 4239,
+      "legacyStates": 0,
+      "recordedCalculations": 3913,
+      "uniqueCalculations": 256,
+      "verifiedCalculations": 29,
+      "unsupportedCalculations": 227,
+      "statesWithoutCalculations": 2061
+    },
+    "unsupportedOperations": {
+      "dense": 35,
+      "squared-loss": 3,
+      "dense-backward": 6,
+      "broadcast": 3,
+      "normalization": 7,
+      "transpose": 15,
+      "sample-grid": 3,
+      "polynomial-fit": 5,
+      "optimizer-trace": 41,
+      "softmax": 7,
+      "softmax-loss": 10,
+      "gradient-step": 7,
+      "tensor-reindex": 16,
+      "rotary-pairs": 13,
+      "roofline": 14,
+      "cache-footprint": 17,
+      "collective": 8,
+      "top-k-route": 4,
+      "matmul-traffic": 4,
+      "decode-attention-traffic": 3,
+      "matmul-batch-sweep": 6
+    },
+    "frameRecordOrigins": {
+      "compose": 915,
+      "compute": 195,
+      "algebra-kernel": 165
+    },
+    "frameRecordOperations": {
+      "dense": 90,
+      "squared-loss": 15,
+      "dense-backward": 30,
+      "broadcast": 15,
+      "normalization": 15,
+      "transpose": 60,
+      "sample-grid": 45,
+      "polynomial-fit": 15,
+      "optimizer-trace": 75,
+      "softmax": 15,
+      "softmax-loss": 30,
+      "gradient-step": 15,
+      "tensor-reindex": 15,
+      "rotary-pairs": 60,
+      "roofline": 45,
+      "cache-footprint": 135,
+      "collective": 75,
+      "top-k-route": 45,
+      "matmul-traffic": 15,
+      "decode-attention-traffic": 45,
+      "matmul-batch-sweep": 15,
+      "exact-row-reduction": 30,
+      "change-basis": 75,
+      "residue-table": 60,
+      "nilpotent-profile": 45,
+      "polynomial-divide": 30,
+      "polynomial-gcd": 15,
+      "determinant-expansion": 15,
+      "dual-basis": 15,
+      "bilinear-congruence": 15,
+      "symmetric-inertia": 15,
+      "orthogonalize": 30,
+      "complex-inner-product": 15,
+      "complex-operator": 15,
+      "matrix-polynomial": 15,
+      "minimal-polynomial": 15
+    },
+    "scope": "Actual uncached unified-trace109design catalog, not generated course book or artistic/human evaluation"
+  },
+  "actualTargetedCatalogAfterCache": {
+    "designs": 7,
+    "widths": [
+      375,
+      768,
+      1280
+    ],
+    "findings": 0,
+    "counts": {
+      "states": 171,
+      "legacyStates": 0,
+      "recordedCalculations": 192,
+      "uniqueCalculations": 10,
+      "verifiedCalculations": 10,
+      "unsupportedCalculations": 0,
+      "statesWithoutCalculations": 21
+    }
+  },
+  "directionalControl": {
+    "kind": "synthetic injected calculation defect, real browser and real export gate",
+    "modelCalls": 0,
+    "fault": "Only prime-residue isField flag changed to false; table remains correct",
+    "rejected": true,
+    "exportBlocked": true,
+    "calculationFindings": [
+      {
+        "id": "residue-field",
+        "width": 1280,
+        "progress": 1,
+        "kind": "calculation-evidence",
+        "problem": "calculation-certificate",
+        "calculation": null,
+        "operation": "residue-table",
+        "error": "residue classification"
+      }
+    ],
+    "scope": "Directional gate validation; not a generated course chapter, teacher review or artistic evaluation."
+  },
+  "cacheMeasurement": {
+    "kind": "real fixed numerical-call measurement, not browser FPS",
+    "modelCalls": 0,
+    "input": {
+      "input": [
+        [
+          "-2",
+          "1/2",
+          "0",
+          "-5/3",
+          "-1/3",
+          "-5"
+        ],
+        [
+          "-3",
+          "1",
+          "2/3",
+          "1",
+          "2/3",
+          "3"
+        ],
+        [
+          "1",
+          "1/2",
+          "-1",
+          "-1/3",
+          "4",
+          "-4/3"
+        ],
+        [
+          "-2",
+          "2/3",
+          "-2",
+          "3/2",
+          "-1/3",
+          "-5/2"
+        ],
+        [
+          "-3",
+          "-5/3",
+          "-1",
+          "-1",
+          "-2",
+          "-5"
+        ],
+        [
+          "-1",
+          "1",
+          "0",
+          "3",
+          "-1/3",
+          "2"
+        ]
+      ]
+    },
+    "initialMilliseconds": 58.60570799999999,
+    "cacheInitialHit": false,
+    "records": [
+      {
+        "label": "cold compute with trace, no cache",
+        "repeats": 5,
+        "millisecondsPerCall": 77.9869818
+      },
+      {
+        "label": "warm compute with trace and per-figure cache",
+        "repeats": 300,
+        "millisecondsPerCall": 0.04561377666666677
+      },
+      {
+        "label": "warm direct algebra with same per-figure cache",
+        "repeats": 300,
+        "millisecondsPerCall": 0.03315472333333332
+      }
+    ],
+    "scope": "One selected6x6 rational example, actual cold computation and cloned warm cache results. No DOM/render/export/user-study performance claim."
+  },
+  "notationControl": {
+    "originalFormulaPreflightPassedDespiteDefect": true,
+    "missingBackslashes": 9,
+    "explicitlyRevisedLines": 8,
+    "actualImportRejectsOriginal": true,
+    "actualImportAcceptsRevision": true,
+    "automaticRewriting": false
+  },
+  "tests": {
+    "nodePassed": 163,
+    "pythonPassed": 107,
+    "failed": 0
+  },
+  "rootViewedFrames": [
+    "row-reduction375",
+    "minimal-versus-characteristic1280"
+  ],
+  "preservedFailures": [
+    "Compose-only trace missed isField defect in native component. Unified trace catches same defect and blocks actual export.",
+    "Initial independent checker rejected24/593 change-basis cases due Fraction input handling; repaired checker passed593.",
+    "Initial unified catalog run stopped after31/109 records, next separate run completed109.",
+    "Syntax-valid bareqquad passed initial compiler/preflight; lexical gate added after actual chapter defect."
+  ],
+  "evidenceHashes": {
+    "calculation-catalog-summary-01.json": "b9589102c793d853552934577d4dcfe39667ce3e7f22ab53b86239501f92073f",
+    "calculation-negative-01.log": "12b803954d180b1e36f95030bb739219c18e1ac1f573562ec31c4ccf7c2bfcc0",
+    "calculation-negative-02/result.json": "1f65f5c3c21588a8ecf44feeb2d290acdd64dea8847a63598dfbc22d80e8b450",
+    "calculation-cache-performance-01.json": "f6b2c8ecb743f3242fb2d311380f562365e85fbbddd301a4893809fe63f3473d",
+    "calculation-cache-render-01/catalog-record.json": "594475de3ee8ed8f702b45369e7d9b5e068b001e1b9f91765bf07227f7c68e6f",
+    "algebra-check-07/result.json": "42d480b4ae9d67490c36f742b3cd3b2295706fa67773f17a7c6cd08aa4d5391c",
+    "node-tests-08.log": "a9a46d4c5473ab766dccb77e1ebacc7984a114a97a5209dfec9db2274181f5df",
+    "python-tests-07.log": "c3d78223d234600afbda5703ae9d98fd37b8ccc6190a43ce3f8909b0b6c5d839",
+    "notation-original-01.json": "c8386028f555dd7003a779dcc85fd324a9f259659996bfc7b7caf36d024a23b4",
+    "notation-revised-01.json": "4a16fc78df051f407bad4393c8468edda59ba7d87a3245547f60813d76b76089"
+  },
+  "toolHashes": {
+    "packages/visualbook/algebra.cjs": "e6c5f8191c43571bc3b77c32482a3b9c0391d434e268db552d7202b51ecfbf40",
+    "packages/visualbook/calculations.cjs": "9256780e85b85802dca015f982f8065d1e1f9d6540e50da4fd62c08f296d2afe",
+    "packages/visualbook/runtime.js": "e43fab834ff4ac1773619f4780cd289fec945f8b37a0f5d1ec9eb4ff550fcfb7",
+    "tools/check_visualbook_calculations.py": "ecbc6a9976a78c4b6a5bdb08600f28a699c9fac83b9f51cda6e972cc93b37385",
+    "packages/visualbook/notation.mjs": "2c3e279e7114bd5e3efc05bd8db2be51ec467cf8f1cc9e2d0091dc4bc2698a88"
+  },
+  "limits": [
+    "Only29 distinct supported calculations verified in109-design catalog;227 unsupported calculations remain explicitly unverified.",
+    "593 kernel controls separate from actual rendered denominators.",
+    "Custom code, unsupported calculations, source matching, prose proofs, art and human learning not certified by trace checks.",
+    "Cache timing one6x6 numerical example, not browser FPS/export.",
+    "This is a tool milestone; full course visualbook not yet generated."
+  ]
+}

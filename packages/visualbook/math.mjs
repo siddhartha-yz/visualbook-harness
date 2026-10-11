@@ -1,4 +1,5 @@
 // Preserve source/anchor hashes; repair only the tree used for HTML rendering.
+import {bareSpacingCommands} from './notation.mjs';
 export function renderingMath(node, report = {}) {
   const copy = structuredClone(node);
   if (
@@ -18,6 +19,8 @@ export function renderingMath(node, report = {}) {
   function visit(n) {
     if (n.type === "math" || n.type === "inlineMath") {
       let value = n.value;
+      const notation = bareSpacingCommands(value);
+      if(notation.length) throw Error(`Possible missing TeX backslash at math line ${n.position?.start?.line??'?'}: ${notation.map(x=>x.command).join(', ')}. Review source explicitly; no automatic formula rewrite.`);
       if (
         n.type === "math" &&
         value.includes("\\\\") &&

@@ -9249,6 +9249,178 @@
           ]
         }
       }
+    },
+    {
+      "id": "matrix-polynomial-cancellation",
+      "title": "矩阵也能代入多项式",
+      "topic": "数学 / 高等代数",
+      "limits": "Exact rational evaluation with ascending coefficients. Default p(x)=(x-2)^2 and a 2 by 2 Jordan matrix. Only the complete sum evaluates p(A); intermediate partial sums are separate steps.",
+      "keywords": "最小多项式 矩阵多项式 零化多项式 polynomial annihilator Cayley Hamilton",
+      "height": 320,
+      "mobileHeight": 530,
+      "interaction": "parameters",
+      "presentation": "reading",
+      "placement": "body",
+      "initialProgress": 1,
+      "summary": "逐项相加得到矩阵多项式的值；常数项乘单位矩阵。",
+      "params": [
+        {
+          "key": "power",
+          "label": "加到几次幂",
+          "min": 0,
+          "max": 2,
+          "step": 1,
+          "value": 2,
+          "kind": "stepper"
+        }
+      ],
+      "scene": {
+        "type": "compose",
+        "calculations": [
+          {
+            "id": "poly",
+            "operation": "matrix-polynomial",
+            "inputs": {
+              "input": [
+                [
+                  2,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ]
+              ],
+              "coefficients": [
+                4,
+                -4,
+                1
+              ],
+              "selectedPower": {
+                "$param": "power"
+              }
+            }
+          }
+        ],
+        "visual": {
+          "type": "columns",
+          "layout": {
+            "gap": 20,
+            "minColumnWidth": 220,
+            "weights": [
+              2,
+              2,
+              1
+            ]
+          },
+          "children": [
+            {
+              "type": "tensor",
+              "props": {
+                "values": {
+                  "$result": "poly.currentTerm"
+                },
+                "title": "当前加入的一项",
+                "encoding": "neutral"
+              }
+            },
+            {
+              "type": "tensor",
+              "props": {
+                "values": {
+                  "$result": "poly.current"
+                },
+                "title": "累加后的矩阵",
+                "encoding": "neutral"
+              }
+            },
+            {
+              "type": "readout",
+              "props": {
+                "items": [
+                  {
+                    "label": "本步加入的幂次",
+                    "value": {
+                      "$result": "poly.selectedPower"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "minimal-versus-characteristic",
+      "title": "两个多项式可以次数不同",
+      "topic": "数学 / 高等代数",
+      "limits": "Exact minimal and characteristic polynomials of the supplied rational matrix; default A=2I in three dimensions. Coefficients appear in ascending powers. Degree alone does not decide diagonalizability; this design computes no eigenvectors.",
+      "keywords": "最小多项式 特征多项式 minimal characteristic scalar repeated eigenvalue",
+      "height": 270,
+      "mobileHeight": 430,
+      "interaction": "static",
+      "presentation": "reading",
+      "placement": "body",
+      "initialProgress": 1,
+      "summary": "同一矩阵的两个多项式可以次数不同；最小多项式的次数不超过空间维数。",
+      "scene": {
+        "type": "compose",
+        "calculations": [
+          {
+            "id": "poly",
+            "operation": "minimal-polynomial",
+            "inputs": {
+              "input": [
+                [
+                  2,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  2,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  2
+                ]
+              ]
+            }
+          }
+        ],
+        "visual": {
+          "type": "columns",
+          "layout": {
+            "gap": 20,
+            "minColumnWidth": 260
+          },
+          "children": [
+            {
+              "type": "coefficient-strip",
+              "props": {
+                "coefficients": {
+                  "$result": "poly.coefficientsExact"
+                },
+                "title": "最小多项式",
+                "color": "blue"
+              }
+            },
+            {
+              "type": "coefficient-strip",
+              "props": {
+                "coefficients": {
+                  "$result": "poly.characteristicCoefficientsExact"
+                },
+                "title": "特征多项式",
+                "color": "orange"
+              }
+            }
+          ]
+        }
+      }
     }
   ]
 }

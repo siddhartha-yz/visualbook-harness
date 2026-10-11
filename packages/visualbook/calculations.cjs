@@ -49,6 +49,16 @@
       ? require("./algebra.cjs")
       : global.VisualBookAlgebra;
   const operations = {
+    "matrix-polynomial": {
+      keys:["input","coefficients","selectedPower","vector"],required:["input","coefficients"],
+      outputs:["input","inputExact","coefficients","coefficientsExact","degree","lastPower","selectedPower","selectionClamped","powers","powersExact","terms","termsExact","partials","partialsExact","currentTerm","currentTermExact","current","currentExact","value","valueExact","isZero","vectorValue","vectorValueExact","convention"],
+      run:A.matrixPolynomial,
+    },
+    "minimal-polynomial": {
+      keys:["input"],required:["input"],
+      outputs:["input","inputExact","dimension","degree","coefficients","coefficientsExact","characteristicDegree","characteristicCoefficients","characteristicCoefficientsExact","value","valueExact","characteristicValueExact","quotientExact","dependence","ranks","convention"],
+      run:A.minimalPolynomial,
+    },
     "complex-inner-product": {
       keys:["u","v","linearSlot","scalar"],required:["u","v","linearSlot"],
       outputs:["u","v","uExact","vExact","linearSlot","scalar","scalarExact","uPoints","vPoints","conjugatedUPoints","terms","termsExact","termPoints","inner","innerExact","innerPoint","reverseExact","bilinearWithoutConjugation","bilinearWithoutConjugationExact","bilinearTermPoints","scaledU","scaledUPoints","scaledInnerExact","normUSquared","normVSquared","normUSquaredExact","normVSquaredExact","convention"],
@@ -682,7 +692,7 @@
       run: ({ data, mask, ...options }) => T.dropout(data, mask, options),
     },
   };
-  function computeMath(operation, input) {
+  function computeMath(operation, input, trace = null) {
     const spec = operations[operation];
     if (!spec) throw Error("Unknown numeric operation");
     if (!input || typeof input !== "object" || Array.isArray(input))
@@ -691,13 +701,14 @@
       throw Error("Unknown input field; allowed: " + spec.keys.join(", "));
     if (spec.required.some((k) => input[k] === undefined))
       throw Error("Required numeric inputs: " + spec.required.join(", "));
-    const result = spec.run(input);
     function check(v) {
       if (typeof v === "number" && !Number.isFinite(v))
         throw Error("Calculation overflowed; reduce the input scale");
       if (v && typeof v === "object") Object.values(v).forEach(check);
     }
-    check(result);
+    const result=invokeRecorded(operation,input,()=>{
+      const value=spec.run(input);check(value);return value;
+    },{id:trace?.id??null,origin:trace?.id?'compose':'compute'});
     return {
       operation,
       inputs: input,
@@ -706,7 +717,56 @@
         "Canonical calculation only; not independent math review, rendering or a model result",
     };
   }
-  const api = { operations, compute: computeMath };
+  function cacheKey(operation,input) {
+    function valid(v) {
+      if(v===null||typeof v==='string'||typeof v==='boolean')return true;
+      if(typeof v==='number')return Number.isFinite(v);
+      if(Array.isArray(v))return v.every(valid);
+      if(v&&typeof v==='object'&&Object.getPrototypeOf(v)===Object.prototype)return Object.values(v).every(valid);
+      return false;
+    }
+    if(!valid(input))return null;
+    const key=operation+':'+JSON.stringify(input);return key.length<=64000?key:null;
+  }
+  function invokeRecorded(operation,input,run,trace={id:null,origin:'algebra-kernel'}) {
+    const recorder=global.__VisualBookCalculationRecorder,cache=global.__VisualBookCalculationCache;
+    const recordedInputs=recorder?JSON.parse(JSON.stringify(input)):null;
+    const key=cache?cacheKey(operation,input):null;
+    const hit=key!==null&&cache?.has(key);
+    let result;
+    if(hit) {
+      const snapshot=cache.get(key);cache.delete(key);cache.set(key,snapshot);
+      result=JSON.parse(snapshot);
+    } else {
+      // Avoid nested duplicate records or caching a different implementation
+      // under the same operation key while the outer compute call is running.
+      global.__VisualBookCalculationRecorder=null;global.__VisualBookCalculationCache=null;
+      try { result=run(); }
+      finally { global.__VisualBookCalculationRecorder=recorder;global.__VisualBookCalculationCache=cache; }
+      if(key!==null&&cache) {
+        const snapshot=JSON.stringify(result);
+        if(snapshot.length<=250000) {
+          cache.set(key,snapshot);
+          while(cache.size>16)cache.delete(cache.keys().next().value);
+        }
+      }
+    }
+    if(recorder)recorder({...trace,operation,inputs:recordedInputs,result:JSON.parse(JSON.stringify(result)),cacheHit:Boolean(hit)});
+    return result;
+  }
+  function withTrace(records, draw, {cache=null}={}) {
+    if(!Array.isArray(records)||typeof draw!=='function')throw Error('Synchronous calculation recorder requires an array and draw callback');
+    if(cache!==null&&!(cache instanceof Map))throw Error('Calculation cache must be a per-figure Map');
+    const previous=global.__VisualBookCalculationRecorder,previousCache=global.__VisualBookCalculationCache;
+    global.__VisualBookCalculationRecorder=record=>records.push(record);
+    global.__VisualBookCalculationCache=cache;
+    try {
+      const result=draw();
+      if(result&&typeof result.then==='function')throw Error('Async drawing cannot be recorded as a deterministic frame');
+      return result;
+    } finally { global.__VisualBookCalculationRecorder=previous;global.__VisualBookCalculationCache=previousCache; }
+  }
+  const api = { operations, compute: computeMath, withTrace, invokeRecorded };
   if (typeof module !== "undefined" && module.exports) module.exports = api;
   global.VisualBookCalculations = api;
 })(typeof window !== "undefined" ? window : globalThis);

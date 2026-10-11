@@ -158,6 +158,7 @@
       playing = false;
       refreshControls();
     }
+    const calculationCache = new Map();
     function paint(p) {
       progress = clamp(p);
       const width = Math.floor(context.width);
@@ -167,10 +168,12 @@
       if (!board && svg.getAttribute("viewBox") !== `0 0 ${width} ${height}`)
         svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
       if (svg.style.height !== height + "px") svg.style.height = height + "px";
+      const calculationTrace = [];
+      instance.calculations = calculationTrace;
       try {
         if (board) board.begin(width, height);
         instance.facts =
-          draw({
+          global.VisualBookCalculations.withTrace(calculationTrace, () => draw({
             ...context,
             width,
             height,
@@ -179,7 +182,8 @@
             state,
             controls,
             board,
-          }) ?? {};
+            calculationTrace,
+          }), {cache:calculationCache}) ?? {};
         if (board) board.end();
         const role = svg.querySelector('[tabindex="0"]') ? "group" : "img";
         if (svg.getAttribute("role") !== role) svg.setAttribute("role", role);
@@ -260,6 +264,8 @@
       context,
       progress,
       facts: {},
+      calculations: [],
+      calculationTraceVersion: 2,
       error: null,
       setProgress,
       paint,

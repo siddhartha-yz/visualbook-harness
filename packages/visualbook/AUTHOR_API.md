@@ -107,3 +107,10 @@ custom draw(input)收到svg,width,height,progress,params,state,controls,board。
 `extract_source_matrices` 只读取一个真实原文锚点内最多四个pmatrix/bmatrix/vmatrix/Vmatrix/array；支持整数、十进制、有理数字面量及标准分数，最多6行8列。返回valuesExact、values、原TeX、源码/原文块哈希及实际数组分隔列。单个竖线分隔才提供coefficientColumns，不凭矩阵宽度猜常数项。变量、表达式、嵌套或不支持的样式返回unsupported原因，不自动解释；没有数值矩阵时也明确返回空列表。直接连接 exact-row-reduction / determinant-expansion 等实际输入，再看公式与图是否匹配。此入口不评判老师的公式是否正确，不能拿读取成功当独立数学验收。
 
 共享图注描述运算关系；实际数值由计算结果连接readout等组件显示。改了矩阵/多项式/模数后，不得继续沿用某个示例的数值、整除、素数域或链长结论。标题、summary与原文具体条件仍要核对；同一组件可复用，并不表示任意输入都满足某个定理。
+
+矩阵多项式可用 `matrix-polynomial`（方阵 `input`、升幂 `coefficients`，可选离散 `selectedPower` 或单独的 `vector`），常数项严格乘单位矩阵。`minimal-polynomial` 从固定有理方阵的首次幂依赖计算首一最小多项式，并返回特征多项式系数、次数与精确零矩阵核验；它不求根或构造约当基。先确认数域、维数、基与系数顺序，不能把 `vectorValue=0` 当成整个矩阵 `value=0`。可复用 `matrix-polynomial-cancellation` / `minimal-versus-characteristic`，系数条与矩阵图可接到同一计算结果。
+
+
+计算检查记录实际重绘的已解析输入与输出，包括compose、compute和原生代数调用；15项精确运算用另一份Python Fraction证书复核。错误阻止导出，未支持运算单列未验证。不能替代图与原文一致性检查。相同输入按图缓存最多16项，改变输入重新计算；不要依赖修改返回对象影响后续计算。
+
+共享源文导入检查数学片段中疑似漏反斜杠的quad/qquad；可编译不等于排版正确。发现时保存原件并显式修订，不静默替换。

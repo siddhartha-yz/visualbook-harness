@@ -1767,7 +1767,8 @@
       ],
       "examples": [
         "polynomial-division",
-        "polynomial-bezout"
+        "polynomial-bezout",
+        "minimal-versus-characteristic"
       ],
       "limits": "Cells >=54×65px, rational text >=12px. Supplied vector may have leading zeros; displayed index labels do not assert irreducibility or root multiplicity. Zero polynomial degree is null; trailing zero slots remain displayed without inflating degree.",
       "keywords": "多项式 整除 余式 最大公因式 系数 polynomial coefficient division gcd Bezout"

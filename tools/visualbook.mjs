@@ -6,6 +6,7 @@ import {
 } from "../packages/visualbook/anchors.mjs";
 import path from "node:path";
 import crypto from "node:crypto";
+import { spawnSync } from "node:child_process";
 import { operations as calculations } from "./visualbook_math.mjs";
 import { pathToFileURL } from "node:url";
 import { auditParameters } from "./audit_visualbook_parameters.mjs";
@@ -699,6 +700,19 @@ export async function preview(file, out) {
         report.findings.push({width,kind:"reading-layout",...readingLayout});
       const shapes = [];
       for (const id of instances) {
+        const calculationDeclarations = await page.evaluate((id) => {
+          const records = [], visit = (node) => {
+            if (!node) return;
+            if (node.type === 'compose') {
+              for (const c of node.calculations) records.push({id:c.id,operation:c.operation});
+              visit(node.visual);
+            } else for (const child of node.children ?? []) visit(child);
+          };
+          const scene = VisualBookRuntime.instances.find(i => i.id === id).figure.scene;
+          if (!scene) return null;
+          visit(scene);
+          return records;
+        }, id);
         const interaction = await page.evaluate(
           (id) =>
             VisualBookRuntime.instances.find((i) => i.id === id).interaction,
@@ -819,6 +833,8 @@ export async function preview(file, out) {
             return {
               progress: i.progress,
               facts: i.facts,
+              calculations: i.calculations ?? [],
+              calculationTraceVersion: i.calculationTraceVersion ?? 0,
               error: i.error ?? null,
               svg: new XMLSerializer().serializeToString(svg),
               outside: text.filter(
@@ -898,6 +914,7 @@ export async function preview(file, out) {
           declaredParameterControls: await page.locator("#figure-" + id + " [data-param]").count(),
           interactiveTargets,
           frames,
+          calculationDeclarations,
         });
       }
       const filename = path.join(out, `${width}-page.png`);
@@ -986,6 +1003,7 @@ export async function preview(file, out) {
           id: shape.id,
           note: "Parameter exploration has no rendered handles or parameter controls",
         });
+  let interactionCases = [];
   if (report.findings.length) {
     report.interactionAudit = {
       status: "skipped",
@@ -994,6 +1012,7 @@ export async function preview(file, out) {
   } else {
     const directory = path.join(out, "interactions");
     const interaction = await auditInteractions(file, directory);
+    interactionCases = interaction.cases;
     report.interactionAudit = {
       status: interaction.status,
       cases: interaction.cases.length,
@@ -1016,7 +1035,35 @@ export async function preview(file, out) {
       return report;
     }
   }
-  report.status = "completed";
+  // Freeze the exact resolved data used by these browser poses. The checker uses
+  // independent Fraction certificates and never trusts the renderer's flags.
+  const declarations = new Map(report.viewports.flatMap(v => v.shapes.map(s => [s.id, s.calculationDeclarations])));
+  const states = report.viewports.flatMap(v => v.shapes.flatMap(s => s.frames.map(f => ({
+    id:s.id,width:v.width,progress:f.progress,kind:'frame',error:f.error,
+    declarations:s.calculationDeclarations,calculationTraceVersion:f.calculationTraceVersion,calculations:f.calculations,
+  }))));
+  for (const c of parameters.cases) states.push({
+    id:c.id,width:c.width,progress:c.progress,kind:'parameter',error:c.error,
+    declarations:declarations.get(c.id),calculationTraceVersion:c.calculationTraceVersion,calculations:c.calculations,
+  });
+  for (const c of interactionCases) for (const side of ['before','after']) states.push({
+    id:c.id,width:c.width,progress:c.progress,kind:'interaction-'+side,error:c.error,
+    declarations:declarations.get(c.id),calculationTraceVersion:c.calculationTraceVersion,calculations:c[side+'Calculations'],
+  });
+  const input = path.join(out,'calculation-input.json'), output = path.join(out,'calculation-audit.json');
+  fs.writeFileSync(input,JSON.stringify({sha256:report.sha256,states},null,2)+'\n');
+  const check = spawnSync('python3',[path.join(root,'tools/check_visualbook_calculations.py'),input,output],{encoding:'utf8',timeout:30000});
+  if (check.error || !fs.existsSync(output)) {
+    report.status='failed';
+    report.findings.push({kind:'calculation-audit-runtime-error',error:String(check.error??check.stderr),exitCode:check.status});
+  } else {
+    const audit = json(output);
+    report.calculationAudit={status:audit.status,counts:audit.counts,unsupportedOperations:audit.unsupportedOperations,
+      scope:audit.scope,inputSha256:audit.inputSha256,file:path.resolve(output)};
+    report.findings.push(...audit.findings.map(f=>({...f,kind:'calculation-evidence'})));
+    if (check.status !== 0 && !audit.findings.length) report.findings.push({kind:'calculation-audit-runtime-error',exitCode:check.status});
+  }
+  if (report.status !== 'failed') report.status = "completed";
   saveReport();
   return report;
 }

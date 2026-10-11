@@ -126,6 +126,8 @@ export async function auditInteractions(
           return {
             geometry: JSON.stringify(marks),
             facts: i.facts,
+            calculations: i.calculations ?? [],
+            calculationTraceVersion: i.calculationTraceVersion ?? 0,
             error: i.error ?? null,
             invalidGeometry: window.__VH_INVALID_GEOMETRY(svg),
           };
@@ -311,6 +313,9 @@ export async function auditInteractions(
                 afterGeometrySha256: sha(after.geometry),
                 beforeFacts: replay.facts,
                 afterFacts: after.facts,
+                beforeCalculations: replay.calculations,
+                afterCalculations: after.calculations,
+                calculationTraceVersion: after.calculationTraceVersion,
                 error: error ?? after.error,
                 invalidGeometry: after.invalidGeometry,
                 repeatable: baseline.geometry === replay.geometry,

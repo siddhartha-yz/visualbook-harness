@@ -109,6 +109,17 @@ def main():
         phases=[S.I**RNG.randrange(4) for _ in range(n)];permutation=S.eye(n);order=list(range(n));RNG.shuffle(order);permutation=permutation[:,order]
         for m in [a,a+a.adjoint(),S.diag(*[a[i,i] for i in range(n)]),permutation*S.diag(*phases)]:
             add('complex-operator',{'input':complex_inputs(m)},m)
+    for n in range(1,7):
+        for _ in range(8):
+            a=random_matrix(n,n);p=[literal(S.Rational(RNG.randrange(-3,4),RNG.randrange(1,4))) for _ in range(RNG.randrange(1,14))];v=random_matrix(n,1)
+            add('matrix-polynomial',{'input':inputs(a),'coefficients':p,'selectedPower':12,'vector':[literal(x) for x in v]},(a,p,v))
+        nilpotent=S.zeros(n)
+        for i in range(n-1):nilpotent[i,i+1]=1
+        diagonal=S.diag(*[S.Integer(i%2) for i in range(n)]);basis=invertible(n)
+        for a in [random_matrix(n,n),2*S.eye(n),nilpotent,2*S.eye(n)+nilpotent,diagonal,basis*diagonal*basis.inv()]:
+            add('minimal-polynomial',{'input':inputs(a)},a)
+    for a in [S.Matrix([[0,-1],[1,0]]),S.Matrix([[0,0,-1],[1,0,-1],[0,1,0]]),S.zeros(6),S.diag(0,0,2,2)]:
+        add('minimal-polynomial',{'input':inputs(a)},a)
     started=time.monotonic()
     javascript="const C=require('./packages/visualbook/calculations.cjs'); let s=''; process.stdin.setEncoding('utf8');process.stdin.on('data',x=>s+=x);process.stdin.on('end',()=>process.stdout.write(JSON.stringify(JSON.parse(s).map(x=>C.compute(x.operation,x.inputs).result))));"
     results=json.loads(subprocess.run(['node','-e',javascript],cwd=ROOT,input=json.dumps(requests),text=True,capture_output=True,check=True).stdout)
@@ -202,6 +213,25 @@ def main():
             assert complex_matrix(r['transposeProduct']['exact'])==(a.T*a).applyfunc(S.expand)
             assert r['unitary']==(left==S.eye(a.rows) and right==S.eye(a.rows))
             assert r['hermitian']==(a==adj) and r['normal']==(left==right)
+        elif op=='matrix-polynomial':
+            a,p,v=ref;coefficients=[S.Rational(x) for x in p]
+            while len(coefficients)>1 and coefficients[-1]==0:coefficients.pop()
+            total=S.zeros(a.rows);assert r['degree']==(None if all(x==0 for x in coefficients) else len(coefficients)-1)
+            for k,c in enumerate(coefficients):
+                power=a**k;term=c*power;total+=term
+                assert mat(r['powersExact'][k])==power and mat(r['termsExact'][k])==term and mat(r['partialsExact'][k])==total
+            assert mat(r['valueExact'])==total and mat(r['currentExact'])==total and r['isZero']==(total==S.zeros(a.rows))
+            assert S.Matrix([S.Rational(x) for x in r['vectorValueExact']])==total*v
+        elif op=='minimal-polynomial':
+            a=ref;degree=r['degree'];p=polynomial(r['coefficientsExact']);characteristic=polynomial(r['characteristicCoefficientsExact'])
+            assert 1<=degree<=a.rows and p.degree()==degree and p.LC()==1
+            assert characteristic==S.Poly(a.charpoly(p.gen).as_expr(),p.gen,domain=S.QQ)
+            evaluated=sum((S.Rational(c)*(a**k) for k,c in enumerate(r['coefficientsExact'])),S.zeros(a.rows))
+            assert evaluated==S.zeros(a.rows)==mat(r['valueExact'])==mat(r['characteristicValueExact'])
+            columns=[S.Matrix(list(a**k)) for k in range(degree+1)]
+            assert S.Matrix.hstack(*columns[:-1]).rank()==degree
+            assert r['ranks']==[S.Matrix.hstack(*columns[:k+1]).rank() for k in range(degree+1)]
+            quotient,remainder=S.div(characteristic,p);assert remainder.is_zero and polynomial(r['quotientExact'])==quotient
         counts[op]=counts.get(op,0)+1
     args.output.mkdir(parents=True,exist_ok=True)
     (args.output/'inputs.json').write_text(json.dumps(requests,indent=2)+'\n');(args.output/'outputs.json').write_text(json.dumps(results,indent=2)+'\n')
