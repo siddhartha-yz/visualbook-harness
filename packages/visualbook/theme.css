@@ -234,6 +234,26 @@ a:focus-visible {
   color: var(--muted);
   margin: 7px 0;
 }
+.book-long { max-width: 1180px; }
+.book-cover { display: block; padding: 0; border: 0; margin-bottom: 44px; }
+.book-cover > p { max-width: 44em; }
+.book-count { color: var(--muted); font-size: 13px; margin-top: 22px; }
+.book-group { margin-top: 48px; }
+.book-group > header { display: block; border-bottom: 0; border-top: 1px solid var(--ink); padding: 16px 0 0; margin-bottom: 8px; }
+.book-group-number { color: var(--orange); font: 12px/1.5 ui-monospace,monospace; letter-spacing: .06em; }
+.book-group > header h2 { font-size: 25px; margin: 8px 0 6px; }
+.book-group > header p { margin: 0 0 20px; color: var(--muted); font-size: 14px; }
+.book-long .book-chapters { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); column-gap: 46px; }
+.book-long .book-link { display: grid; grid-template-columns: 28px minmax(0,1fr); gap: 12px; padding: 22px 0; }
+.book-number { color: var(--orange); font: 12px/1.7 ui-monospace,monospace; padding-top: 4px; }
+.book-long .book-link h3 { margin: 0; font-size: 21px; line-height: 1.5; font-weight: 550; }
+.book-long .book-link a { text-decoration: none; }
+.book-long .book-link a:hover { text-decoration: underline; }
+@media(max-width:700px) {
+  .book-long .book-chapters { grid-template-columns: minmax(0,1fr); }
+  .book-group { margin-top: 36px; }
+  .book-cover { margin-bottom: 30px; }
+}
 .vh-figure[data-failed="true"] .vh-canvas {
   opacity: 0.4;
 }
@@ -523,8 +543,8 @@ summary:focus-visible { outline: 2px solid var(--orange); outline-offset: 4px; }
 table { border-collapse: collapse; font-size: 15px; line-height: 1.6; max-width: 100%; }
 td, th { padding: 9px 12px; border-bottom: 1px solid #dce5e6; text-align: left; }
 @media (min-width: 1200px) {
-  main { max-width: 1380px; display: grid; grid-template-columns: minmax(0,1fr) minmax(0,720px) minmax(0,1fr); column-gap: 32px; }
-  main > * { grid-column: 2; min-width: 0; }
+  main:where(:not(.library)) { max-width: 1380px; display: grid; grid-template-columns: minmax(0,1fr) minmax(0,720px) minmax(0,1fr); column-gap: 32px; }
+  main:where(:not(.library)) > * { grid-column: 2; min-width: 0; }
   .vh-opening, .vh-scope, .vh-anchor-row { grid-column: 1 / -1; display: grid; grid-template-columns: subgrid; }
   .vh-opening > .vh-cover, .vh-scope > .source-block, .vh-scope > .vh-annotation, .vh-anchor-text { grid-column: 2; min-width: 0; }
   .vh-toc { grid-column: 1; grid-row: 1; padding: 17px 12px 0 0; align-self: start; }

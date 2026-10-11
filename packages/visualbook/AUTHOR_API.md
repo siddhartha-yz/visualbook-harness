@@ -2,7 +2,7 @@
 
 先找能解释当前关系的设计，再改数据或拼接组件。它不是模板选择比赛：不合适时明确记录缺口。
 
-1. 阅读完整 source.md；source-map.json 有结构。用 inspect_source({anchors:[...]}) 检查拟插入位置及相邻正文。
+1. 阅读完整 source.md；source-map.json 有结构。用 inspect_source({anchors:[...]}) 检查拟插入位置及相邻正文。原文已有数值矩阵时，先用 extract_source_matrices({anchor:"真实锚点"}) 读取精确值，再给设计/计算提供数据，避免重抄或误用默认例子。
 2. search_designs({query:"要解释的关系"})，describe_design_inputs({id:"design-id"}) 查实际可改数据。show_design 最多看两种实际桌面/手机设计。
 3. put_design({id:"your-figure",design:"design-id",afterAnchor:"真实锚点",overrides:[{path:"实际已有JSON指针",value:新值}]}) 直接接入教材并构建。替换已有图需 replace:true；拼错字段会拒绝。
 4. 若要组合，describe_component / describe_calculation 查实际输入输出，用下面 scene 方式；允许同一计算连接多个画面。
@@ -97,3 +97,9 @@ custom draw(input)收到svg,width,height,progress,params,state,controls,board。
 `exact-row-reduction` 的 imageBasis / imageBasisExact 使用原矩阵主元列，不能把消元后的列当成原映射像的基。`coefficient-strip` 保留显式零系数位置，但次数取最后一个非零项，零多项式没有有限次数。`residue-table` 的 isField 指抽象有限域，不是课程中作为复数子域的“数域”。二维合同的 field / transformedField 均已适配 scalar-field 的1/2约定。
 
 补充设计 cofactor-expansion、dual-contours、quadratic-congruence、quadratic-inertia、quadratic-degeneracy；分别表达带符号贡献、对偶坐标、同一点的换坐标、正负惯性与退化自由方向。优先使用适合正文的关系，不能把目录数当生成品质。
+
+`orthogonalize` 输入vectors为1..6个按行列出的实向量；可选metric是同维实对称正定矩阵G，内积为uᵀGv。返回精确未归一化正交基、每项投影/剩余、独立输入位置、范数平方；orthogonalMatrix把所得向量放在列。零与相关输入明确跳过，不能归一化零。unitBasis才使用数值平方根，不能称它为精确有理数答案。非单位G下的正交不一定在普通坐标屏幕上成直角；orthogonal-basis / orthogonal-remainder示例均明确使用欧氏内积。
+
+`extract_source_matrices` 只读取一个真实原文锚点内最多四个pmatrix/bmatrix/vmatrix/Vmatrix/array；支持整数、十进制、有理数字面量及标准分数，最多6行8列。返回valuesExact、values、原TeX、源码/原文块哈希及实际数组分隔列。单个竖线分隔才提供coefficientColumns，不凭矩阵宽度猜常数项。变量、表达式、嵌套或不支持的样式返回unsupported原因，不自动解释；没有数值矩阵时也明确返回空列表。直接连接 exact-row-reduction / determinant-expansion 等实际输入，再看公式与图是否匹配。此入口不评判老师的公式是否正确，不能拿读取成功当独立数学验收。
+
+共享图注描述运算关系；实际数值由计算结果连接readout等组件显示。改了矩阵/多项式/模数后，不得继续沿用某个示例的数值、整除、素数域或链长结论。标题、summary与原文具体条件仍要核对；同一组件可复用，并不表示任意输入都满足某个定理。

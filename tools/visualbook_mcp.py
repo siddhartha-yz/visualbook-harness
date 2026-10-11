@@ -76,6 +76,11 @@ def main():
     if not args.direct:
         definitions += [
             {
+                "name":"extract_source_matrices",
+                "description":"Read exact literal numeric matrices from one actual source anchor, with original TeX, block/source hashes and explicit array separators. Variables and unsupported syntax are never guessed. Use returned values in calculation/design data; still inspect source fit. No source rewrite, network or model call.",
+                "inputSchema":{"type":"object","properties":{"anchor":{"type":"string"}},"required":["anchor"],"additionalProperties":False},
+            },
+            {
                 "name": "put_design",
                 "description": "Insert one named reusable design into the current book and build it, without writing drawing code. Supply real source anchor, optional existing data replacements, and explicit replace=true only to replace an existing figure id. Saves before/after plan and build evidence; still preview and inspect the candidate. Failed build leaves a failed current proposal, never an older ready candidate.",
                 "inputSchema": {"type":"object","properties":{
@@ -203,7 +208,7 @@ def main():
     def tool_fingerprint():
         library=ROOT/'packages/visualbook'
         modules=json.loads((library/'bundle.json').read_text())['modules']
-        files=[library/n for n in modules+['bundle.json','runtime.js','theme.css','math.mjs','anchors.mjs','components.json','catalog.json']]+[tool,Path(__file__).resolve(),ROOT/'tools/audit_visualbook_parameters.mjs',ROOT/'tools/audit_visualbook_interactions.mjs',ROOT/'tools/visualbook_math.mjs',ROOT/'tools/visualbook_inspection.mjs',ROOT/'tools/export_visualbook_motion.mjs',ROOT/'tools/build_visualbook_catalog.mjs',ROOT/'tools/inspect_visualbook_reader.mjs',ROOT/'tools/visualbook_workspace.mjs']
+        files=[library/n for n in modules+['bundle.json','runtime.js','theme.css','math.mjs','anchors.mjs','source-matrices.mjs','components.json','catalog.json']]+[tool,Path(__file__).resolve(),ROOT/'tools/audit_visualbook_parameters.mjs',ROOT/'tools/audit_visualbook_interactions.mjs',ROOT/'tools/visualbook_math.mjs',ROOT/'tools/visualbook_inspection.mjs',ROOT/'tools/export_visualbook_motion.mjs',ROOT/'tools/build_visualbook_catalog.mjs',ROOT/'tools/inspect_visualbook_reader.mjs',ROOT/'tools/visualbook_workspace.mjs']
         return hashlib.sha256(json.dumps({str(p.relative_to(ROOT)):digest(p) for p in files},sort_keys=True).encode()).hexdigest()
 
     def build_inputs():
@@ -376,6 +381,15 @@ def main():
             process=subprocess.run(['node',str(ROOT/'tools/visualbook_math.mjs'),'describe',str(operation)],capture_output=True,text=True,timeout=30,cwd=workspace)
             if process.returncode:raise ValueError(process.stderr[-3000:])
             result=json.loads(process.stdout)
+        elif name == "extract_source_matrices":
+            anchor=arguments.get('anchor')
+            if not isinstance(anchor,str) or not re.fullmatch(r'[a-z][a-z0-9-]*',anchor):raise ValueError('Use an actual source anchor')
+            process=subprocess.run(['node',str(ROOT/'packages/visualbook/source-matrices.mjs'),str(inside('source.json')),anchor],capture_output=True,text=True,timeout=30)
+            if process.returncode:raise ValueError(process.stderr[-3000:])
+            result=json.loads(process.stdout)
+            directory=inside('source-matrices');directory.mkdir(exist_ok=True)
+            artifact=directory/f'extraction-{len(list(directory.glob("extraction-*.json")))+1:03d}.json';artifact.write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n')
+            result['evidencePath']=str(artifact.relative_to(workspace))
         elif name == "compute_math":
             request=json.dumps({"operation":arguments.get("operation"),"inputs":arguments.get("inputs")})
             if len(request.encode())>65536:raise ValueError("Numeric input exceeds 64 KiB")

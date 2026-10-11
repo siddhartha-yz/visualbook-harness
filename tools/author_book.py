@@ -85,6 +85,7 @@ def main():
             "theme.css",
             "math.mjs",
             "anchors.mjs",
+            "source-matrices.mjs",
             "emphasis.mjs",
             "markdown-math.mjs",
             "AUTHOR_API.md",

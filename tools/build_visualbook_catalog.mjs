@@ -44,7 +44,7 @@ export async function buildCatalog(out, { ids = null } = {}) {
         raw: design.limits,
         type: "paragraph",
         sha256: "maintenance-control",
-        html: `<p>${design.limits}</p>`,
+        html: `<p>${esc(design.limits)}</p>`,
         math: { expected: 0 },
       },
     ];
@@ -57,7 +57,11 @@ export async function buildCatalog(out, { ids = null } = {}) {
       },
       plan = {
         figures: [
-          { ...design, afterAnchor: "design-001", summary: design.limits },
+          {
+            ...design,
+            afterAnchor: "design-001",
+            summary: design.summary ?? design.limits,
+          },
         ],
       },
       file = path.join(out, design.id + ".html"),

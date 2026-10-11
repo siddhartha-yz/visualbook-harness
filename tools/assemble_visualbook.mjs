@@ -5,12 +5,7 @@ const sha = (bytes) => crypto.createHash("sha256").update(bytes).digest("hex");
 import path from "node:path";
 import { build, preview, staticExport } from "./visualbook.mjs";
 import { bookNavigation } from "../packages/visualbook/book-navigation.mjs";
-const esc = (s) =>
-  String(s)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;");
+import { bookIndex, validateBookGroups } from "../packages/visualbook/book-index.mjs";
 const [manifestFile, outDir] = process.argv.slice(2);
 if (!manifestFile || !outDir)
   throw Error(
@@ -30,6 +25,7 @@ if (
   throw Error("Use 1..32 uniquely named chapters");
 if (fs.existsSync(out))
   throw Error("Assembly output exists; retain it and use a fresh directory");
+validateBookGroups(manifest.groups, chapterTitles);
 fs.mkdirSync(out, { recursive: true });
 fs.writeFileSync(
   path.join(out, "assembly-attempt.json"),
@@ -149,7 +145,7 @@ const css = fs.readFileSync(
   new URL("../packages/visualbook/theme.css", import.meta.url),
   "utf8",
 );
-const html = `<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(manifest.title ?? "VisualBook")}</title><style>${css}</style><body><main class="library"><div class="eyebrow">VISUALBOOK</div><h1>${esc(manifest.title ?? "读懂变化")}</h1><p>${esc(manifest.description ?? "保留完整教材，边读边看关系怎样变化。")}</p>${records.map((c) => `<article class="book-link"><h2><a href="${c.file}">${esc(c.title)}</a></h2>${manifest.labels?.[c.id] ? `<p>${esc(manifest.labels[c.id])}</p>` : ""}</article>`).join("")}<p class="source-note">原文来源与许可证随章节保留。图中参数用于解释，读者可以自行控制变化。</p></main></body></html>`;
+const html = bookIndex(manifest, records, css);
 fs.writeFileSync(path.join(out, "index.html"), html);
 fs.writeFileSync(
   path.join(out, "build-record.json"),

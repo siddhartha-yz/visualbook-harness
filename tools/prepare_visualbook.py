@@ -66,6 +66,13 @@ def prepare(input_file, output, *, max_chapters=3, source_url='', source_name='è
         ids=[c.get('id','') for c in chapters]
         if len(set(ids))!=len(ids) or any(not isinstance(i,str) or not re.fullmatch(r'[a-z][a-z0-9-]*',i) for i in ids):
             raise ValueError('Invalid or duplicate chapter id')
+        if manifest.get('groups') is not None:
+            navigation=attempt/'navigation.json'
+            save(navigation,{'groups':manifest['groups'],'chapters':[{'id':i} for i in ids]})
+            checked=subprocess.run(['node',str(ROOT/'packages/visualbook/book-index.mjs'),str(navigation)],capture_output=True,text=True,cwd=ROOT,timeout=30)
+            (attempt/'navigation.stdout').write_text(checked.stdout);(attempt/'navigation.stderr').write_text(checked.stderr)
+            if checked.returncode:raise ValueError('Invalid complete-book grouping before model calls; see navigation diagnostics')
+            report['navigation']=json.loads(checked.stdout)
         candidates=[]
         for c in chapters:
             source=Path(c['source']);source=source.resolve() if source.is_absolute() else (input_file.parent/source).resolve()
@@ -92,6 +99,8 @@ def prepare(input_file, output, *, max_chapters=3, source_url='', source_name='è
             entry.update(status='prepared',originalSha256=digest(source),importedSha256=digest(candidate),blocks=len(data['blocks']),formulas=checked_formulas,sourceSha256=data['sourceSha256'])
             candidates.append((c,data,candidate));record()
         prepared_manifest={'title':manifest.get('title',candidates[0][1]['title']),'description':manifest.get('description'),'chapters':[{'id':c['id'],'source':str(output/'inputs'/(c['id']+'.source.json'))} for c,_,_ in candidates]}
+        for field in ['groups','labels']:
+            if field in manifest:prepared_manifest[field]=manifest[field]
         identity={'inputSha256':digest(input_file),'sourceUrl':source_url,'sourceName':source_name,
                   'chapters':[{k:entry[k] for k in ['id','original','originalSha256','importedSha256']} for entry in report['records']]}
         if split_level is not None:identity['splitLevel']=split_level

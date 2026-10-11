@@ -1,0 +1,35 @@
+{
+  "status": "complete-source-ingestion-and-decoding",
+  "bvid": "BV1jR4y1M78W",
+  "parts": 151,
+  "partRange": [
+    1,
+    151
+  ],
+  "sourceHours": 58.919444444444444,
+  "primarySegments": 6417,
+  "primaryDecodeSecondsSummed": 6900.623,
+  "primaryModel": {
+    "id": "Systran/faster-whisper-large-v3",
+    "revision": "edaa852ec7e145841d8ffdb056a99866b5f0a478"
+  },
+  "secondaryModel": {
+    "id": "mobiuslabsgmbh/faster-whisper-large-v3-turbo",
+    "revision": "0a363e9161cbc7ed1431c9597a8ceaf0c4f78fcf"
+  },
+  "indexedUnreviewedAlternatives": 309,
+  "sourceManifestSha256": "ddc9c900ddec9c96ecd349caeb9b5225182b19dbed2a7bad47601bae181c5386",
+  "repairIndexSha256": "7c179c364efb31ed65b5dc78171ef84a853b9cea0dbc6f25ac6b2a866f2265d5",
+  "checks": [
+    "All151part identities and original primary transcript hashes verified.",
+    "Anonymous subtitle interfaces returned no accessible subtitle URLs for all151parts; not a claim that authenticated captions do not exist.",
+    "Public audio and available480pboard streams acquired without login credentials; complete media and signed URLs kept ignored."
+  ],
+  "retainedFailures": [
+    "Python3.14/CTranslate2 wheel incompatibility.",
+    "PyAV19 metadata_errors incompatibility; used isolated Python3.12/av16.",
+    "One GPU memory failure from concurrent model experiment; recovered with serial primary decoding.",
+    "Primary ASR promotional boilerplate hallucinations; alternatives also retain uncertainty."
+  ],
+  "scope": "Complete source range and actual ASR execution, not measured WER, verbatim audio certification, textbook completion, visualbook delivery or teaching quality."
+}

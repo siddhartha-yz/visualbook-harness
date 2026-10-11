@@ -60,3 +60,17 @@ test('Coefficient slots remain visible but zero/trailing-zero degrees are honest
  assert.deepEqual(A.coefficientLiterals(['0/2','1/2','0']),{values:['0','1/2','0'],degree:1});
  assert.deepEqual(A.coefficientLiterals([0,0]),{values:['0','0'],degree:null});
 });
+test('Orthogonalization skips zero and dependent vectors before any normalization',()=>{
+ const r=A.orthogonalize({vectors:[[0,0],[1,1],[2,2],[3,1]]});
+ assert.equal(r.rank,2);assert.deepEqual(r.independentIndices,[1,3]);
+ assert.deepEqual(r.orthogonalBasisExact,[['1','1'],['1','-1']]);
+ assert.deepEqual(r.steps.map(x=>x.independent),[false,true,false,true]);
+ assert.deepEqual(A.orthogonalize({vectors:[[0,0]]}).unitBasis,[]);
+});
+test('General inner-product orthogonality uses its metric, not screen angles',()=>{
+ const r=A.orthogonalize({vectors:[[1,0],[1,1]],metric:[[2,1],[1,2]]});
+ assert.deepEqual(r.orthogonalBasisExact,[['1','0'],['-1/2','1']]);
+ assert.deepEqual(r.pairingsExact,[['2','0'],['0','3/2']]);
+ assert.throws(()=>A.orthogonalize({vectors:[[1,0]],metric:[[1,0],[0,-1]]}),/positive definite/);
+ assert.throws(()=>A.orthogonalize({vectors:[[1,0]],metric:[[1,1],[0,1]]}),/symmetric/);
+});

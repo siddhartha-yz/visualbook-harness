@@ -21,6 +21,14 @@ def invoke(label,input,output,resume=False,expect=0):
 run=out/'prepared';invoke('good',manifest,run);snapshot=run/'inputs/one.source.json';sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest();before=sha(snapshot)
 prepared=json.loads((run/'prepared-manifest.json').read_text());assert len(prepared['chapters'])==2
 source=json.loads(snapshot.read_text());assert source['adaptation']['mathRendered']==1 and source['adaptation']['images']==1
+grouped=json.loads(manifest.read_text());grouped['groups']=[{'title':'完整两章','chapters':['one','two']}];grouped['labels']={'one':'来源标签'}
+grouped_file=original/'grouped.json';grouped_file.write_text(json.dumps(grouped,ensure_ascii=False));grouped_run=out/'grouped-prepared'
+invoke('good-complete-groups',grouped_file,grouped_run)
+grouped_prepared=json.loads((grouped_run/'prepared-manifest.json').read_text());assert grouped_prepared['groups']==grouped['groups'] and grouped_prepared['labels']==grouped['labels']
+invalid_groups=json.loads(grouped_file.read_text());invalid_groups['groups'][0]['chapters']=['one'];invalid_file=original/'invalid-groups.json';invalid_file.write_text(json.dumps(invalid_groups))
+invalid_run=out/'invalid-group-coverage';p=invoke('incomplete-groups',invalid_file,invalid_run,expect=1)
+assert 'grouping before model calls' in p.stderr and not (invalid_run/'inputs').exists()
+invalid_report=json.loads((invalid_run/'preparation/attempt-001/report.json').read_text());assert invalid_report['records']==[]
 invoke('resume-unchanged',manifest,run,True)
 image.write_text('<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40"><rect x="10" y="10" width="20" height="20"/></svg>')
 p=invoke('changed-local-image',manifest,run,True,1);assert 'local image content changed' in p.stderr;assert sha(snapshot)==before
@@ -34,5 +42,5 @@ p=invoke('corrupt-snapshot',manifest,run,True,1);assert 'snapshot was modified' 
 json_source=json.loads((run/'inputs/one.source.json').read_text());json_source['id']='two';json_source['blocks'][1]['html']='<p>\\mathbf{x}</p>'
 (original/'two.json').write_text(json.dumps(json_source));json_manifest=original/'imported.json';json_manifest.write_text(json.dumps({'title':'已导入输入控制','chapters':[{'id':'one','source':'one.md'},{'id':'two','source':'two.json'}]}))
 json_bad=out/'bad-imported-math';p=invoke('bad-imported-math',json_manifest,json_bad,expect=1);assert 'formula coverage mismatch' in p.stderr;assert not (json_bad/'inputs').exists()
-record={'passed':True,'modelCalls':0,'cases':records,'scope':'Actual two-chapter Markdown/imported JSON formula coverage, formula/image identity and resume rejection. Not full generation or browser/teaching validation.'}
+record={'passed':True,'modelCalls':0,'cases':records,'scope':'Actual two-chapter Markdown/imported JSON formula coverage, formula/image identity, complete book grouping and resume rejection. Not full generation or teaching validation; source-reader preflight uses a real browser.'}
 (out/'control.json').write_text(json.dumps(record,ensure_ascii=False,indent=2)+'\n');print(json.dumps({'passed':True,'cases':len(records),'modelCalls':0}))

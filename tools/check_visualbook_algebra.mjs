@@ -6,7 +6,7 @@ import {build,preview,staticExport} from './visualbook.mjs';
 const root=path.resolve(import.meta.dirname,'..'),out=path.resolve(process.argv[2]);
 if(!out.startsWith(path.join(root,'work')+path.sep)||fs.existsSync(out))throw Error('Use a fresh ignored work directory');
 fs.mkdirSync(out,{recursive:true});
-const ids=['row-reduction','rank-nullity','basis-coordinates','basis-decomposition','residue-field','residue-zero-divisors','residue-systems','jordan-blocks','nilpotent-kernels','polynomial-division','polynomial-remainder','polynomial-bezout','quotient-cosets','solution-coset','cofactor-expansion','dual-contours','quadratic-congruence','quadratic-inertia','quadratic-degeneracy'];
+const ids=['row-reduction','rank-nullity','basis-coordinates','basis-decomposition','residue-field','residue-zero-divisors','residue-systems','jordan-blocks','nilpotent-kernels','polynomial-division','polynomial-remainder','polynomial-bezout','quotient-cosets','solution-coset','cofactor-expansion','dual-contours','quadratic-congruence','quadratic-inertia','quadratic-degeneracy','orthogonal-basis','orthogonal-remainder'];
 const reports=[];
 for(let offset=0;offset<ids.length;offset+=4) {
   const group=ids.slice(offset,offset+4),dir=path.join(out,'group-'+offset);fs.mkdirSync(dir);

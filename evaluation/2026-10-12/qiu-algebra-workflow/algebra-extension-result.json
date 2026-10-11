@@ -1,0 +1,82 @@
+{
+  "seed": 20261012,
+  "sympyVersion": "1.14.0",
+  "cases": 433,
+  "counts": {
+    "exact-row-reduction": 36,
+    "change-basis": 24,
+    "polynomial-divide": 48,
+    "polynomial-gcd": 48,
+    "residue-table": 22,
+    "nilpotent-profile": 15,
+    "bilinear-congruence": 12,
+    "determinant-expansion": 48,
+    "dual-basis": 24,
+    "symmetric-inertia": 84,
+    "orthogonalize": 72
+  },
+  "passed": true,
+  "elapsedSeconds": 3.692,
+  "sourceSha256": "ab11e48f0e88e8bb8be47df84e3a0df52be04f3c72d43d0d5ae73e67df400d53",
+  "scope": "Independent exact numeric comparison, not source accuracy, rendering or artistic review",
+  "libraryNodeTests": {
+    "passed": 152,
+    "failed": 0,
+    "scope": "Actual host full suite after literal source-matrix parser and book-index additions."
+  },
+  "pythonTests": {
+    "passed": 102,
+    "failed": 0,
+    "newSyntheticControls": 6,
+    "scope": "Full existing Python suite; six new revision/assembly fixtures test source identity/completeness, not generation or mathematical correctness."
+  },
+  "sourceMatrixProtocol": {
+    "passed": true,
+    "matrixCount": 2,
+    "modelCalls": 0,
+    "scope": "Real first-chapter source over actual local MCP protocol, immutable input retained."
+  },
+  "algebraRenderChecks": {
+    "designs": 21,
+    "widths": [
+      375,
+      1280,
+      1920
+    ],
+    "findings": 0,
+    "phase": "algebra-render-07, before subsequent generic caption and index-only style changes",
+    "newViewedSamples": [
+      "desktop orthogonal basis",
+      "mobile orthogonal remainder"
+    ],
+    "scope": "Maintenance-authored finite control renders and maintainer AI samples; no generated whole book, human artistic judgement or teacher certification."
+  },
+  "catalogRepairChecks": {
+    "designs": 11,
+    "widths": [
+      375,
+      1280,
+      1920
+    ],
+    "findings": 0,
+    "scope": "Targeted actual rendering after catalog-summary, index-selector and reusable-caption repairs. Prior104-design pass had3 failing designs and remains failed."
+  },
+  "bookIndexChecks": {
+    "plannedChapters": 25,
+    "groups": 4,
+    "widths": [
+      375,
+      1280,
+      1920
+    ],
+    "findings": 0,
+    "scope": "Actual index layout with real plan titles, not25 completed/readable chapters."
+  },
+  "preparationControls": {
+    "cases": 8,
+    "modelCalls": 0,
+    "passed": true,
+    "scope": "Actual frozen source import, math/image identity, complete-group preservation and missing-group rejection before model quota."
+  },
+  "sourceMatrixParserSha256": "3d0d6f446a797ad76d37dd04a96bf506215d7372ba0ede3d558db9dc47052c81"
+}

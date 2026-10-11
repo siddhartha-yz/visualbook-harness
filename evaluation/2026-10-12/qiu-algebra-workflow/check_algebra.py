@@ -82,6 +82,13 @@ def main():
                 b=invertible(n);a=b.T*diag*b
                 add('symmetric-inertia',{'input':inputs(a)},(a,positive,negative,n-positive-negative))
     add('symmetric-inertia',{'input':[['0','1'],['1','0']]},(S.Matrix([[0,1],[1,0]]),1,1,0))
+    for n in range(1,7):
+        for count in range(1,7):
+            columns=random_matrix(n,count)
+            if count>1 and (n+count)%2==0:columns[:,count-1]=columns[:,0]*2
+            for general_metric in [False,True]:
+                b=invertible(n);g=b.T*b if general_metric else S.eye(n)
+                add('orthogonalize',{'vectors':inputs(columns.T),'metric':inputs(g)},(columns,g))
     started=time.monotonic()
     javascript="const C=require('./packages/visualbook/calculations.cjs'); let s=''; process.stdin.setEncoding('utf8');process.stdin.on('data',x=>s+=x);process.stdin.on('end',()=>process.stdout.write(JSON.stringify(JSON.parse(s).map(x=>C.compute(x.operation,x.inputs).result))));"
     results=json.loads(subprocess.run(['node','-e',javascript],cwd=ROOT,input=json.dumps(requests),text=True,capture_output=True,check=True).stdout)
@@ -136,6 +143,25 @@ def main():
             assert r['rank']==a.rank() and r['positiveDefinite']==(positive==a.rows)
             for step in r['steps']:
                 c=mat(step['basisExact']);assert c.det()!=0 and c.T*a*c==mat(step['matrixExact'])
+        elif op=='orthogonalize':
+            columns,g=ref;rank=columns.rank();assert r['rank']==rank
+            basis=S.Matrix(columns.rows,rank,lambda i,j:S.Rational(r['orthogonalMatrixExact'][i][j]))
+            pairing=basis.T*g*basis
+            assert basis.rank()==rank and basis.row_join(columns).rank()==rank and pairing.is_diagonal()
+            assert all(pairing[i,i]>0 for i in range(rank))
+            previous=[]
+            for step in r['steps']:
+                v=columns[:,step['index']];remaining=S.Matrix([S.Rational(x) for x in step['remainderExact']])
+                total=S.zeros(columns.rows,1)
+                for j,u in enumerate(previous):
+                    coefficient=(u.T*g*v)[0]/(u.T*g*u)[0]
+                    projected=S.Matrix([S.Rational(x) for x in step['projectionsExact'][j]])
+                    assert S.Rational(step['coefficientsExact'][j])==coefficient and projected==u*coefficient
+                    total+=projected;assert (u.T*g*remaining)[0]==0
+                assert total+remaining==v and S.Rational(step['normSquaredExact'])==(remaining.T*g*remaining)[0]
+                assert step['independent']==(remaining!=S.zeros(columns.rows,1))
+                if step['independent']:previous.append(remaining)
+            assert list(basis.T.tolist())==[list(v) for v in previous]
         counts[op]=counts.get(op,0)+1
     args.output.mkdir(parents=True,exist_ok=True)
     (args.output/'inputs.json').write_text(json.dumps(requests,indent=2)+'\n');(args.output/'outputs.json').write_text(json.dumps(results,indent=2)+'\n')

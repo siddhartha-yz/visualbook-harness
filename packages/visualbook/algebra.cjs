@@ -236,7 +236,38 @@
     const values=input.map(rational),last=values.findLastIndex(x=>x.n!==0n);
     return {values:values.map(literal),degree:last<0?null:last};
   }
-  const api = { rowReduction, changeBasis, polynomialDivide, polynomialGcd, modularTable, jordanProfile, bilinearChange, determinantExpansion, dualBasis, symmetricInertia, coefficientLiterals };
+  function orthogonalize({ vectors, metric } = {}) {
+    const original = matrix(vectors), n = original[0].length;
+    const g = metric === undefined ? identity(n) : matrix(metric);
+    if (g.length !== n || g[0].length !== n || !symmetricInertia({ input: exact(g) }).positiveDefinite) throw Error("Real symmetric positive definite metric required");
+    const inner = (a, b) => product(product([a], g), b.map(x => [x]))[0][0];
+    const basis = [], norms = [], steps = [], independentIndices = [];
+    original.forEach((vector, index) => {
+      let remainder = vector.slice(); const projections = [], coefficients = [];
+      basis.forEach((u, i) => {
+        const coefficient = div(inner(vector, u), norms[i]), projected = u.map(x => mul(x, coefficient));
+        remainder = remainder.map((x, j) => sub(x, projected[j]));
+        coefficients.push(coefficient); projections.push(projected);
+      });
+      const norm = inner(remainder, remainder), independent = norm.n !== 0n;
+      steps.push({ index, original: vector.map(number), originalExact: vector.map(literal),
+        projections: numeric(projections), projectionsExact: exact(projections),
+        coefficients: coefficients.map(number), coefficientsExact: coefficients.map(literal),
+        remainder: remainder.map(number), remainderExact: remainder.map(literal),
+        normSquared: number(norm), normSquaredExact: literal(norm), independent });
+      if (independent) { independentIndices.push(index); basis.push(remainder); norms.push(norm); }
+    });
+    const pairings = basis.map(u => basis.map(v => inner(u, v)));
+    const basisMatrix = Array.from({ length: n }, (_, i) => basis.map(u => u[i]));
+    return { vectors: numeric(original), vectorsExact: exact(original), metric: numeric(g), metricExact: exact(g),
+      steps, rank: basis.length, independentIndices, orthogonalBasis: numeric(basis), orthogonalBasisExact: exact(basis),
+      orthogonalMatrix: numeric(basisMatrix), orthogonalMatrixExact: exact(basisMatrix),
+      normSquares: norms.map(number), normSquaresExact: norms.map(literal),
+      unitBasis: basis.map((v, i) => v.map(x => number(x) / Math.sqrt(number(norms[i])))),
+      pairings: numeric(pairings), pairingsExact: exact(pairings),
+      convention: "Exact rational Gram-Schmidt over R with positive definite symmetric metric G, <u,v>=u^T G v. Input vectors are rows; orthogonalMatrix places output basis in columns. Zero/dependent inputs are explicitly skipped, not normalized. Unit vectors use numeric square roots; exact basis is unnormalized. G-orthogonality need not look perpendicular in Euclidean screen coordinates." };
+  }
+  const api = { rowReduction, changeBasis, polynomialDivide, polynomialGcd, modularTable, jordanProfile, bilinearChange, determinantExpansion, dualBasis, symmetricInertia, coefficientLiterals, orthogonalize };
   if (typeof module !== "undefined" && module.exports) module.exports = api;
   global.VisualBookAlgebra = api;
 })(typeof window !== "undefined" ? window : globalThis);
