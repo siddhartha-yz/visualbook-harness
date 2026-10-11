@@ -32,6 +32,15 @@ def invertible(n):
         a=random_matrix(n,n)
         if a.det(): return a
 
+def complex_inputs(a):
+    return [[{'re':literal(S.re(v)),'im':literal(S.im(v))} for v in row] for row in a.tolist()]
+
+def complex_value(a):
+    return S.Rational(a['re'])+S.I*S.Rational(a['im'])
+
+def complex_matrix(a):
+    return S.Matrix([[complex_value(v) for v in row] for row in a])
+
 def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('output',type=Path);args=p.parse_args()
     if not args.output.resolve().is_relative_to((ROOT/'work').resolve()): p.error('Keep actual evaluation records in ignored work/')
@@ -89,6 +98,17 @@ def main():
             for general_metric in [False,True]:
                 b=invertible(n);g=b.T*b if general_metric else S.eye(n)
                 add('orthogonalize',{'vectors':inputs(columns.T),'metric':inputs(g)},(columns,g))
+    for n in range(1,7):
+        for _ in range(4):
+            u=random_matrix(n,1)+S.I*random_matrix(n,1);v=random_matrix(n,1)+S.I*random_matrix(n,1)
+            scalar=S.Rational(RNG.randrange(-3,4),2)+S.I*S.Rational(RNG.randrange(-3,4),3)
+            for slot in ['first','second']:
+                add('complex-inner-product',{'u':complex_inputs(u.T)[0],'v':complex_inputs(v.T)[0],
+                    'linearSlot':slot,'scalar':{'re':literal(S.re(scalar)),'im':literal(S.im(scalar))}},(u,v,scalar,slot))
+        a=random_matrix(n,n)+S.I*random_matrix(n,n)
+        phases=[S.I**RNG.randrange(4) for _ in range(n)];permutation=S.eye(n);order=list(range(n));RNG.shuffle(order);permutation=permutation[:,order]
+        for m in [a,a+a.adjoint(),S.diag(*[a[i,i] for i in range(n)]),permutation*S.diag(*phases)]:
+            add('complex-operator',{'input':complex_inputs(m)},m)
     started=time.monotonic()
     javascript="const C=require('./packages/visualbook/calculations.cjs'); let s=''; process.stdin.setEncoding('utf8');process.stdin.on('data',x=>s+=x);process.stdin.on('end',()=>process.stdout.write(JSON.stringify(JSON.parse(s).map(x=>C.compute(x.operation,x.inputs).result))));"
     results=json.loads(subprocess.run(['node','-e',javascript],cwd=ROOT,input=json.dumps(requests),text=True,capture_output=True,check=True).stdout)
@@ -162,6 +182,26 @@ def main():
                 assert step['independent']==(remaining!=S.zeros(columns.rows,1))
                 if step['independent']:previous.append(remaining)
             assert list(basis.T.tolist())==[list(v) for v in previous]
+        elif op=='complex-inner-product':
+            u,v,scalar,slot=ref
+            inner=(u.T*v.conjugate())[0] if slot=='first' else (u.conjugate().T*v)[0]
+            assert S.expand(complex_value(r['innerExact'])-inner)==0
+            assert S.expand(complex_value(r['reverseExact'])-S.conjugate(inner))==0
+            assert S.expand(complex_value(r['scaledInnerExact'])-(scalar if slot=='first' else S.conjugate(scalar))*inner)==0
+            assert S.expand(complex_value(r['bilinearWithoutConjugationExact'])-(u.T*v)[0])==0
+            assert S.Rational(r['normUSquaredExact'])==S.expand((u.adjoint()*u)[0])
+            assert S.Rational(r['normVSquaredExact'])==S.expand((v.adjoint()*v)[0])
+            assert len(r['termsExact'])==u.rows
+            for i,t in enumerate(r['termsExact']):
+                term=u[i]*S.conjugate(v[i]) if slot=='first' else S.conjugate(u[i])*v[i]
+                assert S.expand(complex_value(t)-term)==0
+        elif op=='complex-operator':
+            a=ref;adj=a.adjoint();left=(adj*a).applyfunc(S.expand);right=(a*adj).applyfunc(S.expand)
+            assert complex_matrix(r['adjoint']['exact'])==adj and complex_matrix(r['transpose']['exact'])==a.T
+            assert complex_matrix(r['adjointProduct']['exact'])==left and complex_matrix(r['reverseAdjointProduct']['exact'])==right
+            assert complex_matrix(r['transposeProduct']['exact'])==(a.T*a).applyfunc(S.expand)
+            assert r['unitary']==(left==S.eye(a.rows) and right==S.eye(a.rows))
+            assert r['hermitian']==(a==adj) and r['normal']==(left==right)
         counts[op]=counts.get(op,0)+1
     args.output.mkdir(parents=True,exist_ok=True)
     (args.output/'inputs.json').write_text(json.dumps(requests,indent=2)+'\n');(args.output/'outputs.json').write_text(json.dumps(results,indent=2)+'\n')

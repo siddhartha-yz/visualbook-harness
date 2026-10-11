@@ -100,6 +100,10 @@ custom draw(input)收到svg,width,height,progress,params,state,controls,board。
 
 `orthogonalize` 输入vectors为1..6个按行列出的实向量；可选metric是同维实对称正定矩阵G，内积为uᵀGv。返回精确未归一化正交基、每项投影/剩余、独立输入位置、范数平方；orthogonalMatrix把所得向量放在列。零与相关输入明确跳过，不能归一化零。unitBasis才使用数值平方根，不能称它为精确有理数答案。非单位G下的正交不一定在普通坐标屏幕上成直角；orthogonal-basis / orthogonal-remainder示例均明确使用欧氏内积。
 
+`complex-inner-product` 计算标准Cⁿ复内积，必须指定linearSlot:"first"或"second"，分别为Σuⱼconj(vⱼ)或Σconj(uⱼ)vⱼ。复数输入是`{"re":"1/2","im":1}`，实数可直接写数字/分数字符串。返回逐项乘积、整体内积、范数平方与标量缩放的精确结果，也返回不带共轭的乘积用于对照。不要把实双线性内积规则搬进复空间；i乘在反线性变量上会变成−i。
+
+`complex-operator` 用精确Q(i)计算方阵的转置、共轭转置及两种乘积，明确判定酉、自伴、正规三个性质。实部/虚部可分别接tensor，但只显示实部不能据此判定性质。`complex-plane` 每个点是一项复数分量，Re/Im单位比例相同；不是把Cⁿ向量假装成实二维箭头。共轭演示的中间画面只是实坐标反射的连续提示，不称复线性变换或酉变换。命名设计仍要核对当前章的线性变量约定。
+
 `extract_source_matrices` 只读取一个真实原文锚点内最多四个pmatrix/bmatrix/vmatrix/Vmatrix/array；支持整数、十进制、有理数字面量及标准分数，最多6行8列。返回valuesExact、values、原TeX、源码/原文块哈希及实际数组分隔列。单个竖线分隔才提供coefficientColumns，不凭矩阵宽度猜常数项。变量、表达式、嵌套或不支持的样式返回unsupported原因，不自动解释；没有数值矩阵时也明确返回空列表。直接连接 exact-row-reduction / determinant-expansion 等实际输入，再看公式与图是否匹配。此入口不评判老师的公式是否正确，不能拿读取成功当独立数学验收。
 
 共享图注描述运算关系；实际数值由计算结果连接readout等组件显示。改了矩阵/多项式/模数后，不得继续沿用某个示例的数值、整除、素数域或链长结论。标题、summary与原文具体条件仍要核对；同一组件可复用，并不表示任意输入都满足某个定理。

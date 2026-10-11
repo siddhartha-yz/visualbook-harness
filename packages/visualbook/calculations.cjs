@@ -49,6 +49,16 @@
       ? require("./algebra.cjs")
       : global.VisualBookAlgebra;
   const operations = {
+    "complex-inner-product": {
+      keys:["u","v","linearSlot","scalar"],required:["u","v","linearSlot"],
+      outputs:["u","v","uExact","vExact","linearSlot","scalar","scalarExact","uPoints","vPoints","conjugatedUPoints","terms","termsExact","termPoints","inner","innerExact","innerPoint","reverseExact","bilinearWithoutConjugation","bilinearWithoutConjugationExact","bilinearTermPoints","scaledU","scaledUPoints","scaledInnerExact","normUSquared","normVSquared","normUSquaredExact","normVSquaredExact","convention"],
+      run:A.complexInnerProduct,
+    },
+    "complex-operator": {
+      keys:["input"],required:["input"],
+      outputs:["input","transpose","adjoint","adjointProduct","reverseAdjointProduct","transposeProduct","unitary","hermitian","normal","unitaryIndicator","hermitianIndicator","normalIndicator","convention"],
+      run:A.complexOperator,
+    },
     "orthogonalize": {
       keys: ["vectors", "metric"], required: ["vectors"],
       outputs: ["vectors", "vectorsExact", "metric", "metricExact", "steps", "rank", "independentIndices", "orthogonalBasis", "orthogonalBasisExact", "orthogonalMatrix", "orthogonalMatrixExact", "normSquares", "normSquaresExact", "unitBasis", "pairings", "pairingsExact", "convention"],

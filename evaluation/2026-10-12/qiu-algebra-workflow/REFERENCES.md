@@ -8,5 +8,7 @@
 - [3Blue1Brown：换基](https://www.3blue1brown.com/lessons/change-of-basis/)：借鉴同一个向量保留几何身份、两套基与坐标并列的讲解方式。自写组件与算例，没有搬运截图、原动画或讲稿。
 - [Immersive Linear Algebra：行列式](https://www.immersivemath.com/ila/ch07_determinants/ch07.html)：参考把几何对象、参数变化和邻近正文连起来的方式。代数教材不能把二维面积图当成任意数域上的证明。
 - [Axler开放教材作者站](https://www.linear.axler.net/)：可用作独立理论对照，不是本轮转写来源；未复制其教材作为课程正文。
+- [Axler第四版第6章](https://linear.axler.net/LADR4e.pdf)：实际核对复内积“第一个变量线性”的定义及另一种约定的说明。新计算入口要求显式选first/second，不把某一约定藏成默认值；未复制书页或正文。
+- [SymPy矩阵文档](https://docs.sympy.org/latest/modules/matrices/matrices.html)：核对adjoint为共轭转置，与adjugate（伴随矩阵）不同。独立数值对照使用本地固定SymPy1.14.0，而不是网页浮动版本。
 
 设计原则：静态默认能读懂，必要的连续构造主动短播；离散算法用真正的离散步骤。图里优先画对象与关系，说明只给一条阅读线索；运行限制和审查证据留在开发记录。新图的通过门禁仅意味着检查范围内没有已发现布局/公式错误，仍须实际看画面并检查教学含义。

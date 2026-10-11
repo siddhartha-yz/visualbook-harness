@@ -267,7 +267,61 @@
       pairings: numeric(pairings), pairingsExact: exact(pairings),
       convention: "Exact rational Gram-Schmidt over R with positive definite symmetric metric G, <u,v>=u^T G v. Input vectors are rows; orthogonalMatrix places output basis in columns. Zero/dependent inputs are explicitly skipped, not normalized. Unit vectors use numeric square roots; exact basis is unnormalized. G-orthogonality need not look perpendicular in Euclidean screen coordinates." };
   }
-  const api = { rowReduction, changeBasis, polynomialDivide, polynomialGcd, modularTable, jordanProfile, bilinearChange, determinantExpansion, dualBasis, symmetricInertia, coefficientLiterals, orthogonalize };
+  function complex(value) {
+    if (value !== null && typeof value === 'object' && !Array.isArray(value)) {
+      if (Object.keys(value).sort().join(',') !== 'im,re') throw Error('Complex input must have exactly re and im');
+      return { re:rational(value.re), im:rational(value.im) };
+    }
+    return { re:rational(value), im:Z() };
+  }
+  const cAdd=(a,b)=>({re:add(a.re,b.re),im:add(a.im,b.im)});
+  const cMul=(a,b)=>({re:sub(mul(a.re,b.re),mul(a.im,b.im)),im:add(mul(a.re,b.im),mul(a.im,b.re))});
+  const cConj=a=>({re:a.re,im:neg(a.im)});
+  const cExact=a=>({re:literal(a.re),im:literal(a.im)});
+  const cNumber=a=>({re:number(a.re),im:number(a.im)});
+  const cPoint=a=>[number(a.re),number(a.im)];
+  const cZero=()=>({re:Z(),im:Z()});
+  const cEqual=(a,b)=>sub(a.re,b.re).n===0n && sub(a.im,b.im).n===0n;
+  const cSum=xs=>xs.reduce(cAdd,cZero());
+  function complexVector(input) {
+    if (!Array.isArray(input)||input.length<1||input.length>6) throw Error('Use 1..6 complex vector components');
+    return input.map(complex);
+  }
+  function complexInnerProduct({u,v,linearSlot,scalar=1}={}) {
+    if (!['first','second'].includes(linearSlot)) throw Error('Explicit linearSlot first or second required');
+    const a=complexVector(u),b=complexVector(v),s=complex(scalar);
+    if(a.length!==b.length) throw Error('Complex vector dimensions differ');
+    const terms=(x,y)=>x.map((z,i)=>linearSlot==='first'?cMul(z,cConj(y[i])):cMul(cConj(z),y[i]));
+    const inner=cSum(terms(a,b)),reverse=cSum(terms(b,a)),scaled=a.map(z=>cMul(s,z));
+    const bilinear=a.map((z,i)=>cMul(z,b[i]));
+    const norm=x=>cSum(x.map(z=>cMul(z,cConj(z)))).re;
+    return {u:a.map(cNumber),v:b.map(cNumber),uExact:a.map(cExact),vExact:b.map(cExact),linearSlot,scalar:cNumber(s),scalarExact:cExact(s),
+      uPoints:a.map(cPoint),vPoints:b.map(cPoint),conjugatedUPoints:a.map(z=>cPoint(cConj(z))),
+      terms:terms(a,b).map(cNumber),termsExact:terms(a,b).map(cExact),termPoints:terms(a,b).map(cPoint),
+      inner:cNumber(inner),innerExact:cExact(inner),innerPoint:cPoint(inner),reverseExact:cExact(reverse),
+      bilinearWithoutConjugation:cNumber(cSum(bilinear)),bilinearWithoutConjugationExact:cExact(cSum(bilinear)),bilinearTermPoints:bilinear.map(cPoint),
+      scaledU:scaled.map(cNumber),scaledUPoints:scaled.map(cPoint),scaledInnerExact:cExact(cSum(terms(scaled,b))),
+      normUSquared:number(norm(a)),normVSquared:number(norm(b)),normUSquaredExact:literal(norm(a)),normVSquaredExact:literal(norm(b)),
+      convention:'Standard C^n inner product, explicit linear slot: first means sum u_j conjugate(v_j); second means sum conjugate(u_j) v_j. Exact arithmetic in Q(i); re/im drawing coordinates are numeric approximations. No complex vector is represented as a single 2D real arrow unless its components are explicitly separate points. Bilinear product is a comparison, not an inner product.'};
+  }
+  function complexMatrix(input) {
+    if(!Array.isArray(input)||input.length<1||input.length>6||input.some(row=>!Array.isArray(row)||row.length!==input.length)) throw Error('Use a square complex matrix of size1..6');
+    return input.map(row=>row.map(complex));
+  }
+  const cTranspose=a=>a[0].map((_,j)=>a.map(row=>row[j]));
+  const cAdjoint=a=>cTranspose(a).map(row=>row.map(cConj));
+  const cProduct=(a,b)=>a.map(row=>b[0].map((_,j)=>cSum(row.map((v,k)=>cMul(v,b[k][j])))));
+  const cMatrixEqual=(a,b)=>a.every((row,i)=>row.every((v,j)=>cEqual(v,b[i][j])));
+  function complexOperator({input}={}) {
+    const a=complexMatrix(input),adjoint=cAdjoint(a),t=cTranspose(a),left=cProduct(adjoint,a),right=cProduct(a,adjoint),wrong=cProduct(t,a);
+    const id=a.map((row,i)=>row.map((_,j)=>({re:i===j?O():Z(),im:Z()})));
+    const parts=m=>({real:m.map(row=>row.map(v=>number(v.re))),imaginary:m.map(row=>row.map(v=>number(v.im))),exact:m.map(row=>row.map(cExact))});
+    const unitary=cMatrixEqual(left,id)&&cMatrixEqual(right,id),hermitian=cMatrixEqual(a,adjoint),normal=cMatrixEqual(left,right);
+    return {input:parts(a),transpose:parts(t),adjoint:parts(adjoint),adjointProduct:parts(left),reverseAdjointProduct:parts(right),transposeProduct:parts(wrong),
+      unitary,hermitian,normal,unitaryIndicator:unitary?1:0,hermitianIndicator:hermitian?1:0,normalIndicator:normal?1:0,
+      convention:'Exact square complex matrix over Q(i). Adjoint means conjugate transpose, never plain transpose. Unitary is A* A=A A*=I; Hermitian is A=A*; normal is A* A=A A*. Flags are exact for supplied finite data; no eigenvector/spectral theorem, arbitrary-field or approximate-tolerance claim.'};
+  }
+  const api = { rowReduction, changeBasis, polynomialDivide, polynomialGcd, modularTable, jordanProfile, bilinearChange, determinantExpansion, dualBasis, symmetricInertia, coefficientLiterals, orthogonalize, complexInnerProduct, complexOperator };
   if (typeof module !== "undefined" && module.exports) module.exports = api;
   global.VisualBookAlgebra = api;
 })(typeof window !== "undefined" ? window : globalThis);

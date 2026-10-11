@@ -1804,6 +1804,35 @@
       ],
       "limits": "Only R²/span(direction); choosing orthogonal representatives uses Euclidean structure and is not intrinsic to arbitrary quotient spaces.",
       "keywords": "商空间 等价关系 商集 陪集 齐次解 通解 coset quotient affine solution 对偶 线性函数 covector dual"
+    },
+    {
+      "id": "complex-plane",
+      "title": "复数分量与共轭",
+      "props": {
+        "points": "1..6 numeric [real,imaginary] component points; not a C^n vector projected to real2D",
+        "labels": "One optional short identity per component",
+        "reflect": "Boolean; endpoint reflects imaginary coordinates",
+        "progress": "0..1 continuous real-coordinate reflection guide, not intermediate complex-linear operators",
+        "xDomain": "Increasing finite [min,max] containing all points",
+        "yDomain": "Increasing finite [min,max] containing original and reflected points",
+        "title": "Optional short title"
+      },
+      "required": [
+        "points"
+      ],
+      "outputs": [
+        "points",
+        "transformed",
+        "reflect",
+        "progress",
+        "convention"
+      ],
+      "examples": [
+        "complex-conjugation",
+        "complex-bilinear-vs-inner"
+      ],
+      "limits": "Each mark is one complex scalar; equal Re/Im units. Reflection preserves real coordinates and flips imaginary endpoints. Intermediates are a real-coordinate guide, not complex-linear/unitary transformations. Does not depict arbitrary complex-dimensional geometry.",
+      "keywords": "复数 共轭 内积 酉空间 real imaginary conjugate complex Hermitian unitary"
     }
   ]
 }

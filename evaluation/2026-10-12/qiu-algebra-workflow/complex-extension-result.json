@@ -1,0 +1,107 @@
+{
+  "status": "completed-bounded-tool-extension",
+  "modelCalls": 0,
+  "inventory": {
+    "components": 58,
+    "designs": 107,
+    "operations": 52
+  },
+  "newOperations": [
+    "complex-inner-product",
+    "complex-operator"
+  ],
+  "newComponent": "complex-plane",
+  "newDesigns": [
+    "complex-conjugation",
+    "complex-bilinear-vs-inner",
+    "complex-unitary-check"
+  ],
+  "numericCheck": {
+    "seed": 20261012,
+    "sympyVersion": "1.14.0",
+    "cases": 505,
+    "counts": {
+      "exact-row-reduction": 36,
+      "change-basis": 24,
+      "polynomial-divide": 48,
+      "polynomial-gcd": 48,
+      "residue-table": 22,
+      "nilpotent-profile": 15,
+      "bilinear-congruence": 12,
+      "determinant-expansion": 48,
+      "dual-basis": 24,
+      "symmetric-inertia": 84,
+      "orthogonalize": 72,
+      "complex-inner-product": 48,
+      "complex-operator": 24
+    },
+    "passed": true,
+    "elapsedSeconds": 1.506,
+    "sourceSha256": "292ee16c212b25a7fa6e9e06088c52486189c7949a53d2fe7cc05930f88cf889",
+    "scope": "Independent exact numeric comparison, not source accuracy, rendering or artistic review"
+  },
+  "nodeTests": {
+    "passed": 155,
+    "failed": 0,
+    "scope": "Full current Node suite; no generated course claim"
+  },
+  "render": {
+    "widths": [
+      375,
+      1280,
+      1920
+    ],
+    "designs": 3,
+    "findings": 0,
+    "codeVersion": "uncommitted complex extension after 928e1e0",
+    "exports": [
+      {
+        "id": "complex-conjugation",
+        "sha256": "2bf14f22ffead62c56c89ff849ad116c77f321e714ac80f004e2b2d6c1953b44"
+      },
+      {
+        "id": "complex-bilinear-vs-inner",
+        "sha256": "b1a9cc05727bf7cb4377e6eeeef0bd63df0a3dcfd8dd32967bd571eca4a9bc26"
+      },
+      {
+        "id": "complex-unitary-check",
+        "sha256": "9c735e0f909e71e3a6d5dc360a16aea914fa768c7c902d514323932092c7a7b9"
+      }
+    ]
+  },
+  "retainedFailures": [
+    {
+      "run": "complex-render-01",
+      "kind": "CLI option/ID argument error; no candidate created"
+    },
+    {
+      "run": "complex-render-02",
+      "kind": "Axis name overlaps end tick labels",
+      "findingsByDesign": [
+        14,
+        21,
+        0
+      ]
+    }
+  ],
+  "maintainerImageReview": {
+    "reviewer": "primary Codex maintainer AI",
+    "samples": [
+      "complex-conjugation 1280 reading context",
+      "complex-bilinear-vs-inner 375 reading context",
+      "complex-unitary-check 1280 reading context"
+    ],
+    "observations": [
+      "Original scalar numbers stay as hollow marks; final conjugates preserve color identity",
+      "Both inner-product variants fit mobile width and axis names no longer overlap end ticks",
+      "Two real-part matrix views use a separate exact full-complex unitary indicator"
+    ],
+    "limitations": [
+      "Not human or teacher review",
+      "Reusable fixtures contain engineering limits as body text, not final course prose",
+      "No claim of positive definiteness proved by finite examples",
+      "Complex-plane marks are separate scalar components, not an intrinsic geometric image of C^n",
+      "No full 151-part textbook or visualbook completion claim yet"
+    ]
+  }
+}

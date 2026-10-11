@@ -150,5 +150,28 @@
     board.label('quotient-coordinate',coordinateLabel+' '+V.formatNumber(coordinate*coordinateScale),board.width/2,board.height-10,{size:13,anchor:'middle',maxWidth:board.width-24,avoid:false});
     return {direction,vector,coordinate,displayCoordinate:coordinate*coordinateScale,coordinateScale,coordinateLabel,representative,current,convention:'R²/span(direction); parallel lines are equivalence classes. Orthogonal representatives are a chosen Euclidean model, not intrinsic to every quotient space. Progress moves within one class and leaves its quotient coordinate unchanged.'};
   }
-  Object.assign(V.components,{'exact-matrix':exactMatrix,'basis-frame':basisFrame,'residue-grid':residueGrid,'jordan-chains':jordanChains,'coefficient-strip':coefficientStrip,'quotient-plane':quotientPlane});
+  function complexPlane(board,{points,labels=null,reflect=false,progress=1,xDomain=[-3,3],yDomain=[-3,3],title=''}={}) {
+    if(!Array.isArray(points)||points.length<1||points.length>6) throw Error('Use1..6 complex component points');
+    points.forEach(pair);short(title);
+    if(typeof reflect!=='boolean'||!Number.isFinite(progress)||progress<0||progress>1) throw Error('Explicit reflection flag and progress0..1 required');
+    const names=labels??points.map((_,i)=>'z'+subscript(i+1));
+    if(!Array.isArray(names)||names.length!==points.length)throw Error('One label per complex component required');names.forEach(s=>short(s,12));
+    const transformed=points.map(([re,im])=>[re,reflect?im*(1-2*progress):im]);
+    for(const [re,im] of [...points,...transformed])if(re<xDomain[0]||re>xDomain[1]||im<yDomain[0]||im>yDomain[1])throw Error('Complex component outside drawing domains');
+    const f=V.plotFrame(board,'axes',{title:title||null,xDomain,yDomain,equalUnits:true,grid:false,footerHeight:30,headerHeight:16});
+    board.text('real-axis-label','Re',f.right,f.bottom+50,{size:12,anchor:'end',color:P.muted,halo:false});
+    board.text('imaginary-axis-label','Im',f.left,f.top-12,{size:12,color:P.muted,halo:false});
+    const colors=[P.blue,P.orange,P.violet,P.green,P.gold,P.muted];
+    points.forEach((p,i)=>{
+      const q=transformed[i],color=colors[i];
+      if(reflect&&p[1]!==0){
+        board.curve('reflection-guide-'+i,f,[[p[0],Math.abs(p[1])],[p[0],-Math.abs(p[1])]],{color,width:1,opacity:.24});
+        board.mark('original-'+i,'circle',{cx:f.x(p[0]),cy:f.y(p[1]),r:5,fill:'none',stroke:color,'stroke-width':1.4,opacity:.55});
+      }
+      board.circle('point-'+i,f.x(q[0]),f.y(q[1]),5,color);
+      board.label('point-label-'+i,names[i],f.x(q[0])+9,f.y(q[1])-9,{size:13,color,maxWidth:64});
+    });
+    return {points,transformed,reflect,progress,convention:'Each labelled point is one complex scalar component on the real/imaginary plane. Reflection endpoint is conjugation; intermediate points are a continuous real-coordinate illustration, not complex-linear or unitary operators. Equal units on both axes; no representation of C^n as an intrinsic real2D space.'};
+  }
+  Object.assign(V.components,{'exact-matrix':exactMatrix,'basis-frame':basisFrame,'residue-grid':residueGrid,'jordan-chains':jordanChains,'coefficient-strip':coefficientStrip,'quotient-plane':quotientPlane,'complex-plane':complexPlane});
 })(window);

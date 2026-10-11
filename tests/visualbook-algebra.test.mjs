@@ -74,3 +74,25 @@ test('General inner-product orthogonality uses its metric, not screen angles',()
  assert.throws(()=>A.orthogonalize({vectors:[[1,0]],metric:[[1,0],[0,-1]]}),/positive definite/);
  assert.throws(()=>A.orthogonalize({vectors:[[1,0]],metric:[[1,1],[0,1]]}),/symmetric/);
 });
+test('Complex inner products explicitly choose the linear slot and conjugate scalars',()=>{
+ const data={u:[{re:1,im:1},2],v:[{re:2,im:-1},{re:0,im:1}],scalar:{re:0,im:1}};
+ const a=A.complexInnerProduct({...data,linearSlot:'first'}),b=A.complexInnerProduct({...data,linearSlot:'second'});
+ assert.deepEqual(a.innerExact,{re:'1',im:'1'});assert.deepEqual(b.innerExact,{re:'1',im:'-1'});
+ assert.deepEqual(a.scaledInnerExact,{re:'-1',im:'1'});assert.deepEqual(b.scaledInnerExact,{re:'-1',im:'-1'});
+ assert.throws(()=>A.complexInnerProduct(data),/linearSlot/);
+ assert.throws(()=>A.complexInnerProduct({...data,linearSlot:'first',u:[{re:1,im:1,guess:true}]}),/exactly/);
+});
+test('Bilinear complex product fails positivity while conjugate product has positive norm',()=>{
+ const r=A.complexInnerProduct({u:[{re:0,im:1}],v:[{re:0,im:1}],linearSlot:'first'});
+ assert.deepEqual(r.innerExact,{re:'1',im:'0'});assert.deepEqual(r.bilinearWithoutConjugationExact,{re:'-1',im:'0'});
+ assert.equal(r.normUSquaredExact,'1');
+ assert.equal(A.complexInnerProduct({u:[0],v:[0],linearSlot:'second'}).normUSquaredExact,'0');
+});
+test('Conjugate transpose differs from transpose for unitary complex phases',()=>{
+ const r=A.complexOperator({input:[[{re:0,im:1},0],[0,1]]});
+ assert.equal(r.unitary,true);assert.equal(r.normal,true);assert.equal(r.hermitian,false);
+ assert.deepEqual(r.adjointProduct.real,[[1,0],[0,1]]);assert.deepEqual(r.transposeProduct.real,[[-1,0],[0,1]]);
+ assert.deepEqual(r.adjoint.imaginary,[[-1,0],[0,0]]);
+ const h=A.complexOperator({input:[[1,{re:0,im:1}],[{re:0,im:-1},2]]});assert.equal(h.hermitian,true);assert.equal(h.unitary,false);
+ assert.equal(A.complexOperator({input:[[0,1],[0,0]]}).normal,false);
+});

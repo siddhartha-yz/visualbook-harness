@@ -9046,6 +9046,209 @@
           ]
         }
       }
+    },
+    {
+      "topic": "数学 / 高等代数",
+      "presentation": "reading",
+      "placement": "margin",
+      "id": "complex-conjugation",
+      "title": "共轭只把虚部翻到另一侧",
+      "interaction": "timeline",
+      "initialProgress": 1,
+      "height": 330,
+      "mobileHeight": 340,
+      "summary": "空心点保留原数，实心点表示共轭；蓝色与橙色区分两项分量。",
+      "limits": "Two independent complex scalar components. Continuous reflection guide changes real coordinates between endpoints; conjugation is not complex-linear. This plane is not an intrinsic picture of C^n.",
+      "scene": {
+        "type": "complex-plane",
+        "props": {
+          "points": [
+            [
+              1,
+              1
+            ],
+            [
+              -1,
+              2
+            ]
+          ],
+          "reflect": true,
+          "progress": {
+            "$progress": true
+          },
+          "xDomain": [
+            -3,
+            3
+          ],
+          "yDomain": [
+            -3,
+            3
+          ]
+        }
+      },
+      "marginSide": "right"
+    },
+    {
+      "topic": "数学 / 高等代数",
+      "presentation": "reading",
+      "placement": "wide",
+      "id": "complex-bilinear-vs-inner",
+      "title": "为什么复内积需要共轭",
+      "interaction": "static",
+      "height": 320,
+      "mobileHeight": 550,
+      "summary": "比较带共轭与不带共轭的乘积；正定性要求向量与自身的内积是非负实数。",
+      "limits": "Standard first-slot-linear C^n inner product on a supplied self-pairing, compared with bilinear multiplication. Each plotted mark is one scalar term; positive definiteness is a definition/theorem, not established by this finite example.",
+      "scene": {
+        "type": "compose",
+        "calculations": [
+          {
+            "id": "complex",
+            "operation": "complex-inner-product",
+            "inputs": {
+              "u": [
+                {
+                  "re": 0,
+                  "im": 1
+                }
+              ],
+              "v": [
+                {
+                  "re": 0,
+                  "im": 1
+                }
+              ],
+              "linearSlot": "first"
+            }
+          }
+        ],
+        "visual": {
+          "type": "columns",
+          "layout": {
+            "gap": 18,
+            "minColumnWidth": 280
+          },
+          "children": [
+            {
+              "type": "complex-plane",
+              "props": {
+                "points": {
+                  "$result": "complex.termPoints"
+                },
+                "title": "带共轭的乘积",
+                "xDomain": [
+                  -2,
+                  2
+                ],
+                "yDomain": [
+                  -2,
+                  2
+                ]
+              }
+            },
+            {
+              "type": "complex-plane",
+              "props": {
+                "points": {
+                  "$result": "complex.bilinearTermPoints"
+                },
+                "title": "不带共轭的乘积",
+                "xDomain": [
+                  -2,
+                  2
+                ],
+                "yDomain": [
+                  -2,
+                  2
+                ]
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "topic": "数学 / 高等代数",
+      "presentation": "reading",
+      "placement": "wide",
+      "id": "complex-unitary-check",
+      "title": "酉矩阵需要共轭转置",
+      "interaction": "static",
+      "height": 300,
+      "mobileHeight": 540,
+      "summary": "并排比较共轭转置与普通转置的乘积实部；酉矩阵的判断使用完整复数结果。",
+      "limits": "Default diagonal complex phase matrix. Both real/imaginary products are computed exactly; these tensor views show real parts only. Unitary indicator uses both parts and both product orders, never the displayed real matrices alone.",
+      "scene": {
+        "type": "compose",
+        "calculations": [
+          {
+            "id": "complex",
+            "operation": "complex-operator",
+            "inputs": {
+              "input": [
+                [
+                  {
+                    "re": 0,
+                    "im": 1
+                  },
+                  0
+                ],
+                [
+                  0,
+                  1
+                ]
+              ]
+            }
+          }
+        ],
+        "visual": {
+          "type": "columns",
+          "layout": {
+            "gap": 18,
+            "weights": [
+              2,
+              2,
+              1
+            ],
+            "minColumnWidth": 240
+          },
+          "children": [
+            {
+              "type": "tensor",
+              "props": {
+                "values": {
+                  "$result": "complex.adjointProduct.real"
+                },
+                "title": "A* A 的实部",
+                "encoding": "neutral"
+              }
+            },
+            {
+              "type": "tensor",
+              "props": {
+                "values": {
+                  "$result": "complex.transposeProduct.real"
+                },
+                "title": "Aᵀ A 的实部",
+                "encoding": "neutral"
+              }
+            },
+            {
+              "type": "readout",
+              "props": {
+                "items": [
+                  {
+                    "label": "完整计算：是否酉矩阵",
+                    "value": {
+                      "$result": "complex.unitary"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
     }
   ]
 }
