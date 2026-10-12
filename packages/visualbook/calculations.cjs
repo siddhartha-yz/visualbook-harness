@@ -74,6 +74,11 @@
       outputs: ["vectors", "vectorsExact", "metric", "metricExact", "steps", "rank", "independentIndices", "orthogonalBasis", "orthogonalBasisExact", "orthogonalMatrix", "orthogonalMatrixExact", "normSquares", "normSquaresExact", "unitBasis", "pairings", "pairingsExact", "convention"],
       run: A.orthogonalize,
     },
+    "exact-matrix-product": {
+      outputs: ["a","aExact","b","bExact","output","outputExact","leftShape","rightShape","outputShape","convention"],
+      keys: ["a","b"], required: ["a","b"],
+      run: input => A.matrixProduct(input),
+    },
     "determinant-expansion": {
       keys: ["input", "axis", "index"], required: ["input"],
       outputs: ["input", "inputExact", "axis", "index", "terms", "cofactors", "cofactorsExact", "values", "valuesExact", "determinant", "determinantExact", "convention"],

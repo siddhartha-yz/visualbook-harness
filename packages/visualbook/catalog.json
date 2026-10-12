@@ -5232,7 +5232,8 @@
             }
           ]
         }
-      }
+      },
+      "summary": "B=N=H=d=2，编号0..15代表同一元素。先[B,N,H,d]→[B,H,N,d]，再逻辑合并BH；两格子按各自列标签展开。点击“按 B、N 分行”的格子，“按 B、H 分行”会标出同一元素；只解释索引，没有训练或零拷贝宣称。"
     },
     {
       "id": "sparse-gradient-memory",
@@ -8665,7 +8666,7 @@
           ]
         }
       },
-      "summary": "左图用旧坐标，右图用新坐标描述同一个点；二次型值保持相同。",
+      "summary": "“旧坐标”和“新坐标”描述同一个点；二次型值保持相同。",
       "limits": "C=B^T A B, x=By, not similarity. These panels use different coordinate descriptions. Contour geometry is sampled; black-point values are exact analytic evaluations.",
       "keywords": "换坐标后，形状的表达变了，二次型值没变 高等代数 线性代数",
       "topic": "数学 / 高等代数",
@@ -8855,7 +8856,7 @@
           }
         ]
       },
-      "summary": "左图的等值线封闭；右图沿竖直方向移动不会改变二次型值。",
+      "summary": "“两个正平方项”的等值线封闭；“一个方向不影响值”中沿竖直方向移动不会改变二次型值。",
       "limits": "Real 2D forms x²+y² and x². Coordinate scale is shared. Sampled contours illustrate a fixed example, not arbitrary-field classification.",
       "keywords": "少一个平方项，就多一个不受约束的方向 高等代数 线性代数",
       "topic": "数学 / 高等代数",
@@ -9491,6 +9492,72 @@
           }
         }
       }
+    },
+    {
+      "id": "column-shear",
+      "title": "移开平行部分，面积仍然相同",
+      "scene": {
+        "type": "column-shear",
+        "props": {
+          "input": [
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              5
+            ]
+          ],
+          "multiple": {
+            "$param": "multiple"
+          },
+          "xDomain": [
+            -1,
+            4
+          ],
+          "yDomain": [
+            -1,
+            8
+          ]
+        }
+      },
+      "summary": "主动改变减去的倍数；原第二列保留为淡线，蓝色面积保持为1。",
+      "limits": "维护者编写的2×2实矩阵示例。列剪切保持行列式；r不是正交投影。不证明任意数域的一般定理，不声称每种数据都适合此轴域。",
+      "keywords": "column shear near collinear determinant area 列剪切 近乎共线 面积 行列式",
+      "topic": "数学 / 高等代数",
+      "height": 430,
+      "mobileHeight": 430,
+      "interaction": "parameters",
+      "presentation": "reading",
+      "placement": "body",
+      "initialProgress": 1,
+      "params": [
+        {
+          "key": "multiple",
+          "label": "减去α₁的倍数",
+          "min": 0,
+          "max": 2,
+          "step": 0.05,
+          "value": 2
+        }
+      ],
+      "presets": [
+        {
+          "id": "original",
+          "label": "原两列",
+          "params": {
+            "multiple": 0
+          }
+        },
+        {
+          "id": "separated",
+          "label": "移开平行部分",
+          "params": {
+            "multiple": 2
+          }
+        }
+      ]
     }
   ]
 }

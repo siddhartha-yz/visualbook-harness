@@ -9,6 +9,7 @@ import crypto from "node:crypto";
 import { spawnSync } from "node:child_process";
 import { operations as calculations } from "./visualbook_math.mjs";
 import { pathToFileURL } from "node:url";
+import { captionLayoutFindings } from "../packages/visualbook/caption-layout.mjs";
 import { auditParameters } from "./audit_visualbook_parameters.mjs";
 import { auditInteractions } from "./audit_visualbook_interactions.mjs";
 import { invalidGeometry, sourceMathLeaks } from "./visualbook_inspection.mjs";
@@ -401,6 +402,8 @@ export function validatePlan(book, plan) {
     if (f.scene !== undefined && f.code !== undefined)
       throw Error("Use scene or code, not both " + f.id);
     if (f.scene) validateScene(f.scene, f);
+    const captionIssues = captionLayoutFindings(f);
+    if (captionIssues.length) throw Error(captionIssues[0].message + " Figure: " + f.id);
     if (
       f.scene === undefined &&
       (typeof f.code !== "string" ||

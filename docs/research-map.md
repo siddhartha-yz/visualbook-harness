@@ -154,3 +154,6 @@
 ### 2026-10-12：真实课程候选的公式排版、数值覆盖和长批次诊断
 
 全151集教材已冻结为25章；整本可视化仍在串行生成。实际第二章因手机指标范围拆行而拒绝导出，推动通用显示树适配；全25原文/锚点不变，仅三块编译显示变化，50实际来源阅读案例通过。独立dense证书补足本次实际9组及旧目录35组未覆盖计算；零发现不代表图意正确。新增只读运行快照在实际旧计划重放拒绝缓存门禁误导。原作者拒绝、维护者修复和受限环境失败保留，详见[排版结果](../evaluation/2026-10-12/qiu-algebra-workflow/visual-source-repair-result.json)、[数值结果](../evaluation/2026-10-12/qiu-algebra-workflow/dense-certificate-result.json)及[连续日志](../evaluation/2026-10-12/qiu-algebra-workflow/LOG.md)。
+
+- 2026-10-12，实际近共线手机图失败转为通用列剪切组件；十进制残差传入失败转为精确矩阵乘法，补独立数值/精确乘法检查。全25原文身份保持，括号索引完整分组；读者源文50实际检查零发现。[范围、反例和最终候选记录](../evaluation/2026-10-12/qiu-algebra-workflow/column-shear-result.json)。仍在生成整套教材，不把维护者修订当模型自动成功。
+- 2026-10-12，手机上下排列而图注仍说左右的实际失败转为窄构建门禁；同时修复三个目录模板，真实重渲染并检查375px截图。[实际证据与未覆盖范围](../evaluation/2026-10-12/qiu-algebra-workflow/responsive-caption-result.json)。

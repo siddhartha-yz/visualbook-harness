@@ -1,0 +1,268 @@
+{
+  "status": "local-tool-and-candidate-checks-completed; whole25chapterbookstillrunning",
+  "observedUtc": "2026-10-12T02:16:15.332749+00:00",
+  "motivation": "Actual original spaces chapter rejected mobile near-collinear area ambiguity. General tool changes precede parentAImaintainer chapter revision; original rejection retained.",
+  "toolChanges": [
+    "Reusable column-shear component and design: given2x2 column matrix, subtract a multiple of first column, draw residual and determinant-preserving polygon; original second column stays pale.",
+    "Nonzero residual shorter than14screenpixels gets separate normalized12px direction icon, explicitly unsuitable for length/area comparison; main plot keeps actual equal units.",
+    "Small rational matrices can be multiplied through the CLI, MCP and composed scenes. Use outputExact for subsequent bounded exact calculations; decimal dependent columns keep a zero residual.",
+    "Independent checker supports matmul and exact-matrix-product in addition to previous17operations; strict exact outputs required, missing numeric result and tiny false exact residual blocked.",
+    "Matrix-associated parenthesized index conditions kept together in read-only rendering tree; explicit line environments and raw anchors preserved."
+  ],
+  "currentLibraryCounts": {
+    "components": 60,
+    "designs": 111,
+    "calculations": 56,
+    "independentlySupportedOperations": 19
+  },
+  "countsAreNotQualityScores": true,
+  "toolHashesBeforeCommit": {
+    "packages/visualbook/algebra.cjs": "11f371fa857c15dba708edfddac771b3c8d21d9e3826e97206e128e96a73494f",
+    "packages/visualbook/calculations.cjs": "f39a942ac6d2387afa5492bb8eb921104db12bb7b11c4e660102b9bb357ebd36",
+    "packages/visualbook/components.algebra.js": "0f62a447d94152f0121fa82dbfc4e7133f12e9787488636ccce2f71e52f108e7",
+    "packages/visualbook/components.json": "5312331af61b8e75d0ae95000e050f89ae05ea870f43cf7e6f62b6b7c9b26b92",
+    "packages/visualbook/catalog.json": "89935c5bdf415023959582a962e072f4d15aca24c51cf0994407fb568042a8af",
+    "packages/visualbook/math.mjs": "1728a4535af2a41a5a9b1ba30ba5aa0992d67d352114c959f2357062442ec848",
+    "tools/check_visualbook_calculations.py": "bf9b7446b26314060f6ef8d8dc9c73ea45c2e09aa58dfb7dc014dbe3b68713a6"
+  },
+  "catalog": {
+    "kind": "maintenance-authored design, no model call",
+    "htmlSha256": "3db550617e1b1e24e02cff5b0aa11c1e8684b9abeac93e825b31bb0175a81b47",
+    "reportSha256": "d9706222ba2cc08d79e9d03db74f6621bd0fdb93c088c1eec891889d0dd0c7ae",
+    "counts": {
+      "states": 45,
+      "legacyStates": 0,
+      "recordedCalculations": 135,
+      "uniqueCalculations": 5,
+      "verifiedCalculations": 5,
+      "unsupportedCalculations": 0,
+      "statesWithoutCalculations": 0
+    },
+    "findings": []
+  },
+  "syntheticVariants": [
+    {
+      "id": "dependent",
+      "kind": "maintenance-authored synthetic control, not a generated chapter",
+      "status": "completed",
+      "htmlSha256": "c7739a3ee79e454cdf5edafc0c1126aa5e3fe8fc7a96a82368ea52168bb078d7",
+      "reportSha256": "1a0bcf013db1ca31521bedc1abc1e86f075d5839aa3194ebb9cb490e57b40279",
+      "calculationCounts": {
+        "states": 21,
+        "legacyStates": 0,
+        "recordedCalculations": 63,
+        "uniqueCalculations": 3,
+        "verifiedCalculations": 3,
+        "unsupportedCalculations": 0,
+        "statesWithoutCalculations": 0
+      },
+      "findings": []
+    },
+    {
+      "id": "negative",
+      "kind": "maintenance-authored synthetic control, not a generated chapter",
+      "status": "completed",
+      "htmlSha256": "ee5db1c7c465811071a1f8bc6ad1374b7df6aadeda3f2ef4324479a0487151d6",
+      "reportSha256": "40a1c6043b95a9afc72d0c3b445d7d0d6756ebb5cf55f4eba8bbde9fd7719fc9",
+      "calculationCounts": {
+        "states": 21,
+        "legacyStates": 0,
+        "recordedCalculations": 63,
+        "uniqueCalculations": 3,
+        "verifiedCalculations": 3,
+        "unsupportedCalculations": 0,
+        "statesWithoutCalculations": 0
+      },
+      "findings": []
+    },
+    {
+      "id": "tiny-residual",
+      "kind": "maintenance-authored synthetic control, not a generated chapter",
+      "status": "completed",
+      "htmlSha256": "68aade4c828a3592167d1736e06c301b6441a7b58f84cfca578dd37b63089d65",
+      "reportSha256": "a047e273430fef71c46c2c5766c024c40b2792b2fd62fdcfc2902de9a7b163f9",
+      "calculationCounts": {
+        "states": 21,
+        "legacyStates": 0,
+        "recordedCalculations": 63,
+        "uniqueCalculations": 3,
+        "verifiedCalculations": 3,
+        "unsupportedCalculations": 0,
+        "statesWithoutCalculations": 0
+      },
+      "findings": []
+    },
+    {
+      "id": "zero-first",
+      "kind": "maintenance-authored synthetic control, not a generated chapter",
+      "status": "completed",
+      "htmlSha256": "b15a0e347ac41b0cbb290018a2dc390c5058ae7a1159590d3b9bbf27736add16",
+      "reportSha256": "84a25ad185cdb79e6c0b1512150ad83375543c457ba31aa64f45878e20fbe909",
+      "calculationCounts": {
+        "states": 21,
+        "legacyStates": 0,
+        "recordedCalculations": 63,
+        "uniqueCalculations": 3,
+        "verifiedCalculations": 3,
+        "unsupportedCalculations": 0,
+        "statesWithoutCalculations": 0
+      },
+      "findings": []
+    },
+    {
+      "id": "decimal-dependent",
+      "kind": "maintenance-authored synthetic control, not a generated chapter",
+      "status": "completed",
+      "htmlSha256": "48401b3d56ff7fe4d236893e199c2b870daa4e54f2d6d359c0c3fce716512340",
+      "reportSha256": "62bb8ce29924805f07fa8bbed9628fe9f3fb34ffd42724600ce30fd9e72a01f2",
+      "calculationCounts": {
+        "states": 21,
+        "legacyStates": 0,
+        "recordedCalculations": 63,
+        "uniqueCalculations": 3,
+        "verifiedCalculations": 3,
+        "unsupportedCalculations": 0,
+        "statesWithoutCalculations": 0
+      },
+      "findings": []
+    },
+    {
+      "id": "rational-dependent",
+      "kind": "maintenance-authored synthetic control, not a generated chapter",
+      "status": "completed",
+      "htmlSha256": "3cdd6724694c9145e973c9ac11a30f362f43415274d0419065c16c9da260927d",
+      "reportSha256": "3a2493eba6f1619213f693a1f78aca9ed4e4f07bbbddbbf55fe718e248529388",
+      "calculationCounts": {
+        "states": 21,
+        "legacyStates": 0,
+        "recordedCalculations": 63,
+        "uniqueCalculations": 3,
+        "verifiedCalculations": 3,
+        "unsupportedCalculations": 0,
+        "statesWithoutCalculations": 0
+      },
+      "findings": []
+    }
+  ],
+  "independentSympy": {
+    "reportSha256": "45ab9eec046785446e1b764e8d3f50ce000589e7329843c8a1b2af75fd112323",
+    "mixedActualAndSyntheticStates": 213,
+    "actualChapterColumnStatesIncluded": 42,
+    "syntheticOrMaintenanceDesignStates": 171,
+    "scope": "Finite rational2D inputs and selected parameters; no SVG/pixel/learning/aesthetic certificate or general n theorem. Exact outputs passed between computations; numeric pixel coordinates approximate exact values."
+  },
+  "actualChapter": {
+    "id": "spaces",
+    "originalReadyForExport": false,
+    "originalIssue": "Nonzero skinny polygon difficult to distinguish from collinear case on375px; source values preserved.",
+    "parentMaintainerRevision": true,
+    "newModelCalls": 0,
+    "candidateHtmlSha256": "2f67dc74d24c7d10ad46ab75e9c0303b72820ebf228d58ca84d5e1f0f9411d8f",
+    "planSha256": "aad46b8c3e5ece92cd3f8b6ba2edd3b1bbc19afec206426869f1a421919ceecc",
+    "sourceJsonSha256": "076ae6897b96e81403f0ed6ad66c6d1438d3b4f2a957de744dfec4eb873cc489",
+    "rawSourceSha256": "ec423e6709c6226647afe91b093ca94e4e9f55d8780df5da583302ba5803cff9",
+    "calculationCounts": {
+      "states": 93,
+      "legacyStates": 0,
+      "recordedCalculations": 228,
+      "uniqueCalculations": 12,
+      "verifiedCalculations": 12,
+      "unsupportedCalculations": 0,
+      "statesWithoutCalculations": 0
+    },
+    "sourceMeaningSavedStates": 93,
+    "parentReviewSha256": "aa3891583be9a8771c689415f78cea329425a824febeb11b5dd916211e689487",
+    "actualFinalPngsViewed": 10,
+    "scope": "AImaintainer acceptance of selected diagrams and source presentation, not human aesthetics or learning validation."
+  },
+  "sourceReaderPreflight": {
+    "chapters": 25,
+    "actualCases": 50,
+    "expectedFormulasPerBook": 14336,
+    "renderedInstancesAcrossWidths": 28672,
+    "javaScriptEnabled": false,
+    "reportSha256": "1c9f97b90666f49fd72b876d1c9fb17f7c8b785f005d8e7618bc753661e8c2cd",
+    "findings": [],
+    "rawSourceAndBlocksUnchanged": true,
+    "changedCompiledBlocks": [
+      {
+        "chapter": "basis-rank",
+        "anchor": "basis-rank-083",
+        "mathmlLeafTokensEqual": true
+      },
+      {
+        "chapter": "inner-products",
+        "anchor": "inner-products-205",
+        "mathmlLeafTokensEqual": true
+      },
+      {
+        "chapter": "spaces",
+        "anchor": "spaces-013",
+        "mathmlLeafTokensEqual": true
+      },
+      {
+        "chapter": "spaces",
+        "anchor": "spaces-151",
+        "mathmlLeafTokensEqual": true
+      },
+      {
+        "chapter": "spaces",
+        "anchor": "spaces-153",
+        "mathmlLeafTokensEqual": true
+      },
+      {
+        "chapter": "systems",
+        "anchor": "systems-141",
+        "mathmlLeafTokensEqual": true
+      },
+      {
+        "chapter": "systems",
+        "anchor": "systems-143",
+        "mathmlLeafTokensEqual": true
+      }
+    ],
+    "orderedMathmlLeafTokensPreserved": true,
+    "scope": "Source-only preparation, no model or finishedbook delivery."
+  },
+  "negativeEvidence": [
+    "First component catalog render failed because footerHeight82 exceeded80px bound; retained, fixed to78.",
+    "First parent chapter candidate failed mobileHeight820 bound; split two examples into separate figures, without widening that bound.",
+    "Second parent and first synthetic renderer scripts failed by passing URL-encoded Chinese paths; scripts corrected with fileURLToPath, original attempts retained.",
+    "Old tiny-residual control rendered and passed numeric tolerance, but exact determinant strings drifted after floating column multiplication.",
+    "Old decimal-dependent browser attempt actually failed rational parsing before a usable figure; no rendered false-nonzero image is claimed."
+  ],
+  "oldTinyResidualExactDeterminants": [
+    "1/100",
+    "9999999999999787/1000000000000000000"
+  ],
+  "oldDecimalControl": {
+    "status": "failed",
+    "htmlSha256": "d586eef2f199d82340b97df7dd778d54fbd482fd96dc1d88e4d678ce1ef4bbff",
+    "reportSha256": "e608a011afc0ee689f2bded05e8ddc16bdd3cb3a6a6265a1f1691f149de8e463",
+    "renderedFigureStates": 0,
+    "findingKinds": [
+      "render-runtime-error",
+      "javascript"
+    ]
+  },
+  "tests": {
+    "python": {
+      "passed": 122,
+      "failed": 0,
+      "logSha256": "47fe813a0ac783cbafb9f7a38334fec7a5c4aa50beeef1040da7d75f07474ad7"
+    },
+    "nodeActualHost": {
+      "passed": 174,
+      "failed": 0,
+      "logSha256": "ddaa8a6a3099bf5cc280288f3b63f4d96aff25f678a09b1564048954fffaef94"
+    },
+    "scope": "Mechanical checks and directional controls, separate from actual renders/source review/artistic judgement."
+  },
+  "limits": [
+    "Rational arithmetic and display have bounded shapes/literal lengths; oversized values, long fractions or insufficient plot space can fail explicitly.",
+    "Six chosen synthetic datasets do not prove arbitrary input generalization. Only selected actual source matrices and saved states checked independently.",
+    "Original25authors are still running immutablefrozenV3; they have not used these new tools. This revision is parent maintainer work.",
+    "No controlled same-modelA/B result, human artistic review, learner study, training or universally hands-off book-quality claim."
+  ],
+  "publication": "Own code/tests/docs and aggregate metadata only. Course text/transcripts/media/candidates/provider logs stay ignored."
+}

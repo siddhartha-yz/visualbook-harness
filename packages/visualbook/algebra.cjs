@@ -41,6 +41,10 @@
     if (a[0].length !== b.length) throw Error("Matrix product shape mismatch");
     return a.map(row => b[0].map((_, j) => row.reduce((sum, v, k) => add(sum, mul(v, b[k][j])), Z())));
   }
+  function matrixProduct({a,b}={}) {
+    const left=matrix(a,12),right=matrix(b,12),output=product(left,right);
+    return {a:numeric(left),aExact:exact(left),b:numeric(right),bExact:exact(right),output:numeric(output),outputExact:exact(output),leftShape:[left.length,left[0].length],rightShape:[right.length,right[0].length],outputShape:[output.length,output[0].length],convention:'Exact bounded rational matrix product over Q. Numeric drawing values approximate the exact p/q outputs; for chained exact calculations pass outputExact. At most6 rows and12 columns per input, with matching inner dimensions.'};
+  }
   const transpose = a => a[0].map((_, j) => a.map(row => row[j]));
   function reduce(a, columns = a[0].length) {
     const current = copy(a), transform = identity(a.length), steps = [], pivots = [];
@@ -404,10 +408,10 @@
       unitary,hermitian,normal,unitaryIndicator:unitary?1:0,hermitianIndicator:hermitian?1:0,normalIndicator:normal?1:0,
       convention:'Exact square complex matrix over Q(i). Adjoint means conjugate transpose, never plain transpose. Unitary is A* A=A A*=I; Hermitian is A=A*; normal is A* A=A A*. Flags are exact for supplied finite data; no eigenvector/spectral theorem, arbitrary-field or approximate-tolerance claim.'};
   }
-  const api = { rowReduction, changeBasis, polynomialDivide, polynomialGcd, modularTable, jordanProfile, generalizedKernelProfile, matrixPolynomial, minimalPolynomial, bilinearChange, determinantExpansion, dualBasis, symmetricInertia, coefficientLiterals, orthogonalize, complexInnerProduct, complexOperator };
+  const api = { matrixProduct, rowReduction, changeBasis, polynomialDivide, polynomialGcd, modularTable, jordanProfile, generalizedKernelProfile, matrixPolynomial, minimalPolynomial, bilinearChange, determinantExpansion, dualBasis, symmetricInertia, coefficientLiterals, orthogonalize, complexInnerProduct, complexOperator };
   // Native components also call this kernel directly. Record their resolved
   // finite data during a synchronous runtime frame, without changing returns.
-  const recordedOperations = {rowReduction:'exact-row-reduction',changeBasis:'change-basis',polynomialDivide:'polynomial-divide',polynomialGcd:'polynomial-gcd',modularTable:'residue-table',jordanProfile:'nilpotent-profile',generalizedKernelProfile:'generalized-kernel-profile',matrixPolynomial:'matrix-polynomial',minimalPolynomial:'minimal-polynomial',bilinearChange:'bilinear-congruence',determinantExpansion:'determinant-expansion',dualBasis:'dual-basis',symmetricInertia:'symmetric-inertia',orthogonalize:'orthogonalize',complexInnerProduct:'complex-inner-product',complexOperator:'complex-operator'};
+  const recordedOperations = {matrixProduct:'exact-matrix-product',rowReduction:'exact-row-reduction',changeBasis:'change-basis',polynomialDivide:'polynomial-divide',polynomialGcd:'polynomial-gcd',modularTable:'residue-table',jordanProfile:'nilpotent-profile',generalizedKernelProfile:'generalized-kernel-profile',matrixPolynomial:'matrix-polynomial',minimalPolynomial:'minimal-polynomial',bilinearChange:'bilinear-congruence',determinantExpansion:'determinant-expansion',dualBasis:'dual-basis',symmetricInertia:'symmetric-inertia',orthogonalize:'orthogonalize',complexInnerProduct:'complex-inner-product',complexOperator:'complex-operator'};
   for (const [name,operation] of Object.entries(recordedOperations)) {
     const original=api[name];
     api[name]=function(input) {

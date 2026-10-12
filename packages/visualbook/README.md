@@ -73,7 +73,7 @@ python3 tools/inspect_visualbook_run.py work/my-book
 
 显示公式末尾的简单指标范围，例如`\qquad k=1,\ldots,r`，现在在渲染树中作为一个整体，允许在其前面换行，避免手机把等号和值拆开。原文不改；MathML/TeX显示结构的适配有记录。[全25章实际重编译和第二章修复记录](../../evaluation/2026-10-12/qiu-algebra-workflow/visual-source-repair-result.json)保留原作者拒绝导出结果，不把维护者修复称为自动生成成功。
 
-独立计算检查器现支持17种操作。新增`dense`核对矩阵乘法、偏置、输入回显、形状及四种激活的有限数值输出；不认证权重经过训练或梯度正确。[真实记录重放与定向失败控制](../../evaluation/2026-10-12/qiu-algebra-workflow/dense-certificate-result.json)分别列出新增覆盖和仍未核验的操作。
+独立计算检查器现支持19种操作。新增`dense`核对矩阵乘法、偏置、输入回显、形状及四种激活的有限数值输出；不认证权重经过训练或梯度正确。[真实记录重放与定向失败控制](../../evaluation/2026-10-12/qiu-algebra-workflow/dense-certificate-result.json)分别列出新增覆盖和仍未核验的操作。
 
 ## 不调用模型也能重建
 
@@ -94,7 +94,7 @@ CLI构建book.html继续使用resolved-plan.json；其它输出如chapter-one.ht
 
 默认--composition-policy prefer-library：先检索并调用设计/组件，使用原生组合或put_design；缺少必要关系时仍允许自写，必须留下缺口说明和对应代码哈希，方便后续补工具。--composition-policy open保留开放绘图模式供对照；两个政策不能混作同一试验。这个记录不是质量评分或安全沙箱。
 
-当前59组件、110设计、55数值操作。相同state/param可以连接多幅视图，$result连接之前计算的输出。除优化、张量与程序状态外，新增分词边界条带、按数量绘制的流带、RoPE、GEMM/单步decode访存、KV账本、紧凑通信矩阵和top-k路由。所有示例都有具体边界，手选参数不冒充训练。
+当前60组件、111设计、56数值操作。相同state/param可以连接多幅视图，$result连接之前计算的输出。除优化、张量与程序状态外，新增分词边界条带、按数量绘制的流带、RoPE、GEMM/单步decode访存、KV账本、紧凑通信矩阵和top-k路由。所有示例都有具体边界，手选参数不冒充训练。
 
 阅读默认收起探索，复杂图可占用宽幅，小图与短说明可贴在当前段落左侧/右侧。静态图不带按钮，演示主动看一遍；典型情况按钮同时切换实际参数，避免多个滑块之间来回调整。具体声明见[生成入口](AUTHOR_API.md)。
 
@@ -116,3 +116,13 @@ python3 tools/package_visualbook.py work/my-book/book work/my-book.zip
 已有失败候选可用`node tools/rebuild_visualbook.mjs original.source.json unchanged-book.json work/fresh-rebuild`复编译。它先重导入原始Markdown，检查正文、公式、图片和计划身份，再实际预览；结果停在awaiting-review，不把维护者修复算成新的模型生成成功。
 
 生成入口和--resume都会调用最终交付检查，旧记录保留，新的交付在新attempt目录。一次交付检查通过才创建ZIP；书文件被改动则拒绝，也不会补跑模型。无脚本时保存实际图片PNG，避免Firefox禁用页面Promise造成检查无限等待；有脚本时使用原生decode与宿主上限。
+
+## 几乎重合的列与精确计算
+
+`column-shear`输入二维列矩阵和减去的倍数，输出变换后的平行四边形、残余向量及面积。淡线保留原第二列，两个轴等比例。主图中非零残余短于14px时，另给一个明确只示方向的12px箭头；它不用于比较长度或面积。输入换数据、倍数可接参数，实例可以接进`columns`或分别接在原文例子旁。
+
+`exact-matrix-product`对小矩阵用分数计算。后续精确运算使用`outputExact`，绘图使用`output`；矩阵、字面量和显示空间仍有界。普通`matmul`保持原来的数值计算接口，独立检查器也已补核。十进制共线反例曾在浮点残差传入后触发分数解析失败，原记录保留；精确版得到严格零残差。[实际来源案例、六种变体与失败边界](../../evaluation/2026-10-12/qiu-algebra-workflow/column-shear-result.json)区分模型生成、维护者修订、机械检查和画面审查。
+
+结构化 `columns` 在375px肯定会上下排列时，构建器会拒绝部分“左图/右图”等成对定位图注。请使用可见标题或变量名称。这个检查只覆盖已识别的表达和结构，不判断任意自定义图或整段文意。实际课程失败与三个目录模板的修订、重渲染和未覆盖计算记录见[响应式图注证据](../../evaluation/2026-10-12/qiu-algebra-workflow/responsive-caption-result.json)。
+
+公式渲染现在能把矩阵旁的`(j=1,\ldots,n)`保持为一组。它只改变HTML渲染树，原文与锚点不变；显式作者分行环境保留。全25章的源码身份和实际手机/桌面公式覆盖另有证据，不等于所有公式的数学证明或最终图书验收。

@@ -134,3 +134,12 @@ test('Minimal polynomial distinguishes a repeated scalar from a Jordan block',()
  assert.deepEqual(rotation.coefficientsExact,['1','0','1']);
  assert.deepEqual(A.minimalPolynomial({input:[[0]]}).coefficientsExact,['0','1']);
 });
+
+test('Exact matrix products do not create a false decimal zero-relation',()=>{
+ const r=C.compute('exact-matrix-product',{a:[[.1,.3],[.2,.6]],b:[[1,-3],[0,1]]}).result;
+ assert.deepEqual(r.outputExact,[['1/10','0'],['1/5','0']]);assert.deepEqual(r.output,[[.1,0],[.2,0]]);
+ const q=C.compute('exact-matrix-product',{a:[['1/3','2/3']],b:[['3'],['-3/2']]}).result;
+ assert.deepEqual(q.outputExact,[['0']]);
+ assert.throws(()=>C.compute('exact-matrix-product',{a:[[1,2]],b:[[1]]}),/shape/);
+ assert.throws(()=>A.matrixProduct({a:[['1/0']],b:[[1]]}),/denominator/);
+});

@@ -1,0 +1,71 @@
+{
+  "status": "narrow-responsive-caption-gate-implemented",
+  "modelCalls": 0,
+  "sourceCase": {
+    "chapter": "matrix-rank",
+    "originalAuthorReady": false,
+    "originalPlanSha256": "faed829f9b5bff6aa22b046123c2afa4f1c3e2ec04df51a4c46f1108a45940fb",
+    "originalPlanNowRejectedBeforeRender": true,
+    "repairedChapterParentReview": "pending at this snapshot"
+  },
+  "catalogChanges": [
+    {
+      "design": "head-reindex",
+      "htmlSha256": "e80ce41bbd1069e40da7b76fa8c147849980c34453d46cb95d14073165981708",
+      "renderFindings": [],
+      "arithmeticCounts": {
+        "states": 149,
+        "legacyStates": 0,
+        "recordedCalculations": 149,
+        "uniqueCalculations": 16,
+        "verifiedCalculations": 0,
+        "unsupportedCalculations": 16,
+        "statesWithoutCalculations": 0
+      },
+      "mobilePngViewedSha256": "da27aaecddecf75168bc1ec94bb895179b64af98efa2582947f2d11a10b28bb4"
+    },
+    {
+      "design": "quadratic-congruence",
+      "htmlSha256": "04b6c25ccc9a89c5e513b82f60069868ac4df87cc8eff6b4b39c7875ac1eb72d",
+      "renderFindings": [],
+      "arithmeticCounts": {
+        "states": 21,
+        "legacyStates": 0,
+        "recordedCalculations": 21,
+        "uniqueCalculations": 1,
+        "verifiedCalculations": 1,
+        "unsupportedCalculations": 0,
+        "statesWithoutCalculations": 0
+      },
+      "mobilePngViewedSha256": "cf5ecb8a12cd698f0ce91e532bc03280ae1d01c5d6f15252ac4a3221ad080a7d"
+    },
+    {
+      "design": "quadratic-degeneracy",
+      "htmlSha256": "fd05cbef248f61ed18b1e19e685ed030b056feb7a18a30abe0bbf01b0d4fd71d",
+      "renderFindings": [],
+      "arithmeticCounts": {
+        "states": 21,
+        "legacyStates": 0,
+        "recordedCalculations": 0,
+        "uniqueCalculations": 0,
+        "verifiedCalculations": 0,
+        "unsupportedCalculations": 0,
+        "statesWithoutCalculations": 21
+      },
+      "mobilePngViewedSha256": "5bab762654f6717d14843d21c81b42c36be47b8622503224435bf492c6a211fd"
+    }
+  ],
+  "catalogDiffScope": "Exactly3 existing summary strings; scene, parameters, presets and data unchanged. One new unrelated column-shear design recorded separately.",
+  "tests": {
+    "actualHostNode": {
+      "tests": 176,
+      "pass": 176,
+      "fail": 0
+    }
+  },
+  "limits": [
+    "Only structured columns definitely stacking at375 and selected paired position words. No arbitrary custom code, unrecognized phrases, general caption semantics or artistic/learner validation.",
+    "Actual3 catalog previews passed; head-reindex16 unique recorded calculations remain unsupported; degeneracy has no arithmetic certificates; these were not silently counted as verified.",
+    "Three375 reading PNGs actually viewed by parent AI."
+  ]
+}

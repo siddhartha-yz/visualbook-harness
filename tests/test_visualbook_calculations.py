@@ -68,6 +68,33 @@ class RecordedCalculationTests(unittest.TestCase):
         row['inputs']['weights'] = [[1]]
         self.assertEqual(module.audit(document)['status'], 'failed')
 
+    def test_exact_decimal_cancellation_requires_the_zero_certificate(self):
+        row = {'id': 'c', 'operation': 'exact-matrix-product',
+               'inputs': {'a': [[.1, .3], [.2, .6]], 'b': [[1, -3], [0, 1]]},
+               'result': {'a': [[.1, .3], [.2, .6]], 'aExact': [['1/10', '3/10'], ['1/5', '3/5']],
+                          'b': [[1, -3], [0, 1]], 'bExact': [['1', '-3'], ['0', '1']],
+                          'output': [[.1, 0], [.2, 0]], 'outputExact': [['1/10', '0'], ['1/5', '0']],
+                          'leftShape': [2, 2], 'rightShape': [2, 2], 'outputShape': [2, 2]}}
+        document = {'states': [{'calculationTraceVersion': 2, 'calculations': [row]}]}
+        self.assertEqual(module.audit(document)['counts']['verifiedCalculations'], 1)
+        bad = copy.deepcopy(document); bad['states'][0]['calculations'][0]['result']['outputExact'][0][1] = '1/1000000000000'
+        self.assertEqual(module.audit(bad)['status'], 'failed')
+        bad = copy.deepcopy(document); del bad['states'][0]['calculations'][0]['result']['output']
+        self.assertEqual(module.audit(bad)['status'], 'failed')
+
+    def test_matrix_products_do_not_accept_a_relabelled_or_misshaped_output(self):
+        # A genuine zero-relation witness from this course: the t column vanishes.
+        row = {'id': 'c', 'operation': 'matmul',
+               'inputs': {'a': [[1, 0, 1], [0, 1, 1]], 'b': [[2, -1], [3, -1], [0, 1]]},
+               'result': {'output': [[2, 0], [3, 0]]}}
+        document = {'states': [{'calculationTraceVersion': 2, 'calculations': [row]}]}
+        self.assertEqual(module.audit(document)['counts']['verifiedCalculations'], 1)
+        for output in [[[2, 1], [3, 0]], [[2, 0, 0], [3, 0, 0]], [[2], [3]]]:
+            bad = copy.deepcopy(document); bad['states'][0]['calculations'][0]['result']['output'] = output
+            self.assertEqual(module.audit(bad)['status'], 'failed')
+        row['inputs']['b'] = [[2, -1], [3, -1]]
+        self.assertEqual(module.audit(document)['status'], 'failed')
+
     def test_root_component_is_not_the_whole_space_and_changes_cannot_hide(self):
         # Directional synthetic diagonal fixture: only one of two dimensions
         # belongs to lambda2; the other contributes rank1 at every positive power.

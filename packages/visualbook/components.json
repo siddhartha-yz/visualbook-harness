@@ -1863,6 +1863,42 @@
       ],
       "limits": "Dimension counts only, not actual subspace coordinates or a constructed Jordan basis. Caller must establish meanings and nestedness; colors carry supplied identity rather than proof. Minimum28px rows and12px text.",
       "keywords": "核 维数 增量 过滤 子空间 rank nullity generalized eigen kernel filtration"
+    },
+    {
+      "id": "column-shear",
+      "title": "把几乎重合的列移开看",
+      "props": {
+        "input": "2x2 rational-coefficient matrix of column vectors, finite numbers or integer/p/q strings",
+        "multiple": "Finite real multiplier; c2 is replaced by c2-multiple*c1",
+        "xDomain": "Optional finite increasing range covering original second column and transformed parallelogram; equal units",
+        "yDomain": "Optional finite increasing range; equal units",
+        "title": "Optional short label up to24 characters"
+      },
+      "required": [],
+      "outputs": [
+        "input",
+        "transform",
+        "transformed",
+        "originalColumns",
+        "retainedColumn",
+        "residualColumn",
+        "polygon",
+        "multiple",
+        "beforeDeterminant",
+        "afterDeterminant",
+        "area",
+        "convention",
+        "residualPixelLength",
+        "directionDetail",
+        "transformedExact",
+        "beforeDeterminantExact",
+        "afterDeterminantExact"
+      ],
+      "examples": [
+        "column-shear"
+      ],
+      "limits": "二维实坐标列剪切，r不是正交投影。淡线保留原第二列；画的是变换后平行四边形。两个轴等比例；不同图若比较面积请给相同轴域。数值来自输入，不是一般数域的几何证明。 非零残余在主图短于14px时，另画12px单位方向小箭头，明确不作长度/面积比较；主图不放大。 列运算以分数精确计算，绘图坐标为数值近似；连续的运算请传outputExact。",
+      "keywords": "column shear determinant near collinear independence area 列剪切 行列式 几乎共线 面积 线性无关"
     }
   ]
 }

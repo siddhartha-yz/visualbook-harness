@@ -197,5 +197,39 @@
     });
     return {points,transformed,reflect,progress,convention:'Each labelled point is one complex scalar component on the real/imaginary plane. Reflection endpoint is conjugation; intermediate points are a continuous real-coordinate illustration, not complex-linear or unitary operators. Equal units on both axes; no representation of C^n as an intrinsic real2D space.'};
   }
-  Object.assign(V.components,{'exact-matrix':exactMatrix,'basis-frame':basisFrame,'residue-grid':residueGrid,'jordan-chains':jordanChains,'dimension-filtration':dimensionFiltration,'coefficient-strip':coefficientStrip,'quotient-plane':quotientPlane,'complex-plane':complexPlane});
+  function columnShear(board,{input=[[1,2],[2,5]],multiple=2,xDomain=null,yDomain=null,title=''}={}) {
+    if(!Array.isArray(input)||input.length!==2||input.some(row=>!Array.isArray(row)||row.length!==2)||!Number.isFinite(multiple)) throw Error('Column shear needs a2x2 rational-coefficient matrix and finite multiplier');
+    short(title,24);
+    const transform=[[1,-multiple],[0,1]],
+      product=global.VisualBookCalculations.compute('exact-matrix-product',{a:input,b:transform}).result,
+      transformed=product.output,transformedExact=product.outputExact,
+      before=A.determinantExpansion({input}),after=A.determinantExpansion({input:transformedExact}),
+      u=[product.a[0][0],product.a[1][0]],v=[product.a[0][1],product.a[1][1]],r=[transformed[0][1],transformed[1][1]],
+      polygon=[[0,0],u,u.map((x,i)=>x+r[i]),r,[0,0]],points=[...polygon,v];
+    const domain=i=>{const values=points.map(p=>p[i]),lo=Math.min(...values),hi=Math.max(...values),pad=Math.max(1,hi-lo)*.18;return [lo-pad,hi+pad];};
+    const f=V.plotFrame(board,'axes',{title:title||null,xDomain:xDomain??domain(0),yDomain:yDomain??domain(1),equalUnits:true,grid:true,footerHeight:78,headerHeight:24});
+    board.path('area',polygon.map(p=>[f.x(p[0]),f.y(p[1])]),{color:P.blue,closed:true,width:0,opacity:.2});
+    board.curve('outline',f,polygon,{color:P.blue,width:1.6,opacity:.7});
+    if(Math.hypot(v[0]-r[0],v[1]-r[1])>1e-12) {
+      board.curve('original-second',f,[[0,0],v],{color:P.muted,width:1.2,opacity:.4});
+      board.mark('original-end','circle',{cx:f.x(v[0]),cy:f.y(v[1]),r:4,fill:'none',stroke:P.muted,'stroke-width':1.2,opacity:.6});
+    }
+    if(Math.hypot(...u)>0)board.vector('retained',f,[0,0],u,{color:P.blue,label:'α₁'});
+    if(Math.hypot(...r)>0)board.vector('residual',f,[0,0],r,{color:P.orange,label:'r'});
+    else board.circle('zero-residual',f.x(0),f.y(0),4,P.orange);
+    const fmt=V.formatNumber,expression='r = α₂ − ('+fmt(multiple)+')α₁',value='('+r.map(x=>fmt(x)).join(', ')+')',area='面积 '+fmt(Math.abs(after.determinant));
+    board.label('operation',expression,board.width/2,board.height-55,{size:13,anchor:'middle',maxWidth:board.width-24,avoid:false,color:P.orange});
+    board.label('result',value+' · '+area,board.width/2,board.height-33,{size:14,anchor:'middle',maxWidth:board.width-24,avoid:false});
+    const residualLength=Math.hypot(...r),residualPixelLength=Math.hypot(f.x(r[0])-f.x(0),f.y(r[1])-f.y(0));
+    let directionDetail=null;
+    if(residualLength>0&&residualPixelLength<14) {
+      const direction=r.map(x=>x/residualLength),text='小箭头只示r方向（非零）',width=36+V.measure(text,12),left=(board.width-width)/2;
+      if(width>board.width-24)throw Error('Direction detail needs more drawing width');
+      board.vector('direction-detail',{x:x=>left+14+12*x,y:y=>board.height-15-12*y},[0,0],direction,{color:P.orange});
+      board.text('direction-detail-label',text,left+36,board.height-11,{size:12,color:P.orange,halo:false});
+      directionDetail={normalizedDirection:direction,displayLengthPx:12,lengthNotComparable:true};
+    } else board.label('original-legend','淡线：原α₂；蓝色：变换后面积',board.width/2,board.height-11,{size:12,anchor:'middle',maxWidth:board.width-24,avoid:false,color:P.muted});
+    return {input,transform,transformed,transformedExact,originalColumns:[u,v],retainedColumn:u,residualColumn:r,polygon,multiple,beforeDeterminant:before.determinant,beforeDeterminantExact:before.determinantExact,afterDeterminant:after.determinant,afterDeterminantExact:after.determinantExact,area:Math.abs(after.determinant),residualPixelLength,directionDetail,convention:'Real2D column shear c2<-c2-multiple*c1. Equal x/y units; original second column is a pale guide. Determinant stays fixed; r is a shear residual, not an orthogonal projection. Coordinates and display labels computed from supplied matrices. A nonzero residual shorter than14px gets a separate normalized12px direction icon explicitly unsuitable for length/area comparison.'};
+  }
+  Object.assign(V.components,{'column-shear':columnShear,'exact-matrix':exactMatrix,'basis-frame':basisFrame,'residue-grid':residueGrid,'jordan-chains':jordanChains,'dimension-filtration':dimensionFiltration,'coefficient-strip':coefficientStrip,'quotient-plane':quotientPlane,'complex-plane':complexPlane});
 })(window);

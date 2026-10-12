@@ -39,6 +39,15 @@ export function renderingMath(node, report = {}) {
           report.indexRangeGrouped = (report.indexRangeGrouped ?? 0) + 1;
         }
       }
+      // Parenthesized index conditions can accompany matrices in one display.
+      // Keep the condition together; preserve explicit author line environments.
+      if (n.type === "math" && !/\\begin\{(?:aligned|align\*?|gathered|split|cases)\}/.test(value)) {
+        const condition = /(\\(?:qquad|quad)\s*)(\([a-zA-Z](?:_\{[a-zA-Z0-9]+\}|_[a-zA-Z0-9])?\s*=\s*\d+\s*,\s*\\(?:ldots|dots|cdots)\s*,\s*[a-zA-Z](?:_\{[a-zA-Z0-9]+\}|_[a-zA-Z0-9])?\s*\))/g;
+        value = value.replace(condition, (_, spacing, group) => {
+          report.parenthesizedIndexGrouped = (report.parenthesizedIndexGrouped ?? 0) + 1;
+          return "\\allowbreak" + spacing + "{" + group + "}";
+        });
+      }
       // mdast-util-to-hast uses data.hChildren, not value, for math nodes.
       // Construct both together, including nodes created by display adaptation.
       const code = {

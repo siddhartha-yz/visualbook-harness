@@ -69,3 +69,10 @@ test("index grouping leaves inline math and explicit environments alone", () => 
     const report={};renderingMath(node,report);assert.equal(report.indexRangeGrouped,undefined);
   }
 });
+
+test("a parenthesized index stays together beside a matrix",()=>{
+ const source={type:"math",value:"\\alpha_j=\\begin{pmatrix}a_{1j}\\\\a_{2j}\\end{pmatrix}\\in F^s\\quad(j=1,\\ldots,n),\\qquad\\beta"},copy=structuredClone(source),report={};
+ const r=renderingMath(source,report);assert.deepEqual(source,copy);
+ assert.ok(r.data.hChildren[0].children[0].value.includes("\\allowbreak\\quad{(j=1,\\ldots,n)}"));
+ assert.equal(report.parenthesizedIndexGrouped,1);
+});

@@ -478,16 +478,35 @@ def check_complex_operator(data, r):
         require(r[key] is expected and r[key + 'Indicator'] == int(expected), 'complex flag ' + key)
 
 
+def tensor_matrix(value):
+    require(isinstance(value, list) and value and isinstance(value[0], list) and value[0], 'tensor matrix shape')
+    rows, cols = len(value), len(value[0])
+    require(rows * cols <= 4096 and all(isinstance(row, list) and len(row) == cols for row in value), 'tensor matrix bound/shape')
+    require(all(isinstance(v, (int, float)) and not isinstance(v, bool) and math.isfinite(v) for row in value for v in row), 'tensor finite numeric input')
+    return exact(value)
+
+
+def check_exact_product(data, result):
+    a, b = mat(data['a']), mat(data['b'])
+    output = multiply(a, b)
+    require(exact(result['aExact']) == a and exact(result['bExact']) == b, 'exact product input echo')
+    require(exact(result['outputExact']) == output, 'exact matrix product')
+    for key, expected in {'a': a, 'b': b, 'output': output}.items():
+        close(result[key], expected, 'exact product numeric ' + key)
+    for key, shape in {'leftShape': [len(a), len(a[0])], 'rightShape': [len(b), len(b[0])], 'outputShape': [len(a), len(b[0])]}.items():
+        require(result[key] == shape and all(type(v) is int for v in result[key]), 'exact product ' + key)
+
+
+def check_matmul(data, result):
+    a, b = tensor_matrix(data['a']), tensor_matrix(data['b'])
+    require(len(a[0]) == len(b) and len(a) * len(b[0]) * len(b) <= 262144, 'matmul dimensions/bound')
+    close(result['output'], multiply(a, b), 'matmul output')
+
+
 def check_dense(data, result):
     # Fraction sums are independent of the renderer's JavaScript reduction.
     # The tensor kernel has larger bounds than the small algebra matrices.
-    def tensor(value):
-        require(isinstance(value, list) and value and isinstance(value[0], list) and value[0], 'dense matrix shape')
-        rows, cols = len(value), len(value[0])
-        require(rows * cols <= 4096 and all(isinstance(row, list) and len(row) == cols for row in value), 'dense matrix bound/shape')
-        require(all(isinstance(v, (int, float)) and not isinstance(v, bool) and math.isfinite(v) for row in value for v in row), 'dense finite numeric input')
-        return exact(value)
-    a, w = tensor(data['input']), tensor(data['weights'])
+    a, w = tensor_matrix(data['input']), tensor_matrix(data['weights'])
     m, k, n = len(a), len(a[0]), len(w[0])
     require(len(w) == k and m * n * k <= 262144, 'dense product dimensions/bound')
     bias = data.get('bias', 0)
@@ -512,7 +531,7 @@ def check_dense(data, result):
         require(result[key] == expected and all(type(v) is int for v in result[key]), 'dense ' + key)
 
 
-CHECKS = {'dense': check_dense, 'exact-row-reduction': check_rows, 'change-basis': check_change, 'polynomial-divide': check_divide,
+CHECKS = {'exact-matrix-product': check_exact_product, 'matmul': check_matmul, 'dense': check_dense, 'exact-row-reduction': check_rows, 'change-basis': check_change, 'polynomial-divide': check_divide,
           'polynomial-gcd': check_gcd, 'residue-table': check_residue, 'nilpotent-profile': check_nilpotent,
           'generalized-kernel-profile': check_generalized_kernels,
           'bilinear-congruence': check_bilinear, 'determinant-expansion': check_expansion, 'dual-basis': check_dual,
