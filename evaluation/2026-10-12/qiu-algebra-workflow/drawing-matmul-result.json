@@ -1,0 +1,170 @@
+{
+  "status": "implemented-and-real-rebuild-checked",
+  "modelCallsForRebuilds": 0,
+  "actualSourceChapters": [
+    "matrix-algebra",
+    "inverse-blocks"
+  ],
+  "originalFrozenAuthorToolchain": "visual-v3 unchanged; original audits0 recorded calculations retained",
+  "changes": [
+    "Drawing matmul returns the same array but records one resolved input/output in synchronous frame; bounds4096 input entries/262144 scalar products, finite result required.",
+    "Existing per-figure recorder/cache restores globals on failures; snapshots isolate caller/result mutations."
+  ],
+  "actualRebuilds": [
+    {
+      "chapter": "matrix-algebra",
+      "actualComparedStates": 126,
+      "figureSvgAndFactsDifferences": [],
+      "readingPngByteIdentity": [
+        {
+          "name": "1280-elementary-sides-reading.png",
+          "sha256": "08f97a6d678346dcd3afed92d2680f58545a25b7857224dc1431efe8b042c23a"
+        },
+        {
+          "name": "375-elementary-sides-reading.png",
+          "sha256": "936eea173d50705439c473e00030897b53a1b69e845e0ae98b01f69ac4e121ef"
+        },
+        {
+          "name": "1920-elementary-sides-reading.png",
+          "sha256": "7258d1e7d22c3af17016995f5712045e103edb5fa95bfd0413a6f204a1aa56ea"
+        },
+        {
+          "name": "1280-multiplication-order-reading.png",
+          "sha256": "fb996a691eafc5481c54549e1eb0a5dfc291adc28a7c40fecfb29ef0b24ef73a"
+        },
+        {
+          "name": "1920-multiplication-order-reading.png",
+          "sha256": "9a832bb1f8b407d29a5be8e68dccad692f503da7217fa20a4bd112f9ec235d47"
+        },
+        {
+          "name": "375-multiplication-order-reading.png",
+          "sha256": "eb5535ed1de2d14517c591045f8b760da1b0644b1bf28ad04a892c34adb64752"
+        }
+      ],
+      "arithmeticCounts": {
+        "states": 126,
+        "legacyStates": 0,
+        "recordedCalculations": 552,
+        "uniqueCalculations": 26,
+        "verifiedCalculations": 26,
+        "unsupportedCalculations": 0,
+        "statesWithoutCalculations": 0
+      },
+      "oldNoRecordedCalculations": true
+    },
+    {
+      "chapter": "inverse-blocks",
+      "actualComparedStates": 129,
+      "figureSvgAndFactsDifferences": [],
+      "readingPngByteIdentity": [
+        {
+          "name": "375-matched-blocks-reading.png",
+          "sha256": "a59f9ba2e7bb1e185c35a04dd6d854898429c2853ee8cf830f11218d117652ff"
+        },
+        {
+          "name": "1280-minor-cancellation-reading.png",
+          "sha256": "799acbf84c6e18a0f481c7b9f6159fcf3202fc321e4651640ad76d3587e7cdd3"
+        },
+        {
+          "name": "1920-minor-cancellation-reading.png",
+          "sha256": "1a61912cffb774b59f2f1bfb505cc36a49958f399c052f465912d1bd4b653d4c"
+        },
+        {
+          "name": "375-complement-indices-reading.png",
+          "sha256": "ec0f5959e04ce82723c6a8b954caafa97440933274086157d4d28eac6df97a5e"
+        },
+        {
+          "name": "1280-complement-indices-reading.png",
+          "sha256": "f3f3b9a9b94ca45a520d84d9c29b0e3a91e6a800f7875b5b54f0bf8993277937"
+        },
+        {
+          "name": "375-minor-cancellation-reading.png",
+          "sha256": "b181d425bc66a03c0ab3401a6a0021c1faab5ed34ff511e5f46e20ffe0e4996b"
+        },
+        {
+          "name": "1920-matched-blocks-reading.png",
+          "sha256": "ed35f05dc607b70a0e4ecf2f590c65a9fe4ed77570a69b70e58fa0b166cc67ee"
+        },
+        {
+          "name": "1280-matched-blocks-reading.png",
+          "sha256": "bc98b9e46c4cc989255b21f475b391c0d53f858d2a788c511b3d65d14e517022"
+        },
+        {
+          "name": "1920-complement-indices-reading.png",
+          "sha256": "3e195eb8bc0ebd5a1fa0087e5b012a45e0750993d74485df2316493886ce4f1d"
+        }
+      ],
+      "arithmeticCounts": {
+        "states": 129,
+        "legacyStates": 0,
+        "recordedCalculations": 114,
+        "uniqueCalculations": 5,
+        "verifiedCalculations": 5,
+        "unsupportedCalculations": 0,
+        "statesWithoutCalculations": 57
+      },
+      "oldNoRecordedCalculations": true
+    }
+  ],
+  "directionalControls": [
+    {
+      "mutation": "output",
+      "status": "failed",
+      "findings": [
+        {
+          "id": "multiplication-order",
+          "width": 1280,
+          "progress": 1,
+          "kind": "frame",
+          "problem": "calculation-certificate",
+          "calculation": null,
+          "operation": "matmul",
+          "error": "matmul output[0][0]"
+        }
+      ]
+    },
+    {
+      "mutation": "input",
+      "status": "failed",
+      "findings": [
+        {
+          "id": "multiplication-order",
+          "width": 1280,
+          "progress": 1,
+          "kind": "frame",
+          "problem": "calculation-certificate",
+          "calculation": null,
+          "operation": "matmul",
+          "error": "matmul output[1][0]"
+        }
+      ]
+    },
+    {
+      "mutation": "missing-result",
+      "status": "failed",
+      "findings": [
+        {
+          "id": "multiplication-order",
+          "width": 1280,
+          "progress": 1,
+          "kind": "frame",
+          "problem": "calculation-certificate",
+          "calculation": null,
+          "operation": "matmul",
+          "error": "'output'"
+        }
+      ]
+    }
+  ],
+  "tests": {
+    "hostNodeTests": 177,
+    "pass": 177,
+    "fail": 0
+  },
+  "limits": [
+    "Count31 is sum of chapter-local unique inputs, not globally deduplicated.",
+    "57 saved complement-index states still have no canonical records; independent parent SymPy math evidence handles the chosen source example, not arbitrary custom code.",
+    "Direct neural exports, dot/optimizer helpers and arbitrary JavaScript arithmetic are not all covered by this wrapper.",
+    "PNG byte identity and finite saved geometry equality are not artistic/learner evaluation or same-model A/B."
+  ]
+}

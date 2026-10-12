@@ -1,0 +1,50 @@
+{
+  "scope": "Reusable production reader implementation and actual25chapter draft migration; whole-book diagrams and final learner delivery still incomplete. No new model calls by reader compiler.",
+  "upstreams": {
+    "quarto": {
+      "version": "1.10.19",
+      "commit": "2c3c1a35b23f8bff15ca0fc1c881f29af8c885fa",
+      "releaseAssetSha256": "8e38c2b2df6a6dbd369ea16e15acded6894545258d13a02f777f81ad18fd7973"
+    },
+    "mathjax": {
+      "version": "3.2.2",
+      "commit": "600692ad9d3552cc25f85510d5797bc942ecc9f7",
+      "bundleSha256": "a4354ff94fd868aea0cc6eaaa79a57fda0588646fc46ee3700a349ee0a11cbe6"
+    },
+    "upstreamSourceEdited": false
+  },
+  "render": {
+    "exitCode": 0,
+    "error": null,
+    "wallSeconds": 23.251,
+    "chapters": 25,
+    "nativeFormulas": 14336,
+    "widgets": 47,
+    "rawMarkdownRecovery": true,
+    "indentationOnlyDifferences": 4,
+    "symbolDifferences": 0,
+    "remoteExecutableTags": 0
+  },
+  "failuresRetained": [
+    "project01 sandbox spawnSync returnedstatus0 withEPERM and strictformula gate rejected4indentationchanges; not a clean render",
+    "50 actualbrowser375/1280 draft01 cases had2mobileoverflowcases; fixed targetedlonginline adaptation, latestquotientspaces mobile360/360 and keyboardHome/End seen",
+    "Actual600px viewport gaussdiagonal width518/height350 clipped2captions; sharedruntime compactheight threshold600 nowactualheight410/outside0",
+    "Original minimalpolynomial exit0 but finalgatefalse/stalefailedpreview. Freshroot candidate samecurrentplan actuallyrenders withoutfindings; separateadoption",
+    "Hostauthor parents wereTpaused, absent onlyinsandbox ps; originalidentities and244 frozenfileSHAs checked before scopedSIGCONT, no duplicateauthor"
+  ],
+  "infrastructureChecks": {
+    "actualHostNode": 180,
+    "actualHostPython": 124,
+    "exitCodes": [
+      0,
+      0
+    ]
+  },
+  "browserLimits": [
+    "NewCSP selfresources actualduality519formulas noMathJaxerrors andpagewidth360; notyetall25finalCSPbrowserchecks",
+    "MutationObserver errors withoutsourceURL remainunattributed",
+    "NoFirefoxSafari/physicaltouch/printPDF/learningeffectcertification",
+    "Finalreview gate binds explicitreview/source/planSHA andblockingissues, not automaticqualitytruth"
+  ],
+  "observedUtc": "2026-10-12T11:31:44.522958+00:00"
+}

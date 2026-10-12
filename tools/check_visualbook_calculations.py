@@ -598,7 +598,7 @@ def audit(document):
                 findings.append({**pose, 'problem': 'calculation-certificate', 'calculation': row.get('id'), 'operation': op, 'error': str(error)})
     return {'status': 'passed' if not findings else 'failed', 'counts': counts, 'unsupportedOperations': unsupported,
             'findings': findings, 'supportedOperations': sorted(CHECKS),
-            'scope': 'Independent finite algebra certificates and numeric/exact agreement for recorded synchronous compute calls and exported algebra-kernel calls. Unsupported operations, legacy runtime, opaque custom math, source-to-figure meaning, general theorems and artistic quality are unverified.'}
+            'scope': 'Independent finite algebra certificates and numeric/exact agreement for recorded synchronous compute calls, exported algebra kernels and drawing matmul. Unsupported operations, legacy runtime, opaque custom math, source-to-figure meaning, general theorems and artistic quality are unverified.'}
 
 
 def main():

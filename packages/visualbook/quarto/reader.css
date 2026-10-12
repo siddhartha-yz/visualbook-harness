@@ -1,0 +1,21 @@
+/* Quarto owns the reading grid and typography. These rules only adapt widgets
+   and genuinely wide equations; ordinary inline math keeps its native flow. */
+main mjx-container[jax="SVG"][display="true"] {
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-block: .35em;
+}
+main mjx-container[data-vh-long-inline] {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-block: .35em;
+}
+.visualbook-embed { margin-block: 1.5rem 2rem; min-width: 0; }
+.visualbook-widget { width: 100%; display: block; border: 0; }
+.visualbook-embed a.visualbook-open { font-size: .85em; color: var(--bs-secondary-color); }
+@media print {
+  .visualbook-open { display: none; }
+}

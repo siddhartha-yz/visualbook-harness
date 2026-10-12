@@ -163,8 +163,10 @@
       progress = clamp(p);
       const width = Math.floor(context.width);
       if (width < 1) return;
+      // Match the compact layouts used by the public diagram examples. A
+      // 450px height switch clipped their stacked layouts at 450..599px.
       const height =
-        width < 450 ? (figure.mobileHeight ?? context.height) : context.height;
+        width < 600 ? (figure.mobileHeight ?? context.height) : context.height;
       if (!board && svg.getAttribute("viewBox") !== `0 0 ${width} ${height}`)
         svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
       if (svg.style.height !== height + "px") svg.style.height = height + "px";

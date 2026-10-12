@@ -1,0 +1,110 @@
+{
+  "scope": "Fresh public repository/issues/comments/releases/assets metadata/branches/tags/deployments/Pages/CI metadata; intendedfiles/exactpublishableindextree/mainhistory scanned. Internalcheckpointrefs excluded.",
+  "limitations": "CI archive contents not freshly rescanned in this audit. Earlier92ZIP SHA/CRC checks retained but interruptedsecret-scan exit remainsunknown; not calledclean. No guarantee fordeleted/expired/private/inaccessible/deeper/futurecontent.",
+  "surfaces": [
+    {
+      "name": "repo",
+      "exitCode": 0,
+      "acceptedMissingPages": false
+    },
+    {
+      "name": "issues",
+      "exitCode": 0,
+      "acceptedMissingPages": false
+    },
+    {
+      "name": "issue-comments",
+      "exitCode": 0,
+      "acceptedMissingPages": false
+    },
+    {
+      "name": "pull-comments",
+      "exitCode": 0,
+      "acceptedMissingPages": false
+    },
+    {
+      "name": "releases",
+      "exitCode": 0,
+      "acceptedMissingPages": false
+    },
+    {
+      "name": "branches",
+      "exitCode": 0,
+      "acceptedMissingPages": false
+    },
+    {
+      "name": "tags",
+      "exitCode": 0,
+      "acceptedMissingPages": false
+    },
+    {
+      "name": "deployments",
+      "exitCode": 0,
+      "acceptedMissingPages": false
+    },
+    {
+      "name": "artifacts",
+      "exitCode": 0,
+      "acceptedMissingPages": false
+    },
+    {
+      "name": "runs",
+      "exitCode": 0,
+      "acceptedMissingPages": false
+    },
+    {
+      "name": "pages",
+      "exitCode": 1,
+      "acceptedMissingPages": true
+    }
+  ],
+  "scans": [
+    {
+      "scope": "fresh-public-metadata",
+      "exitCode": 0,
+      "wallSeconds": 0.552916651009582
+    },
+    {
+      "scope": "main-history",
+      "exitCode": 0,
+      "wallSeconds": 1.9472979219863191
+    },
+    {
+      "scope": "intended",
+      "exitCode": 0,
+      "wallSeconds": 0.38086945901159197
+    },
+    {
+      "scope": "exact-index-tree",
+      "exitCode": 0,
+      "wallSeconds": 2.1797530840267427
+    }
+  ],
+  "files": [
+    "docs/research-map.md",
+    "evaluation/2026-10-12/qiu-algebra-workflow/LOG.md",
+    "evaluation/2026-10-12/qiu-algebra-workflow/drawing-matmul-result.json",
+    "evaluation/2026-10-12/qiu-algebra-workflow/quarto-reader-result.json",
+    "packages/visualbook/README.md",
+    "packages/visualbook/quarto/export.mjs",
+    "packages/visualbook/quarto/reader.css",
+    "packages/visualbook/quarto/reader.js",
+    "packages/visualbook/runtime.js",
+    "packages/visualbook/viz.js",
+    "tests/test_visualbook_detached.py",
+    "tests/visualbook-calculation-trace.test.mjs",
+    "tests/visualbook-quarto.test.mjs",
+    "tools/check_visualbook_calculations.py",
+    "tools/export_quarto_book.mjs",
+    "tools/start_visualbook_run.py"
+  ],
+  "publicCounts": {
+    "repo": null,
+    "branches": 1,
+    "artifacts": 59,
+    "runs": 36
+  },
+  "scannerVersion": "8.30.1",
+  "unchangedAllowlist": "evaluation/2026-10-11/harness-v4-cs336/publication-allowlist.toml",
+  "failedAttempt": "Local gh does not support --slurp; allfirstmetadatareads failed before staging/scanning. Original diagnostics retained; retry used supported --paginate."
+}

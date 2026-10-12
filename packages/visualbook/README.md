@@ -125,4 +125,31 @@ python3 tools/package_visualbook.py work/my-book/book work/my-book.zip
 
 结构化 `columns` 在375px肯定会上下排列时，构建器会拒绝部分“左图/右图”等成对定位图注。请使用可见标题或变量名称。这个检查只覆盖已识别的表达和结构，不判断任意自定义图或整段文意。实际课程失败与三个目录模板的修订、重渲染和未覆盖计算记录见[响应式图注证据](../../evaluation/2026-10-12/qiu-algebra-workflow/responsive-caption-result.json)。
 
+自写图中的 `VisualBook.matmul(a,b)` 保留返回二维数组的接口，在同步绘图帧内也会记录输入和输出，接受同一独立矩阵检查。记录不会变成任意自写算式的证明；例如直接算的子式与符号仍需另核。两章真实重建的255保存状态、15阅读PNG与原版相同，并补上了原来缺失的乘法记录，见[实际调用记录证据](../../evaluation/2026-10-12/qiu-algebra-workflow/drawing-matmul-result.json)。
+
 公式渲染现在能把矩阵旁的`(j=1,\ldots,n)`保持为一组。它只改变HTML渲染树，原文与锚点不变；显式作者分行环境保留。全25章的源码身份和实际手机/桌面公式覆盖另有证据，不等于所有公式的数学证明或最终图书验收。
+
+## 长批次进程记录
+
+```bash
+python3 tools/start_visualbook_run.py work/source/manifest.json work/campaign/run work/campaign/process-01 --toolchain work/frozen-tools --campaign work/campaign --max-chapters 25 --attempt-limit 32 --timeout 1800 --resume
+python3 tools/start_visualbook_run.py --status work/campaign/process-01
+```
+
+入口只启动已有串行生成器，使用自有冻结工具链与已有官方登录。进程记录目录必须新建；独立进程会保存实际退出码，PID与Linux启动时刻一起核对，防止旧PID被复用后误报存活。相同campaign的第二个入口会拒绝；已经启动却没有结束记录的作者会话也会拒绝自动恢复，需要先查真实进程并保留诊断。`live`只说明进程身份，不说明教材完成。原文、工具文件被改变会停止；这些限制也不代替官方作者的串行锁、模型用量上限和导出门禁。
+
+本轮实际中断时，第15章作者父进程先结束、官方会话稍后完成，退出码无法取回。恢复记录明确写null，原自动门禁保持失败，再由维护者单独复核候选；没有重复模型调用。此入口已有真实脱离终端及退出码17的合成进程检查，整套课程恢复仍在运行，不能据此称为整书自动成功。
+
+## Quarto 整书阅读导出
+
+`tools/export_quarto_book.mjs` 接受标准Markdown或现有Markdown来源JSON、每章图解计划，以及按原顺序覆盖所有章节的分组。使用本地固定Quarto和完整MathJax SVG发行目录：
+
+```bash
+node tools/export_quarto_book.mjs work/book/manifest.json work/book/reader-01 --quarto work/pinned-quarto/bin/quarto --mathjax work/pinned-mathjax/es5
+```
+
+Manifest的`chapters`为`{id,source,plan,review}`，`groups`为`{title,chapters:[id,...]}`。正式导出要求每份review的`readyForReader:true`、`sourceFileSha256`、`planFileSha256`和`blockingIssues:[]`对应输入文件。`--draft`可省验收，仅用于明确标记的检查稿；`--prepare-only`不运行Quarto，不算实际渲染。目录必须新建，原失败/修订不得覆盖。
+
+原文按块行号与SHA插入图解，反向移除插入必须恢复同一字节串。Quarto接管原生目录、中文搜索、正文排版和MathJax；宽图用原生column-page。图解隔离为iframe，脚本/CSS按内容哈希共用，滚动只暂停播放。普通行内公式保持原生流，真正过长的独立/行内公式可局部横向滚动并用Home/End到两端。渲染会检查有序公式；只接受数学模式行首缩进移除并保存字面差异，拒绝符号、文本模式或宏变更。保留本地依赖许可证和QuartoCOPYRIGHT。
+
+资源策略拒绝额外远程script/link，仅明确移除Pandoc可选ES6 polyfill，并给阅读HTML加入本地资源CSP。它不是任意来源适配器：图片、原始HTML、frontmatter需另外实现，不能悄悄丢掉。review哈希、正常渲染和本地资源策略均不证明数学、审美、教学质量；最后仍需实际浏览器与来源/图意复核。实际25章迁移及失败见quarto-reader-result.json。

@@ -917,17 +917,26 @@
     if (a.length !== b.length) throw Error("Vector shapes differ");
     return a.reduce((s, v, i) => s + v * b[i], 0);
   }
-  function matmul(a, b) {
+  function rawMatmul(a, b) {
     if (!matrixShape(a) || !matrixShape(b) || a[0].length !== b.length)
       throw Error("Matrix shapes differ");
+    if (a.length * a[0].length > 4096 || b.length * b[0].length > 4096 || a.length * b[0].length * a[0].length > 262144)
+      throw Error("Educational matrix product is too large");
     return a.map((row) =>
       b[0].map((_, j) =>
-        dot(
+        finite(dot(
           row,
           b.map((r) => r[j]),
-        ),
+        )),
       ),
     );
+  }
+  function matmul(a, b) {
+    const calculate = () => ({output:rawMatmul(a,b)});
+    const recorder = global.VisualBookCalculations;
+    return (recorder?.invokeRecorded
+      ? recorder.invokeRecorded('matmul',{a,b},calculate,{id:null,origin:'drawing-kernel'})
+      : calculate()).output;
   }
   function trace(
     kind,

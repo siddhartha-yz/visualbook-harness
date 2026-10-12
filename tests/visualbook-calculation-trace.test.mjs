@@ -4,6 +4,24 @@ import fs from 'node:fs';
 import vm from 'node:vm';
 import {createRequire} from 'node:module';
 const C=createRequire(import.meta.url)('../packages/visualbook/calculations.cjs');
+test('Drawing matmul preserves its array API and records independent-checkable snapshots',()=>{
+ const window={VisualBookFormat:{formatNumber:String},VisualBookCalculations:C};
+ vm.runInNewContext(fs.readFileSync(new URL('../packages/visualbook/viz.js',import.meta.url),'utf8'),{
+  window,document:{createElement:()=>({getContext:()=>({})})}
+ });
+ const a=[[1,2],[0,1]],b=[[3],[4]],rows=[];
+ const result=C.withTrace(rows,()=>window.VisualBook.matmul(a,b));
+ const local=x=>JSON.parse(JSON.stringify(x));
+ assert.deepEqual(local(result),[[11],[4]]);
+ assert.deepEqual(local(rows[0].inputs),{a,b});
+ assert.deepEqual(local(rows[0].result),{output:[[11],[4]]});
+ assert.equal(rows[0].origin,'drawing-kernel');assert.equal(rows[0].operation,'matmul');
+ a[0][0]=99;result[0][0]=88;assert.equal(rows[0].inputs.a[0][0],1);assert.equal(rows[0].result.output[0][0],11);
+ assert.throws(()=>C.withTrace(rows,()=>window.VisualBook.matmul([[1e308]],[[1e308]])),/Non-finite/);
+ assert.throws(()=>window.VisualBook.matmul([[1]],[[1],[2]]),/Matrix shapes/);
+ const large=Array.from({length:65},()=>Array(65).fill(0));assert.throws(()=>window.VisualBook.matmul(large,large),/too large/);
+ window.VisualBook.matmul([[2]],[[3]]);assert.equal(rows.length,1);
+});
 test('Resolved calculation evidence follows dependencies and survives later state changes',()=>{
  const V={Board:class{},palette:{}};
  vm.runInNewContext(fs.readFileSync(new URL('../packages/visualbook/compose.js',import.meta.url),'utf8'),{window:{VisualBook:V,VisualBookCalculations:C}});
