@@ -1,0 +1,21 @@
+{
+  "status": "integrated-for-future-generations-after-original25driverexit",
+  "modelCalls": 0,
+  "actualOriginalDefectRejected": true,
+  "actualCorrectedCopyReady": true,
+  "originalFilesUnchanged": true,
+  "originalSourceSha256": "6b9f28924a5f90fa1ce4d9275b5ba874d63c2159b8a258bcc4c1061fc6498d9e",
+  "correctedSourceSha256": "bb1e7704a636a73de6393717dec60944521cfbd2a601c097afb596572a9a94f1",
+  "writerSha256": "c4b4fc4a4900a014814c7e6306adc753d755f8d079e8a166a026e2146e1ffb56",
+  "helperSha256": "783d429cf481323f63bcf51254e389bf68b4550d41424b9e233e9418b510782e",
+  "protocolControls": {
+    "newSyntheticTests": 7,
+    "courseControlsTotalPassed": 13,
+    "logSha256": "9b83ff3a45612f990d83434626898cd3a5fb16745a9f429cff7520cc7ebc194e"
+  },
+  "original25UsedNewGate": false,
+  "frozenVisualV3Changed": false,
+  "scope": "Actual old/corrected source copies replayed through integrated producer. Copies regenerate review hash transparently, no new author call. Shared formula-display gate and protocol controls do not prove mathematics, source truth, beauty or learning efficacy.",
+  "allPythonControlsPassed": 115,
+  "allPythonLogSha256": "29c56fa54fcd0db208a1a9086a04a4a50c99abaf6cb6b3ad0863b17de10dc3a4"
+}

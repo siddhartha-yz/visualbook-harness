@@ -61,6 +61,8 @@ python3 tools/run_visualbook.py chapters.json work/prepared-book --resume
 
 --resume只复用已有会话，不覆盖、不因为不满意而偷偷重复调用；原文改变必须另起目录。输入身份、调用用量、真实图片反馈、预览发现、失败和修订都留在会话目录。
 
+视频上游的教材作者入口`tools/write_course_textbook.py`现在在会话退出后独立调用同一个只读公式检查，并按最终文件哈希核对结果。`node tools/check_textbook_math.mjs chapter.md`也可由作者在定稿前使用；不改公式、不调用模型，不把显示通过称为数学证明。后置检查最长90秒；错误、无效响应、身份不符、计数不一致或超时都会拒绝接纳，逐次证据保留在该任务的`formula-preflight/`。本轮原25章写作结束后才接入，[真实旧稿与修正副本验证](../../evaluation/2026-10-12/qiu-algebra-workflow/textbook-producer-gate-result.json)不能冒充原25章已经使用这个入口。
+
 ## 不调用模型也能重建
 
 ```bash

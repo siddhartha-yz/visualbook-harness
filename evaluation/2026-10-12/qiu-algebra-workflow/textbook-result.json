@@ -1,0 +1,31 @@
+{
+  "status": "complete151range-maintainer-adopted25chapters",
+  "actualSourceParts": 151,
+  "chapters": 25,
+  "modelCallsInAssembly": 0,
+  "originalAuthorJobs": 25,
+  "originalReady": 23,
+  "originalDiagnosticChapterIds": [
+    "objects",
+    "systems"
+  ],
+  "maintainerEditItems": 12,
+  "selectedMathCheckItems": 719,
+  "textbookSha256": "25fef998b5f4e1b61f5c49ef9681e4e01335370147034ab008e029741e1b7b9c",
+  "manifestSha256": "39b8139ae2f5d413832968428780ad4a4baadf969e2676e549e1f89d5359336d",
+  "courseSha256": "1fbf675532ecbc618e4d7bdacea42a7183b45f6b6161344f14db0b649264f52d",
+  "planSha256": "7d5e6e795539627e7a3b20bd9d477bcf70fea257114b830c19b3e748d4286849",
+  "sourceManifestSha256": "ddc9c900ddec9c96ecd349caeb9b5225182b19dbed2a7bad47601bae181c5386",
+  "chapterCharactersIncludingMarkdownTex": 487983,
+  "hanCharacters": 197623,
+  "scope": "Full25 localbook frozen after explicitAI maintainer source/proof/math review, not verbatim ASR or independentteacher certification. Originalfailedgates/limits retained. Visualbook still generating, no fullvisual successclaim.",
+  "fullFrozenV3SourcePreflight": {
+    "chapters": 25,
+    "cases": 50,
+    "formulaInstances": 14336,
+    "findings": 0,
+    "modelCalls": 0,
+    "reportSha256": "c35b0720cdd51f422097d71db5612a7898076dd7372397b2385ad4c69a0d13f4",
+    "scope": "Wholefrozen25 source-only375/1280JSoff beforefirstmodel call, notvisual generation/mathtruth/artreview"
+  }
+}

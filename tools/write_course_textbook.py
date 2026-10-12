@@ -25,8 +25,64 @@ def save(path, value):
     path.write_text(json.dumps(value, ensure_ascii=False, indent=2) + "\n")
 
 
+def check_formula_preflight(job, timeout=90):
+    """Fail closed on display defects or an invalid read-only helper response."""
+    chapter, helper = job / "chapter.md", ROOT / "tools/check_textbook_math.mjs"
+    directory = job / "formula-preflight"
+    directory.mkdir(exist_ok=True)
+    attempt = directory / f"attempt-{len(list(directory.glob('attempt-*'))) + 1:03d}"
+    attempt.mkdir()
+    before = sha(chapter)
+    record = {"ready": False, "modelCalls": 0, "chapterSha256": before,
+              "helperSha256": sha(helper), "timeoutSeconds": timeout,
+              "scope": "Shared reader formula-display gate, not semantic or mathematical proof.",
+              "findings": []}
+    stdout, stderr = "", ""
+    try:
+        process = subprocess.run(["node", str(helper), str(chapter)], cwd=ROOT,
+                                 capture_output=True, text=True, timeout=timeout)
+        stdout, stderr = process.stdout, process.stderr
+        record["exitCode"] = process.returncode
+        answer = json.loads(stdout)
+        record["helperResult"] = answer
+        if (not isinstance(answer, dict) or type(answer.get("ready")) is not bool or
+                type(answer.get("modelCalls")) is not int or answer["modelCalls"] != 0 or
+                answer.get("chapterSha256") != before or not isinstance(answer.get("findings"), list)):
+            raise ValueError("invalid-formula-helper-protocol")
+        counts = [answer.get("formulasExpected"), answer.get("formulasRendered")]
+        if process.returncode or not answer["ready"]:
+            record["findings"].append("formula-display-rejected")
+        elif (any(type(n) is not int or not 0 <= n <= 100000 for n in counts) or
+                counts[0] != counts[1] or answer["findings"]):
+            raise ValueError("invalid-formula-helper-counts")
+        else:
+            record.update(ready=True, formulasExpected=counts[0], formulasRendered=counts[1])
+    except subprocess.TimeoutExpired as error:
+        stdout = error.stdout or ""
+        stderr = error.stderr or ""
+        if isinstance(stdout, bytes):
+            stdout = stdout.decode(errors="replace")
+        if isinstance(stderr, bytes):
+            stderr = stderr.decode(errors="replace")
+        record["findings"].append("formula-helper-timeout")
+    except (OSError, ValueError, TypeError, AttributeError) as error:
+        record["findings"].append("formula-helper-error:" + type(error).__name__)
+        record["error"] = str(error)
+    if sha(chapter) != before:
+        record["findings"].append("chapter-changed-during-formula-preflight")
+        record["ready"] = False
+    if record["findings"]:
+        record["ready"] = False
+    (attempt / "stdout.log").write_text(stdout)
+    (attempt / "stderr.log").write_text(stderr)
+    save(attempt / "result.json", record)
+    return {"ready": record["ready"], "findings": record["findings"],
+            "reportPath": str(attempt / "result.json"), "reportSha256": sha(attempt / "result.json"),
+            "helperSha256": record["helperSha256"], "chapterSha256": before}
+
+
 def check_chapter(job, expected_pages):
-    """Check identity and declared coverage, never claim full semantic coverage."""
+    """Check identity, declared coverage and formula display; no semantic proof."""
     failures = []
     chapter = job / "chapter.md"
     if not chapter.exists():
@@ -60,9 +116,13 @@ def check_chapter(job, expected_pages):
         failures.append("known-unresolved-issues")
     if review.get("chapterSha256") != sha(chapter):
         failures.append("review-does-not-match-final-chapter")
+    formula = check_formula_preflight(job)
+    if not formula["ready"]:
+        failures.append("formula-display-preflight-failed")
     return {"ready": not failures, "findings": sorted(set(failures)),
             "characters": len(text), "declaredPages": len(rows), "chapterSha256": sha(chapter),
-            "scope": "Structural and declared-source checks only; not independent content coverage, ASR accuracy or theorem validation."}
+            "formulaPreflight": formula,
+            "scope": "Structural, declared-source and shared formula-display checks; not independent content coverage, ASR accuracy or theorem validation."}
 
 
 def main():
@@ -124,7 +184,7 @@ def main():
 
 同时写coverage.json={{\"pages\":[{{\"page\":实际分集号,\"topics\":[具体知识],\"sections\":[chapter.md中实际标题文本],\"anchors\":[真实pXXX-sXXX],\"omissions\":[删去重复/闲谈或不确定内容的具体说明]}}],\"corrections\":[{{\"anchor\":原文位置,\"sourceText\":原误识别,\"resolved\":规范写法,\"basis\":板书文件或明确数学核对依据}}],\"addedExamples\":[补充例子与核算]}}。每集必须准确进入本章索引，不拿空话伪造覆盖；这只是你的声明，后续会独立核查。
 写glossary.json={{\"terms\":[{{\"term\":术语,\"notation\":记号,\"definition\":短定义}}]}}。
-完成后自己检查定义、证明、算例和TeX。写review.json={{\"ready\":是否愿意交给学习者,\"issues\":[真实未解决问题],\"blockingIssues\":[仍会误导学习或阻碍交付的问题],\"chapterSha256\":最终chapter.md的SHA256,\"mathChecks\":[实际独立验算/推理],\"sourceLimits\":[未确认的口述/板书位置与影响]}}。issues和blockingIssues只列仍影响学习正确性的未解决问题；已明确说明的来源缺口、未经过教师审查等边界写sourceLimits，不能删除负面证据。若替代解释已独立验算且明确标为编者补充，可以作为带来源限制的教材交付，不能声称恢复了原讲解。已知影响学习的错误必须记录，不自打分，不因为文件存在就声称严谨。写作审查不等于独立教师审查。
+完成后自己检查定义、证明、算例和TeX。定稿前可运行明确授权的只读显示检查：node {ROOT / "tools/check_textbook_math.mjs"} chapter.md。它只读取本章及自有渲染代码，不调用模型，不改原文。若拒绝，按具体错误自行修正并重新运行；将结果保留在当前目录，不把显示通过当成数学证明。启动器还会在会话退出后独立重复检查最终稿，错误会阻止接纳。写review.json={{\"ready\":是否愿意交给学习者,\"issues\":[真实未解决问题],\"blockingIssues\":[仍会误导学习或阻碍交付的问题],\"chapterSha256\":最终chapter.md的SHA256,\"mathChecks\":[实际独立验算/推理],\"sourceLimits\":[未确认的口述/板书位置与影响]}}。issues和blockingIssues只列仍影响学习正确性的未解决问题；已明确说明的来源缺口、未经过教师审查等边界写sourceLimits，不能删除负面证据。若替代解释已独立验算且明确标为编者补充，可以作为带来源限制的教材交付，不能声称恢复了原讲解。已知影响学习的错误必须记录，不自打分，不因为文件存在就声称严谨。写作审查不等于独立教师审查。
 
 只在当前目录写输出，禁止网络、任何额外模型/代理、读取账号配置、改公共工具或原始输入。用实际view_image查看图片，不凭路径声称看过。input-identity.json中boardSources是只读的明确授权源视频；需要确认重要公式时可以用ffmpeg从这些视频路径按source anchor时间提取PNG到当前目录，再实际查看。不要修改源视频。允许在当前目录用Python/Fraction/SymPy核算自选算例。官方账号认证由启动器管理。不提交Git。把书写入文件，最后消息只报告完成路径与重要限制。
 """
@@ -167,7 +227,7 @@ def main():
         save(job / "chapter-check.json", check)
         result = {"exit_code": process.returncode, "timed_out": timed_out, "elapsedSeconds": time.monotonic() - started,
                   "inputsUnchanged": after == inputs, "check": check,
-                  "scope": "Real official model authoring; gate is structural. Mathematical/artistic/teacher review remains separate."}
+                  "scope": "Real official model authoring; gate includes source declarations and formula display. Mathematical/artistic/teacher review remains separate."}
         save(job / "result.json", result)
         print(json.dumps(result, ensure_ascii=False))
         if not check["ready"]:
