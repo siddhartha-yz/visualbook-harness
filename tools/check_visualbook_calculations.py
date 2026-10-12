@@ -478,7 +478,41 @@ def check_complex_operator(data, r):
         require(r[key] is expected and r[key + 'Indicator'] == int(expected), 'complex flag ' + key)
 
 
-CHECKS = {'exact-row-reduction': check_rows, 'change-basis': check_change, 'polynomial-divide': check_divide,
+def check_dense(data, result):
+    # Fraction sums are independent of the renderer's JavaScript reduction.
+    # The tensor kernel has larger bounds than the small algebra matrices.
+    def tensor(value):
+        require(isinstance(value, list) and value and isinstance(value[0], list) and value[0], 'dense matrix shape')
+        rows, cols = len(value), len(value[0])
+        require(rows * cols <= 4096 and all(isinstance(row, list) and len(row) == cols for row in value), 'dense matrix bound/shape')
+        require(all(isinstance(v, (int, float)) and not isinstance(v, bool) and math.isfinite(v) for row in value for v in row), 'dense finite numeric input')
+        return exact(value)
+    a, w = tensor(data['input']), tensor(data['weights'])
+    m, k, n = len(a), len(a[0]), len(w[0])
+    require(len(w) == k and m * n * k <= 262144, 'dense product dimensions/bound')
+    bias = data.get('bias', 0)
+    bias = [bias] * n if isinstance(bias, (int, float)) and not isinstance(bias, bool) else bias
+    require(isinstance(bias, list) and len(bias) == n and all(isinstance(v, (int, float)) and not isinstance(v, bool) and math.isfinite(v) for v in bias), 'dense bias shape/type')
+    bias = exact(bias)
+    activation = data.get('activation', 'linear')
+    require(activation in ('linear', 'relu', 'sigmoid', 'tanh') and result['activation'] == activation, 'dense activation echo')
+    pre = [[sum((a[i][j] * w[j][c] for j in range(k)), F(0)) + bias[c] for c in range(n)] for i in range(m)]
+    def activated(value):
+        if activation == 'linear': return value
+        if activation == 'relu': return max(F(0), value)
+        value = float(value)
+        require(math.isfinite(value), 'dense preactivation overflow')
+        if activation == 'tanh': return math.tanh(value)
+        # Stable sigmoid evaluated independently by Python's math library.
+        return 1 / (1 + math.exp(-value)) if value >= 0 else math.exp(value) / (1 + math.exp(value))
+    for key, expected in {'input': a, 'weights': w, 'bias': bias, 'preactivation': pre,
+                          'output': [[activated(v) for v in row] for row in pre]}.items():
+        close(result[key], expected, 'dense ' + key)
+    for key, expected in {'inputShape': [m, k], 'weightShape': [k, n], 'outputShape': [m, n]}.items():
+        require(result[key] == expected and all(type(v) is int for v in result[key]), 'dense ' + key)
+
+
+CHECKS = {'dense': check_dense, 'exact-row-reduction': check_rows, 'change-basis': check_change, 'polynomial-divide': check_divide,
           'polynomial-gcd': check_gcd, 'residue-table': check_residue, 'nilpotent-profile': check_nilpotent,
           'generalized-kernel-profile': check_generalized_kernels,
           'bilinear-congruence': check_bilinear, 'determinant-expansion': check_expansion, 'dual-basis': check_dual,

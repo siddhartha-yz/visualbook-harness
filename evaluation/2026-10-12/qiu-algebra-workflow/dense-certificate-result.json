@@ -1,0 +1,123 @@
+{
+  "status": "finite-certificates-checked",
+  "modelCalls": 0,
+  "newSupportedOperation": "dense",
+  "independentlySupportedOperations": 17,
+  "method": "Independent Python Fraction matrix sums and bias, plus Python math sigmoid/tanh; same bounds4096 input/weight entries and262144 multiply-adds. Numeric output tolerance1e-11; no trained weights or gradients inferred.",
+  "actualCourseReplay": {
+    "chapter": "systems",
+    "originalRecordedAuditUnsupported": {
+      "dense": 9
+    },
+    "newCounts": {
+      "states": 141,
+      "legacyStates": 0,
+      "recordedCalculations": 141,
+      "uniqueCalculations": 9,
+      "verifiedCalculations": 9,
+      "unsupportedCalculations": 0,
+      "statesWithoutCalculations": 0
+    },
+    "inputSha256": "ff14285e5db456df960acb225a7252bba4a53f93eb7ff74aad9d3e73f1da86fa",
+    "authorOutcome": "Original author ready=false due separate mobile source formula break; arithmetic pass does not change it."
+  },
+  "actualPriorCatalogReplay": {
+    "originalRenderedCatalog": 110,
+    "countsBefore": {
+      "states": 4260,
+      "legacyStates": 0,
+      "recordedCalculations": 3934,
+      "uniqueCalculations": 251,
+      "verifiedCalculations": 26,
+      "unsupportedCalculations": 225,
+      "statesWithoutCalculations": 2061
+    },
+    "countsAfter": {
+      "states": 4260,
+      "legacyStates": 0,
+      "recordedCalculations": 3934,
+      "uniqueCalculations": 251,
+      "verifiedCalculations": 61,
+      "unsupportedCalculations": 190,
+      "statesWithoutCalculations": 2061
+    },
+    "unsupportedAfter": {
+      "optimizer-trace": 41,
+      "collective": 8,
+      "broadcast": 3,
+      "decode-attention-traffic": 3,
+      "matmul-batch-sweep": 6,
+      "matmul-traffic": 4,
+      "roofline": 14,
+      "tensor-reindex": 16,
+      "cache-footprint": 17,
+      "sample-grid": 2,
+      "normalization": 7,
+      "transpose": 15,
+      "polynomial-fit": 5,
+      "rotary-pairs": 12,
+      "top-k-route": 4,
+      "softmax": 7,
+      "softmax-loss": 10,
+      "gradient-step": 7,
+      "squared-loss": 3,
+      "dense-backward": 6
+    },
+    "inputSha256": "140718f86ccf79e26d1ed7c42cf9673e7b3570f8db4d593a4cf907ab09574d7f",
+    "method": "All original saved states merged and deduplicated across designs; differs from historical per-design sum. No new renders/model calls;35 distinct dense calculations newly verified."
+  },
+  "syntheticKernelControls": {
+    "kind": "Deterministic hand-authored inputs evaluated by actual JS dense kernel, then independently checked; no renders or models",
+    "counts": {
+      "states": 131,
+      "legacyStates": 0,
+      "recordedCalculations": 131,
+      "uniqueCalculations": 131,
+      "verifiedCalculations": 131,
+      "unsupportedCalculations": 0,
+      "statesWithoutCalculations": 0
+    },
+    "inputSha256": "bbe8cda8e3a518e0b88d3404d70aed57a16fe33160234a3d6bc8ac3b866d8e08",
+    "activationTypes": [
+      "linear",
+      "relu",
+      "sigmoid",
+      "tanh"
+    ],
+    "includes": "Scalar/vector bias, ±1000 sigmoid/tanh,64×64 maximum product bound"
+  },
+  "actualEvidenceTamperControls": [
+    {
+      "field": "output",
+      "status": "failed",
+      "findings": 1
+    },
+    {
+      "field": "bias",
+      "status": "failed",
+      "findings": 1
+    },
+    {
+      "field": "weights",
+      "status": "failed",
+      "findings": 1
+    }
+  ],
+  "tests": {
+    "python": {
+      "pass": 120,
+      "failed": 0
+    },
+    "nodeHost": {
+      "pass": 172,
+      "failed": 0
+    },
+    "nodeRestrictedEarlier": {
+      "pass": 168,
+      "failed": 4,
+      "reason": "Four subprocess-return JSON failures; retained original log. Successful host rerun is separately recorded."
+    }
+  },
+  "toolSha256": "da0a14b7fcf1feaf6af19b4c29c94f6dbd0a84b71e628c9ef4c2e20f65180f42",
+  "limits": "Finite arithmetic and input echo/shape checks only. No general mathematical proof, source-to-figure meaning, SVG geometry, gradients/training, art or learning certification. Frozen v3 course authoring unchanged; future tool addition replayed independently."
+}

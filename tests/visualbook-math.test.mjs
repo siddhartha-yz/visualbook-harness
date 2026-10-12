@@ -57,3 +57,15 @@ test("counts nested inline formulas separately from code text", () => {
     2,
   );
 });
+test("a trailing display index range remains one unit without changing source", () => {
+  const source = {type:"math", value:"x_k=d_k,\\qquad k=1,\\ldots,r,"}, report={};
+  const rendered=renderingMath(source,report);
+  assert.equal(source.value,"x_k=d_k,\\qquad k=1,\\ldots,r,");
+  assert.equal(rendered.data.hChildren[0].children[0].value,"x_k=d_k,\\allowbreak\\qquad {k=1,\\ldots,r,}");
+  assert.equal(report.indexRangeGrouped,1);
+});
+test("index grouping leaves inline math and explicit environments alone", () => {
+  for(const node of [{type:"inlineMath",value:"k=1,\\ldots,r"},{type:"math",value:"\\begin{aligned}x_k=d_k,\\qquad k=1,\\ldots,r\\end{aligned}"}]){
+    const report={};renderingMath(node,report);assert.equal(report.indexRangeGrouped,undefined);
+  }
+});

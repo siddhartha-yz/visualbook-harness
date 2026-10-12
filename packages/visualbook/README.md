@@ -61,7 +61,19 @@ python3 tools/run_visualbook.py chapters.json work/prepared-book --resume
 
 --resume只复用已有会话，不覆盖、不因为不满意而偷偷重复调用；原文改变必须另起目录。输入身份、调用用量、真实图片反馈、预览发现、失败和修订都留在会话目录。
 
+长批次可以另开终端查看只读快照：
+
+```bash
+python3 tools/inspect_visualbook_run.py work/my-book
+```
+
+它逐章重新核对最终计划、HTML、预览和问题记录的身份，不信任旧`export-gate.json`。`candidate_gate_ready`只表示当前候选的工程检查通过，不能代表整书已交付；`authoring_or_interrupted`只表示目录存在但没有结束记录，不能据此推断进程仍活着。快照不读取提供方日志、不调用模型，也不恢复或修改任务；作者写文件期间可能暂时出现不可读状态。
+
 视频上游的教材作者入口`tools/write_course_textbook.py`现在在会话退出后独立调用同一个只读公式检查，并按最终文件哈希核对结果。`node tools/check_textbook_math.mjs chapter.md`也可由作者在定稿前使用；不改公式、不调用模型，不把显示通过称为数学证明。后置检查最长90秒；错误、无效响应、身份不符、计数不一致或超时都会拒绝接纳，逐次证据保留在该任务的`formula-preflight/`。本轮原25章写作结束后才接入，[真实旧稿与修正副本验证](../../evaluation/2026-10-12/qiu-algebra-workflow/textbook-producer-gate-result.json)不能冒充原25章已经使用这个入口。
+
+显示公式末尾的简单指标范围，例如`\qquad k=1,\ldots,r`，现在在渲染树中作为一个整体，允许在其前面换行，避免手机把等号和值拆开。原文不改；MathML/TeX显示结构的适配有记录。[全25章实际重编译和第二章修复记录](../../evaluation/2026-10-12/qiu-algebra-workflow/visual-source-repair-result.json)保留原作者拒绝导出结果，不把维护者修复称为自动生成成功。
+
+独立计算检查器现支持17种操作。新增`dense`核对矩阵乘法、偏置、输入回显、形状及四种激活的有限数值输出；不认证权重经过训练或梯度正确。[真实记录重放与定向失败控制](../../evaluation/2026-10-12/qiu-algebra-workflow/dense-certificate-result.json)分别列出新增覆盖和仍未核验的操作。
 
 ## 不调用模型也能重建
 

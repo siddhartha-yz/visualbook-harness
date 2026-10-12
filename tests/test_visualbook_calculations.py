@@ -48,6 +48,26 @@ class RecordedCalculationTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'value'):
             module.numeric_pairs({'value': [[2]], 'valueExact': [['1/2']]})
 
+    def test_affine_output_bias_and_echo_cannot_disagree(self):
+        # Synthetic course-like scalar parameter -> two affine outputs.
+        row = {'id': 'c', 'operation': 'dense', 'inputs': {'input': [[2]], 'weights': [[3, -1]], 'bias': [1, 4]},
+               'result': {'input': [[2]], 'weights': [[3, -1]], 'bias': [1, 4], 'activation': 'linear',
+                          'preactivation': [[7, 2]], 'output': [[7, 2]], 'inputShape': [1, 1], 'weightShape': [1, 2], 'outputShape': [1, 2]}}
+        document = {'states': [{'calculationTraceVersion': 2, 'calculations': [row]}]}
+        self.assertEqual(module.audit(document)['counts']['verifiedCalculations'], 1)
+        for key, value in [('output', [[6, 2]]), ('bias', [0, 4]), ('weights', [[2, -1]]), ('outputShape', [2, 1]), ('activation', 'relu')]:
+            bad = copy.deepcopy(document); bad['states'][0]['calculations'][0]['result'][key] = value
+            self.assertEqual(module.audit(bad)['status'], 'failed', key)
+
+    def test_relu_changes_output_and_bad_dimension_never_passes(self):
+        row = {'id': 'c', 'operation': 'dense', 'inputs': {'input': [[-2, 1]], 'weights': [[1], [1]], 'activation': 'relu'},
+               'result': {'input': [[-2, 1]], 'weights': [[1], [1]], 'bias': [0], 'activation': 'relu',
+                          'preactivation': [[-1]], 'output': [[0]], 'inputShape': [1, 2], 'weightShape': [2, 1], 'outputShape': [1, 1]}}
+        document = {'states': [{'calculationTraceVersion': 2, 'calculations': [row]}]}
+        self.assertEqual(module.audit(document)['counts']['verifiedCalculations'], 1)
+        row['inputs']['weights'] = [[1]]
+        self.assertEqual(module.audit(document)['status'], 'failed')
+
     def test_root_component_is_not_the_whole_space_and_changes_cannot_hide(self):
         # Directional synthetic diagonal fixture: only one of two dimensions
         # belongs to lambda2; the other contributes rank1 at every positive power.

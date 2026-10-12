@@ -29,6 +29,16 @@ export function renderingMath(node, report = {}) {
         value = "\\begin{aligned}\n" + value + "\n\\end{aligned}";
         report.multilineMathWrapped = (report.multilineMathWrapped ?? 0) + 1;
       }
+      // A trailing index range is one reading unit. KaTeX otherwise allows a
+      // mobile line break after its '='. Braces group only this narrow display
+      // pattern in the rendering tree; raw source and anchor hashes stay intact.
+      if (n.type === "math" && !value.includes("\\begin{")) {
+        const range = /(\\(?:qquad|quad)\s+)([a-zA-Z](?:_\{[a-zA-Z0-9]+\}|_[a-zA-Z0-9])?\s*=\s*\d+\s*,\s*\\(?:ldots|dots|cdots)\s*,\s*[a-zA-Z](?:_\{[a-zA-Z0-9]+\}|_[a-zA-Z0-9])?\s*,?)\s*$/;
+        if (range.test(value)) {
+          value = value.replace(range, (_, spacing, condition) => "\\allowbreak" + spacing + "{" + condition + "}");
+          report.indexRangeGrouped = (report.indexRangeGrouped ?? 0) + 1;
+        }
+      }
       // mdast-util-to-hast uses data.hChildren, not value, for math nodes.
       // Construct both together, including nodes created by display adaptation.
       const code = {

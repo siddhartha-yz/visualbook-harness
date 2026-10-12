@@ -1,0 +1,54 @@
+{
+  "status": "source-preserving-presentation-repair-reviewed",
+  "modelCalls": 0,
+  "cause": "Actual second visual chapter author retained issue: at375px index suffix k=1,…,r split afterequals, refused export after3 previews.",
+  "original": {
+    "readyForExport": false,
+    "candidateSha256": "578db936762030081c3ae30057717d942c17df8cbb22101e0982f39dfa408935",
+    "reviewSha256": "efbdc56a7e70039eee6e90f17cfad6647dba998ff75a62f0cfb450e39cd57ce0",
+    "exitCode": 0
+  },
+  "generalToolChange": "Only trailing display patterns separated by quad/qquad with one latin scalar index = integer,…,latin bound are grouped in render tree and given a soft break before range. Inline math and explicit environments unchanged. Raw text/anchor hashes preserved; annotation TeX records presentation grouping.",
+  "completeSourceRecompile": {
+    "chapters": 25,
+    "browserCases": 50,
+    "formulasPerBook": 14336,
+    "renderedFormulaInstancesAcrossTwoWidths": 28672,
+    "findings": [],
+    "rawSourceAndBlocksUnchanged": true,
+    "changedCompiledBlocks": [
+      {
+        "chapter": "spaces",
+        "anchor": "spaces-151",
+        "mathmlLeafTokensEqual": true
+      },
+      {
+        "chapter": "systems",
+        "anchor": "systems-141",
+        "mathmlLeafTokensEqual": true
+      },
+      {
+        "chapter": "systems",
+        "anchor": "systems-143",
+        "mathmlLeafTokensEqual": true
+      }
+    ],
+    "equivalenceEvidenceSha256": "696e572e4934d93cd9496d83c5d67cca05f25e7045d17e53528edc7322b3618d"
+  },
+  "actualRepairedCandidate": {
+    "sha256": "d161dd24614689af4e89f4313326633af9f603114d1b28729d1b9cc595afb485",
+    "previewFindings": [],
+    "independentSavedGraphStates": 141,
+    "uniqueDenseCertificates": 9,
+    "originalDefaultSvgPoseHashesUnchanged": 45,
+    "actualMaintainerViewedPngs": 12,
+    "source143Actual375InspectionFindings": [],
+    "mathEvidenceSha256": "697822eb45478f8bd38e45ca0548782a9b4ebc881b34fc005220d45ef8c710ce",
+    "maintainerReviewSha256": "519b0f68f49e164de9c25a9ec31f16135f692fe67810edc8aa45c25b249245eb"
+  },
+  "retainedRootFailures": [
+    "Temporary rebuild01 used wrong relative import; build failed and dependent inspection failed. Newscript02 andfreshcandidate02 retained separately.",
+    "Root catalog coefficient observation01 was false: quadratic scalarField has½ Hessian convention. Corrected observation02 retained; no catalog change."
+  ],
+  "scope": "Not new model generation or automatic original success. Generic rendering fix, actual source/diagram/math checks and separate AI maintainer adoption. Whole25 generated book and final delivery still ongoing; no human teacher/aesthetic/learning certification."
+}
