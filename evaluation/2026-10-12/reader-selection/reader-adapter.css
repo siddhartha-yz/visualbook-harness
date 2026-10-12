@@ -1,0 +1,7 @@
+/* Block equations only. Preserve ordinary inline formula flow. */
+main mjx-container[jax="SVG"][display="true"] {
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-block: .25em;
+}

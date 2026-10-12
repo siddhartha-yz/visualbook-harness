@@ -1,0 +1,1 @@
+<script>addEventListener('message',e=>{if(e.origin!==location.origin||e.data?.type!=='visualbook-widget-size')return;const f=document.getElementById(e.data.id);if(f?.tagName==='IFRAME'&&e.source===f.contentWindow&&Number.isFinite(e.data.height)&&e.data.height>0&&e.data.height<3000)f.style.height=e.data.height+'px'})</script>

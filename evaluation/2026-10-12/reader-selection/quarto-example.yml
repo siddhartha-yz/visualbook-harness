@@ -1,0 +1,24 @@
+project:
+  type: book
+  resources:
+    - widgets/**
+    - assets/**
+book:
+  title: "高等代数 · 阅读器对照"
+  chapters:
+    - index.qmd
+    - systems.qmd
+    - basis-rank.qmd
+lang: zh-CN
+format:
+  html:
+    theme: cosmo
+    css: reader-adapter.css
+    number-sections: false
+    toc: true
+    html-math-method:
+      method: mathjax
+      url: assets/mathjax/tex-svg-full.js
+    include-after-body: widget-resize.html
+execute:
+  enabled: false

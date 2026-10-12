@@ -1,0 +1,96 @@
+{
+  "publicMetadata": [
+    {
+      "surface": "issues",
+      "exitCode": 0,
+      "count": 0,
+      "pageLimit": 100
+    },
+    {
+      "surface": "issue-comments",
+      "exitCode": 0,
+      "count": 0,
+      "pageLimit": 100
+    },
+    {
+      "surface": "review-comments",
+      "exitCode": 0,
+      "count": 0,
+      "pageLimit": 100
+    },
+    {
+      "surface": "commit-comments",
+      "exitCode": 0,
+      "count": 0,
+      "pageLimit": 100
+    },
+    {
+      "surface": "releases",
+      "exitCode": 0,
+      "count": 0,
+      "pageLimit": 100,
+      "assetMetadataCount": 0
+    },
+    {
+      "surface": "tags",
+      "exitCode": 0,
+      "count": 0,
+      "pageLimit": 100
+    },
+    {
+      "surface": "branches",
+      "exitCode": 0,
+      "count": 1,
+      "pageLimit": 100
+    },
+    {
+      "surface": "deployments",
+      "exitCode": 0,
+      "count": 0,
+      "pageLimit": 100
+    },
+    {
+      "surface": "artifacts",
+      "exitCode": 0,
+      "count": 57,
+      "pageLimit": 100
+    },
+    {
+      "surface": "runs",
+      "exitCode": 0,
+      "count": 35,
+      "pageLimit": 100
+    },
+    {
+      "surface": "pages",
+      "exitCode": 1,
+      "knownAbsent": true
+    }
+  ],
+  "scans": [
+    {
+      "scope": "metadata",
+      "exitCode": 0
+    },
+    {
+      "scope": "intended",
+      "exitCode": 0
+    },
+    {
+      "scope": "main-history",
+      "exitCode": 0
+    },
+    {
+      "scope": "publishable-tree",
+      "exitCode": 0
+    }
+  ],
+  "firstAttempt": {
+    "ghApiNetworkUnavailable": true,
+    "intendedScanExit0": true,
+    "unconfiguredMainHistoryAndTreeFindings": 77,
+    "knownChecksumAllowlistUsedOnFollowup": "evaluation/2026-10-11/harness-v4-cs336/publication-allowlist.toml",
+    "allowlistChanged": false
+  },
+  "scope": "Current named main history, exact publishable tree, seven intended reader experiment files, and fresh first-page public metadata; no raw textbook, provider logs, internal checkpoint refs or fresh remote CI asset/log contents published or certified."
+}

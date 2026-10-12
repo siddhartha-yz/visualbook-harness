@@ -1,0 +1,315 @@
+{
+  "scope": "Real two-chapter reader prototype, no model calls or resumption of the paused 151-lecture course campaign; not a production migration or completed book.",
+  "modelCalls": 0,
+  "quarto": {
+    "version": "1.10.19",
+    "tag": "v1.10.19",
+    "officialReleaseCommit": "2c3c1a35b23f8bff15ca0fc1c881f29af8c885fa",
+    "url": "https://github.com/quarto-dev/quarto-cli/releases/download/v1.10.19/quarto-1.10.19-linux-amd64.tar.gz",
+    "archiveSha256": "8e38c2b2df6a6dbd369ea16e15acded6894545258d13a02f777f81ad18fd7973",
+    "bytes": 147020886,
+    "scope": "Official upstream binary in ignored work, unchanged upstream; installation identity only, no rendering claim."
+  },
+  "mathjax": {
+    "version": "3.2.2",
+    "tag": "3.2.2",
+    "commit": "600692ad9d3552cc25f85510d5797bc942ecc9f7",
+    "upstream": "https://github.com/mathjax/MathJax",
+    "upstreamUnchanged": true,
+    "bundleSha256": "a4354ff94fd868aea0cc6eaaa79a57fda0588646fc46ee3700a349ee0a11cbe6",
+    "scope": "Official frozen upstream, full SVG bundle copied without modifications for local reader prototype."
+  },
+  "source": {
+    "scope": "Real two-chapter Quarto reader prototype; unchanged raw paragraphs/formulas, existing five diagrams isolated as widgets. Not production migration, new model generation or finished whole book.",
+    "modelCalls": 0,
+    "chapters": [
+      {
+        "id": "systems",
+        "sourceSha256": "7f88cd171fc2c1ef24d049e825f6e8eb8586dae0ef01b4658db92b9cdf3137ed",
+        "originalSource": "work/qiu-algebra-20261012/textbook-complete01/chapters/systems.md",
+        "planSha256": "6cd4150e17be57b3fb1c2e11115566f5f150d0f4866f0dafe4134e02a6ea8112",
+        "diagrams": [
+          "row-intersection",
+          "constant-conflict",
+          "free-coordinates"
+        ],
+        "rawTextExactAfterRemovingInsertedWidgets": true
+      },
+      {
+        "id": "basis-rank",
+        "sourceSha256": "c951445461012d391d2da05435f7902d2e757afdf65b963baaf7b68c7d34b6e5",
+        "originalSource": "work/qiu-algebra-20261012/textbook-complete01/chapters/basis-rank.md",
+        "planSha256": "6d6e72523902fdb8fda937ec87a08c8f3c6746729b482530c3adad6ad931ff2c",
+        "diagrams": [
+          "redundancy",
+          "coordinates"
+        ],
+        "rawTextExactAfterRemovingInsertedWidgets": true
+      }
+    ]
+  },
+  "texIdentity": {
+    "scope": "Ordered source AST TeX versus Quarto pre-typeset math spans; trim outer whitespace only. This is source preservation, not mathematical correctness.",
+    "rows": [
+      {
+        "chapter": "systems",
+        "originalCount": 411,
+        "renderedCount": 411,
+        "exactOrderedTexEquality": true,
+        "differences": []
+      },
+      {
+        "chapter": "basis-rank",
+        "originalCount": 651,
+        "renderedCount": 651,
+        "exactOrderedTexEquality": true,
+        "differences": []
+      }
+    ]
+  },
+  "browserCases": [
+    {
+      "chapter": "systems",
+      "viewport": 375,
+      "displayScrollBoxes": 5,
+      "errors": 0,
+      "iframes": 3,
+      "inlineScrollBoxes": 0,
+      "math": 411,
+      "scrollWidth": 360,
+      "title": "线性方程组与消元 – 高等代数 · 阅读器对照",
+      "width": 360
+    },
+    {
+      "chapter": "systems",
+      "viewport": 768,
+      "displayScrollBoxes": 0,
+      "errors": 0,
+      "iframes": 3,
+      "inlineScrollBoxes": 0,
+      "math": 411,
+      "scrollWidth": 753,
+      "title": "线性方程组与消元 – 高等代数 · 阅读器对照",
+      "width": 753
+    },
+    {
+      "chapter": "systems",
+      "viewport": 1280,
+      "displayScrollBoxes": 0,
+      "errors": 0,
+      "iframes": 3,
+      "inlineScrollBoxes": 0,
+      "math": 411,
+      "scrollWidth": 1265,
+      "title": "线性方程组与消元 – 高等代数 · 阅读器对照",
+      "width": 1265
+    },
+    {
+      "chapter": "basis-rank",
+      "viewport": 375,
+      "displayScrollBoxes": 13,
+      "errors": 0,
+      "iframes": 2,
+      "inlineScrollBoxes": 0,
+      "math": 651,
+      "scrollWidth": 360,
+      "title": "秩、基与坐标 – 高等代数 · 阅读器对照",
+      "width": 360
+    },
+    {
+      "chapter": "basis-rank",
+      "viewport": 768,
+      "displayScrollBoxes": 0,
+      "errors": 0,
+      "iframes": 2,
+      "inlineScrollBoxes": 0,
+      "math": 651,
+      "scrollWidth": 753,
+      "title": "秩、基与坐标 – 高等代数 · 阅读器对照",
+      "width": 753
+    },
+    {
+      "chapter": "basis-rank",
+      "viewport": 1280,
+      "displayScrollBoxes": 0,
+      "errors": 0,
+      "iframes": 2,
+      "inlineScrollBoxes": 0,
+      "math": 651,
+      "scrollWidth": 1265,
+      "title": "秩、基与坐标 – 高等代数 · 阅读器对照",
+      "width": 1265
+    }
+  ],
+  "widgets": [
+    {
+      "id": "basis-rank-redundancy",
+      "svgCount": 1,
+      "action": "不用 w",
+      "changed": true,
+      "kind": "interactive diagram"
+    },
+    {
+      "id": "basis-rank-coordinates",
+      "svgCount": 1,
+      "action": null,
+      "changed": null,
+      "kind": "static diagram preserved"
+    },
+    {
+      "id": "systems-row-intersection",
+      "svgCount": 1,
+      "action": null,
+      "changed": null,
+      "kind": "interactive diagram"
+    },
+    {
+      "id": "systems-constant-conflict",
+      "svgCount": 1,
+      "action": null,
+      "changed": null,
+      "kind": "interactive diagram"
+    },
+    {
+      "id": "systems-free-coordinates",
+      "svgCount": 1,
+      "action": null,
+      "changed": null,
+      "kind": "interactive diagram"
+    }
+  ],
+  "search": {
+    "query": "极大线性无关组",
+    "highlightCount": 10,
+    "navigatedToOtherChapter": true
+  },
+  "initialFailures": {
+    "oldReader": {
+      "chapter": "systems",
+      "math": 411,
+      "inlineMath": 360,
+      "allInlineMathUsesScrollingContainers": true,
+      "inlineHorizontalExcess": 81,
+      "observedViewport": 735,
+      "interpretation": "Geometry and visibly clipped fraction found; not an enumeration of every formula display defect."
+    },
+    "quartoDefaultMobile": {
+      "chapter": "systems",
+      "viewport": 375,
+      "clientWidth": 360,
+      "scrollWidth": 439,
+      "displayMathBeyondViewport": 5
+    },
+    "setup": "Local preparation syntax error, two npm tarball TLS transfer failures and missing python alias retained in execution history; official Git MathJax checkout used without disabling certificate verification."
+  },
+  "render01": {
+    "exitCode": 0,
+    "wallSeconds": 4.166439154010732,
+    "sourceChapters": 2,
+    "modelCalls": 0,
+    "scope": "Actual official Quarto book render, not browser or learning evaluation."
+  },
+  "render02": {
+    "exitCode": 0,
+    "wallSeconds": 2.758141285041347,
+    "modelCalls": 0,
+    "scope": "Actual official Quarto render with explicit narrow own CSS adapter. Browser checks pending.",
+    "explicitOutputAssetAdaptation": {
+      "scope": "Only remove exact optional ES6 CDN polyfill tag in this local output. Modern browsers support required language features. Upstream distribution/template unchanged; remaining MathJax bundle and book assets local. Not a production general offline packager.",
+      "files": [
+        {
+          "file": "systems.html",
+          "removedCount": 1,
+          "beforeSha256": "09eda142a17d443a61516a2e7b8b60ca240bc0c1ff90b17741c35909ad12b000",
+          "afterSha256": "61923ece6efbad8c3368f57c6f3738aca7e7e5f4984594507ac9572a93cd2570"
+        },
+        {
+          "file": "index.html",
+          "removedCount": 0,
+          "beforeSha256": "73470f87fda0f921976480b8a217cc5c21c28266046ba34a88ca8786bee2aaa1",
+          "afterSha256": "73470f87fda0f921976480b8a217cc5c21c28266046ba34a88ca8786bee2aaa1"
+        },
+        {
+          "file": "basis-rank.html",
+          "removedCount": 1,
+          "beforeSha256": "570dfc6b2922ef6c0d34d97f009e534f9bc3eea77d0b6df199275ebd679c2c1f",
+          "afterSha256": "d029d650e4f21f8418bf15ebba14decfd18502f852c108506b5fb608a38e57ff"
+        }
+      ]
+    }
+  },
+  "unresolved": {
+    "console": [
+      {
+        "level": "error",
+        "message": "Uncaught TypeError: Failed to execute 'observe' on 'MutationObserver': parameter 1 is not of type 'Node'.",
+        "timestamp": "2026-10-12T08:16:59.416Z"
+      },
+      {
+        "level": "error",
+        "message": "Uncaught TypeError: Failed to execute 'observe' on 'MutationObserver': parameter 1 is not of type 'Node'.",
+        "timestamp": "2026-10-12T08:22:49.673Z"
+      },
+      {
+        "level": "error",
+        "message": "Uncaught TypeError: Failed to execute 'observe' on 'MutationObserver': parameter 1 is not of type 'Node'.",
+        "timestamp": "2026-10-12T08:23:49.855Z"
+      },
+      {
+        "level": "error",
+        "message": "Uncaught TypeError: Failed to execute 'observe' on 'MutationObserver': parameter 1 is not of type 'Node'.",
+        "timestamp": "2026-10-12T08:24:47.437Z"
+      }
+    ],
+    "consoleAttribution": "Captured errors have no source URL; attribution unresolved. The delivered page assets contain no MutationObserver text. This does not prove the errors are external or harmless.",
+    "localization": "Official render warned about unavailable zh-CN translation data; sidebar/search labels observed in Chinese, full localization not certified.",
+    "notChecked": [
+      "Firefox/Safari",
+      "touch gestures",
+      "screen reader use",
+      "all 25 chapters",
+      "all source propositions",
+      "network-isolated browser operation",
+      "iframe printing and exported PDF layout"
+    ]
+  },
+  "experimentMaterialsReplay": {
+    "initialRender": {
+      "exitCode": 1,
+      "wallSeconds": 1.7300076484680176,
+      "modelCalls": 0,
+      "scope": "Actual render using committed experiment preparation/configuration files; optional default polyfill remains in this replay, not published or claimed offline."
+    },
+    "identityCheckAfterFailedRender": {
+      "exitCode": 1,
+      "reason": "Expected HTML absent; do not reuse earlier successful formula identity as a replay result."
+    },
+    "diagnosis": "Quarto Sass cache database outside the writable workspace was unavailable; configure a process-scoped local cache.",
+    "render02": {
+      "exitCode": 0,
+      "wallSeconds": 2.399869680404663,
+      "modelCalls": 0,
+      "cacheScope": "Process-scoped XDG_CACHE_HOME and DENO_DIR under ignored experiment work; no HOME or account configuration changes.",
+      "scope": "Actual render of committed experiment preparation/configuration materials; optional default polyfill remains in replay."
+    },
+    "identity02": {
+      "exitCode": 0,
+      "rows": [
+        {
+          "chapter": "systems",
+          "originalCount": 411,
+          "renderedCount": 411,
+          "exactOrderedTexEquality": true,
+          "differences": []
+        },
+        {
+          "chapter": "basis-rank",
+          "originalCount": 651,
+          "renderedCount": 651,
+          "exactOrderedTexEquality": true,
+          "differences": []
+        }
+      ]
+    }
+  }
+}

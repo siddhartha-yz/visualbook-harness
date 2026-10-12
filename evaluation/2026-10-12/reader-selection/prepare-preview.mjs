@@ -1,0 +1,23 @@
+// Frozen local experiment replay, not a production exporter. Run from repository root.
+import fs from 'node:fs';import path from 'node:path';import crypto from 'node:crypto';import{pathToFileURL}from'node:url';
+import{build}from'../../../tools/visualbook.mjs';
+const{parse,serialize}=await import(pathToFileURL(path.resolve('work/visualbook/runtime/node_modules/parse5/dist/index.js')));
+const root=path.resolve('work/reader-evaluation-20261012'),out=path.resolve(process.argv[2]??root+'/rebuild-book');if(fs.existsSync(out))throw Error('Fresh prototype needed');fs.mkdirSync(out);fs.mkdirSync(out+'/widgets');
+const sha=x=>crypto.createHash('sha256').update(x).digest('hex'),record={scope:'Real two-chapter Quarto reader prototype; unchanged raw paragraphs/formulas, existing five diagrams isolated as widgets. Not production migration, new model generation or finished whole book.',modelCalls:0,chapters:[]};
+for(const[id,dir]of[['systems','visual-review/systems-rebuild-03'],['basis-rank','visual-campaign01/run01/sessions/basis-rank']]){
+ const base=path.resolve('work/qiu-algebra-20261012',dir),source=JSON.parse(fs.readFileSync(base+'/source.json')),plan=JSON.parse(fs.readFileSync(base+'/book.json')),original=fs.readFileSync(source.source,'utf8');if(sha(original)!==source.sourceSha256)throw Error('Source identity changed');let text=original;const insertions=[];
+ for(const f of plan.figures){
+  const anchor=source.blocks.find(b=>b.id===f.afterAnchor);if(!anchor||original.split(anchor.raw).length!==2)throw Error('Ambiguous original anchor');
+  const small={...source,title:f.title,blocks:[{...anchor,html:'',math:{expected:0,rendered:0}}]};let html=build(small,{figures:[f],annotations:[]});const dom=parse(html);
+  function trim(n){if(n.childNodes)n.childNodes=n.childNodes.filter(c=>c.tagName!=='header'&&!c.attrs?.some(a=>a.name==='class'&&(a.value.split(' ').includes('vh-opening')||a.value.split(' ').includes('source-block')))).map(c=>{trim(c);return c;});}trim(dom);html=serialize(dom);
+  const widgetId=id+'-'+f.id,extra=`<style>body{background:transparent;margin:0}main{display:block!important;max-width:none!important;margin:0!important;padding:0!important}.vh-figure{margin:0!important;padding:12px 8px!important}.vh-anchor-row{display:block!important}</style><script>function reportWidgetHeight(){parent.postMessage({type:'visualbook-widget-size',id:${JSON.stringify(widgetId)},height:Math.ceil(document.body.scrollHeight)},location.origin)}new ResizeObserver(reportWidgetHeight).observe(document.body);addEventListener('load',reportWidgetHeight);</script>`;
+  html=html.replace('</body>',extra+'</body>');fs.writeFileSync(out+'/widgets/'+widgetId+'.html',html);
+  const fence=String.fromCharCode(96).repeat(3);const insertion="\n\n"+fence+"{=html}\n"+`<iframe class="visualbook-widget" id="${widgetId}" title="${f.title}" src="widgets/${widgetId}.html" style="width:100%;border:0;display:block;height:${(f.mobileHeight??f.height??360)+160}px" loading="lazy"></iframe>`+"\n"+fence+"\n\n";
+  text=text.replace(anchor.raw,anchor.raw+insertion);insertions.push(insertion);
+ }
+ let recovered=text;for(const i of insertions)recovered=recovered.replace(i,'');if(recovered!==original)throw Error('Raw text changed');fs.writeFileSync(out+'/'+id+'.qmd',text);record.chapters.push({id,sourceSha256:sha(original),originalSource:source.source,planSha256:sha(fs.readFileSync(base+'/book.json')),diagrams:plan.figures.map(f=>f.id),rawTextExactAfterRemovingInsertedWidgets:true});
+}
+fs.writeFileSync(out+'/_quarto.yml',`project:\n  type: book\n  resources:\n    - widgets/**\n    - assets/**\nbook:\n  title: "高等代数 · 阅读器对照"\n  chapters:\n    - index.qmd\n    - systems.qmd\n    - basis-rank.qmd\nlang: zh-CN\nformat:\n  html:\n    theme: cosmo\n    number-sections: false\n    toc: true\n    html-math-method:\n      method: mathjax\n      url: assets/mathjax/tex-svg-full.js\n    include-after-body: widget-resize.html\nexecute:\n  enabled: false\n`);
+fs.writeFileSync(out+'/index.qmd','# 阅读器对照\n\n这是 Quarto 承载的两章实际教材。文字与 TeX 原样保留；已有图解仍在对应段落中，按需播放和探索。全套生成保持暂停。\n\n这里只验证阅读器是否适合承载当前内容，尚未迁移整套教材。\n');
+fs.writeFileSync(out+'/widget-resize.html',`<script>addEventListener('message',e=>{if(e.origin!==location.origin||e.data?.type!=='visualbook-widget-size')return;const f=document.getElementById(e.data.id);if(f?.tagName==='IFRAME'&&e.source===f.contentWindow&&Number.isFinite(e.data.height)&&e.data.height>0&&e.data.height<3000)f.style.height=e.data.height+'px'})</script>`);
+fs.writeFileSync(out+'/prototype-inputs.json',JSON.stringify(record,null,2)+'\n');console.log({chapters:record.chapters.length,widgets:5,rawSourceUnchanged:true,modelCalls:0});
