@@ -6,7 +6,14 @@ import { pathToFileURL } from "node:url";
 import { invalidGeometry } from "./visualbook_inspection.mjs";
 const root = path.resolve(import.meta.dirname, ".."),
   hash = (bytes) => crypto.createHash("sha256").update(bytes).digest("hex");
-export async function auditParameters(file, out) {
+export function auditWidths(widths = [1280, 375, 600, 1920]) {
+  if (!Array.isArray(widths) || !widths.length || widths.length > 6 ||
+      new Set(widths).size !== widths.length || widths.some(w => !Number.isInteger(w) || w < 240 || w > 2560))
+    throw Error('Use 1..6 unique integer viewport widths from 240 to 2560');
+  return [...widths];
+}
+export async function auditParameters(file, out, {widths} = {}) {
+  widths = auditWidths(widths);
   if (fs.existsSync(out))
     throw Error("Parameter evidence exists; choose a fresh directory");
   fs.mkdirSync(out, { recursive: true });
@@ -28,11 +35,12 @@ export async function auditParameters(file, out) {
     cases: [],
     findings: [],
     modelCalls: 0,
+    declaredViewports: widths,
     scope:
-      "Parameter extremes and all declared cases at 1280/375/1920, with progress 0.5/1 or explicit case progress. Not exhaustive combinations or artistic review.",
+      "Parameter extremes and all declared cases at declaredViewports, with progress 0.5/1 or explicit case progress. Not exhaustive combinations or artistic review.",
   };
   try {
-    for (const width of [1280, 375, 1920]) {
+    for (const width of widths) {
       const page = await browser.newPage({ viewport: { width, height: 900 } });
       await page.addInitScript(() => (window.__VH_SNAPSHOT = true));
       await page.addInitScript({

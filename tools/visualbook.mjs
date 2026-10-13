@@ -10,7 +10,7 @@ import { spawnSync } from "node:child_process";
 import { operations as calculations } from "./visualbook_math.mjs";
 import { pathToFileURL } from "node:url";
 import { captionLayoutFindings } from "../packages/visualbook/caption-layout.mjs";
-import { auditParameters } from "./audit_visualbook_parameters.mjs";
+import { auditParameters, auditWidths } from "./audit_visualbook_parameters.mjs";
 import { auditInteractions } from "./audit_visualbook_interactions.mjs";
 import { invalidGeometry, sourceMathLeaks } from "./visualbook_inspection.mjs";
 import reading from "../packages/visualbook/reading.cjs";
@@ -31,7 +31,7 @@ const json = (filename) => JSON.parse(fs.readFileSync(filename, "utf8"));
 const hash = (bytes) => crypto.createHash("sha256").update(bytes).digest("hex");
 const figureFields = new Set([
   'id','title','afterAnchor','endAnchor','sourceDiagramAnchor','summary',
-  'height','mobileHeight','design','overrides','stages','params','state',
+  'height','mobileHeight','compactWidth','design','overrides','stages','params','state',
   'interaction','placement','marginSide','presentation','presets',
   'initialProgress','durationMs','checkpoints','scene','code','designRef',
 ]);
@@ -59,6 +59,7 @@ export function resolvePlan(plan) {
         "title",
         "height",
         "mobileHeight",
+        "compactWidth",
         "stages",
         "params",
         "state",
@@ -295,6 +296,8 @@ export function validatePlan(book, plan) {
   const ids = new Set(),
     scopes = [];
   for (const f of plan.figures) {
+    if (f.compactWidth !== undefined && (!Number.isInteger(f.compactWidth) || f.compactWidth < 240 || f.compactWidth > 1600))
+      throw Error('Compact layout breakpoint must be an integer from 240 to 1600');
     reading.readingSpec(f);
     if (
       typeof f.id !== "string" ||
@@ -567,14 +570,19 @@ export function build(book, plan, { direct = false } = {}) {
   const startup = plan.figures
     .map(
       (f) =>
-        `VisualBookRuntime.mount(document.getElementById('figure-${f.id}'),${JSON.stringify({ ...f, code: undefined, scene: undefined }).replaceAll("<", "\\u003c")},(${f.scene ? "function draw(input){return VisualBook.renderScene(input.board," + JSON.stringify(f.scene).replaceAll("<", "\\u003c") + ",input);}" : f.code}),${!direct});`,
+        f.scene
+          ? `(()=>{const scene=${JSON.stringify(f.scene).replaceAll("<", "\\u003c")};VisualBookRuntime.mount(document.getElementById('figure-${f.id}'),{...${JSON.stringify({ ...f, code: undefined, scene: undefined }).replaceAll("<", "\\u003c")},scene},function draw(input){return VisualBook.renderScene(input.board,scene,input);},${!direct});})();`
+          : `VisualBookRuntime.mount(document.getElementById('figure-${f.id}'),${JSON.stringify({ ...f, code: undefined, scene: undefined }).replaceAll("<", "\\u003c")},(${f.code}),${!direct});`,
     )
     .join("\n");
   const headings = book.blocks.filter((b) => b.type === "heading" && b.depth > 1 && b.depth <= 4);
   const toc = headings.length >= 3 ? `<nav class="vh-toc" aria-label="本章目录"><details><summary>本章</summary><ol>${headings.map((b) => `<li data-depth="${b.depth}"><a href="#${b.id}">${esc(b.raw.replace(/^#+\s*/, ""))}</a></li>`).join("")}</ol></details></nav>` : "";
-  return `<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; font-src data:; connect-src 'none'; base-uri 'none'"><title>${esc(book.title)}</title><style>${fs.readFileSync(path.join(lib, "theme.css"), "utf8")}\n${katexCss()}</style></head><body data-source-name="${esc(sourceName)}" data-math-expected="${mathExpected}" data-source-sha="${book.sourceSha256}"><header><a href="index.html">VisualBook</a>${book.sourceUrl ? `<a href="${esc(book.sourceUrl)}">原版教材 ↗</a>` : ""}</header><main><div class="vh-opening">${toc}<div class="vh-cover"><div class="eyebrow">读 · 看 · 有需要再试</div>${cover}<p class="source-note">正文来自 ${esc(sourceName)}。先读图；需要时可以看一遍演示，或展开探索。</p></div></div>${body}</main><script>${library}\n${fs.readFileSync(path.join(lib, "runtime.js"), "utf8")}\n${startup}</script></body></html>`;
+  return `<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; font-src data:; connect-src 'none'; base-uri 'none'"><title>${esc(book.title)}</title><style>${fs.readFileSync(path.join(lib, "theme.css"), "utf8")}\n${katexCss()}</style></head><body data-source-name="${esc(sourceName)}" data-math-expected="${mathExpected}" data-source-sha="${book.sourceSha256}"><header><a href="index.html">VisualBook</a>${book.sourceUrl ? `<a href="${esc(book.sourceUrl)}">原版教材 ↗</a>` : ""}</header><main><div class="vh-opening">${toc}<div class="vh-cover"><div class="eyebrow">读 · 看 · 有需要再试</div>${cover}<p class="source-note">正文来自 ${esc(sourceName)}。先读图；需要时可以看一遍演示，或展开探索。</p></div></div>${body}</main><script>${library}\n${fs.readFileSync(path.join(lib, "runtime.js"), "utf8")}\n/* VisualBook figure startup */\n${startup}</script></body></html>`;
 }
-export async function preview(file, out) {
+export async function preview(file, out, options = {}) {
+  if (!options || Array.isArray(options) || typeof options !== 'object' || Object.keys(options).some(key => key !== 'widths'))
+    throw Error('Preview options only accept bounded widths');
+  const widths = auditWidths(options.widths);
   if (fs.existsSync(out))
     throw Error("Preview directory exists; use a new directory");
   fs.mkdirSync(out, { recursive: true });
@@ -585,6 +593,7 @@ export async function preview(file, out) {
     findings: [],
     screenshots: [],
     status: "running",
+    declaredViewports: widths,
   };
   let browser,
     activePage,
@@ -615,7 +624,8 @@ export async function preview(file, out) {
       headless: true,
       executablePath: process.env.CHROMIUM_PATH ?? chromium.executablePath(),
     });
-    for (const width of [1280, 375, 1920]) {
+    // Medium layouts exposed clipping between the compact/desktop breakpoints.
+    for (const width of widths) {
       const page = await browser.newPage({
         viewport: { width, height: 900 },
         deviceScaleFactor: 1,
@@ -981,7 +991,7 @@ export async function preview(file, out) {
   if (report.status === "failed") return report;
   let parameters;
   try {
-    parameters = await auditParameters(file, path.join(out, "parameters"));
+    parameters = await auditParameters(file, path.join(out, "parameters"), {widths});
   } catch (error) {
     report.status = "failed";
     report.findings.push({
@@ -1239,7 +1249,7 @@ async function main() {
     return;
   }
   if (command === "preview") {
-    const report = await preview(args[0], args[1]);
+    const report = await preview(args[0], args[1], JSON.parse(args[2] ?? '{}'));
     console.log(
       JSON.stringify({
         status: report.status,

@@ -1,0 +1,372 @@
+{
+  "status": "complete151episode25chapter-local-reader-delivered",
+  "date": "2026-10-13",
+  "scope": "AI-maintainer-adopted complete course book, not unattended generation or teacher/learning certification. Source,source math,model exit,render,numerical identity and sampled visual review remain separate.",
+  "source": {
+    "bvid": "BV1jR4y1M78W",
+    "episodes": 151,
+    "hours": 58.919444444444444,
+    "chapters": 25,
+    "parts": 4,
+    "rawChapterBytes": 929185,
+    "markdownDownloadBytes": 929353,
+    "selectedSourceMathChecks": 719,
+    "maintainerSourceEditItems": 12,
+    "sourceRecord": {
+      "path": "evaluation/2026-10-12/qiu-algebra-workflow/source-result.json",
+      "sha256": "b2774b347f2e14550e03680e7d62052ec05f6376adc26e03e8a5bbeef0e5dc6f"
+    },
+    "textbookRecord": {
+      "path": "evaluation/2026-10-12/qiu-algebra-workflow/textbook-result.json",
+      "sha256": "12d151ba1576eedf492e2a4384053c44bfc726021e2dd84f7eff41f4bfecbc2d"
+    }
+  },
+  "originalVisualAuthor": {
+    "jobs": 25,
+    "ready": 19,
+    "notReady": [
+      "systems",
+      "spaces",
+      "matrix-rank",
+      "linear-maps",
+      "change-of-basis",
+      "minimal-polynomial"
+    ],
+    "campaignWallHours": 8.614251388888889,
+    "record": {
+      "path": "work/qiu-algebra-20261012/visual-campaign01/run01/pipeline-record.json",
+      "sha256": "fc8928ea382714de31ad5e9bd475d694e5a4b73478758de7aaed28064b0cf407"
+    },
+    "note": "Original gates and unknown/interrupted process results unchanged. Maintainer repair/review separate; live frozenv3 author did not use later tool updates."
+  },
+  "finalReader": {
+    "engine": "Quarto1.10.19 + localMathJax3.2.2",
+    "renderSeconds": 17.465,
+    "modelCallsInAssembly": 0,
+    "formulas": 14336,
+    "widgets": 56,
+    "widgetWidths": [
+      310,
+      600,
+      1280,
+      1920
+    ],
+    "widgetFindings": 0,
+    "savedNumericalFactStatesCompared": 3264,
+    "nativeWidths": [
+      375,
+      1280
+    ],
+    "nativeCases": 50,
+    "loadedIframeCases": 112,
+    "formulaErrors": 0,
+    "externalRequestsDuringIsolatedCheck": [],
+    "runtimeResources": 242,
+    "rawMarkdownPreserved": true,
+    "formulaWhitespaceAdaptations": 4,
+    "numberOfChaptersWithWhitespaceAdaptations": 3,
+    "note": "All saved facts compared to previously reviewed candidate inputs at10decimal precision, not3264unique independent proofs. Native UI final03review kept; final04 only theme font configuration changes, all source/plan/widget identities same."
+  },
+  "portablePackage": {
+    "status": "passed",
+    "files": 245,
+    "bytes": 9559737,
+    "archiveSha256": "7978a162135acf346133ce75f3d5670d00be1526e53ca5ec7d5f8b959de281da",
+    "repeatByteIdentical": true,
+    "crc": "passed",
+    "scope": "Actual final04 full25chapter reader packaging twice; no model calls. Source identities,compiled resources and review bound; actual extracted server/browser check separate.",
+    "extractedBrowserStatus": "passed",
+    "blockedExternalNetworkExceptLoopback": true,
+    "completeInternetDisconnectionTest": false,
+    "nativeSearchVerified": "Jordan -> jordan-form.html",
+    "localReader": "http://127.0.0.1:8768/qiu-algebra-book04/index.html",
+    "zip": "outputs/visualbook/qiu-algebra-full-20261013-02.zip",
+    "markdownSha256": "b4a6e39d19bfccfbfa28f6c8ec03446334c9204e3d80f9e055c10fa28e1c1658"
+  },
+  "toolChanges": [
+    "Weighted/nested layout determines compact height rather than average child width",
+    "Actual embedded viewport widths for render and parameter audits",
+    "Explicit compiled startup boundary keeps structured scene and shared assets valid",
+    "Embedded animation elapsed time uses only requestAnimationFrame clock",
+    "Iframe reported height avoids fractional scrollbar/resize feedback",
+    "Numbered MathJax equations scroll locally without widening whole page",
+    "Disable optional theme web font through official Sass variable, no upstream edit",
+    "Source/review-bound deterministic native reader package with CSS/HTML local-resource checks and loopback launcher"
+  ],
+  "tests": {
+    "node": 186,
+    "python": 125,
+    "result": {
+      "path": "work/qiu-algebra-20261012/quarto-full-01/tool-tests-05/result.json",
+      "sha256": "0ab68194fc253b2a929b01a5080eca1962e2bb4e1ee25dd3b4653971e5f94ce4"
+    },
+    "packageNegativeControls": "stale/blocked reviews,missing local files,path escape,external JS and CSS,asset directory misuse; sameinput archiveidentity"
+  },
+  "retainedFailures": [
+    "Original6notready author chapters",
+    "Earlier partial/failed freeze and widget review rounds",
+    "Iframe startup split closure produced32failedwidget renders",
+    "Old eigen numbered equation widened phone page",
+    "First native final02case helper captured wrong route and evidence was invalidated",
+    "Iframe clock origin mismatch delayed playback",
+    "Lorentz frameheight rounding oscillation",
+    "First packager rejected native directoryhome navigation",
+    "First portable package caught remoteGooglefont request",
+    "First CSSimport negative control missed minified no-whitespace form",
+    "Mis-scoped node --test discovery included third-party work; terminated, exact tests rerun",
+    "Browser media download waited56819.3339seconds; excluded from productive work"
+  ],
+  "limitations": [
+    "ASR word error rate and every original utterance not certified",
+    "719selected sourcechecks are not proof of every theorem",
+    "25episodeplans preserve range/order, not verbatim completeness",
+    "No Firefox/Safari/physicaltouch/printPDF final25chapter verification",
+    "Some search snippets retain rawTeX while actual chapter bodies typeset",
+    "Math and sampled AI maintainer visual checks do not establish human teaching/artistic quality",
+    "Original author19/25ready is not claim of automatic wholebook success",
+    "Current publication audit does not freshly scan CI archivecontents; earlier92archiveSHA/CRCchecked, interrupted secretscan exitunknown"
+  ],
+  "evidence": [
+    {
+      "path": "work/qiu-algebra-20261012/quarto-full-01/final-project04/assembly-record.json",
+      "sha256": "437da6700251cc1a1e00f12f8fb7b3dd41ebfe442966cb7ff20a9d47dd1bf71c"
+    },
+    {
+      "path": "work/qiu-algebra-20261012/quarto-full-01/final-project04/render-result.json",
+      "sha256": "e56aa4ff0cfce1554c279602d786fbebb346dc60caeab320ea482f74048f96fa"
+    },
+    {
+      "path": "work/qiu-algebra-20261012/quarto-full-01/final-project04/reader-build-check.json",
+      "sha256": "cebea35b6831c512d614e0bb7fab9ba88e4da431eab2debad673914cff8868b6"
+    },
+    {
+      "path": "work/qiu-algebra-20261012/quarto-full-01/reader-artifact-review-final-02.json",
+      "sha256": "721562c60caac63e733f7581fff6f9ae85ddd6ced8653b09489d2368d2cdc2bb"
+    },
+    {
+      "path": "work/qiu-algebra-20261012/quarto-full-01/reader-artifact-05/result.json",
+      "sha256": "18929bfd3951b0850946aa8db5e9baedca3431d18f06395b4327db31529c5a26"
+    },
+    {
+      "path": "work/qiu-algebra-20261012/quarto-full-01/browser-final-04.json",
+      "sha256": "3177ac0bdaaf96405958af0dcc22364de20b850a7c426714c543de218805f512"
+    },
+    {
+      "path": "work/qiu-algebra-20261012/quarto-full-01/widget-review-09/result.json",
+      "sha256": "59a3f670910eda945e03033e6854eaac9265e65e0be7d95c3bbd9350a6af1545"
+    },
+    {
+      "path": "work/qiu-algebra-20261012/quarto-full-01/widget-fact-identity-02.json",
+      "sha256": "039d2dafefc782d14ee621ac2906d38577a31e2d057763a09b0e0446d7912dc8"
+    },
+    {
+      "path": "work/qiu-algebra-20261012/quarto-full-01/source-coverage-01.json",
+      "sha256": "d2df37b17ed9e56fdfa7b8fa1165de3865bca53204182f06e5e059cd2a292719"
+    },
+    {
+      "path": "work/qiu-algebra-20261012/quarto-full-01/package-result-03.json",
+      "sha256": "c4b3e7e5046ac88c6fdbee83770c79557b6b187ed81fa20d7d89641f1b1dd2fe"
+    },
+    {
+      "path": "work/qiu-algebra-20261012/quarto-full-01/package-browser-02/result.json",
+      "sha256": "64074d4e152ea4c2785608688ad1552b48c37ede58418ef18a3bcd7829abc989"
+    },
+    {
+      "path": "work/qiu-algebra-20261012/quarto-full-01/delivery-http-final-01.json",
+      "sha256": "fd06b5fb7d5c2fffae6260bd8ffaa70b2fcfc0f3c09fd4045ac6f830f25d52d1"
+    },
+    {
+      "path": "work/qiu-algebra-20261012/quarto-full-01/tool-tests-05/result.json",
+      "sha256": "0ab68194fc253b2a929b01a5080eca1962e2bb4e1ee25dd3b4653971e5f94ce4"
+    },
+    {
+      "path": "work/qiu-algebra-20261012/quarto-full-01/offline-font-repair-01.json",
+      "sha256": "0bd4f14d1de42d36552104c415fb3a9c02f1d9aad9de0f721fd47aa9eb3835c6"
+    },
+    {
+      "path": "work/qiu-algebra-20261012/quarto-full-01/package-attempt-01.json",
+      "sha256": "1ef3cdf75814131cbdaaf410152f1cf32ca663e408fa000b947bd356ed95821d"
+    },
+    {
+      "path": "work/qiu-algebra-20261012/quarto-full-01/markdown-download-identity-01.json",
+      "sha256": "4a357077c9c99c38f21d678906aa92eddb9bcc0d9f7c145e5092bc565dcd75f5"
+    }
+  ],
+  "chapters": [
+    {
+      "id": "objects",
+      "title": "高等代数研究什么",
+      "sourceMarkdownSha256": "72dcb52765be1c7c3129f4d66b5e12b00a7376f169d57fc220db84e582228c43",
+      "planSha256": "dfc83e0a9184d566f02204ae46cbf5010c5d65117535113c82ad5e9395bd84b4",
+      "widgets": 3
+    },
+    {
+      "id": "systems",
+      "title": "线性方程组与消元",
+      "sourceMarkdownSha256": "7f88cd171fc2c1ef24d049e825f6e8eb8586dae0ef01b4658db92b9cdf3137ed",
+      "planSha256": "6cd4150e17be57b3fb1c2e11115566f5f150d0f4866f0dafe4134e02a6ea8112",
+      "widgets": 3
+    },
+    {
+      "id": "determinants",
+      "title": "行列式的定义与性质",
+      "sourceMarkdownSha256": "792c4ce6cf620fab09c3b9348a09dcd318973681b9966eb78aaaa0289346b11c",
+      "planSha256": "dce091f99f164c747328be41068810562cfcc59b639df963a6fd4d6980d5fcaa",
+      "widgets": 2
+    },
+    {
+      "id": "determinant-expansion",
+      "title": "行列式展开与应用",
+      "sourceMarkdownSha256": "aa9f84f8ef5cc3c23c13671912126b7537bc3540cf44db28315c2128c96ae5de",
+      "planSha256": "8048226a029c3cc94f7a94262b8fbcac75f9b1f7de8fa99d8ce4eabf219049ee",
+      "widgets": 2
+    },
+    {
+      "id": "spaces",
+      "title": "线性空间与线性相关",
+      "sourceMarkdownSha256": "ec423e6709c6226647afe91b093ca94e4e9f55d8780df5da583302ba5803cff9",
+      "planSha256": "aad46b8c3e5ece92cd3f8b6ba2edd3b1bbc19afec206426869f1a421919ceecc",
+      "widgets": 3
+    },
+    {
+      "id": "basis-rank",
+      "title": "秩、基与坐标",
+      "sourceMarkdownSha256": "c951445461012d391d2da05435f7902d2e757afdf65b963baaf7b68c7d34b6e5",
+      "planSha256": "6d6e72523902fdb8fda937ec87a08c8f3c6746729b482530c3adad6ad931ff2c",
+      "widgets": 2
+    },
+    {
+      "id": "matrix-rank",
+      "title": "矩阵的秩与解空间",
+      "sourceMarkdownSha256": "91a290445b797fe13bc84556ac48fe7bbb95077612eca2d51e8b9257efd71911",
+      "planSha256": "359842ffcd6c4632c488d8926c6d2e302568dfd0cf1614f1586e1457db67a1f1",
+      "widgets": 2
+    },
+    {
+      "id": "subspace-sums",
+      "title": "子空间的和、直和与补空间",
+      "sourceMarkdownSha256": "596bd25c9d10e158116a4d60b701f3a50b6916e08f96b8bf63afe97d488f3693",
+      "planSha256": "022bececde50f99a6a6abe54000c1a2035c0db0015c9652802001c15546cb4e6",
+      "widgets": 3
+    },
+    {
+      "id": "quotient-spaces",
+      "title": "映射、等价关系与商空间",
+      "sourceMarkdownSha256": "bcc83419a629bcdfa9c0534bd3720ab80b2046c813e8daf93304fa09b8c6ceff",
+      "planSha256": "cef92e03fb0b414b79692335cd38fde9ec770a2684edd05af995da924525f093",
+      "widgets": 2
+    },
+    {
+      "id": "matrix-algebra",
+      "title": "矩阵运算与特殊矩阵",
+      "sourceMarkdownSha256": "7f2c7c5207aace2881c0660f5bab27d3045a7679ad49d204ce7d894217f194e9",
+      "planSha256": "faf607c2eba590fea97a765bc9d00ae2653d636c65c7993650f5f414767e1d87",
+      "widgets": 2
+    },
+    {
+      "id": "inverse-blocks",
+      "title": "可逆矩阵、分块与乘积行列式",
+      "sourceMarkdownSha256": "bb1e7704a636a73de6393717dec60944521cfbd2a601c097afb596572a9a94f1",
+      "planSha256": "48a14a631b6b9f933c280d619b5ea73aed6fc023e20560beb805ebeafe64782a",
+      "widgets": 3
+    },
+    {
+      "id": "polynomial-rings",
+      "title": "多项式环与带余除法",
+      "sourceMarkdownSha256": "9f39df2d77e87b8e47882df5bbf6ae4755c7bed413bf4f89b58d1ea0b7cb9c5b",
+      "planSha256": "4c499b7cd4b55e7b781eccefd8de74913294d137ade94b1c1991d85c3cf5dda9",
+      "widgets": 2
+    },
+    {
+      "id": "polynomial-gcd",
+      "title": "最大公因式、不可约与根",
+      "sourceMarkdownSha256": "dfcae9d795adfc848d117158b3f209fd26419b816db778d8588d9229f135aec7",
+      "planSha256": "f14725909c7442f3c69e855c7d839725bea7d482dacea0430db15fb1f8a4a7c9",
+      "widgets": 2
+    },
+    {
+      "id": "rational-polynomials",
+      "title": "有理系数多项式与代数系统",
+      "sourceMarkdownSha256": "463dd3363be7e6070d1d11fa2de26698002fc4c578fa3986760844f3458808f5",
+      "planSha256": "cbc66bdb538494eb81c0e876454e2819e9bc1d0da56b008ece4525888eb660cb",
+      "widgets": 2
+    },
+    {
+      "id": "linear-maps",
+      "title": "线性映射、核与像",
+      "sourceMarkdownSha256": "5beef0d55e8abb99033163d52e70fe19ccf2509c6a181d22ab93751f6b0a654f",
+      "planSha256": "560107aa3c10daf00f8d1e8ad4943e47bf4bd061415d7b9c230b2199348582fc",
+      "widgets": 2
+    },
+    {
+      "id": "change-of-basis",
+      "title": "矩阵表示、换基与相似",
+      "sourceMarkdownSha256": "7229da3f6d7446430b0b66f29f5fcb13033918bceb02b535810f2b4709d69963",
+      "planSha256": "baae91459eb317a671a771e4dda5e94191eddf2fa56bd2b2b3bec404d4692bbf",
+      "widgets": 2
+    },
+    {
+      "id": "eigen-diagonal",
+      "title": "特征值、特征空间与对角化",
+      "sourceMarkdownSha256": "8dfe0b68e46e1515cd111bf52855073946a03f2af941ca06c865b49fc1b3ee37",
+      "planSha256": "468f3075bc39a53f3742edc12f688dbd89d41bab9fdced131ec2dce8e326e540",
+      "widgets": 2
+    },
+    {
+      "id": "minimal-polynomial",
+      "title": "不变子空间与最小多项式",
+      "sourceMarkdownSha256": "0abcabecdb371805d30d1dba97dbd8224576458e8ccaa89e5b0d3900dbb54008",
+      "planSha256": "74d1133a04837d14a46a1e5f04cbd9e8e9f77ce4660492daacee8132ed60b920",
+      "widgets": 2
+    },
+    {
+      "id": "jordan-form",
+      "title": "循环子空间与Jordan标准形",
+      "sourceMarkdownSha256": "ef55ef97ac2e42fec546b3bd0d91a38693cd3cab38b1d166a479b03bef1fecf9",
+      "planSha256": "7fee7974b2bd854f30fed469a5dc9666d5c3d9f83e57f184ecc69cd7969a8b8d",
+      "widgets": 2
+    },
+    {
+      "id": "duality",
+      "title": "对偶空间与对偶基",
+      "sourceMarkdownSha256": "c87311f5346c4a12796fe2d61e0a8b43b2be459b67174b4385ef37480cd7f97a",
+      "planSha256": "565ca71f923cc0a4ccbf622d1ccbb3cce48761ab6b451f9e275e84923a810061",
+      "widgets": 2
+    },
+    {
+      "id": "bilinear-forms",
+      "title": "双线性形式与合同",
+      "sourceMarkdownSha256": "1ff194848ff3b63f563c956b23d42db75c398b64d872d14684c1309bf326845b",
+      "planSha256": "b59d011ca132fee6aed4351b0fc346a1466738e4ae18ce7b3d61a732bc4db903",
+      "widgets": 2
+    },
+    {
+      "id": "inner-products",
+      "title": "实内积、正交化与投影",
+      "sourceMarkdownSha256": "62ed698e7aa0f1e18c36d9e06d9253406302b2c7634967fc29496ed40883ad7f",
+      "planSha256": "44885a0b62db5f70eece170e6f63e33cf07c933cc19334e03e3c63b1239ef6fc",
+      "widgets": 2
+    },
+    {
+      "id": "orthogonal-spectral",
+      "title": "正交变换与实对称谱定理",
+      "sourceMarkdownSha256": "ba0f642d0ad0754e7065516607f5b0d23882dbc41c7ae6e977e79cff0c0aafdf",
+      "planSha256": "3f2ca90ab8370277c49b4f1c7c64402202f24b4208024f034d3110ab452b6b1e",
+      "widgets": 2
+    },
+    {
+      "id": "complex-metrics",
+      "title": "复内积、酉变换与其他度量",
+      "sourceMarkdownSha256": "e561999e32f97b3ab51c6a619bc52c6e4612c527a4140b2331103a9a6b6861d7",
+      "planSha256": "8cfef15748a7e35152dc200985a1f26564f8efdaae7010b190d094b7dfeb92c0",
+      "widgets": 3
+    },
+    {
+      "id": "quadratic-forms",
+      "title": "多元多项式与二次型",
+      "sourceMarkdownSha256": "f67e3a993a26736a3ea4f30e7a06c143cab187552b45dca466a5862c00f31c57",
+      "planSha256": "34f28cae378e0fcb6bd2016ee1ea81b5a5e1d6544bdc6c6c91e0c01eb253e262",
+      "widgets": 2
+    }
+  ]
+}

@@ -135,16 +135,16 @@ function widget(out, source, figure, widgetId) {
   const style = styles[0].childNodes.map(node => node.value ?? '').join('');
   const script = scripts[0].childNodes.map(node => node.value ?? '').join('');
   const marker = `VisualBookRuntime.mount(document.getElementById('figure-${figure.id}')`;
-  const offset = script.indexOf(marker);
-  if (offset < 0 || script.indexOf(marker, offset + 1) >= 0) throw Error('Ambiguous figure startup');
+  const offset = script.indexOf('/* VisualBook figure startup */');
+  if (offset < 0 || script.indexOf(marker) < offset || script.indexOf(marker, script.indexOf(marker) + 1) >= 0) throw Error('Ambiguous figure startup');
   const css = asset(out, style, '.css'), js = asset(out, script.slice(0, offset), '.js');
   let html = serialize(document).replace('<style>' + style + '</style>', `<link rel="stylesheet" href="../assets/${css}">`);
   html = html.replace('<script>' + script + '</script>', `<script src="../assets/${js}"></script><script>${script.slice(offset)}</script>`);
   // Externalize our generated output assets, leaving upstream code unchanged.
   html = html.replace("script-src 'unsafe-inline'", "script-src 'self' 'unsafe-inline'")
     .replace("style-src 'unsafe-inline'", "style-src 'self' 'unsafe-inline'");
-  const extra = `<style>body{background:transparent;margin:0}main{display:block!important;max-width:none!important;margin:0!important;padding:0!important}.vh-figure{margin:0!important;padding:12px 8px!important}.vh-anchor-row{display:block!important}</style><script>
-  const reportHeight=()=>parent.postMessage({type:'visualbook-widget-size',id:${JSON.stringify(widgetId)},height:Math.ceil(document.body.scrollHeight)},location.origin);
+  const extra = `<style>html,body{overflow-y:hidden}body{background:transparent;margin:0}main{display:block!important;max-width:none!important;margin:0!important;padding:0!important}.vh-figure{margin:0!important;padding:12px 8px!important;min-width:0!important}.vh-scope,.vh-anchor-row{display:block!important;grid-template-columns:none!important}.vh-margin-content{padding:0!important;margin:0!important}</style><script>
+  const reportHeight=()=>{if(parent!==window)parent.postMessage({type:'visualbook-widget-size',id:${JSON.stringify(widgetId)},height:Math.ceil(Math.max(document.body.scrollHeight,document.body.getBoundingClientRect().height))+2},location.origin)};
   new ResizeObserver(reportHeight).observe(document.body);addEventListener('load',reportHeight);
   addEventListener('message',e=>{if(e.source===parent&&e.origin===location.origin&&e.data?.type==='visualbook-reader-pause')VisualBookRuntime.pauseAll()});
   </script>`;
@@ -217,6 +217,8 @@ export function prepareQuarto(manifestFile, output, {mathjax, draft = false} = {
   for (const [name, file] of licenses) fs.copyFileSync(file, out + '/licenses/' + name + '.txt');
   fs.copyFileSync(import.meta.dirname + '/reader.css', out + '/reader.css');
   fs.copyFileSync(import.meta.dirname + '/reader.js', out + '/reader.js');
+  // Use Quarto's theme variable instead of modifying upstream Sass/CSS.
+  fs.writeFileSync(out + '/reader-theme.scss', '/*-- scss:defaults --*/\n$web-font-path: false;\n');
   fs.writeFileSync(out + '/reader-include.html', '<script src="reader.js"></script>\n');
   const description = manifest.description ?? '根据视频课程整理的可视化教材。';
   const cover = `${description}\n\n${draft ? '**图解补齐中的检查稿，尚未整书验收。**\n\n' : ''}正文保留完整论证；图解在对应段落后，可直接阅读，有需要时再播放或探索。\n\n[下载整本 Markdown 教材](downloads/textbook.md)\n\n`;
@@ -224,7 +226,7 @@ export function prepareQuarto(manifestFile, output, {mathjax, draft = false} = {
   fs.writeFileSync(out + '/downloads/textbook.md', manifest.chapters.map(chapter => inputs.find(input => input.chapter.id === chapter.id).raw).join('\n\n---\n\n'));
   const config = {project: {type: 'book', resources: ['widgets/**', 'assets/**', 'downloads/**', 'licenses/**', 'reader.js']},
     book: {title: manifest.title, search: true, chapters: ['index.qmd', ...groups.map(group => ({part: group.title, chapters: group.chapters.map(id => id + '.qmd')}))]},
-    lang: 'zh', format: {html: {theme: 'cosmo', css: 'reader.css', 'number-sections': false, toc: true,
+    lang: 'zh', format: {html: {theme: ['cosmo', 'reader-theme.scss'], css: 'reader.css', 'number-sections': false, toc: true,
       'html-math-method': {method: 'mathjax', url: 'assets/mathjax/tex-svg-full.js'}, 'include-after-body': 'reader-include.html'}}, execute: {enabled: false}};
   fs.writeFileSync(out + '/_quarto.yml', JSON.stringify(config, null, 2) + '\n');
   record.mathjaxBundleSha256 = sha(fs.readFileSync(out + '/assets/mathjax/tex-svg-full.js'));

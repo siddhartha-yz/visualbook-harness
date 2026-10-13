@@ -1,0 +1,93 @@
+{
+  "scope": "Fresh accessible repository/issues/comments/releasesandassetmetadata/branches/tags/deployments/Pages/CIartifact-andrunmetadata; intended ownedfiles and publishablemainhistory. No internal application checkpointrefs. CI ZIP/log archives not freshly downloaded or secret-scanned this round. Earlier92ZIPsha/CRCpassed but interrupted secretscan exitunknown; notclean claim.",
+  "phase": "fresh-public-metadata-and-preliminary-intended-files-before-final-index",
+  "tool": "gitleaks8.30.1",
+  "allowlistSha256": "9b2613a831394523072a1116ef15025ff627f94da25bd46b44c6db52be57319b",
+  "metadataDateUtc": "2026-10-13T04:54:49.263271+00:00",
+  "surfaces": {
+    "repo": {
+      "exitCode": 0,
+      "items": 0,
+      "sha256": "57ccd2145a972d9656e316a0111ddbcee2e8810996bbe548614ca5d954a416b6"
+    },
+    "issues": {
+      "exitCode": 0,
+      "items": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "issue-comments": {
+      "exitCode": 0,
+      "items": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "review-comments": {
+      "exitCode": 0,
+      "items": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "commit-comments": {
+      "exitCode": 0,
+      "items": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "releases": {
+      "exitCode": 0,
+      "items": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "releaseAssets": 0
+    },
+    "branches": {
+      "exitCode": 0,
+      "items": 1,
+      "sha256": "e4ff897f5594facc80d56bd4317e9cda3624fe95e52233903a32b75a48180e2e"
+    },
+    "tags": {
+      "exitCode": 0,
+      "items": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "deployments": {
+      "exitCode": 0,
+      "items": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "artifacts": {
+      "exitCode": 0,
+      "items": 61,
+      "sha256": "9202ada8099a1cd0fe6154237d2c60b896ebdbe08d9b1068b371bcb737467d20"
+    },
+    "runs": {
+      "exitCode": 0,
+      "items": 37,
+      "sha256": "3357dcb1e28288df98ccafc4bcc0ae0c7f8b8aac1771ae24476bbeff6365aa7b"
+    },
+    "pages": {
+      "exitCode": 1,
+      "items": 0,
+      "sha256": "563d97060c2459a0ff950c9fdf8d97e70237ccbc433002dd0c4bd5be7680f166",
+      "interpretation": "No accessible Pages endpoint,HTTP404"
+    }
+  },
+  "scans": [
+    {
+      "scope": "public-api-metadata",
+      "exitCode": 0
+    },
+    {
+      "scope": "publishable-main-history",
+      "exitCode": 0
+    },
+    {
+      "scope": "intended-owned-files",
+      "exitCode": 0
+    }
+  ],
+  "preliminaryIntendedFiles": 18,
+  "preliminaryIntendedBytes": 297494,
+  "record": {
+    "path": "work/qiu-algebra-20261012/quarto-full-01/publication-full-01/result.json",
+    "sha256": "87b4c42869b0c6c3311f23d82ae7f124b96769045d36bd4e8d2046b90d1faf7a"
+  },
+  "finalIndexAndCommittedHistory": "Exact final index tree and new publishable main history scanned separately before push, recorded in ignored publication-full-final-01. Only actual exit0 permits push.",
+  "limits": "No fresh CI archivecontent secretscan this round. Old92ZIPhash/CRCpassed, interrupted secretscanexitunknown. No clean claim for expired/deleted/inaccessible/future content or internal checkpoint refs."
+}

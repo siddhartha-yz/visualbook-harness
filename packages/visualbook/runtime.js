@@ -165,8 +165,10 @@
       if (width < 1) return;
       // Match the compact layouts used by the public diagram examples. A
       // 450px height switch clipped their stacked layouts at 450..599px.
+      const compactWidth = Math.max(figure.compactWidth ?? 600,
+        figure.scene ? global.VisualBook.sceneMinimumWidth(figure.scene) : 0);
       const height =
-        width < 600 ? (figure.mobileHeight ?? context.height) : context.height;
+        width < compactWidth ? (figure.mobileHeight ?? context.height) : context.height;
       if (!board && svg.getAttribute("viewBox") !== `0 0 ${width} ${height}`)
         svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
       if (svg.style.height !== height + "px") svg.style.height = height + "px";
@@ -224,6 +226,9 @@
     function tick(now) {
       raf = null;
       if (!playing) return;
+      // Embedded documents can have a different performance.now() origin
+      // from the shared frame timestamp. Measure elapsed time in one clock.
+      if (started === null) started = now;
       try {
         paint(Math.min(1, startProgress + (now - started) / duration));
       } catch {
@@ -238,7 +243,7 @@
       if (figure.presentation !== "exploration" || progress >= 1) paint(0);
       playing = true;
       startProgress = progress;
-      started = performance.now();
+      started = null;
       refreshControls();
       raf = requestAnimationFrame(tick);
       return true;

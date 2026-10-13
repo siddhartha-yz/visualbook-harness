@@ -1,6 +1,9 @@
 /* Quarto owns the reading grid and typography. These rules only adapt widgets
    and genuinely wide equations; ordinary inline math keeps its native flow. */
 main mjx-container[jax="SVG"][display="true"] {
+  /* Numbered MathJax equations put an inline min-width on both container
+     and SVG. Constrain the container while the full SVG scrolls inside. */
+  min-width: 0 !important;
   max-width: 100%;
   overflow-x: auto;
   overflow-y: hidden;

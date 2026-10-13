@@ -69,3 +69,11 @@ GitHub实际取得53个未过期CI附件及33份运行日志，共86ZIP、5,753,
 当前16个意向文件、确切暂存树、main公开目标历史和新取得的GitHub公开元数据秘密扫描实际退出0、无发现，固定gitleaks8.30.1与原允许表未改。重新读取仓库、issues及评论、PR评论、releases及asset元数据、branches、tags、deployments、Pages和CI附件/运行元数据；Pages实际404。首轮本机gh不支持slurp失败在暂存前，诊断保留，改用支持的paginate后取得。公开计数及执行范围见quarto-publication.json。
 
 本次没有重新扫描CI附件归档内容。较早92ZIP的SHA/CRC检查有效，但中断的秘密扫描退出码仍未知，不能称全公开内容干净。过期、删除、无权限、更深层和未来内容不在证明范围。官方账号输出、原教材、转写、视频音频中间件和依赖均保持ignored；内置checkpoint refs不作为发布目标。
+
+### 2026-10-13，整书交付工具的公开范围
+
+重新取得仓库、issues及各类评论、releases及asset元数据、branches、tags、deployments、Pages、Actions附件和运行元数据。此时1分支、无issues/评论/releases/资产/tags/deployments，61个附件元数据、37次运行元数据；Pages接口实际404。固定gitleaks8.30.1与既有允许表未改，公开元数据、初步18个意向自有文件297494字节和可发布main历史三项扫描实际退出0。实际范围和SHA见full-book-publication.json。
+
+最终文档补齐后，确切暂存树和新提交main历史另在ignored publication-full-final-01记录，推送前必须实际退出0。只发布自有导出/布局/预览/播放/打包工具、测试、日志及汇总，不公开151集音视频、教材全文、模型账号输出或本地阅读成品。内部应用checkpoint refs不作为发布目标。
+
+本次没有新下载或秘密扫描CI归档内容。较早92ZIP的SHA/成员CRC已核，但中断的秘密扫描退出码未知，不能从旧日志no-leaks文字推断成功。当前元数据扫描不代替归档内容扫描；过期、删除、无权访问、工具不能识别、更深层及未来内容不在本轮证明范围。

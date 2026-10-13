@@ -42,7 +42,11 @@
         width: w,
         height: h,
       }));
-    if (kind === "columns" && (w - gap * (count - 1)) / count < minColumnWidth)
+    const ws = weights ?? Array(count).fill(1);
+    if (!Array.isArray(ws) || ws.length !== count || ws.some(v => !Number.isFinite(v) || v <= 0))
+      throw Error("Positive layout weights required");
+    const total = ws.reduce((a,b) => a+b,0);
+    if (kind === "columns" && (w - gap * (count - 1)) * Math.min(...ws) / total < minColumnWidth)
       kind = "stack";
     if (kind === "grid") {
       const cols = Math.max(
@@ -66,15 +70,7 @@
     }
     if (!["columns", "stack"].includes(kind))
       throw Error("Unknown layout " + kind);
-    const ws = weights ?? Array(count).fill(1);
-    if (
-      !Array.isArray(ws) ||
-      ws.length !== count ||
-      ws.some((v) => !Number.isFinite(v) || v <= 0)
-    )
-      throw Error("Positive layout weights required");
-    const total = ws.reduce((a, b) => a + b, 0),
-      space = (kind === "columns" ? w : h) - gap * (count - 1);
+    const space = (kind === "columns" ? w : h) - gap * (count - 1);
     if (space <= 0) throw Error("Layout has no space between children");
     let cursor = padding;
     return ws.map((weight) => {
@@ -368,6 +364,24 @@
     return visit(board, scene, 0);
   }
   V.layout = layout;
+  // Width needed to keep declared structured columns horizontal. Runtime uses
+  // the compact height when a narrow weighted child forces stacking.
+  V.sceneMinimumWidth = function minimum(node) {
+    if (!node || typeof node !== 'object') return 0;
+    if (node.type === 'compose') return minimum(node.visual);
+    const children = node.children ?? [];
+    if (!children.length) return 0;
+    const {gap=24,padding=0,minColumnWidth=260,weights=null,columns=2}=node.layout ?? {};
+    if (node.type === 'columns') {
+      const ws=weights ?? children.map(()=>1), total=ws.reduce((a,b)=>a+b,0);
+      return 2*padding+gap*(children.length-1)+Math.max(...children.map((child,i)=>Math.max(minColumnWidth,minimum(child))*total/ws[i]));
+    }
+    if (node.type === 'grid') {
+      const n=Math.min(columns,children.length);
+      return 2*padding+gap*(n-1)+n*Math.max(minColumnWidth,...children.map(minimum));
+    }
+    return 2*padding+Math.max(...children.map(minimum));
+  };
   V.resolveBindings = resolve;
   V.renderScene = renderScene;
 })(window);

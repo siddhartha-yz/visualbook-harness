@@ -153,3 +153,13 @@ Manifest的`chapters`为`{id,source,plan,review}`，`groups`为`{title,chapters:
 原文按块行号与SHA插入图解，反向移除插入必须恢复同一字节串。Quarto接管原生目录、中文搜索、正文排版和MathJax；宽图用原生column-page。图解隔离为iframe，脚本/CSS按内容哈希共用，滚动只暂停播放。普通行内公式保持原生流，真正过长的独立/行内公式可局部横向滚动并用Home/End到两端。渲染会检查有序公式；只接受数学模式行首缩进移除并保存字面差异，拒绝符号、文本模式或宏变更。保留本地依赖许可证和QuartoCOPYRIGHT。
 
 资源策略拒绝额外远程script/link，仅明确移除Pandoc可选ES6 polyfill，并给阅读HTML加入本地资源CSP。它不是任意来源适配器：图片、原始HTML、frontmatter需另外实现，不能悄悄丢掉。review哈希、正常渲染和本地资源策略均不证明数学、审美、教学质量；最后仍需实际浏览器与来源/图意复核。实际25章迁移及失败见quarto-reader-result.json。
+
+2026-10-13 的[整书交付报告](../../evaluation/2026-10-12/qiu-algebra-workflow/FULL-BOOK-REPORT.md)完成151集、25章、56图解的实际阅读包。原始可视化作者19/25章通过门禁，维护者修订与复核另列。正式打包新增：
+
+```bash
+python3 tools/package_quarto_book.py work/book/reader final-browser-review.json work/book.zip
+# 解压阅读包，在解压目录运行，无需在线安装：
+python3 serve.py --open
+```
+
+最终 browser review 要含 readyForPackage:true、assemblyRecordSha256、blockingIssues:[] 和整套 _book 的 fileHashes。资源变更、缺文件、外部 CSS 字体、越界引用会拒绝打包；固定排序和时间生成可复现 ZIP。主题使用官方变量关闭远程字体，上游源码不改。包内保留源 Markdown 与本地依赖许可，不包含账号、会话日志或音视频。

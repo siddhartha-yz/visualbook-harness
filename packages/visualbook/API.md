@@ -210,3 +210,15 @@ plot支持xLabel/yLabel的实际数量与单位，<=32字且真实测量能放�
 指定有理特征值的`generalized-kernel-profile`返回shifted/powers的精确与数值版本、ranks/nullities、atLeast/blockCounts/blockSizes及rootSpaceDimension/complementDimension。输入必须是1..6阶有理方阵和显式有理eigenvalue；没有选中根时块列表为空。wholeShiftNilpotent独立表示整个移位矩阵是否幂零，不能从所选根的核稳定推出全矩阵幂为零。dimension-filtration可复用地显示2..8个非降维数及同一总容量，不提供真实子空间坐标。
 
 顶层figure只允许已支持字段，命名设计数据用`overrides:[{path:"/scene/calculations/0/inputs/eigenvalue",value:5}]`等既有JSON指针替换。未知inputs/data/拼错的控制字段直接报错，避免渲染成功但实际数据没有变化。
+
+### 嵌入成熟阅读器
+
+Quarto 阅读器导出使用 `node tools/export_quarto_book.mjs manifest.json work/fresh-project --quarto pinned-binary --mathjax pinned-es5-directory`。正式导出要求每章 review 绑定 source/plan 的 SHA256，并明确没有阻塞问题。原 Markdown 保留，不用图解里的文字替代论证；最终阅读包用 `python3 tools/package_quarto_book.py project browser-review.json work/book.zip`，浏览器审查必须绑定整套输出资源。包内 `python3 serve.py --open` 可启动仅监听本机的阅读服务。
+
+嵌入图框可能比整页窄得多。预览可声明真实宽度：`node tools/visualbook.mjs preview widget.html fresh-preview '{"widths":[310,600,1280,1920]}'`。最多6种互不重复的240..2560整数宽度，参数边界检查使用相同宽度。默认包含375、600、1280、1920；完成预览不代表数学或审美认证。
+
+结构化 columns 按最窄的加权子栏决定是否堆叠，运行时同步使用 mobileHeight。自定义绘图若有自己的断点，可设置整数 compactWidth（240..1600），配合 mobileHeight；默认600。不要靠缩小文字隐藏越界，也不要沿用不同宽度的旧预览。
+
+Quarto 主题通过官方 Sass 变量关闭可选远程字体，打包器检查 HTML 引用以及生成 CSS 的 import/url 资源。目录首页链接只允许导航到已有 index.html，脚本和字体必须是实际文件。最终验收需要绑定每个阅读资源的哈希，不能只绑定章节 HTML；共用脚本变化也会使旧验收失效。
+
+嵌入播放从首个 requestAnimationFrame 回调开始计时，不混用不同文档的 performance.now() 时钟。图框高度向上取整并留像素余量，避免滚动条反复出现导致宽度与高度振荡。滚动仍只暂停演示，不驱动进度。
